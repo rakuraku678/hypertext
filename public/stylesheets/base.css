@@ -208,14 +208,14 @@ body {
 	background-color: #fff;
 	border-radius: 4px;
 	height: 180px;
-	margin: 0 auto;
+	margin: 30px auto;
 	padding: 10px 0;
     width: 335px;
-    position: absolute;
+    /*position: absolute;*/
     top: 50%;
     left: 0;
     right: 0;
-    transform: translateY(-50%);
+    /*transform: translateY(-50%);*/
     text-align: center;
 }
 

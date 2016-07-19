@@ -1,82 +1,107 @@
-<button class="btn btn-primary btn-search-mobile" type="button" data-toggle="collapse" data-target="#collapseSearchMobile" aria-expanded="false" aria-controls="collapseSearchMobile">
-  <ul>
-      <li><i class="icon-fly-mobile-search"></i><span class="txt-fly-mobile">eze - lon</span></li>
-      <li><i class="icon-calendar-mobile-search"></i><span class="txt-calendar-mobile">Sábado 8 de Abr - Domingo 23 Abr</span> </li>
-      <li><i class="icon-passenger-mobile-search"></i><span class="txt-passenger-mobile">1</span> </li>
-      
-
-  </ul>
+<button class="btn btn-primary btn-search-mobile" type="button" data-toggle="collapse"
+        data-target="#collapseSearchMobile" aria-expanded="false" aria-controls="collapseSearchMobile">
+    <ul>
+        <li><i class="icon-fly-mobile-search"></i><span class="txt-fly-mobile">eze - lon</span></li>
+        <li><i class="icon-calendar-mobile-search"></i><span class="txt-calendar-mobile">Sábado 8 de Abr - Domingo 23 Abr</span>
+        </li>
+        <li><i class="icon-passenger-mobile-search"></i><span class="txt-passenger-mobile">1</span></li>
+    </ul>
 </button>
 <div class="collapse" id="collapseSearchMobile">
-  <div class="well">
+    <div class="well">
+        <div class="bg-search">
+            <h2>Vuelos</h2>
+            <form id="flightSearchForm" class="form-search-travel" action="" method="">
+                <div class="form-group col-md-12">
+                    <label>Origen:</label>
+                    <input type="text" name="origen" class="form-control"
+                           placeholder="Santiago de Chile">
+                </div>
+                <div class="form-group col-md-12">
+                    <label>Destino:</label>
+                    <input type="text" name="destino" class="form-control"
+                           placeholder="Iguazu">
+                </div>
+                <div class="form-group col-xs-6">
+                    <label>Partida:</label>
+                    <div class="input-group date" data-provide="datepicker">
+                        <input type="text" name="partida" class="calendar-input form-control">
+                        <i class="bg-calendar input-group-addon"></i>
+                    </div>
+                </div>
+                <div class="form-group col-xs-6">
+                    <label>Regreso:</label>
+                    <div class="input-group date" data-provide="datepicker">
+                        <input type="text" name="regreso" class="calendar-input form-control">
+                        <i class="bg-calendar input-group-addon"></i>
+                    </div>
+                </div>
+                <div class="form-group col-xs-4">
+                    <label>Adultos:</label>
+                    <select class="bg-arrow form-control">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                    </select>
+                    <span>(12 ó + años)</span>
+                </div>
+                <div class="form-group col-xs-4">
+                    <label>Niños:</label>
+                    <select class="bg-arrow form-control">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                    </select>
+                    <span>(2 a 11 años)</span>
+                </div>
+                <div class="form-group col-xs-4">
+                    <label>Infantes:</label>
+                    <select class="bg-arrow form-control">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                    </select>
+                    <span>(0 a 23 meses)</span>
+                </div>
+                <div class="col-md-12 text-center">
+                    <input type="submit" value="Buscar Vuelos" class="btn btn-search">
+                </div>
+            #{set 'moreScripts'}
+            #{get 'moreScripts' /}
+                $(document).ready(function() {
+                    $("#flightSearchForm").submit(function(event) {
 
-<div class="bg-search">
-    <h2>Vuelos</h2>
-    <form class="form-search-travel" action="" method="">
-        <div class="form-group col-md-12">
-            <label>Origen:</label>
-            <input type="text" name="origen" class="form-control"
-                   placeholder="Santiago de Chile">
-        </div>
-        <div class="form-group col-md-12">
-            <label>Destino:</label>
-            <input type="text" name="destino" class="form-control"
-                   placeholder="Iguazu">
-        </div>
-        <div class="form-group col-xs-6">
-            <label>Partida:</label>
-            <div class="input-group date" data-provide="datepicker">
-                <input type="text" name="partida" class="calendar-input form-control">
-                <i class="bg-calendar input-group-addon"></i>
-            </div>
-        </div>
-        <div class="form-group col-xs-6">
-            <label>Regreso:</label>
-            <div class="input-group date" data-provide="datepicker">
-                <input type="text" name="regreso" class="calendar-input form-control">
-                <i class="bg-calendar input-group-addon"></i>
-            </div>
-        </div>
-        <div class="form-group col-xs-4">
-            <label>Adultos:</label>
-            <select class="bg-arrow form-control">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-                <option>6</option>
-                <option>7</option>
-            </select>
-            <span>(12 ó + años)</span>
-        </div>
-        <div class="form-group col-xs-4">
-            <label >Niños:</label>
-            <select class="bg-arrow form-control">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-            </select>
-            <span>(2 a 11 años)</span>
-        </div>
-        <div class="form-group col-xs-4">
-            <label>Infantes:</label>
-            <select class="bg-arrow form-control">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-            </select>
-            <span>(0 a 23 meses)</span>
+                        $( "#loading" ).show("fade");
+
+                        $( "#priceSuggestionMatrix" ).load( "/flights/matrix",
+                            function (responseText, textStatus, XMLHttpRequest) {
+                                if (textStatus == "success") {
+                                    $( "#priceSuggestionMatrix" ).show("slow");
+                                }
+                            }
+                        );
+                        $( "#fligthsData" ).load( "/flights/data",
+                            function (responseText, textStatus, XMLHttpRequest) {
+                                if (textStatus == "success") {
+                                    $( "#loading" ).hide();
+                                    $( "#fligthsData" ).show("slow");
+                                }
+                            }
+                        );
+
+                        event.preventDefault();
+                    });
+                });
+            #{/set}
+            </form>
         </div>
 
-        <div class="col-md-12 text-center">
-            <input type="submit" value="Buscar Vuelo" class="btn btn-search">
-        </div>
-    </form>
-</div>
-
-</div>
+    </div>
 
 </div>

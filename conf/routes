@@ -4,6 +4,8 @@
 
 # Home page
 GET     /                                       FlightsController.index
+GET     /flights/data                           FlightsDataController.index
+GET     /flights/matrix                         FlightsDataController.priceSuggestionMatrix
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
