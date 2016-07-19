@@ -107,7 +107,97 @@ body {
 	margin-top: 20px;
 	width: 100%;
 }
+/* search mobile
+============== */
+#collapseSearchMobile .well {
+	padding: 0;
+	margin: 0;
+	height: auto;
+	border: 0;
+	background-color: transparent;
+	box-shadow: none;
+	-webkit-box-shadow: none;
+}
+.btn-search-mobile,
+.btn-search-mobile:hover,
+.btn-search-mobile:active {
+	background-color: #2F313A!important;
+	border-color: #2F313A!important;
+	margin: 5px;
+	border-radius: 0;
+}
+.btn-search-mobile:hover {
+	margin-bottom: 0;
+}
+.btn-search-mobile ul {
+	background-image: url(../img/icon-arrow-down-mobile-search.svg);
+	background-repeat: no-repeat;
+	background-position: right;
+	padding-left: 0;
+	margin-bottom: 0;
+	text-align: left;
+}
 
+.btn-search-mobile[aria-expanded="true"] {
+	margin: 5px 0 0 0;	
+}
+.btn-search-mobile[aria-expanded="true"] ul {
+	background-image: url(../img/icon-arrow-up-mobile-search.svg);
+	background-repeat: no-repeat;
+	background-position: right;
+}
+.btn-search-mobile ul li {
+	display: inline-block;
+	margin-left: 15px;
+}
+
+.btn-search-mobile .icon-fly-mobile-search {
+	background-image: url(../img/icon-fly-mobile-search.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	vertical-align: middle;
+}
+.btn-search-mobile .icon-calendar-mobile-search {
+	background-image: url(../img/icon-calendar-mobile-search.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+	display: inline-block;
+	width: 20px;
+	height: 25px;
+	vertical-align: middle;
+}
+
+.btn-search-mobile .icon-passenger-mobile-search {
+	background-image: url(../img/icon-passenger-mobile-search.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+	display: inline-block;
+	width: 20px;
+	height: 25px;
+	vertical-align: middle;
+}
+.btn-search-mobile .txt-fly-mobile {
+	text-transform: uppercase;
+}
+
+.btn-search-mobile .txt-fly-mobile,
+.btn-search-mobile .txt-calendar-mobile,
+.btn-search-mobile .txt-passenger-mobile {
+	padding-left: 10px;
+	font-weight: 400;
+	vertical-align: middle;
+	opacity: .8;
+}
+
+#collapseSearchMobile[aria-expanded="true"] {	
+	border-top: 1px solid #666;
+}
+#collapseSearchMobile[aria-expanded="true"] .bg-search {
+	margin-top: 0;
+}
 /* PRELOAD
 ============== */
 .tickets-arrives {
@@ -164,6 +254,7 @@ body {
 =============== */
 .table-arrive {
 	margin: 10px 0;	
+	width: 100%;
 }
 .table-arrive table {
 	background: #FFFFFF;
@@ -173,6 +264,7 @@ body {
 	margin: 5px;
     overflow: hidden;
 	text-align: center;
+	width: 100%;
 }
 
 .table-arrive table thead {
@@ -237,6 +329,7 @@ body {
 	margin: 5px;
     overflow: hidden;
     position: relative;
+    width: 100%;
 }
 .ticket .info-flight,
 .ticket .ticket-detail {
@@ -494,14 +587,29 @@ body {
 	}
 }
 
-@media screen and (max-width: 769px) {
+@media screen and (max-width: 768px) {
 	.table-arrive {
 		display: none;
 	}
-	
+	.btn-search-mobile {
+		display: block;
+		width: 100%;
+	}	
 }
+@media screen and (min-width: 769px) {
+	#collapseSearchMobile {
+		display: block;
+	}
+	.btn-search-mobile {
+		display: none;
+	}
+}
+@media screen and (max-width: 450px){
 
-
-@media screen and (max-width: 450px) {
-	
+	.btn-search-mobile .txt-calendar-mobile {
+		text-overflow: ellipsis;
+		width: 65px;
+		overflow: hidden;
+		display: inline-block;
+	}
 }
