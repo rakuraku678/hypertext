@@ -237,14 +237,15 @@ body {
 	margin: 5px;
     overflow: hidden;
     position: relative;
-    min-height: 300px;
 }
 .ticket .info-flight,
 .ticket .ticket-detail {
 	padding: 0;
 }
+
 .ticket ul {
 	padding-left: 0;
+	margin-bottom: 0;
 }
 .ticket ul li {
 	list-style: none;
@@ -345,9 +346,9 @@ body {
 .stops-route .circle {
 	background-color: #fff;
     border: 2px solid #3B4D6D;
-    bottom: -4.5px;
+    bottom: -5px;
     margin-left: -4.5px;
-    height: 5px;
+    height: 4px;
     position: absolute;
     width: 5px;
     -webkit-border-radius: 5px;
@@ -355,6 +356,12 @@ body {
     -ms-border-radius: 5px;
     -o-border-radius: 5px;
     border-radius: 5px;
+}
+.left-circle {
+	left: 0;
+}
+.right-circle {
+	right: 0;
 }
 .ticket .txt-view-detail .time {
 	width: 10%;
@@ -400,7 +407,7 @@ body {
 
 .ticket-detail .box-share {
 	text-align: right;
-	padding: 10px;
+	padding: 0 10px;
 }
 
 .icon-mail {
@@ -446,6 +453,9 @@ body {
 .ticket-detail .item-price {
 	float: right;
 }
+.box-ticket-submit {
+	margin-bottom: 10px;
+}
 .btn-ticket {
 	background: #FA564D;
 	box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.30);
@@ -468,10 +478,26 @@ body {
 	.ticket-detail {
 		position: static;
 	}
+
+	.ticket .info-flight {
+		margin-right: 0;
+	    display: table-row;
+	    width: 100%;
+	    position: relative;
+	    vertical-align: top;
+	}
+	.ticket .ticket-detail {
+		width: 100%;
+	    position: relative;
+	    padding: 0;
+	    display: table-header-group;
+	}
 }
 
 @media screen and (max-width: 769px) {
-	
+	.table-arrive {
+		display: none;
+	}
 	
 }
 
