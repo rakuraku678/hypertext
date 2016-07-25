@@ -28,7 +28,7 @@
                             <span>20:15</span>
                         </li>
                         <li class="stops-route">
-                            <a href="">
+                            <a href="#" data-toggle="tooltip" data-placement="top" title="(SCL) Espera de 1h 35m (Mismo avión) (SCL) Espera de 9h 35m (Cambio de Avión)">
                                 <span class="stop-txt">1 escala</span>
                                 <span class="circle"></span>
                                 <span class="line-route"></span>
@@ -264,4 +264,11 @@
         </div>
     </form>
 </div>
+
+<script type="text/javascript">
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    #{get 'moreScripts' /}
+</script>
 

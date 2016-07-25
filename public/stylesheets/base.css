@@ -12,6 +12,8 @@ body {
 	min-height: 600px;
 }
 
+/* ANIMATE PRELOAD
+================ */
 
 @keyframes rotateIn {
   0% {
@@ -401,6 +403,14 @@ body {
 
 .ticket .txt-view-detail .radio {
 	padding-left: 10px;
+}
+
+.ticket .txt-view-detail .radio label {
+	box-sizing: border-box;
+    width: 100%;
+}
+.ticket .txt-view-detail .radio label input [type="radio"] {
+	width: 100%;	
 }
 /* well ticket
 ================ */
