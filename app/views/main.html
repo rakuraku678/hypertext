@@ -22,10 +22,45 @@
         </footer>
         <script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
         <script src="@{'/public/javascripts/bootstrap.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+        <script src="@{'/public/javascripts/bootstrap-slider.js" type="text/javascript" charset="${_response_encoding}"></script>
         <script type="text/javascript">
             $(function () {
                 $('[data-toggle="tooltip"]').tooltip()
-            })
+            });
+
+
+            /*FILTER*/
+
+$("#ex2").slider({});
+
+            $('.body-filter .checkbox').click(function(){
+
+                $("input[type=checkbox]").change(function(){
+                
+                    $(this).parent().parent().find('.box-number').removeClass('selected-box');
+
+                    if($(this).prop("checked")){
+                        $(this).parent().parent().find('.box-number').addClass('selected-box'); 
+                    }
+                });
+
+            });
+
+            $('.body-filter').addClass('hidden-filter');
+
+            $('.box-filter').click(function() {
+                $('.body-filter').addClass('hidden-filter');
+                $(this).find('.body-filter').removeClass('hidden-filter');
+
+                $('.header-filter h3 i').addClass('arrow-down');
+                $('.header-filter h3 i').removeClass('arrow-up');
+                
+                $(this).find('.header-filter h3 i').removeClass('arrow-down');
+                $(this).find('.header-filter h3 i').addClass('arrow-up');
+            });
+
+
+
             #{get 'moreScripts' /}
         </script>
     </body>

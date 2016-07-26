@@ -103,11 +103,182 @@ body {
 .form-search-travel .btn-search {
 	box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.30);
 	border-radius: 4px;
-	background: #428BCA;
+	background-color: #428BCA;
 	color: #fff;
 	padding: 10px 20px;
 	margin-top: 20px;
 	width: 100%;
+}
+/* FILTER
+============== */
+.filter-arrive {
+	background-color: #fff;
+	padding: 5px;
+}
+.box-filter {
+	border-top: 1px solid #E5E6EB;
+    border-left: 1px solid #E5E6EB;
+    border-right: 1px solid #E5E6EB;
+}
+
+.box-filter:last-child {
+    border-bottom: 1px solid #E5E6EB;	
+}
+.header-filter {
+	border-bottom: 1px solid #fff;
+}
+.header-filter h3 {
+	color: #428BCA;
+	font-size: 16px;
+	margin: 10px;
+	position: relative;
+}
+
+.header-filter i {
+	background-repeat: no-repeat;
+    background-position: center right;
+    width: 20px;
+    height: 12px;
+    display: inline-block;
+    vertical-align: middle;
+    position: absolute;
+    right: 7px;
+    top: 25%;
+}
+.arrow-up {
+	background-image: url("../img/arrow-up.svg");
+}
+.arrow-down {
+	background-image: url("../img/arrow-down.svg");
+}
+.body-filter {
+	padding: 5px;
+}
+.hidden-filter {
+	display: none;
+}
+
+.body-filter label {
+	color: #999;
+	font-size: 14px;
+}
+.body-filter .checkbox {
+	margin: 0;
+	padding: 10px;
+	position: relative;
+}
+.body-filter .radio {
+	margin: 0;
+	padding: 10px;
+}
+.box-number {
+	border: 1px solid #E5E6EB;
+    color: #999;
+    position: absolute;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    vertical-align: middle;
+    top: 5px;
+}
+.selected-box {
+	border: 0;
+	background-color: #428BCA;
+	color: #fff;
+}
+.box-number span {
+	line-height: 2;
+}
+
+input[type=range] {
+    /*removes default webkit styles*/
+    -webkit-appearance: none;
+    
+    /*fix for FF unable to apply focus style bug */
+    border: 1px solid white;
+    
+    /*required for proper track sizing in FF*/
+    width: 300px;
+}
+input[type=range]::-webkit-slider-runnable-track {
+    width: 300px;
+    height: 5px;
+    background: #ddd;
+    border: none;
+    border-radius: 3px;
+}
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background-color: #428BCA;
+    margin-top: -4px;
+}
+input[type=range]:focus {
+    outline: none;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+    background: #ccc;
+}
+
+input[type=range]::-moz-range-track {
+    width: 300px;
+    height: 5px;
+    background: #ddd;
+    border: none;
+    border-radius: 3px;
+}
+input[type=range]::-moz-range-thumb {
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background-color: #428BCA;
+}
+
+/*hide the outline behind the border*/
+input[type=range]:-moz-focusring{
+    outline: 1px solid white;
+    outline-offset: -1px;
+}
+
+input[type=range]::-ms-track {
+    width: 300px;
+    height: 5px;
+    
+    /*remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */
+    background: transparent;
+    
+    /*leave room for the larger thumb to overflow with a transparent border */
+    border-color: transparent;
+    border-width: 6px 0;
+
+    /*remove default tick marks*/
+    color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+    background: #777;
+    border-radius: 10px;
+}
+input[type=range]::-ms-fill-upper {
+    background: #ddd;
+    border-radius: 10px;
+}
+input[type=range]::-ms-thumb {
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background-color: #428BCA;
+}
+input[type=range]:focus::-ms-fill-lower {
+    background: #888;
+}
+input[type=range]:focus::-ms-fill-upper {
+    background: #ccc;
 }
 /* search mobile
 ============== */
