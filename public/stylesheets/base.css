@@ -100,7 +100,7 @@ body {
 	font-weight: 400;
 	color: #fff;
 }
-.form-search-travel .btn-search {
+.btn-search {
 	box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.30);
 	border-radius: 4px;
 	background-color: #428BCA;
@@ -108,12 +108,18 @@ body {
 	padding: 10px 20px;
 	margin-top: 20px;
 	width: 100%;
+	transition: all .5s;
+}
+
+.btn-search:hover {
+	color: #fff;
+	box-shadow: none;
+	opacity: .8;
 }
 /* FILTER
 ============== */
 .filter-arrive {
 	background-color: #fff;
-	padding: 5px;
 }
 .box-filter {
 	border-top: 1px solid #E5E6EB;
@@ -152,7 +158,12 @@ body {
 	background-image: url("../img/arrow-down.svg");
 }
 .body-filter {
-	padding: 5px;
+	padding: 15px;
+	border-top: 1px solid #E5E6EB;
+	background-color: #fff;
+}
+.body-filter img {
+	max-width: 100%;
 }
 .hidden-filter {
 	display: none;
@@ -160,7 +171,8 @@ body {
 
 .body-filter label {
 	color: #999;
-	font-size: 14px;
+	font-size: 12px;
+	font-weight: normal;
 }
 .body-filter .checkbox {
 	margin: 0;
@@ -182,6 +194,10 @@ body {
     vertical-align: middle;
     top: 5px;
 }
+.box-range {
+	padding-left: 0!important;
+	width: 100%;
+}
 .selected-box {
 	border: 0;
 	background-color: #428BCA;
@@ -190,95 +206,50 @@ body {
 .box-number span {
 	line-height: 2;
 }
-
-input[type=range] {
-    /*removes default webkit styles*/
-    -webkit-appearance: none;
-    
-    /*fix for FF unable to apply focus style bug */
-    border: 1px solid white;
-    
-    /*required for proper track sizing in FF*/
-    width: 300px;
+/* detail of filter
+============ */
+.slider.slider-horizontal {
+	width: 100%;
 }
-input[type=range]::-webkit-slider-runnable-track {
-    width: 300px;
-    height: 5px;
-    background: #ddd;
-    border: none;
-    border-radius: 3px;
+.price-number-left {
+	margin-right: 10px;
+	float: left;
 }
-input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    border: none;
-    height: 16px;
-    width: 16px;
-    border-radius: 50%;
-    background-color: #428BCA;
-    margin-top: -4px;
+.price-number-right {
+	margin-left: 10px;
+	float: right;
 }
-input[type=range]:focus {
-    outline: none;
+.value-min,
+.value-max {
+	display: inline-block;
+	width: 30%;
+    margin: 15px;
 }
-input[type=range]:focus::-webkit-slider-runnable-track {
-    background: #ccc;
+.value-min span,
+.value-max span {
+	display: block;
 }
-
-input[type=range]::-moz-range-track {
-    width: 300px;
-    height: 5px;
-    background: #ddd;
-    border: none;
-    border-radius: 3px;
+.btn-filter {
+	width: 40%;
 }
-input[type=range]::-moz-range-thumb {
-    border: none;
-    height: 16px;
-    width: 16px;
-    border-radius: 50%;
-    background-color: #428BCA;
+.txt-filter {
+	display: block;
+	margin-bottom: 10px;
 }
-
-/*hide the outline behind the border*/
-input[type=range]:-moz-focusring{
-    outline: 1px solid white;
-    outline-offset: -1px;
+.txt-checkbox {
+	margin-left: 10px;
 }
-
-input[type=range]::-ms-track {
-    width: 300px;
-    height: 5px;
-    
-    /*remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */
-    background: transparent;
-    
-    /*leave room for the larger thumb to overflow with a transparent border */
-    border-color: transparent;
-    border-width: 6px 0;
-
-    /*remove default tick marks*/
-    color: transparent;
+/* range input
+================ */
+.slider-selection {
+	background-image: none;
+	background-color: #3b4d6d;
 }
-input[type=range]::-ms-fill-lower {
-    background: #777;
-    border-radius: 10px;
+.slider-handle {
+	top: -3px;
 }
-input[type=range]::-ms-fill-upper {
-    background: #ddd;
-    border-radius: 10px;
-}
-input[type=range]::-ms-thumb {
-    border: none;
-    height: 16px;
-    width: 16px;
-    border-radius: 50%;
-    background-color: #428BCA;
-}
-input[type=range]:focus::-ms-fill-lower {
-    background: #888;
-}
-input[type=range]:focus::-ms-fill-upper {
-    background: #ccc;
+.slider.slider-horizontal .slider-track {
+	height: 7px;
 }
 /* search mobile
 ============== */

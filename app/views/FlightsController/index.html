@@ -65,7 +65,8 @@
 
                                 <div class="checkbox">
                                     <label>
-                                      <input type="checkbox"> KLM
+                                      <input type="checkbox">
+                                        <img src="public/img/lan.jpg" title="" alt=""><span class="txt-checkbox"> KLM</span>
                                     </label>
                                     <div class="box-number"><span>24</span></div>
                                 </div>
@@ -73,7 +74,8 @@
 
                                 <div class="checkbox">
                                     <label>
-                                      <input type="checkbox"> Qatar
+                                      <input type="checkbox">
+                                        <img src="public/img/lan.jpg" title="" alt=""><span class="txt-checkbox"> Qatar</span>
                                     </label>
                                     <div class="box-number"><span>14</span></div>
                                 </div>
@@ -81,7 +83,8 @@
 
                                 <div class="checkbox">
                                     <label>
-                                      <input type="checkbox"> LATAM
+                                      <input type="checkbox">
+                                        <img src="public/img/lan.jpg" title="" alt=""><span class="txt-checkbox"> LATAM</span>
                                     </label>
                                     <div class="box-number"><span>304</span></div>
                                 </div>
@@ -114,22 +117,162 @@
 
 
                                 <div class="checkbox">
-                                    <label>
-                                    <input type="range">
+                                    <label class="box-range">
+                                        <span class="price-number-left">$10</span>
+                                        <span class="price-number-right">$1000</span>
 
-                                     <b>€ 10</b> <input id="ex2" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]"/> <b>€ 1000</b>
+                                        <input id="ex2" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]"/>
 
+                                        <div class="value-min">
+                                            <span>Desde:</span>
+                                            <input type="text" class="form-control">
+                                        </div>
+                                        <div class="value-max">
+                                            
+                                            <span>Hasta:</span>
+                                            <input type="text" class="form-control">
+                                        </div>
 
                                     </label>
-                                    <div class="value-range">
-                                        <input type="text">
+
+                                    <div class="btn-filter">
+                                        <a href="" class="btn btn-search">Aplicar filtros</a>
                                     </div>
+                                    
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="box-filter">
+                            <div class="header-filter">
+                                <h3>Horarios<i class="arrow-down"></i></h3>
+                            </div>
+                            <div class="body-filter">
+                                <div class="">
+                                    <span class="txt-filter">Ida:</span>
+                                    <label class="box-range">
+                                        <span class="price-number-left">Desde: 00h 00m</span>
+                                        <span class="price-number-right">Hasta: 00h 00m</span>
+                                        <input id="ex3" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]"/> 
+                                    </label>
+                                    <hr>
+                                    <span class="txt-filter">Vuelta:</span>
+                                    <label class="box-range">
+                                        <span class="price-number-left">$10</span>
+                                        <span class="price-number-right">$1000</span>
+
+                                        <input id="ex4" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]"/> 
+                                    </label>
+                                    <div class="btn-filter">
+                                        <a href="" class="btn btn-search">Aplicar filtros</a>
+                                    </div>
+                                    
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="box-filter">
+                            <div class="header-filter">
+                                <h3>Aeropuertos<i class="arrow-down"></i></h3>
+                            </div>
+                            <div class="body-filter">
+                                <span class="txt-filter">Ida:</span>
+                                <div class="checkbox">
+                                    <label>
+                                      <input type="checkbox" checked> Todas los aeropuertos
+                                    </label>
+                                    <div class="box-number selected-box"><span>524</span></div>
+                                </div>
+
+                                <div class="checkbox">
+                                    <label>
+                                      <input type="checkbox"> Aeropuerto Buenos Aires Ministro Pistarini Ezeiza
+                                    </label>
+                                    <div class="box-number"><span>24</span></div>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                      <input type="checkbox"> Partida y Regreso por el mismo aeropuerto
+                                    </label>
+                                </div>
+                                <hr>
+                                <span class="txt-filter">Vuelta:</span>
+                                <div class="checkbox">
+                                    <label>
+                                      <input type="checkbox" checked> Todas los aeropuertos
+                                    </label>
+                                    <div class="box-number selected-box"><span>524</span></div>
+                                </div>
+
+                                <div class="checkbox">
+                                    <label>
+                                      <input type="checkbox"> Aeropuerto Buenos Aires Ministro Pistarini Ezeiza
+                                    </label>
+                                    <div class="box-number"><span>24</span></div>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                        <div class="box-filter">
+                            <div class="header-filter">
+                                <h3>Duración<i class="arrow-down"></i></h3>
+                            </div>
+                            <div class="body-filter">
+                                <div class="">
+                                    <span class="txt-filter">Ida:</span>
+                                    <label class="box-range">
+                                        <span class="price-number-left">Desde: 00h 00m</span>
+                                        <span class="price-number-right">Hasta: 00h 00m</span>
+                                        <input id="ex5" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]"/> 
+                                    </label>
+                                    <hr>
+                                    <span class="txt-filter">Vuelta:</span>
+                                    <label class="box-range">
+                                        <span class="price-number-left">$10</span>
+                                        <span class="price-number-right">$1000</span>
+
+                                        <input id="ex6" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]"/> 
+                                    </label>
+                                    <div class="btn-filter">
+                                        <a href="" class="btn btn-search">Aplicar filtros</a>
+                                    </div>
+                                    
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="box-filter">
+                            <div class="header-filter">
+                                <h3>Alianzas<i class="arrow-down"></i></h3>
+                            </div>
+                            <div class="body-filter">
+                           
+                                <div class="checkbox">
+                                    <label>
+                                      <input type="checkbox" checked> Todas las escalas
+                                    </label>
+                                    <div class="box-number selected-box"><span>34</span></div>
                                 </div>
 
 
                                 <div class="checkbox">
                                     <label>
-                                      <input type="checkbox"> Qatar
+                                      <input type="checkbox">
+                                        <img src="public/img/lan.jpg" title="" alt=""><span class="txt-checkbox">Sky Team</span>
+                                    </label>
+                                    <div class="box-number"><span>24</span></div>
+                                </div>
+
+
+                                <div class="checkbox">
+                                    <label>
+                                      <input type="checkbox"><img src="public/img/lan.jpg" title="" alt=""><span class="txt-checkbox"> One World</span>
                                     </label>
                                     <div class="box-number"><span>14</span></div>
                                 </div>
@@ -137,16 +280,9 @@
 
                                 <div class="checkbox">
                                     <label>
-                                      <input type="checkbox"> LATAM
+                                      <input type="checkbox"><img src="public/img/lan.jpg" title="" alt=""><span class="txt-checkbox"> Star Alliance</span>
                                     </label>
                                     <div class="box-number"><span>304</span></div>
-                                </div>
-
-
-                                <div class="checkbox">
-                                    <label>
-                                      <input type="checkbox"> Ida y vuelta por la misma aerolínea
-                                    </label>
                                 </div>
 
                             </div>
