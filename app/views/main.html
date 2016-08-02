@@ -196,21 +196,25 @@
 
             });
 
-            $('.body-filter').addClass('hidden-filter');
 
-            $('.box-filter').click(function() {
-                $('.body-filter').addClass('hidden-filter');
-                $(this).find('.body-filter').removeClass('hidden-filter');
 
-                
-
-                $(this).find('.body-filter').slideDown(1000).fadeIn(1500);
+            $('.box-filter .header-filter').click(function() {
 
                 $('.header-filter h3 i').addClass('arrow-down');
                 $('.header-filter h3 i').removeClass('arrow-up');
+                $(this).find('h3 i').removeClass('arrow-down');
+                $(this).find('h3 i').addClass('arrow-up');
+
+
+                $('.body-filter').slideUp( "slow" );
+
+                $(this).find('.body-filter').slideDown( "slow" );
+
+                $(this).parent().find('.body-filter').slideDown( "slow" );
                 
-                $(this).find('.header-filter h3 i').removeClass('arrow-down');
-                $(this).find('.header-filter h3 i').addClass('arrow-up');
+
+                
+
             });
 
 
