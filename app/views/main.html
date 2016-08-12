@@ -13,17 +13,36 @@
         <link type="text/css" rel="stylesheet" href="@{'/public/stylesheets/nouislider.min.css'}" media="screen"/>
 
         <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/base.css'}">
+
+        <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/payment.css'}">
+
         <link href="${play.configuration.getProperty('agency.cdn')}/public/stylesheets/${agencyConfigurationDto.template}/base.css" rel="stylesheet" media="screen,print">
         <style>${agencyConfigurationDto.customCss}</style>
     </head>
     <body>
-        <header id="header">
-        ${agencyConfigurationDto.headerHtml.raw()}
-        </header>
+        #{if isAgencyHeader}
+            <header>
+                ${agencyConfigurationDto.headerHtml.raw()}
+            </header>
+        #{/if}
+        #{else}
+            <header class="headerpayment">
+                #{paymentHeader /}
+            </header>
+        #{/else}  
         #{doLayout /}
-        <footer id="footer">
-        ${agencyConfigurationDto.footerHtml.raw()}
-        </footer>
+            #{if isAgencyFooter}
+
+            <footer id="footer">
+                ${agencyConfigurationDto.footerHtml.raw()}
+            </footer>
+            #{/if}
+            #{else}
+                <footer class="footerpayment">
+                #{paymentFooter /}
+                </footer>
+            #{/else}
+        
         <script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
         <script src="@{'/public/javascripts/bootstrap.js'}" type="text/javascript" charset="${_response_encoding}"></script>
 
