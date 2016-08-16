@@ -56,6 +56,14 @@
 	vertical-align: middle;
 	margin-right: 20px;
 }
+.icon-arrow-from {
+	background-image: url("../img/icon-arrow-from.svg");
+    background-repeat: no-repeat;
+    background-position: 75px 20px;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
 /* HEADER
 ================= */
 .headerpayment .btn-secondary-travel {
@@ -143,17 +151,21 @@
 /* PATH-2 PASSENGER
 =========== */
 
+.payment-path {
+	padding-top: 30px;
+	padding-bottom: 30px;
+}
 .payment-path h2 {
 	color: #333333;
 	font-size: 26px;
-	padding-top: 30px;
-	padding-bottom: 30px;
+	padding: 0 15px 30px 15px;
 	margin: 0;
 }
 
 .box-info-payment {
 	border-radius: 5px;
 	background-color: #FFFFFF;
+	margin-bottom: 15px;
 	overflow: hidden;
 }
 .head-payment {
@@ -173,4 +185,77 @@
 }
 .body-payment {
 	padding: 20px 30px;
+}
+.body-payment .form-group {
+	color: #666;
+	padding-left: 0;
+	margin-top: 15px;
+}
+
+.body-payment .form-group label {
+	padding-left: 0;
+	font-size: 15px;
+    font-weight: normal;
+}
+.body-payment input[type="radio"] {
+	margin-right: 5px;
+}
+
+.body-payment input[type="text"],
+.body-payment input[type="email"],
+.body-payment input[type="tel"],
+.body-payment input[type="date"],
+.body-payment select {
+	border:1px solid #eee;
+	margin-top: 10px;
+	height: 50px;
+}
+.term-and-condition {
+	color: #666666;
+	font-size: 12px;
+}
+.term-and-condition p {
+	color: #444444;
+	font-weight: 600;
+}
+
+.term-and-condition a {
+	color: #5C9BD2;
+	text-decoration: underline;
+}
+.term-and-condition .underline-text {
+	color: #444444;
+}
+.term-and-condition li {
+	line-height: 2.2;
+}
+.more-term-and-condition {
+	list-style: none;
+	margin-top: 15px;
+}
+.body-payment .checkbox-term-and-condition label {
+	font-weight: bold;
+}
+.payment-path .btn-search {
+	width: 200px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    text-transform: uppercase;
+}
+/* detail-fly-payment
+==================== */
+.detail-fly-payment {
+	padding: 0;
+}
+.detail-fly-payment ul {
+	padding-left: 0;
+	border-bottom: 1px solid #eee;
+}
+
+.detail-fly-payment ul li {
+	list-style: none;
+}
+
+.detail-fly-payment ul li a {
+	width: 100%;
 }
