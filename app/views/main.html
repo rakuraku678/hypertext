@@ -20,6 +20,7 @@
         <style>${agencyConfigurationDto.customCss}</style>
     </head>
     <body>
+        <main class="search-and-payment-travel">
         #{if isAgencyHeader}
             <header>
                 ${agencyConfigurationDto.headerHtml.raw()}
@@ -240,5 +241,6 @@
 
             #{get 'moreScripts' /}
         </script>
+        </main>
     </body>
 </html>

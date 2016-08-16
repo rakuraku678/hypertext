@@ -1,6 +1,5 @@
 /* GENERAL
 ================= */
-
 .headerpayment {
 	box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.50);
 	background-image: none;
@@ -42,7 +41,21 @@
 	text-transform: uppercase;
 	transition: all .5s;
 }
-
+.alert-info-payment {
+	color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+}
+.icon-glasses {
+	background-image: url("../img/icon-glasses.svg");
+	width: 23px;
+	height: 16px;
+	background-repeat: no-repeat;
+	background-position: center;
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 20px;
+}
 /* HEADER
 ================= */
 .headerpayment .btn-secondary-travel {
@@ -65,16 +78,99 @@
 .bg-path {
 	background-color: #fff;
 	height: 120px;
+	padding-top: 30px;
 }
 .general-path {
 	padding-left: 0;
+	width: 351px;
+    margin: 0 auto;
+    position: relative;
 }
 
 .general-path li {
 	display: inline-block;
+	text-align: center;
 }
 .circle-path {
-	width: 15px;
-	height: 15px;
-	border-radius: 20px;
+	width: 35px;
+	height: 35px;
+    border: 2px solid #428BCA;
+    border-radius: 20px;
+    color: #428BCA;
+    display: inline-block;
+    text-align: center;
+    line-height: 2.3;
+}
+.bg-circle-path {
+	background-color: #428BCA;
+	color: #fff;
+}
+.name-path {
+	color: #428BCA;
+	display: block;
+	text-align: center;
+	text-transform: uppercase;
+	position: absolute;
+}
+.general-path li:nth-child(1) .name-path {
+	left: -20px;
+}
+.general-path li:nth-child(2) .name-path {
+	left: 0;
+	right: 0;
+}
+.general-path li:nth-child(3) .name-path {
+	right: 0;
+}
+.line-path::after,
+.line-path::before {
+	content: "";
+	width: 124px;
+    height: 2px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: -5px;
+    margin-right: -5px;
+    background: #428BCA;
+}
+.icon-checked-path {	
+	background-image: url("../img/icon-checked-path.svg");
+	background-repeat: no-repeat;
+	background-position: center;
+	vertical-align: middle;
+}
+
+/* PATH-2 PASSENGER
+=========== */
+
+.payment-path h2 {
+	color: #333333;
+	font-size: 26px;
+	padding-top: 30px;
+	padding-bottom: 30px;
+	margin: 0;
+}
+
+.box-info-payment {
+	border-radius: 5px;
+	background-color: #FFFFFF;
+	overflow: hidden;
+}
+.head-payment {
+	border-bottom: 1px solid #eee;
+	padding: 20px 30px;
+}
+.title-payment {
+	color: #333333;
+	font-size: 18px;
+	font-weight: 600;
+	margin: 0;
+}
+.detail-title {
+	color: #999999;
+	font-size: 18px;
+	font-weight: 300;
+}
+.body-payment {
+	padding: 20px 30px;
 }
