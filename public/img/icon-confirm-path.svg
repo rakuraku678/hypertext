@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 39.1 (31720) - http://www.bohemiancoding.com/sketch -->
+    <title>circle-done</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Pax" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="passangers-1_color_confirm_collapse" transform="translate(-43.000000, -251.000000)">
+            <g id="Content" transform="translate(24.000000, 239.000000)">
+                <g id="circle-done" transform="translate(20.000000, 13.000000)">
+                    <circle id="Oval" stroke="#44894F" stroke-width="2" cx="14" cy="14" r="14"></circle>
+                    <path d="M13.4309587,15.3679795 L11.7978663,13.734887 C11.170871,13.1078918 10.153863,13.1050517 9.52834318,13.7305715 C8.89846236,14.3604524 8.90475547,15.3721915 9.53265866,16.0000946 L12.3816378,18.8490738 C12.5534018,19.0208378 12.7544353,19.1457606 12.9686713,19.2237556 C12.9894076,19.2370304 13.010548,19.2498944 13.0320883,19.2623307 C13.8035316,19.7077237 14.7782064,19.4414527 15.2210151,18.6744855 L19.3837401,11.4644344 C19.8248097,10.7004794 19.5644677,9.7171549 18.7983655,9.2748456 C18.0269222,8.8294526 17.0522474,9.09572355 16.6094387,9.86269078 L13.4309587,15.3679795 Z" id="Combined-Shape" fill="#44894F"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

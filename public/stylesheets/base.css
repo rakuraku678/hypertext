@@ -100,6 +100,13 @@
 	font-weight: 400;
 	color: #fff;
 }
+.btn-secondary-travel {
+	border-width: 2px;
+	border-style: solid;
+	background-color: transparent;
+	text-transform: uppercase;
+	transition: all .5s;
+}
 .btn-search {
 	box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.30);
 	border-radius: 4px;
@@ -941,9 +948,6 @@
 }
 /* MODAL BODY TICKET
 =========== */
-.info-flight .modal-body {
-	min-height: 400px;
-}
 
 .info-flight .modal-body .well {
 	background-color: transparent;

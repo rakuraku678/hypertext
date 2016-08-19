@@ -1,0 +1,74 @@
+#{extends 'main.html' /}
+#{set title:'PaymentFlow' /}
+
+#{set isAgencyHeader: false /}
+<section class="bg-path">
+    <article class="container-fluid">
+        <div class="row">
+            <ul class="general-path">
+                <li>
+                    <span class="circle-path icon-checked-path"></span>
+                    <span class="name-path">búsqueda</span>
+                </li>
+                <li class="line-path">
+                    <span class="circle-path icon-checked-path"></span>
+                    <span class="name-path">pasajeros</span>
+                </li>
+                <li>
+                    <span class="circle-path icon-checked-path"></span>
+                    <span class="name-path">pago</span>
+                </li>
+            </ul>
+        </div>
+    </article>
+</section>
+<section class="search-arrive payment-path">
+    <article class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-success" role="alert"><i class="icon-confirm-path"></i>Felicitaciónes <strong>Sebastián</strong>, tu vuelo ha sido confirmado!! </div>                
+            </div>
+            <div class="col-md-8">
+
+                <div class="box-info-payment">
+                    <div class="head-payment">
+                        <h3 class="title-payment">Detalle de tu vuelo</h3>
+                    </div>
+                    <div class="body-payment">
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+               
+                <div class="box-info-payment">
+                    <div class="head-payment">
+                        <h3 class="title-payment">Detalles de compra</h3>
+                    </div>
+                    <div class="body-payment">
+                        <ul class="box-detail-fly-confirm">
+                            <li>
+                                <span class="name-detail-fly">Tarifa:</span>
+                                <span class="num-detail-fly">$100000</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="total-payment">
+                        <ul>
+                            <li>Total</li>
+                            <li>US$1330</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 text-center">
+                <button class="btn btn-search">continuar</button>
+            </div>
+        </div>
+    </article>    
+</section>
+
+#{modalNeadHealp /}
+
+#{set isAgencyFooter: false /}

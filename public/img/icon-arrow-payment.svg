@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="12px" height="7px" viewBox="0 0 12 7" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 39.1 (31720) - http://www.bohemiancoding.com/sketch -->
+    <title>Combined Shape</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Pax" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="passangers-1_color_detail_path_1" transform="translate(-1218.000000, -389.000000)" fill="#444444">
+            <g id="Content" transform="translate(23.000000, 229.000000)">
+                <g id="Aside" transform="translate(852.000000, 63.000000)">
+                    <g id="flight">
+                        <g id="go" transform="translate(28.000000, 87.000000)">
+                            <path d="M321.335935,14.9201616 L317.249689,10.8339152 C316.946401,10.5306275 316.455733,10.5287406 316.154261,10.830212 C315.850688,11.1337852 315.854448,11.6221231 316.157965,11.9256397 L320.723765,16.4914405 C320.742848,16.5158273 320.763611,16.5393207 320.786056,16.5617654 C320.953423,16.7291322 321.17695,16.8030831 321.394703,16.7848876 C321.573893,16.7726311 321.749263,16.6983176 321.885815,16.5617654 C321.908426,16.5391542 321.929332,16.5155179 321.948536,16.4910093 L326.513906,11.9256397 C326.817194,11.6223519 326.819081,11.1316834 326.517609,10.830212 C326.214036,10.5266388 325.725698,10.5303986 325.422182,10.8339152 L321.335935,14.9201616 Z" id="Combined-Shape"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

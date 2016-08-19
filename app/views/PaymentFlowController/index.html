@@ -58,12 +58,12 @@
                                 <label>Tipo y número de documento:</label>
                                 <div class="row">
                                     <div class="col-xs-4">
-                                        <select class="form-control">
+                                        <select class="form-control icon-arrow-from">
                                             <option>RUT</option>
                                         </select>  
                                     </div>
                                     <div class="col-xs-8">      
-                                        <input type="text" class="form-control" placeholder="Ingresa tu apellido">
+                                        <input type="text" class="form-control">
                                     </div>
                                 </div>
                             </div>
@@ -111,7 +111,7 @@
                                         </select>  
                                     </div>
                                     <div class="col-xs-8">      
-                                        <input type="text" class="form-control" placeholder="Ingresa tu apellido">
+                                        <input type="text" class="form-control">
                                     </div>
                                 </div>
                             </div>
@@ -187,56 +187,137 @@
                     </div>
                 </div>
                 <div class="col-md-12 text-right">
-                    <button class="btn btn-search">continuar</button>
+                    <a href="@{PaymentConfirmController.index}" class="btn btn-search" disabled>continuar</a>
                 </div>
             </div>
             <div class="col-md-4">
                
                 <div class="box-info-payment">
                     <div class="head-payment">
-                        <h3 class="title-payment">Elige tu plataforma de pago</h3>
+                        <h3 class="title-payment">Tu vuelo</h3>
                     </div>
                     <div class="body-payment detail-fly-payment">
                     <ul>
                         <li>
-                            <a class="btn btn-primary" data-toggle="collapse" href="#collapseExampleida" aria-expanded="false" aria-controls="collapseExampleida">
+                            <a class="btn icon-arrow-payment" data-toggle="collapse" href="#detailFlyTo" aria-expanded="false" aria-controls="detailFlyTo">
                             <i class="icon-fly"></i>
-                            <span>Ida</span>
-                            <span>13 nov. 2016 (SCL > JFK)</span>
+                            <span class="title-payment">Ida</span>
+                            <span class="date-fly-payment">13 nov. 2016 (SCL > JFK)</span>
                             </a>
                         </li>
                     </ul>
                         
-                    <div class="collapse" id="collapseExampleida">
+                    <div class="collapse" id="detailFlyTo">
                         <div class="card card-block">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                            <div class="fly-brand text-center">
+                                <img src="" alt="" title="" width="136px" height="36px">
+                            </div>
+                            <ul>
+                                <li class="name-passenger">
+                                    <strong class="name">Santiago</strong>
+                                    <span class="last-name">Arturo Merino Benítez</span>
+                                </li>
+                                <li class="time">
+                                    <span class="to-time">19:00</span>
+                                </li>
+                                <li class="scale">
+                                    <span class="number-of-scale">1 escala</span>
+                                    <span class="point-scale"></span>
+                                    <span class="duration-of-fly">10h 15m</span>
+                                </li>
+
+                                <li class="time">
+                                    <span class="to-time">7:40</span>
+                                </li>
+                                <li class="name-passenger">
+                                    <strong class="name">Santiago</strong>
+                                    <span class="last-name">Arturo Merino Benítez</span>
+                                </li>
+                            </ul>
                         </div>
                     </div>
 
                     <ul>
                         <li>
-                            <a class="btn btn-primary" data-toggle="collapse" href="#collapseExamplevuelta" aria-expanded="false" aria-controls="collapseExamplevuelta">
+                            <a class="btn icon-arrow-payment" data-toggle="collapse" href="#detailFlyFrom" aria-expanded="false" aria-controls="detailFlyFrom">
                             <i class="icon-fly-vuelta"></i>
-                            <span>Vuelta</span>
-                            <span>13 nov. 2016 (SCL > JFK)</span>
+                            <span class="title-payment">Vuelta</span>
+                            <span class="date-fly-payment">13 nov. 2016 (SCL > JFK)</span>
                             </a>
                         </li>
                     </ul>
                         
-                    <div class="collapse" id="collapseExamplevuelta">
+                    <div class="collapse" id="detailFlyFrom">
                         <div class="card card-block">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-                        </div>
-                    </div>
+                            <div class="fly-brand text-center">
+                                <img src="" alt="" title="" width="136px" height="36px">
+                            </div>
+                            <ul>
+                                <li class="name-passenger">
+                                    <strong class="name">Santiago</strong>
+                                    <span class="last-name">Arturo Merino Benítez</span>
+                                </li>
+                                <li class="time">
+                                    <span class="to-time">19:00</span>
+                                </li>
+                                <li class="scale">
+                                    <span class="number-of-scale">1 escala</span>
+                                    <span class="point-scale"></span>
+                                    <span class="duration-of-fly">10h 15m</span>
+                                </li>
 
-                        
+                                <li class="time">
+                                    <span class="to-time">7:40</span>
+                                </li>
+                                <li class="name-passenger">
+                                    <strong class="name">Santiago</strong>
+                                    <span class="last-name">Arturo Merino Benítez</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>  
                     </div>
                 </div>
+
+
+                <div class="box-info-payment">
+                    <div class="head-payment">
+                        <h3 class="title-payment">Tu reserva</h3>
+                    </div>
+                     <table class="detail-payment-table">
+                         <thead>
+                             <tr>
+                                <th></th>
+                                <th>Pasajeros</th>
+                                <th>Precio</th>
+                                <th>Impuestos</th>
+                                <th>Subtotal</th>
+                             </tr>
+                         </thead>
+                         <tbody>
+                             <tr>
+                                 <td></td>
+                                 <td class="txt-payment-table-mark">2 Adultos</td>
+                                 <td>US$599</td>
+                                 <td>US$66</td>
+                                 <td class="txt-payment-table-mark">US$1330</td>
+                             </tr>
+                         </tbody>
+                     </table>
+                    <div class="total-payment">
+                        <ul>
+                            <li>Total</li>
+                            <li>US$1330</li>
+                        </ul>
+                    </div>
+                </div>
+
 
             </div>
         </div>
     </article>    
 </section>
 
+#{modalNeadHealp /}
 
 #{set isAgencyFooter: false /}
