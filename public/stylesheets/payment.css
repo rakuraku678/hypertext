@@ -4,7 +4,7 @@
 	box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.50);
 	background-image: none;
 	background-color: #002269;
-	height: 70px;
+	min-height: 70px;
 }
 .footerpayment {
 	background-color: #002269;
@@ -38,6 +38,17 @@
 	color: #8a6d3b;
     background-color: #fcf8e3;
     border-color: #faebcc;
+}
+.btn-border-color-travel {
+	border-color: #428BCA;
+	color: #428BCA;
+	font-size: 17px;
+	padding: 10px 15px;
+}
+
+.btn-border-color-travel:hover {
+	background-color: #428BCA;
+	color: #fff; 
 }
 .icon-confirm-path {
 	background-image: url("../img/icon-confirm-path.svg");
@@ -99,8 +110,8 @@
 .headerpayment .navbar-brand {
 	padding-left: 0;
 }
-/* body nead help modal
-================= */
+/* body help modal and modal session expired
+=========================================== */
 .body-answer-question ul {
 	padding-left: 0;
 	margin-top: 10px;
@@ -142,6 +153,44 @@
 .body-answer-question .btn-secondary-travel:hover {
 	background-color: #428BCA;
 	color: #fff;
+}
+.expired-session-flight  {
+	color: #444444;
+}
+.expired-session-flight h4 {
+	font-size: 23px;
+}
+.expired-session-flight p {
+	padding: 15px 0;
+}
+.expired-session-flight ul {
+	padding-left: 0;
+}
+.expired-session-flight ul li {
+	line-height: 2;
+	list-style: none;
+}
+.expired-session-flight .name-flight {
+	font-weight: bold;
+}
+.expired-session-flight .modal-footer {
+	border-top: 0;
+	text-align: center;
+}
+.expired-session-flight .modal-footer .btn-search {
+    width: 240px;
+    padding: 16px 37px;
+    margin-bottom: 20px;
+}
+.link-new-looking-for {
+    display: inline-block;
+    font-size: 15px;
+    width: 240px;
+    padding: 16px 37px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+	vertical-align: middle;
+	text-decoration: underline;
 }
 /* PATH
 ================= */
@@ -218,7 +267,7 @@
 	padding-top: 30px;
 	padding-bottom: 30px;
 }
-.payment-path h2 {
+h2 {
 	color: #333333;
 	font-size: 26px;
 	padding: 0 15px 30px 15px;
@@ -467,23 +516,52 @@
 }
 /* detail fly confirm
 ===================== */
+.confirm-fly-table th {
+	color: #666;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+.confirm-fly-table td {
+	color: #666;
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+/* add-for-your-travel
+===================== */
+.add-for-your-travel {
+	padding-top: 60px;
+}
+.add-for-your-travel h3 {
+	margin: 0;
+}
+.add-for-your-travel h3 img {
+	margin-right: 10px;
+}
+/* box-detail-fly-confirm
+====================== */
 .box-detail-fly-confirm {
 	padding-left: 0;
 }
 .box-detail-fly-confirm li {
 	list-style: none;
+	line-height: 2;
 	position: relative;
 }
 .box-detail-fly-confirm li span {
 	color: #666666;
 	font-size: 14px;
-	position: absolute;
 }
 .box-detail-fly-confirm .name-detail-fly {
 	font-weight: bold;
-	left: 0;
 }
 
 .box-detail-fly-confirm .num-detail-fly {
+	position: absolute;
 	right: 0;
+}
+/* box-continue
+=================== */
+.box-continue {
+	padding-top: 100px;
+	padding-bottom: 100px;
 }
