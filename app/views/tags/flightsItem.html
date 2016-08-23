@@ -1,0 +1,196 @@
+<div class="row ticket">
+    <form class="form-ticket" action="" method="">
+        <div class="col-md-9 info-flight">
+            <ul>
+                <li class="txt-airport-date">
+                    <ul>
+                        <li>
+                            <i class="icon-fly"></i>
+                            <span class="leaving">ida</span>
+                            <span class="fly-day">${_flight.departureDate.getAsString()}</span>
+                        </li>
+                        <li>
+                            <span class="airport">${_flight.departureAirportCode.getAsString()}</span>
+                            <span class="description-airport">${_flight.departureName.getAsString()}</span>
+                        </li>
+                        <li>
+                            <span class="airport">${_flight.returnAirportCode.getAsString()}</span>
+                            <span class="description-airport">${_flight.returnName.getAsString()}</span>
+                        </li>
+                    </ul>
+                </li>
+                <li class="txt-view-detail">
+                    <ul>
+                        <li class="radio">
+                            <label><input type="radio" name="optiona"><img src="public/img/lan.jpg" title="" alt=""></label>
+                        </li>
+                        <li class="hour-of-flight">
+                            <span>${_flight.departureSegment.departureTime.getAsString()}</span>
+                        </li>
+                        <li class="stops-route">
+                            <a href="#" data-toggle="tooltip" data-placement="top" title="(SCL) Espera de 1h 35m (Mismo avión) (SCL) Espera de 9h 35m (Cambio de Avión)">
+                                <span class="stop-txt">${_flight.departureSegment.flightsCount.getAsString()} escala</span>
+                                <span class="circle"></span>
+                                <span class="line-route"></span>
+                            </a>
+                        </li>
+                        <li class="hour-of-flight">
+                            <span>${_flight.departureSegment.returnTime.getAsString()}</span>
+                        </li>
+                        <li class="time">
+                            %{
+                                departureElapsedTime = _flight.departureSegment.elapsedTime.getAsInt();
+                                int departureElapsedHours = departureElapsedTime / 60;
+                                int departureElapsedMinutes = departureElapsedTime % 60;
+                            }%
+                            <span>&{"%dh %02dm", departureElapsedHours, departureElapsedMinutes}</span>
+                        </li>
+                        <li class="detail">
+                            <a type="button" data-toggle="collapse" data-target="#departureSegment${_flight.sequenceNumber.getAsString()}" aria-expanded="false" aria-controls="collapseExample" class="link-detail-desktop">
+                                detalle
+                            </a>
+                            <a data-toggle="modal" data-target="#detailModalFlight" class="link-detail-mobile">detalle</a>
+                        </li>
+
+                        <div class="collapse" id="departureSegment${_flight.sequenceNumber.getAsString()}">
+                            #{list items:_flight.departureSegment, as:'flightSegment'}
+                                #{flightsItemDetail flightSegment:flightSegment/}
+                            #{/list}
+                        </div>
+                    </ul>
+                </li>
+                <li class="txt-airport-date">
+                    <ul>
+                        <li>
+                            <i class="icon-fly-vuelta"></i>
+                            <span class="leaving">vuelta</span>
+                            <span class="fly-day">${_flight.returnDate.getAsString()}</span>
+                        </li>
+                        <li>
+                            <span class="airport">${_flight.returnAirportCode.getAsString()}</span>
+                            <span class="description-airport">${_flight.returnName.getAsString()}</span>
+                        </li>
+                        <li>
+                            <span class="airport">${_flight.departureAirportCode.getAsString()}</span>
+                            <span class="description-airport">${_flight.departureName.getAsString()}</span>
+                        </li>
+                    </ul>
+                </li>
+                <li class="txt-view-detail">
+                    <ul>
+                        <li class="radio">
+                            <label><input type="radio" name="optionb"><img src="public/img/lan.jpg" title="" alt=""></label>
+                        </li>
+                        <li class="hour-of-flight">
+                            <span>${_flight.returnSegment.departureTime.getAsString()}</span>
+                        </li>
+                        <li class="stops-route">
+                            <a href="">
+                                <span class="stop-txt">${_flight.returnSegment.flightsCount.getAsString()} escala</span>
+                                <span class="circle left-circle"></span>
+                                <span class="circle right-circle"></span>
+                                <span class="line-route"></span>
+                            </a>
+                        </li>
+                        <li class="hour-of-flight">
+                            <span>${_flight.returnSegment.returnTime.getAsString()}</span>
+                        </li>
+                        <li class="time">
+                        %{
+                            returnElapsedTime = _flight.returnSegment.elapsedTime.getAsInt();
+                            int returnElapsedHours = returnElapsedTime / 60;
+                            int returnElapsedMinutes = returnElapsedTime % 60;
+                            }%
+                            <span>&{"%dh %02dm", returnElapsedHours, returnElapsedMinutes}</span>
+                        </li>
+                        <li class="detail">
+                            <a type="button" data-toggle="collapse" data-target="#returnSegment${_flight.sequenceNumber.getAsString()}" aria-expanded="false" aria-controls="collapseExample2" class="link-detail-desktop">
+                                detalle
+                            </a>
+                             <a data-toggle="modal" data-target="#detailModalFlight" class="link-detail-mobile">detalle</a>
+                        </li>
+                        </li>
+
+                        <div class="collapse" id="returnSegment${_flight.sequenceNumber.getAsString()}">
+                            #{list items:_flight.returnSegment, as:'flightSegment'}
+                                #{flightsItemDetail flightSegment:flightSegment/}
+                            #{/list}
+                        </div>
+                    </ul>
+                </li>
+                *{<li class="txt-view-detail">}*
+                    *{<ul>}*
+                        *{<li class="radio">}*
+                            *{<label><input type="radio" name="optionb"><img src="public/img/lan.jpg" title="" alt=""></label>}*
+                        *{</li>}*
+                        *{<li class="hour-of-flight">}*
+                            *{<span>20:15</span>}*
+                        *{</li>}*
+                        *{<li class="stops-route">}*
+                            *{<a href="">}*
+                                *{<span class="stop-txt">3 escala</span>}*
+                                *{<span class="circle left-circle"></span>}*
+                                *{<span class="circle"></span>}*
+                                *{<span class="circle right-circle"></span>}*
+                                *{<span class="line-route"></span>}*
+                            *{</a>}*
+                        *{</li>}*
+                        *{<li class="hour-of-flight">}*
+                            *{<span>20:15</span>}*
+                        *{</li>}*
+                        *{<li class="time">}*
+                            *{<span>18h 50m</span>}*
+                        *{</li>}*
+                        *{<li class="detail">}*
+                            *{<a type="button" data-toggle="collapse" data-target="#collapseExample3" aria-expanded="false" aria-controls="collapseExample3" class="link-detail-desktop">}*
+                                *{detalle}*
+                            *{</a>}*
+                             *{<a data-toggle="modal" data-target="#detailModalFlight" class="link-detail-mobile">detalle</a>}*
+                        *{</li>}*
+                        *{</li>}*
+
+                        *{<div class="collapse" id="collapseExample3">}*
+                            *{<div class="well">}*
+                                *{...}*
+                            *{</div>}*
+                        *{</div>}*
+                    *{</ul>}*
+                *{</li>}*
+            </ul>
+        </div>
+
+        <div class="col-md-3 ticket-detail">
+        <!--
+            <div class="box-share">
+                <a href="" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Compartir" >
+                    <i class="icon-mail"></i>
+                </a>
+                <a href=""  data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Agregar a favoritos">
+                    <i class="icon-heart"></i>
+                </a>
+            </div>
+        -->
+            <span class="title">Precio por Adulto</span>
+            <span class="price">$${_flight.passengerFare.getAsString()}</span>
+            <ul class="detail-price">
+                <li><span class="item-detail">${_flight.passengers} Adulto</span><span class="item-price">$${_flight.totalPassengerFare.getAsString()}</span></li>
+                <li><span class="item-detail">Imp. y Tasas</span><span class="item-price">$${_flight.taxFare.getAsString()}</span></li>
+                <li><span class="item-detail">Cargas</span><span class="item-price">$???????</span></li>
+                <hr>
+                <li><span class="item-detail">Total</span><span class="item-price">$${_flight.totalFare.getAsString()}</span></li>
+            </ul>
+            <div class="text-center box-ticket-submit">
+                <input type="submit" class="btn btn-ticket" value="Comprar">
+                <a href="@{PaymentFlowController.index}">sdsdsd</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    #{get 'moreScripts' /}
+</script>
+

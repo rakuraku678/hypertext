@@ -1,0 +1,97 @@
+<div class="well">
+    <!--DETAIL TITLE FLIGHT-->
+    <ul class="detail-title-flight">
+        <li class="title-text-from-to">
+            ${_flightSegment.departureCityName.getAsString()}
+            <span class="airport-code">(${_flightSegment.departureCityCode.getAsString()})</span>
+            <span class="title-text-to"><i class="icon-arrow-airport"></i></span>
+            ${_flightSegment.returnCityName.getAsString()}
+            <span class="airport-code">(${_flightSegment.returnCityCode.getAsString()})</span>
+        </li>
+        <li class="title-text-total-duration">
+            <span class="title-duration">DURACIÓN TOTAL:</span>
+            %{
+                segmentElapsedTime = _flightSegment.elapsedTime.getAsInt();
+                int segmentElapsedHours = segmentElapsedTime / 60;
+                int segmentElapsedMinutes = segmentElapsedTime % 60;
+            }%
+            <span>&{"%dh %02dm", segmentElapsedHours, segmentElapsedMinutes}</span>
+        </li>
+    </ul>
+
+    <!--DETAIL BODY FLIGHT-->
+    <ul class="detail-body-flight">
+        #{list items:_flightSegment.detail, as:'flightSegmentDetail'}
+            <li class="airline-logo">
+                <img src="public/img/lan.jpg" title="" alt="">
+            </li>
+            <li class="flight-detail-data">
+                <ul>
+                    <!--SALE LLEGA-->
+                    <li class="flight-detail-data-route">
+                        <div>
+                            <span class="inline-detail-airport-date">
+                                <span class="inline-detail-airport-date-text">Sale:</span>
+                                <span>${flightSegmentDetail.departureDate.getAsString()}</span>
+                            </span>
+                            <span class="inline-detail-airport-code-wrapper">
+                                <span class="inline-detail-airport-code">${flightSegmentDetail.departureAirportCode.getAsString()}</span>
+                                <span class="inline-detail-airport-hour">${flightSegmentDetail.departureTime.getAsString()}</span>
+                            </span>
+                            <span class="inline-detail-airport-description">
+                            ${flightSegmentDetail.departureAirportDescription.getAsString()}</span>
+                        </div>
+                        <div class="arrow-airport">
+                            <i class="icon-arrow-airport"></i>
+                        </div>
+                        <div>
+                            <span class="inline-detail-airport">
+                                <span class="inline-detail-airport-date">
+                                    <span class="inline-detail-airport-date-text">Llega:</span>
+                                    <span>${flightSegmentDetail.arrivalDate.getAsString()}</span>
+                                </span>
+                                <span class="inline-detail-airport-code-wrapper">
+                                    <span class="inline-detail-airport-code">${flightSegmentDetail.arrivalAirportCode.getAsString()}</span>
+                                    <span class="inline-detail-airport-hour">${flightSegmentDetail.arrivalTime.getAsString()}</span>
+                                    <span class="days-difference">
+                                        <span>+1 dia</span>
+                                    </span>
+                                </span>
+                                <span class="inline-detail-airport-description">
+                                    ${flightSegmentDetail.arrivalAirportDescription.getAsString()}
+                                </span>
+                            </span>
+                        </div>
+                    </li>
+
+                    <!--DETAIL DATA FLIGHT-->
+                    <li class="flight-detail-data-flight">
+                        <div class="inline-detail-flight-data">
+                            <span class="inline-detail-flight-data-title">DURACIÓN</span>
+                        %{
+                            flightElapsedTime = flightSegmentDetail.elapsedTime.getAsInt();
+                            int flightElapsedHours = flightElapsedTime / 60;
+                            int flightElapsedMinutes = flightElapsedTime % 60;
+                            }%
+                            <span class="inline-detail-flight-data-description">&{"%dh %02dm", flightElapsedHours, flightElapsedMinutes}</span>
+                        </div>
+                        <div class="inline-detail-flight-data">
+                            <span class="inline-detail-flight-data-title">VUELO N°</span>
+                            <span class="inline-detail-flight-data-description">${flightSegmentDetail.flightNumber.getAsString()}</span>
+                        </div>
+                        <div class="inline-detail-flight-data inline-detail-flight-cabinType">
+                            <span class="inline-detail-flight-data-title">CLASE</span>
+                            <span class="inline-detail-flight-data-description">${flightSegmentDetail.elapsedTime.getAsString()}</span>
+                        </div>
+                        <div class="box-airplane-name">
+                            <span class="airplane-name">
+                                <i class="icon-airplane-name"></i>${flightSegmentDetail.airEquipType.getAsString()}
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        #{/list}
+    </ul>
+</div>
+<!--END WELL-->

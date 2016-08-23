@@ -14,30 +14,30 @@
                 <div class="form-group col-md-12">
                     <label>Origen:</label>
                     <input type="text" name="origen" class="form-control"
-                           placeholder="Santiago de Chile">
+                           placeholder="Santiago de Chile" value="EZE">
                 </div>
                 <div class="form-group col-md-12">
                     <label>Destino:</label>
                     <input type="text" name="destino" class="form-control"
-                           placeholder="Iguazu">
+                           placeholder="Iguazu" value="MIA">
                 </div>
                 <div class="form-group col-xs-6">
                     <label>Partida:</label>
                     <div class="input-group date" data-provide="datepicker">
-                        <input type="text" name="partida" class="calendar-input form-control">
+                        <input type="text" name="partida" class="calendar-input form-control" value="2016-08-20">
                         <i class="bg-calendar input-group-addon"></i>
                     </div>
                 </div>
                 <div class="form-group col-xs-6">
                     <label>Regreso:</label>
                     <div class="input-group date" data-provide="datepicker">
-                        <input type="text" name="regreso" class="calendar-input form-control">
+                        <input type="text" name="regreso" class="calendar-input form-control" value="2016-09-01">
                         <i class="bg-calendar input-group-addon"></i>
                     </div>
                 </div>
                 <div class="form-group col-xs-4">
                     <label>Adultos:</label>
-                    <select class="bg-arrow form-control">
+                    <select class="bg-arrow form-control" name="passengercount">
                         <option>1</option>
                         <option>2</option>
                         <option>3</option>
@@ -74,9 +74,13 @@
             #{set 'moreScripts'}
             #{get 'moreScripts' /}
                 $(document).ready(function() {
+
+
                     $("#flightSearchForm").submit(function(event) {
 
                         $( "#loading" ).show("fade");
+                        $( "#priceSuggestionMatrix" ).html("");
+                        $( "#fligthsData" ).html("");
 
                         $( "#priceSuggestionMatrix" ).load( "/flights/matrix",
                             function (responseText, textStatus, XMLHttpRequest) {
@@ -85,7 +89,14 @@
                                 }
                             }
                         );
-                        $( "#fligthsData" ).load( "/flights/data",
+                        $( "#fligthsData" ).load(
+                            "/flights/data?" + $.param({
+                                origin: $(this).find('input[name="origen"]').val(),
+                                destination: $(this).find('input[name="destino"]').val(),
+                                departuredate: $(this).find('input[name="partida"]').val(),
+                                returndate: $(this).find('input[name="regreso"]').val(),
+                                passengercount: $(this).find('select[name="passengercount"]').val()
+                            }),
                             function (responseText, textStatus, XMLHttpRequest) {
                                 if (textStatus == "success") {
                                     $( "#loading" ).hide();
