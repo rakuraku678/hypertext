@@ -11,7 +11,6 @@
 	background-color: #EBEDF2;
 	min-height: 600px;
 }
-
 /* ANIMATE PRELOAD
 ================ */
 
@@ -1006,7 +1005,7 @@
 .ticket-detail .title {
 	color: #fff;
 	display: block;
-	padding: 10px 5px;
+	padding: 8px 5px;
 	text-align: center;
 }
 .ticket-detail .price {
@@ -1019,8 +1018,13 @@
 }
 .ticket-detail .detail-price {
 	color: #fff;
-	margin: 10px auto;
+	font-size: 12px;
+	margin: 5px auto;
 	width: 80%;
+}
+.ticket-detail .detail-price hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 .ticket-detail .item-detail {
 	max-width: 50%;
@@ -1125,7 +1129,15 @@
 	}
 
 }
-@media screen and (max-width: 450px){
+@media screen and (max-width: 768px){
+	/* header
+	=============== */
+	.navbar-toggle .icon-bar {
+		background-color: #fff;
+	}
+	.headerpayment .navbar-brand {
+		padding: 10px;
+	}
 
 	.btn-search-mobile .txt-calendar-mobile {
 		text-overflow: ellipsis;

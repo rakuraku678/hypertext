@@ -29,7 +29,6 @@
 	list-style: none;
 	padding:0 10px;
 }
-
 .footerpayment ul li a {
 	color: #fff;
 	text-decoration: none;
@@ -45,7 +44,6 @@
 	font-size: 17px;
 	padding: 10px 15px;
 }
-
 .btn-border-color-travel:hover {
 	background-color: #428BCA;
 	color: #fff; 
@@ -106,9 +104,6 @@
 .headerpayment .btn-secondary-travel:hover {
 	color: #002269;
 	background-color: #fff;
-}
-.headerpayment .navbar-brand {
-	padding-left: 0;
 }
 /* body help modal and modal session expired
 =========================================== */
@@ -564,4 +559,24 @@ h2 {
 .box-continue {
 	padding-top: 100px;
 	padding-bottom: 100px;
+}
+
+@media screen and (min-width: 768px) {
+	.headerpayment .navbar-brand {
+		padding-left: 0;
+	}
+
+}
+
+@media screen and (max-width: 768px) {
+	.headerpayment .btn-secondary-travel {
+		width: 100%;
+	}
+	h2 {
+		text-align: center;
+	}
+	.payment-path .btn-search {
+		margin-bottom:	15px;
+		width: 100%; 
+	}
 }
