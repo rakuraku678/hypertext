@@ -521,16 +521,30 @@ h2 {
 	padding-top: 15px;
 	padding-bottom: 15px;
 }
+.confirm-fly-table .name-company-fly {
+    font-size: 12px;
+}
 /* add-for-your-travel
 ===================== */
 .add-for-your-travel {
 	padding-top: 60px;
+}
+.add-for-your-travel .box-info-payment {
+	display: block;
+	text-decoration: none;
+	transition: all .5s;
+}
+.add-for-your-travel .box-info-payment:hover {
+	box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.30);
 }
 .add-for-your-travel h3 {
 	margin: 0;
 }
 .add-for-your-travel h3 img {
 	margin-right: 10px;
+}
+.add-for-your-travel p {
+	color: #333;
 }
 /* box-detail-fly-confirm
 ====================== */
