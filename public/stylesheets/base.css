@@ -562,6 +562,7 @@
     overflow: hidden;
     position: relative;
     width: 100%;
+    min-height: 300px;
 }
 .ticket .info-flight,
 .ticket .ticket-detail {
@@ -983,7 +984,29 @@
 	text-align: right;
 	padding: 0 10px;
 }
+.ticket-detail .last-ticket-available {
+	display: block;
+    background-color: #fa564d;
+    color: #fff;
+    padding: 5px 25px;
+    margin: 10px 0 0 -9px;
+    text-align: left;
+    width: 100%;
+}
 
+.ticket-detail .last-ticket-available .info-ticket-avaible {
+	display: inline-block;
+	vertical-align: middle;	
+}
+.icon-alert-ticket {
+	background-image: url(../img/icon-alert-ticket.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+	display: inline-block;
+	width: 32px;
+	height: 15px;
+	vertical-align: middle;
+}
 .icon-mail {
 	background-image: url(../img/icon-mail.svg);
 	background-repeat: no-repeat;
