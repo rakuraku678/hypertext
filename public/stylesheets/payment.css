@@ -123,6 +123,15 @@
 	border-radius: 0;
 	color: #428BCA;
 }
+.info-help {
+	padding: 0 10px 30px 15px;
+    color: #999;
+}
+
+.info-help strong {
+	font-weight: 400;
+	color: #333;
+}
 .body-answer-question .collapse {
 	border: 1px solid #ddd;
 }
