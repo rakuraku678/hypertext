@@ -24,14 +24,14 @@
                 <div class="form-group col-xs-6">
                     <label>Partida:</label>
                     <div class="input-group date" data-provide="datepicker">
-                        <input type="text" name="partida" class="calendar-input form-control" value="2016-08-20">
+                        <input type="text" name="partida" class="calendar-input form-control" value="2016-10-01">
                         <i class="bg-calendar input-group-addon"></i>
                     </div>
                 </div>
                 <div class="form-group col-xs-6">
                     <label>Regreso:</label>
                     <div class="input-group date" data-provide="datepicker">
-                        <input type="text" name="regreso" class="calendar-input form-control" value="2016-09-01">
+                        <input type="text" name="regreso" class="calendar-input form-control" value="2016-10-15">
                         <i class="bg-calendar input-group-addon"></i>
                     </div>
                 </div>
@@ -78,11 +78,21 @@
 
                     $("#flightSearchForm").submit(function(event) {
 
+                        $( "#loading_departure_city").html($(this).find('input[name="origen"]').val());
+                        $( "#loading_return_city").html($(this).find('input[name="destino"]').val());
+
                         $( "#loading" ).show("fade");
                         $( "#priceSuggestionMatrix" ).html("");
                         $( "#fligthsData" ).html("");
 
-                        $( "#priceSuggestionMatrix" ).load( "/flights/matrix",
+                        $( "#priceSuggestionMatrix" ).load(
+                            "/flights/matrix?" + $.param({
+                                origin: $(this).find('input[name="origen"]').val(),
+                                destination: $(this).find('input[name="destino"]').val(),
+                                departuredate: $(this).find('input[name="partida"]').val(),
+                                returndate: $(this).find('input[name="regreso"]').val(),
+                                passengercount: $(this).find('select[name="passengercount"]').val()
+                            }),
                             function (responseText, textStatus, XMLHttpRequest) {
                                 if (textStatus == "success") {
                                     $( "#priceSuggestionMatrix" ).show("slow");
