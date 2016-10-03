@@ -22,16 +22,31 @@
                 <li class="txt-view-detail">
                     <ul>
                         <li class="radio">
-                            <label><input type="radio" name="optiona"><img src="public/img/lan.jpg" title="" alt=""></label>
+                            <label><input type="radio" name="optiona"><img src="public/img/lan.jpg" title="" alt="">${_flight.departureSegment.airlinesCodes}</label>
                         </li>
                         <li class="hour-of-flight">
                             <span>${_flight.departureSegment.departureTime.getAsString()}</span>
                         </li>
                         <li class="stops-route">
-                            <a href="#" data-toggle="tooltip" data-placement="top" title="(SCL) Espera de 1h 35m (Mismo avión) (SCL) Espera de 9h 35m (Cambio de Avión)">
-                                <span class="stop-txt">${_flight.departureSegment.flightsCount.getAsString()} escala</span>
+                            <a href="#">
+                                %{
+                                    connectionsCount = _flight.departureSegment.flightsCount.getAsInt() - 1;
+                                }%
+                            #{if connectionsCount == 0 }
+                                <span class="stop-txt">Directo</span>
+                                <span class="line-route"></span>
+                            #{/if}
+                            #{if connectionsCount == 1 }
+                                <span class="stop-txt">${connectionsCount} escala</span>
                                 <span class="circle"></span>
                                 <span class="line-route"></span>
+                            #{/if}
+                            #{if connectionsCount == 2 }
+                                <span class="stop-txt">${connectionsCount} escalas</span>
+                                <span class="circle left-circle"></span>
+                                <span class="circle right-circle"></span>
+                                <span class="line-route"></span>
+                            #{/if}
                             </a>
                         </li>
                         <li class="hour-of-flight">
@@ -79,17 +94,31 @@
                 <li class="txt-view-detail">
                     <ul>
                         <li class="radio">
-                            <label><input type="radio" name="optionb"><img src="public/img/lan.jpg" title="" alt=""></label>
+                            <label><input type="radio" name="optionb"><img src="public/img/lan.jpg" title="" alt="">${_flight.returnSegment.airlinesCodes}</label>
                         </li>
                         <li class="hour-of-flight">
                             <span>${_flight.returnSegment.departureTime.getAsString()}</span>
                         </li>
                         <li class="stops-route">
-                            <a href="">
-                                <span class="stop-txt">${_flight.returnSegment.flightsCount.getAsString()} escala</span>
+                            <a href="#">
+                            %{
+                              connectionsCount = _flight.returnSegment.flightsCount.getAsInt() - 1;
+                            }%
+                            #{if connectionsCount == 0 }
+                                <span class="stop-txt">Directo</span>
+                                <span class="line-route"></span>
+                            #{/if}
+                            #{if connectionsCount == 1 }
+                                <span class="stop-txt">${connectionsCount} escala</span>
+                                <span class="circle"></span>
+                                <span class="line-route"></span>
+                            #{/if}
+                            #{if connectionsCount == 2 }
+                                <span class="stop-txt">${connectionsCount} escalas</span>
                                 <span class="circle left-circle"></span>
                                 <span class="circle right-circle"></span>
                                 <span class="line-route"></span>
+                            #{/if}
                             </a>
                         </li>
                         <li class="hour-of-flight">
@@ -174,8 +203,8 @@
                 <li><span class="item-detail">Total</span><span class="item-price">$${_flight.totalFare.getAsString()}</span></li>
             </ul>
             <div class="text-center box-ticket-submit">
-                <input type="submit" class="btn btn-ticket" value="Comprar">
-                <a href="@{PaymentFlowController.index}">sdsdsd</a>
+                *{<input type="submit" class="btn btn-ticket" value="Comprar">}*
+                <a class="btn btn-ticket" href="@{PaymentFlowController.index}">Comprar</a>
             </div>
         </div>
     </form>

@@ -1,6 +1,7 @@
 package controllers;
 
 import com.google.gson.JsonElement;
+import models.FlightsResultsFilters;
 import play.mvc.Controller;
 import utils.ApiFlightsSdk.v1.FlightsAltenateDates;
 import utils.ApiFlightsSdk.v1.FlightsSearch;
@@ -15,9 +16,16 @@ public class FlightsDataController extends Controller {
         flightsSearch.setDeparturedate(params.get("departuredate"));
         flightsSearch.setReturndate(params.get("returndate"));
         flightsSearch.setPassengercount(params.get("passengercount"));
+        flightsSearch.setOutboundflightstops(params.get("outboundflightstops"));
+        flightsSearch.setIncludedcarriers(params.get("includedcarriers"));
+        flightsSearch.setOutbounddeparturewindow(params.get("outbounddeparturewindow"));
+        flightsSearch.setInboundarrivalwindow(params.get("inboundarrivalwindow"));
         JsonElement flightsResults = flightsSearch.process();
 
-        renderTemplate("FlightsDataController/flightsData.html",flightsResults);
+        FlightsResultsFilters flightsResultsFilters = FlightsResultsFilters.processFlightsResults(flightsResults);
+
+
+        renderTemplate("FlightsDataController/flightsData.html",flightsResults, flightsResultsFilters);
     }
 
     public static void priceSuggestionMatrix() throws InterruptedException {

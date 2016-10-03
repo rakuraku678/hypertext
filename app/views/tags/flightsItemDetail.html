@@ -23,7 +23,7 @@
     <ul class="detail-body-flight">
         #{list items:_flightSegment.detail, as:'flightSegmentDetail'}
             <li class="airline-logo">
-                <img src="public/img/lan.jpg" title="" alt="">
+                <img src="public/img/lan.jpg" title="" alt=""> ${flightSegmentDetail.operatingAirlineCode.getAsString()}
             </li>
             <li class="flight-detail-data">
                 <ul>

@@ -11,11 +11,11 @@ lastRowDate = firstDepartureDate.minusDays(1);
     <table border="1">
         <thead>
         <tr>
-            <th colspan="5"></th>
+            <th colspan="4"></th>
             <!--<th><a href="#">Tendencia de tarifas</a></th>-->
 
-            <th class="select-th"><a href="#">Precios +/- 5 días</a></th>
-            <th><a href="#">Precios por aerolíneas</a></th>
+            <th colspan="2" class="select-th"><a href="#">Precios +/- 5 días</a></th>
+            <th colspan="2"><a href="#">Precios por aerolíneas</a></th>
         </tr>
         </thead>
         <tbody>
@@ -63,6 +63,7 @@ lastRowDate = firstDepartureDate.minusDays(1);
                 </tr>
             #{/if}
         #{/list}
+        <tr class="bg-returning"><td colspan="8">Precio del pasaje ida y vuelta por persona. Los precios visualizados son los mejores encontrados por los usuarios en los últimos días y podrían no estar actualizados.</td></tr>
         </tbody>
     </table>
 </div>

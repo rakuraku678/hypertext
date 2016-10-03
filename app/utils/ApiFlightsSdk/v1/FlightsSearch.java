@@ -12,6 +12,10 @@ public class FlightsSearch extends ApiFlightsSDKBase {
     public String departuredate;
     public String returndate;
     public String passengercount;
+    public String outboundflightstops;
+    public String includedcarriers;
+    public String outbounddeparturewindow;
+    public String inboundarrivalwindow;
 
     public JsonElement process(){
 
@@ -22,6 +26,12 @@ public class FlightsSearch extends ApiFlightsSDKBase {
         request.setParameter("departuredate", departuredate);
         request.setParameter("returndate", returndate);
         request.setParameter("passengercount", passengercount);
+        request.setParameter("outboundflightstops", outboundflightstops);
+        request.setParameter("includedcarriers", includedcarriers);
+        request.setParameter("outbounddeparturewindow", outbounddeparturewindow);
+        request.setParameter("inboundarrivalwindow", inboundarrivalwindow);
+        //request.setParameter("excludedcarriers", "AA,AV");
+
 
         JsonElement responseJsonObject = processResponse(request);
 
@@ -48,4 +58,19 @@ public class FlightsSearch extends ApiFlightsSDKBase {
         this.passengercount = passengercount;
     }
 
+    public void setOutboundflightstops(String outboundflightstops) {
+        this.outboundflightstops = outboundflightstops;
+    }
+
+    public void setIncludedcarriers(String includedcarriers) {
+        this.includedcarriers = includedcarriers;
+    }
+
+    public void setOutbounddeparturewindow(String outbounddeparturewindow) {
+        this.outbounddeparturewindow = outbounddeparturewindow;
+    }
+
+    public void setInboundarrivalwindow(String inboundarrivalwindow) {
+        this.inboundarrivalwindow = inboundarrivalwindow;
+    }
 }

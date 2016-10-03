@@ -52,191 +52,191 @@
         <script src="@@{'/public/javascripts/nouislider.min.js'}"></script>
 
         <script type="text/javascript">
-            $(function () {
-                $('[data-toggle="tooltip"]').tooltip()
-            });
-
-
-            /*FILTER*/
-
-            var priceRangeSliderStartLabel = $('.price-range-slider-start-label');
-            var priceRangeSliderEndLabel = $('.price-range-slider-end-label');
-            var timeRangeSliderStartToLabel = $('.time-range-slider-start-to-label');
-            var timeRangeSliderStartFromLabel = $('.time-range-slider-start-from-label');
-            var timeRangeSliderEndToLabel = $('.time-range-slider-end-to-label');
-            var timeRangeSliderEndFromLabel = $('.time-range-slider-end-from-label');
-
-
-            var durationSliderStartLabel = $('.duration-slider-start-label');
-
-
-            var durationSliderEndLabel = $('.duration-slider-end-label');
-
-            var availabilityTimeRangeSlider = $(' .time-range-slider')[0];
-            var priceRangeSlider = $('.price-range-slider')[0];
-            var hourRangeSliderTo = $('.hour-range-to-slider')[0];
-            var hourRangeSliderFrom = $('.hour-range-from-slider')[0];
-
-
-            var durationSliderStart = $('.duration-start-slider')[0];
-            var durationSliderEnd = $('.duration-end-slider')[0];
-
-            noUiSlider.create(priceRangeSlider, {
-                start: [ 100, 500 ],
-                range: {
-                  'min': 0,
-                  'max': 1000
-                },
-                margin: 1,
-                step: 1,
-                connect: true,
-                pips: {
-                    mode: 'count',
-                    values: 1,
-                    density: 4
-                }
-            });
-
-            priceRangeSlider.noUiSlider.on('update', function(values, handle) {
-                priceRangeSliderStartLabel.text('$' + values[0]);
-                priceRangeSliderEndLabel.text('$' + values[1]);
-            });
-
-            noUiSlider.create(hourRangeSliderTo, {
-                start: [ new Date(2000, 0, 1, 9, 0, 0, 0).getTime(), new Date(2000, 0, 1, 18, 0, 0, 0).getTime() ],
-                range: {
-                  'min': new Date(2000, 0, 1, 0, 0, 0, 0).getTime(),
-                  'max': new Date(2000, 0, 2, 0, 0, 0, 0).getTime()
-                },
-                margin: 5 * 60 * 1000,
-                step: 1 * 60 * 1000,
-                connect: true,
-
-                pips: {
-                        mode: 'count',
-                        values: 1,
-                        density: 4
-                    }
-
-            });
-
-            noUiSlider.create(hourRangeSliderFrom, {
-                start: [ new Date(2000, 0, 1, 9, 0, 0, 0).getTime(), new Date(2000, 0, 1, 18, 0, 0, 0).getTime() ],
-                range: {
-                  'min': new Date(2000, 0, 1, 0, 0, 0, 0).getTime(),
-                  'max': new Date(2000, 0, 2, 0, 0, 0, 0).getTime()
-                },
-                margin: 5 * 60 * 1000,
-                step: 1 * 60 * 1000,
-                connect: true,
-
-                pips: {
-                        mode: 'count',
-                        values: 1,
-                        density: 4
-                    }
-
-            });
-
-            hourRangeSliderTo.noUiSlider.on('update', function(values, handle) {
-                var dateToFormatStart = new Date(+values[0]);
-                var dateToFormatEnd = new Date(+values[1]);
-                var dateFormattedStart = ('00' + dateToFormatStart.getHours()).slice(-2) + ':' + ('00' + dateToFormatStart.getMinutes()).slice(-2);
-                var dateFormattedEnd = ('00' + dateToFormatEnd.getHours()).slice(-2) + ':' + ('00' + dateToFormatEnd.getMinutes()).slice(-2);
-                timeRangeSliderStartToLabel.text(dateFormattedStart + ' hs');
-                timeRangeSliderEndToLabel.text((dateFormattedEnd === '00:00'? '24:00' : dateFormattedEnd) + ' hs');
-            });
-
-            hourRangeSliderFrom.noUiSlider.on('update', function(values, handle) {
-                var dateToFormatStart = new Date(+values[0]);
-                var dateToFormatEnd = new Date(+values[1]);
-                var dateFormattedStart = ('00' + dateToFormatStart.getHours()).slice(-2) + ':' + ('00' + dateToFormatStart.getMinutes()).slice(-2);
-                var dateFormattedEnd = ('00' + dateToFormatEnd.getHours()).slice(-2) + ':' + ('00' + dateToFormatEnd.getMinutes()).slice(-2);
-                timeRangeSliderStartFromLabel.text(dateFormattedStart + ' hs');
-                timeRangeSliderEndFromLabel.text((dateFormattedEnd === '00:00'? '24:00' : dateFormattedEnd) + ' hs');
-            });
-
-
-            noUiSlider.create(durationSliderStart, {
-                start: 150,
-                range: {
-                  'min': 100,
-                  'max': 300
-                },
-                step: 1,
-                connect: 'lower',
-                pips: {
-                    mode: 'steps',
-                    density: 10
-                }
-            });
-
-
-            noUiSlider.create(durationSliderEnd, {
-                start: 150,
-                range: {
-                  'min': 100,
-                  'max': 300
-                },
-                step: 1,
-                connect: 'lower',
-                pips: {
-                    mode: 'steps',
-                    density: 10
-                }
-            });
-
-            durationSliderStart.noUiSlider.on('update', function(values, handle) {
-                var currentMinutesDuration = (values[handle] | 0);
-                durationSliderStartLabel.text(currentMinutesDuration);
-                
-            });
-
-
-            durationSliderEnd.noUiSlider.on('update', function(values, handle) {
-                var currentMinutesDuration = (values[handle] | 0);
-                durationSliderEndLabel.text(currentMinutesDuration);
-                
-            });
-
-
-
-
-
-
-            $('.body-filter .checkbox').click(function(){
-
-                $("input[type=checkbox]").change(function(){
-                
-                    $(this).parent().parent().find('.box-number').removeClass('selected-box');
-
-                    if($(this).prop("checked")){
-                        $(this).parent().parent().find('.box-number').addClass('selected-box'); 
-                    }
-                });
-
-            });
-
-
-
-            $('.box-filter .header-filter').click(function() {
-
-                $('.header-filter h3 i').addClass('arrow-down');
-                $('.header-filter h3 i').removeClass('arrow-up');
-                $(this).find('h3 i').removeClass('arrow-down');
-                $(this).find('h3 i').addClass('arrow-up');
-
-
-                $('.body-filter').slideUp( "slow" );
-
-                $(this).find('.body-filter').slideDown( "slow" );
-
-                $(this).parent().find('.body-filter').slideDown( "slow" );
-                
-
-                
-
-            });
+//            $(function () {
+//                $('[data-toggle="tooltip"]').tooltip()
+//            });
+//
+//
+//            /*FILTER*/
+//
+//            var priceRangeSliderStartLabel = $('.price-range-slider-start-label');
+//            var priceRangeSliderEndLabel = $('.price-range-slider-end-label');
+//            var timeRangeSliderStartToLabel = $('.time-range-slider-start-to-label');
+//            var timeRangeSliderStartFromLabel = $('.time-range-slider-start-from-label');
+//            var timeRangeSliderEndToLabel = $('.time-range-slider-end-to-label');
+//            var timeRangeSliderEndFromLabel = $('.time-range-slider-end-from-label');
+//
+//
+//            var durationSliderStartLabel = $('.duration-slider-start-label');
+//
+//
+//            var durationSliderEndLabel = $('.duration-slider-end-label');
+//
+//            var availabilityTimeRangeSlider = $(' .time-range-slider')[0];
+//            var priceRangeSlider = $('.price-range-slider')[0];
+//            var hourRangeSliderTo = $('.hour-range-to-slider')[0];
+//            var hourRangeSliderFrom = $('.hour-range-from-slider')[0];
+//
+//
+//            var durationSliderStart = $('.duration-start-slider')[0];
+//            var durationSliderEnd = $('.duration-end-slider')[0];
+//
+//            noUiSlider.create(priceRangeSlider, {
+//                start: [ 100, 500 ],
+//                range: {
+//                  'min': 0,
+//                  'max': 1000
+//                },
+//                margin: 1,
+//                step: 1,
+//                connect: true,
+//                pips: {
+//                    mode: 'count',
+//                    values: 1,
+//                    density: 4
+//                }
+//            });
+//
+//            priceRangeSlider.noUiSlider.on('update', function(values, handle) {
+//                priceRangeSliderStartLabel.text('$' + values[0]);
+//                priceRangeSliderEndLabel.text('$' + values[1]);
+//            });
+//
+//            noUiSlider.create(hourRangeSliderTo, {
+//                start: [ new Date(2000, 0, 1, 9, 0, 0, 0).getTime(), new Date(2000, 0, 1, 18, 0, 0, 0).getTime() ],
+//                range: {
+//                  'min': new Date(2000, 0, 1, 0, 0, 0, 0).getTime(),
+//                  'max': new Date(2000, 0, 2, 0, 0, 0, 0).getTime()
+//                },
+//                margin: 5 * 60 * 1000,
+//                step: 1 * 60 * 1000,
+//                connect: true,
+//
+//                pips: {
+//                        mode: 'count',
+//                        values: 1,
+//                        density: 4
+//                    }
+//
+//            });
+//
+//            noUiSlider.create(hourRangeSliderFrom, {
+//                start: [ new Date(2000, 0, 1, 9, 0, 0, 0).getTime(), new Date(2000, 0, 1, 18, 0, 0, 0).getTime() ],
+//                range: {
+//                  'min': new Date(2000, 0, 1, 0, 0, 0, 0).getTime(),
+//                  'max': new Date(2000, 0, 2, 0, 0, 0, 0).getTime()
+//                },
+//                margin: 5 * 60 * 1000,
+//                step: 1 * 60 * 1000,
+//                connect: true,
+//
+//                pips: {
+//                        mode: 'count',
+//                        values: 1,
+//                        density: 4
+//                    }
+//
+//            });
+//
+//            hourRangeSliderTo.noUiSlider.on('update', function(values, handle) {
+//                var dateToFormatStart = new Date(+values[0]);
+//                var dateToFormatEnd = new Date(+values[1]);
+//                var dateFormattedStart = ('00' + dateToFormatStart.getHours()).slice(-2) + ':' + ('00' + dateToFormatStart.getMinutes()).slice(-2);
+//                var dateFormattedEnd = ('00' + dateToFormatEnd.getHours()).slice(-2) + ':' + ('00' + dateToFormatEnd.getMinutes()).slice(-2);
+//                timeRangeSliderStartToLabel.text(dateFormattedStart + ' hs');
+//                timeRangeSliderEndToLabel.text((dateFormattedEnd === '00:00'? '24:00' : dateFormattedEnd) + ' hs');
+//            });
+//
+//            hourRangeSliderFrom.noUiSlider.on('update', function(values, handle) {
+//                var dateToFormatStart = new Date(+values[0]);
+//                var dateToFormatEnd = new Date(+values[1]);
+//                var dateFormattedStart = ('00' + dateToFormatStart.getHours()).slice(-2) + ':' + ('00' + dateToFormatStart.getMinutes()).slice(-2);
+//                var dateFormattedEnd = ('00' + dateToFormatEnd.getHours()).slice(-2) + ':' + ('00' + dateToFormatEnd.getMinutes()).slice(-2);
+//                timeRangeSliderStartFromLabel.text(dateFormattedStart + ' hs');
+//                timeRangeSliderEndFromLabel.text((dateFormattedEnd === '00:00'? '24:00' : dateFormattedEnd) + ' hs');
+//            });
+//
+//
+//            noUiSlider.create(durationSliderStart, {
+//                start: 150,
+//                range: {
+//                  'min': 100,
+//                  'max': 300
+//                },
+//                step: 1,
+//                connect: 'lower',
+//                pips: {
+//                    mode: 'steps',
+//                    density: 10
+//                }
+//            });
+//
+//
+//            noUiSlider.create(durationSliderEnd, {
+//                start: 150,
+//                range: {
+//                  'min': 100,
+//                  'max': 300
+//                },
+//                step: 1,
+//                connect: 'lower',
+//                pips: {
+//                    mode: 'steps',
+//                    density: 10
+//                }
+//            });
+//
+//            durationSliderStart.noUiSlider.on('update', function(values, handle) {
+//                var currentMinutesDuration = (values[handle] | 0);
+//                durationSliderStartLabel.text(currentMinutesDuration);
+//
+//            });
+//
+//
+//            durationSliderEnd.noUiSlider.on('update', function(values, handle) {
+//                var currentMinutesDuration = (values[handle] | 0);
+//                durationSliderEndLabel.text(currentMinutesDuration);
+//
+//            });
+//
+//
+//
+//
+//
+//
+//            $('.body-filter .checkbox').click(function(){
+//
+//                $("input[type=checkbox]").change(function(){
+//
+//                    $(this).parent().parent().find('.box-number').removeClass('selected-box');
+//
+//                    if($(this).prop("checked")){
+//                        $(this).parent().parent().find('.box-number').addClass('selected-box');
+//                    }
+//                });
+//
+//            });
+//
+//
+//
+//            $('.box-filter .header-filter').click(function() {
+//
+//                $('.header-filter h3 i').addClass('arrow-down');
+//                $('.header-filter h3 i').removeClass('arrow-up');
+//                $(this).find('h3 i').removeClass('arrow-down');
+//                $(this).find('h3 i').addClass('arrow-up');
+//
+//
+//                $('.body-filter').slideUp( "slow" );
+//
+//                $(this).find('.body-filter').slideDown( "slow" );
+//
+//                $(this).parent().find('.body-filter').slideDown( "slow" );
+//
+//
+//
+//
+//            });
 
 
 
