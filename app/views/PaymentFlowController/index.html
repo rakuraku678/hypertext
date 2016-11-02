@@ -23,299 +23,305 @@
     </article>
 </section>
 <section class="search-arrive payment-path">
-    <article class="container-fluid">
-        <div class="row">
-            <h2>¿Quien Viaja?</h2>
-            <p class="info-help">En caso de necesitar ayuda comunicarse al correo <strong>ventaonline@travelclub.cl</strong></p>
-            <div class="col-md-8">
-                <div class="box-info-payment">
-                    <div class="head-payment">
-                        <h3 class="title-payment">Pasajero 1<span class="detail-title"> - Adulto(+12)</span></h3>
-                    </div>
-                    <div class="body-payment">
-                        <form action="" method="">
-                            <div class="alert alert-info-payment">
-                                <p><i class="icon-glasses"></i>Comprueba detenidamente que la información introducida coincida con la de tu pasaporte.</p>     
-                            </div>
+    <form action="@{PaymentFlowController.startPayment}" method="post">
+        <article class="container-fluid">
+            <div class="row">
+                <h2>¿Quien Viaja?</h2>
+                <p class="info-help">En caso de necesitar ayuda comunicarse al correo <strong>ventaonline@travelclub.cl</strong></p>
+                <div class="col-md-8">
+                    <div class="box-info-payment">
+                        <div class="head-payment">
+                            <h3 class="title-payment">Pasajero 1<span class="detail-title"> - Adulto(+12)</span></h3>
+                        </div>
+                        <div class="body-payment">
+                            <form action="" method="">
+                                <div class="alert alert-info-payment">
+                                    <p><i class="icon-glasses"></i>Comprueba detenidamente que la información introducida coincida con la de tu pasaporte.</p>
+                                </div>
 
-                            <div class="form-group col-md-12">
-                                <label class="checkbox-inline">
-                                    <input type="radio" name="opciones" id="opciones_2" value="opcion_2"> Hombre
-                                </label>
-                                <label class="checkbox-inline">
-                                    <input type="radio" name="opciones" id="opciones_2" value="opcion_2"> Mujer
-                                </label>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label>Nombres:</label>
-                                <input type="text" class="form-control" placeholder="Ingresa tu nombre">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label>Apellidos:</label>
-                                <input type="text" class="form-control" placeholder="Ingresa tu apellido">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label>Tipo y número de documento:</label>
-                                <div class="row">
-                                    <div class="col-xs-4">
-                                        <select class="form-control icon-arrow-from">
-                                            <option>RUT</option>
-                                        </select>  
-                                    </div>
-                                    <div class="col-xs-8">      
-                                        <input type="text" class="form-control">
+                                <div class="form-group col-md-12">
+                                    <label class="checkbox-inline">
+                                        <input type="radio" name="opciones" id="opciones_2" value="opcion_2"> Hombre
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input type="radio" name="opciones" id="opciones_2" value="opcion_2"> Mujer
+                                    </label>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Nombres:</label>
+                                    <input type="text" class="form-control" placeholder="Ingresa tu nombre">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Apellidos:</label>
+                                    <input type="text" class="form-control" placeholder="Ingresa tu apellido">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Tipo y número de documento:</label>
+                                    <div class="row">
+                                        <div class="col-xs-4">
+                                            <select class="form-control icon-arrow-from">
+                                                <option>RUT</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-xs-8">
+                                            <input type="text" class="form-control">
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="col-md-6 form-group">
-                                <label>Fecha de nacimiento:</label>
-                                <input type="date" class="form-control">
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-                <div class="box-info-payment">
-                    <div class="head-payment">
-                        <h3 class="title-payment">Pasajero 2<span class="detail-title"> - Adulto(+12)</span></h3>
-                    </div>
-                    <div class="body-payment">
-                        <form action="" method="">
-                            <div class="alert alert-info-payment">
-                                <p><i class="icon-glasses"></i>Comprueba detenidamente que la información introducida coincida con la de tu pasaporte.</p>     
-                            </div>
-
-                            <div class="form-group col-md-12">
-                                <label class="checkbox-inline">
-                                    <input type="radio" name="opciones" id="opciones_2" value="opcion_2"> Hombre
-                                </label>
-                                <label class="checkbox-inline">
-                                    <input type="radio" name="opciones" id="opciones_2" value="opcion_2"> Mujer
-                                </label>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label>Nombres:</label>
-                                <input type="text" class="form-control" placeholder="Ingresa tu nombre">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label>Apellidos:</label>
-                                <input type="text" class="form-control" placeholder="Ingresa tu apellido">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label>Tipo y número de documento:</label>
-                                <div class="row">
-                                    <div class="col-xs-4">
-                                        <select class="form-control icon-arrow-from">
-                                            <option>RUT</option>
-                                        </select>  
-                                    </div>
-                                    <div class="col-xs-8">      
-                                        <input type="text" class="form-control">
-                                    </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Fecha de nacimiento:</label>
+                                    <input type="date" class="form-control">
                                 </div>
-                            </div>
-
-                            <div class="col-md-6 form-group">
-                                <label>Fecha de nacimiento:</label>
-                                <input type="date" class="form-control">
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-                <div class="box-info-payment">
-                    <div class="head-payment">
-                        <h3 class="title-payment">Información de contacto</h3>
-                    </div>
-                    <div class="body-payment">
-                        <form action="" method="">
-                            <div class="col-md-6 form-group">
-                                <label>Email:</label>
-                                <input type="email" class="form-control">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label>Teléfono:</label>
-                                <input type="tel" class="form-control">
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-                <div class="box-info-payment">
-                    <div class="head-payment">
-                        <h3 class="title-payment">Elige tu plataforma de pago</h3>
-                    </div>
-                    <div class="body-payment">
-                        <form action="" method="">
-                            <div class="form-group col-md-12">
-                                <label class="checkbox-inline">
-                                    <input type="radio" name="pay" id="pay_1" value="pay_1"> 
-                                    <img src="" alt="" title="" width="66px" height="36px">
-                                </label>
-                                <label class="checkbox-inline">
-                                    <input type="radio" name="pay" id="pay_1" value="pay_1">
-                                    <img src="" alt="" title="" width="66px" height="36px">
-                                </label>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-                <div class="box-info-payment">
-                    <div class="body-payment term-and-condition">
-                        <form action="" method="">
-                            <div class="form-group col-md-12">
-                               <p><a href="" class="underline-text">La Guia de Viajes TravelClub</a>, con Información y Recomendaciones para los pasajeros TravelClub</p>
-                               <p>Las Condiciones Generales de Venta por Internet de TravelClub:</p>
-                               <ul>
-                                   <li>No aplica derecho a retracto por ventas generadas por este canal, de acuerdo a la Ley Nº 19.496 de Protección al Consumidor.</li>
-                                   <li>Condiciones de pasaje y transporte aéreo son de exclusiva responsabilidad de las líneas aéreas respectivas y se rigen de acuerdo al <a href=""> Contrato de Transporte de Pasajeros IATA</a>.</li>
-                                   <li>Los descuentos y beneficios son entregados por TravelClub, sin responsabilidad para Banco de Chile y Banco Edwards.</li>
-                                   <li>El uso de Dólares Premio aplica según condiciones del Programa Travel Club (refiérase a los montos mínimos exigidos para canjear y demás condiciones) publicados en<a href=""> http://www.travelclub.cl</a>.</li>
-                                   <li>Es responsabilidad del cliente informarse y contar con la documentacion necesaria para su viaje, asi como cumplir con las restricciones establecidas.</li>
-                                   <li>Para vuelos con conexión, es responsabilidad del cliente la compra de estadia y traslados cuando el itinerario asi lo amerite.</li>
-                                   <li class="more-term-and-condition"><a href="#" target="_blank">Ver todos los términos y condiciones</a></li>
-                               </ul>
-                            </div>
-                            <div class="form-group col-md-12 checkbox-term-and-condition">
-                                <label>
-                                    <input type="checkbox" id="inlineCheckbox1" value="option1">  Declaro Conocer y Aceptar Condiciones del Servicio
-                                </label>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="col-md-12 text-right">
-                    <a href="@{PaymentConfirmController.index}" class="btn btn-search" disabled>continuar</a>
-                </div>
-            </div>
-            <div class="col-md-4">
-               
-                <div class="box-info-payment">
-                    <div class="head-payment">
-                        <h3 class="title-payment">Tu vuelo</h3>
-                    </div>
-                    <div class="body-payment detail-fly-payment">
-                    <ul>
-                        <li>
-                            <a class="btn icon-arrow-payment" data-toggle="collapse" href="#detailFlyTo" aria-expanded="false" aria-controls="detailFlyTo">
-                            <i class="icon-fly"></i>
-                            <span class="title-payment">Ida</span>
-                            <span class="date-fly-payment">13 nov. 2016 (SCL > JFK)</span>
-                            </a>
-                        </li>
-                    </ul>
-                        
-                    <div class="collapse" id="detailFlyTo">
-                        <div class="card card-block">
-                            <div class="fly-brand text-center">
-                                <img src="" alt="" title="" width="136px" height="36px">
-                            </div>
-                            <ul>
-                                <li class="name-passenger">
-                                    <strong class="name">Santiago</strong>
-                                    <span class="last-name">Arturo Merino Benítez</span>
-                                </li>
-                                <li class="time">
-                                    <span class="to-time">19:00</span>
-                                </li>
-                                <li class="scale">
-                                    <span class="number-of-scale">1 escala</span>
-                                    <span class="point-scale"></span>
-                                    <span class="duration-of-fly">10h 15m</span>
-                                </li>
-
-                                <li class="time">
-                                    <span class="to-time">7:40</span>
-                                </li>
-                                <li class="name-passenger">
-                                    <strong class="name">Santiago</strong>
-                                    <span class="last-name">Arturo Merino Benítez</span>
-                                </li>
-                            </ul>
+                            </form>
                         </div>
                     </div>
 
-                    <ul>
-                        <li>
-                            <a class="btn icon-arrow-payment" data-toggle="collapse" href="#detailFlyFrom" aria-expanded="false" aria-controls="detailFlyFrom">
-                            <i class="icon-fly-vuelta"></i>
-                            <span class="title-payment">Vuelta</span>
-                            <span class="date-fly-payment">13 nov. 2016 (SCL > JFK)</span>
-                            </a>
-                        </li>
-                    </ul>
-                        
-                    <div class="collapse" id="detailFlyFrom">
-                        <div class="card card-block">
-                            <div class="fly-brand text-center">
-                                <img src="" alt="" title="" width="136px" height="36px">
-                            </div>
-                            <ul>
-                                <li class="name-passenger">
-                                    <strong class="name">Santiago</strong>
-                                    <span class="last-name">Arturo Merino Benítez</span>
-                                </li>
-                                <li class="time">
-                                    <span class="to-time">19:00</span>
-                                </li>
-                                <li class="scale">
-                                    <span class="number-of-scale">1 escala</span>
-                                    <span class="point-scale"></span>
-                                    <span class="duration-of-fly">10h 15m</span>
-                                </li>
-
-                                <li class="time">
-                                    <span class="to-time">7:40</span>
-                                </li>
-                                <li class="name-passenger">
-                                    <strong class="name">Santiago</strong>
-                                    <span class="last-name">Arturo Merino Benítez</span>
-                                </li>
-                            </ul>
+                    <div class="box-info-payment">
+                        <div class="head-payment">
+                            <h3 class="title-payment">Pasajero 2<span class="detail-title"> - Adulto(+12)</span></h3>
                         </div>
-                    </div>  
+                        <div class="body-payment">
+                            <form action="" method="">
+                                <div class="alert alert-info-payment">
+                                    <p><i class="icon-glasses"></i>Comprueba detenidamente que la información introducida coincida con la de tu pasaporte.</p>
+                                </div>
+
+                                <div class="form-group col-md-12">
+                                    <label class="checkbox-inline">
+                                        <input type="radio" name="opciones" id="opciones_2" value="opcion_2"> Hombre
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input type="radio" name="opciones" id="opciones_2" value="opcion_2"> Mujer
+                                    </label>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Nombres:</label>
+                                    <input type="text" class="form-control" placeholder="Ingresa tu nombre">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Apellidos:</label>
+                                    <input type="text" class="form-control" placeholder="Ingresa tu apellido">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Tipo y número de documento:</label>
+                                    <div class="row">
+                                        <div class="col-xs-4">
+                                            <select class="form-control icon-arrow-from">
+                                                <option>RUT</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-xs-8">
+                                            <input type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 form-group">
+                                    <label>Fecha de nacimiento:</label>
+                                    <input type="date" class="form-control">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="box-info-payment">
+                        <div class="head-payment">
+                            <h3 class="title-payment">Información de contacto</h3>
+                        </div>
+                        <div class="body-payment">
+                            <form action="" method="">
+                                <div class="col-md-6 form-group">
+                                    <label>Email:</label>
+                                    <input type="email" class="form-control">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Teléfono:</label>
+                                    <input type="tel" class="form-control">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="box-info-payment">
+                        <div class="head-payment">
+                            <h3 class="title-payment">Elige tu plataforma de pago</h3>
+                        </div>
+                        <div class="body-payment">
+                            <form action="" method="">
+                                <div class="form-group col-md-12">
+                                    <label class="checkbox-inline">
+                                        <input type="radio" name="pay" id="pay_1" value="pay_1">
+                                        <img src="" alt="" title="" width="66px" height="36px">
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input type="radio" name="pay" id="pay_1" value="pay_1">
+                                        <img src="" alt="" title="" width="66px" height="36px">
+                                    </label>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="box-info-payment">
+                        <div class="body-payment term-and-condition">
+                                <div class="form-group col-md-12">
+                                   <p><a href="" class="underline-text">La Guia de Viajes TravelClub</a>, con Información y Recomendaciones para los pasajeros TravelClub</p>
+                                   <p>Las Condiciones Generales de Venta por Internet de TravelClub:</p>
+                                   <ul>
+                                       <li>No aplica derecho a retracto por ventas generadas por este canal, de acuerdo a la Ley Nº 19.496 de Protección al Consumidor.</li>
+                                       <li>Condiciones de pasaje y transporte aéreo son de exclusiva responsabilidad de las líneas aéreas respectivas y se rigen de acuerdo al <a href=""> Contrato de Transporte de Pasajeros IATA</a>.</li>
+                                       <li>Los descuentos y beneficios son entregados por TravelClub, sin responsabilidad para Banco de Chile y Banco Edwards.</li>
+                                       <li>El uso de Dólares Premio aplica según condiciones del Programa Travel Club (refiérase a los montos mínimos exigidos para canjear y demás condiciones) publicados en<a href=""> http://www.travelclub.cl</a>.</li>
+                                       <li>Es responsabilidad del cliente informarse y contar con la documentacion necesaria para su viaje, asi como cumplir con las restricciones establecidas.</li>
+                                       <li>Para vuelos con conexión, es responsabilidad del cliente la compra de estadia y traslados cuando el itinerario asi lo amerite.</li>
+                                       <li class="more-term-and-condition"><a href="#" target="_blank">Ver todos los términos y condiciones</a></li>
+                                   </ul>
+                                </div>
+                                <div class="form-group col-md-12 checkbox-term-and-condition">
+                                    <label>
+                                        <input type="checkbox" id="inlineCheckbox1" value="option1">  Declaro Conocer y Aceptar Condiciones del Servicio
+                                    </label>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 text-right">
+                        <input type="hidden" name="departureDate" value="${checkoutPostDto.departureDate}">
+                        <input type="hidden" name="departureAirportCode" value="${checkoutPostDto.departureAirportCode}">
+                        <input type="hidden" name="returnDate" value="${checkoutPostDto.returnDate}">
+                        <input type="hidden" name="returnAirportCode" value="${checkoutPostDto.returnAirportCode}">
+                        <input type="hidden" name="taxFare" value="${checkoutPostDto.taxFare}">
+                        <input type="hidden" name="totalFare" value="${checkoutPostDto.totalFare}">
+                        <input type="submit" class="btn btn-search" value="continuar">
                     </div>
                 </div>
+                <div class="col-md-4">
 
-
-                <div class="box-info-payment">
-                    <div class="head-payment">
-                        <h3 class="title-payment">Tu reserva</h3>
-                    </div>
-                     <table class="detail-payment-table">
-                         <thead>
-                             <tr>
-                                <th></th>
-                                <th>Pasajeros</th>
-                                <th>Precio</th>
-                                <th>Impuestos</th>
-                                <th>Subtotal</th>
-                             </tr>
-                         </thead>
-                         <tbody>
-                             <tr>
-                                 <td></td>
-                                 <td class="txt-payment-table-mark">2 Adultos</td>
-                                 <td>US$599</td>
-                                 <td>US$66</td>
-                                 <td class="txt-payment-table-mark">US$1330</td>
-                             </tr>
-                         </tbody>
-                     </table>
-                    <div class="total-payment">
+                    <div class="box-info-payment">
+                        <div class="head-payment">
+                            <h3 class="title-payment">Tu vuelo</h3>
+                        </div>
+                        <div class="body-payment detail-fly-payment">
                         <ul>
-                            <li>Total</li>
-                            <li>US$1330</li>
+                            <li>
+                                <a class="btn icon-arrow-payment" data-toggle="collapse" href="#detailFlyTo" aria-expanded="false" aria-controls="detailFlyTo">
+                                <i class="icon-fly"></i>
+                                <span class="title-payment">Ida</span>
+                                <span class="date-fly-payment">${checkoutPostDto.departureDate} (${checkoutPostDto.departureAirportCode} > ${checkoutPostDto.returnAirportCode})</span>
+                                </a>
+                            </li>
                         </ul>
+
+                        <div class="collapse" id="detailFlyTo">
+                            <div class="card card-block">
+                                <div class="fly-brand text-center">
+                                    <img src="" alt="" title="" width="136px" height="36px">
+                                </div>
+                                <ul>
+                                    <li class="name-passenger">
+                                        <strong class="name">Santiago</strong>
+                                        <span class="last-name">Arturo Merino Benítez</span>
+                                    </li>
+                                    <li class="time">
+                                        <span class="to-time">19:00</span>
+                                    </li>
+                                    <li class="scale">
+                                        <span class="number-of-scale">1 escala</span>
+                                        <span class="point-scale"></span>
+                                        <span class="duration-of-fly">10h 15m</span>
+                                    </li>
+
+                                    <li class="time">
+                                        <span class="to-time">7:40</span>
+                                    </li>
+                                    <li class="name-passenger">
+                                        <strong class="name">Santiago</strong>
+                                        <span class="last-name">Arturo Merino Benítez</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <ul>
+                            <li>
+                                <a class="btn icon-arrow-payment" data-toggle="collapse" href="#detailFlyFrom" aria-expanded="false" aria-controls="detailFlyFrom">
+                                <i class="icon-fly-vuelta"></i>
+                                <span class="title-payment">Vuelta</span>
+                                <span class="date-fly-payment">${checkoutPostDto.returnDate} (${checkoutPostDto.returnAirportCode} > ${checkoutPostDto.departureAirportCode})</span>
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="collapse" id="detailFlyFrom">
+                            <div class="card card-block">
+                                <div class="fly-brand text-center">
+                                    <img src="" alt="" title="" width="136px" height="36px">
+                                </div>
+                                <ul>
+                                    <li class="name-passenger">
+                                        <strong class="name">Santiago</strong>
+                                        <span class="last-name">Arturo Merino Benítez</span>
+                                    </li>
+                                    <li class="time">
+                                        <span class="to-time">19:00</span>
+                                    </li>
+                                    <li class="scale">
+                                        <span class="number-of-scale">1 escala</span>
+                                        <span class="point-scale"></span>
+                                        <span class="duration-of-fly">10h 15m</span>
+                                    </li>
+
+                                    <li class="time">
+                                        <span class="to-time">7:40</span>
+                                    </li>
+                                    <li class="name-passenger">
+                                        <strong class="name">Santiago</strong>
+                                        <span class="last-name">Arturo Merino Benítez</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        </div>
                     </div>
+
+
+                    <div class="box-info-payment">
+                        <div class="head-payment">
+                            <h3 class="title-payment">Tu reserva</h3>
+                        </div>
+                         <table class="detail-payment-table">
+                             <thead>
+                                 <tr>
+                                    <th></th>
+                                    <th>Pasajeros</th>
+                                    <th>Precio</th>
+                                    <th>Impuestos</th>
+                                    <th>Subtotal</th>
+                                 </tr>
+                             </thead>
+                             <tbody>
+                                 <tr>
+                                     <td></td>
+                                     <td class="txt-payment-table-mark">2 Adultos</td>
+                                     <td>$${checkoutPostDto.taxFare}</td>
+                                     <td>$${checkoutPostDto.totalFare}</td>
+                                     <td class="txt-payment-table-mark">$${checkoutPostDto.totalFare}</td>
+                                 </tr>
+                             </tbody>
+                         </table>
+                        <div class="total-payment">
+                            <ul>
+                                <li>Total</li>
+                                <li>$${checkoutPostDto.totalFare}</li>
+                            </ul>
+                        </div>
+                    </div>
+
+
                 </div>
-
-
             </div>
-        </div>
-    </article>    
+        </article>
+    </form>
 </section>
 
 #{modalNeadHelp /}

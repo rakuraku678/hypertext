@@ -24,9 +24,38 @@ public abstract class ApiFlightsSDKBase {
         System.out.println("//****************************************//");
         System.out.println("// request_url: " + request.url );
         System.out.println("// request_params: " + request.parameters );
+        System.out.println("// request_body: " + request.body );
 
         try {
             WS.HttpResponse response = request.get();
+            JsonElement jsonResponse = response.getJson();
+
+            if (!response.success()) {
+                System.out.println("// responde_code: " + response.getStatus());
+                System.out.println("// responde: " + jsonResponse);
+                System.out.println("//****************************************//");
+                throw new RuntimeException("Api Flights ERROR");
+            }
+            System.out.println("// jsonResponse: " + jsonResponse );
+            System.out.println("//****************************************//");
+
+            return jsonResponse;
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Api Flights process response fail.");
+        }
+    }
+
+    protected static JsonElement processResponsePost(WS.WSRequest request) {
+        System.out.println("//****************************************//");
+        System.out.println("//               Api Flights              //");
+        System.out.println("//****************************************//");
+        System.out.println("// request_url: " + request.url );
+        System.out.println("// request_params: " + request.parameters );
+        System.out.println("// request_body: " + request.body );
+
+        try {
+            WS.HttpResponse response = request.post();
             JsonElement jsonResponse = response.getJson();
 
             if (!response.success()) {

@@ -1,5 +1,5 @@
 <div class="row ticket">
-    <form class="form-ticket" action="" method="">
+    <form class="form-ticket" action="@{PaymentFlowController.index}" method="post">
         <div class="col-md-9 info-flight">
             <ul>
                 <li class="txt-airport-date">
@@ -203,8 +203,15 @@
                 <li><span class="item-detail">Total</span><span class="item-price">$${_flight.totalFare.getAsString()}</span></li>
             </ul>
             <div class="text-center box-ticket-submit">
-                *{<input type="submit" class="btn btn-ticket" value="Comprar">}*
-                <a class="btn btn-ticket" href="@{PaymentFlowController.index}">Comprar</a>
+                <input type="hidden" name="departureDate" value="${_flight.departureDate.getAsString()}">
+                <input type="hidden" name="departureAirportCode" value="${_flight.departureAirportCode.getAsString()}">
+                <input type="hidden" name="returnDate" value="${_flight.returnDate.getAsString()}">
+                <input type="hidden" name="returnAirportCode" value="${_flight.returnAirportCode.getAsString()}">
+                <input type="hidden" name="taxFare" value="${_flight.taxFare.getAsString()}">
+                <input type="hidden" name="totalFare" value="${_flight.totalFare.getAsString()}">
+                <input type="submit" class="btn btn-ticket" value="Comprar">
+                *{<a class="btn btn-ticket" href="@{PaymentFlowController.index}">Comprar</a>}*
+
             </div>
         </div>
     </form>
