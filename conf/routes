@@ -11,6 +11,7 @@ POST    /checkout                               PaymentFlowController.index
 GET     /checkout/callback                      PaymentFlowController.callback
 GET     /checkout/confirmation                  PaymentConfirmController.index
 
+
 # Ignore favicon requests
 GET     /favicon.ico                            404
 

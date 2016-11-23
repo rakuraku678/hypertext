@@ -13,8 +13,8 @@
             <form id="flightSearchForm" class="form-search-travel" action="" method="">
                 <div class="form-group col-md-12">
                     <label>Origen:</label>
-                    <input type="text" name="origen" class="form-control"
-                           placeholder="Santiago de Chile" value="EZE">
+                    <select name="origen" class="form-control" placeholder="Santiago de Chile" id="origin" >
+                    </select
                 </div>
                 <div class="form-group col-md-12">
                     <label>Destino:</label>
@@ -109,6 +109,19 @@
 
                         event.preventDefault();
                     });
+                    
+                    
+                    
+                    
+                    $('#origin').select2({
+					  ajax: {
+					   		 url: "@@{SearchController.getAutoComplete}",
+					   		 delay: 250,
+					   		 dataType: 'json'
+					  }
+					});
+                    
+           
                 });
             #{/set}
             </form>

@@ -10,6 +10,7 @@
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,400,300,600,700' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/bootstrap.css'}">
 
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 
         <link type="text/css" rel="stylesheet" href="@{'/public/stylesheets/nouislider.min.css'}" media="screen"/>
 
@@ -46,8 +47,12 @@
             #{/else}
         
         <script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
+     
+	
         <script src="@{'/public/javascripts/bootstrap.js'}" type="text/javascript" charset="${_response_encoding}"></script>
 
+
+		<script src="@@{'/public/javascripts/select2.full.min.js'}"></script>
 
         <script src="@@{'/public/javascripts/nouislider.min.js'}"></script>
 
