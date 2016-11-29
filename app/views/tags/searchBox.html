@@ -1,3 +1,5 @@
+
+
 <button class="btn btn-primary btn-search-mobile" type="button" data-toggle="collapse"
         data-target="#collapseSearchMobile" aria-expanded="false" aria-controls="collapseSearchMobile">
     <ul>
@@ -13,31 +15,35 @@
             <form id="flightSearchForm" class="form-search-travel" action="" method="">
                 <div class="form-group col-md-12">
                     <label>Origen:</label>
-                    <select name="origen" class="form-control" placeholder="Santiago de Chile" id="origin" >
-                    </select
+                    <select name="origenSlc" class="form-control" id="origin" > </select>
+                    <input type="hidden" name="origen" id="originHdn" /> 
                 </div>
                 <div class="form-group col-md-12">
                     <label>Destino:</label>
-                    <input type="text" name="destino" class="form-control"
-                           placeholder="Iguazu" value="MIA">
+                    <select  name="destinoSlc" class="form-control" id="destiny"> </select>
+                    <input type="hidden" name="destino" id="destinyHdn" />
                 </div>
                 <div class="form-group col-xs-6">
                     <label>Partida:</label>
-                    <div class="input-group date" data-provide="datepicker">
-                        <input type="text" name="partida" class="calendar-input form-control" value="2016-11-02">
-                        <i class="bg-calendar input-group-addon"></i>
-                    </div>
+                    	<div class='input-group date' id='datetimepicker1'>
+                            <input type="text" name="partida" autocomplete="off" id="startDate"
+                                   class="form-control"  style="border-right: 0; padding-right: 0;">
+        					<i class="bg-calendar input-group-addon"></i>
+                        </div>
                 </div>
                 <div class="form-group col-xs-6">
                     <label>Regreso:</label>
-                    <div class="input-group date" data-provide="datepicker">
-                        <input type="text" name="regreso" class="calendar-input form-control" value="2016-11-15">
-                        <i class="bg-calendar input-group-addon"></i>
+                    <div class='input-group date' id='datetimepicker1'>
+                        <input type="text" name="regreso" id="endDate" autocomplete="off"
+                               class="form-control" value="${endDate}"
+                               style="border-right: 0; padding-right: 0;">
+    					<i class="bg-calendar input-group-addon"></i>
+    					</span>
                     </div>
                 </div>
                 <div class="form-group col-xs-4">
                     <label>Adultos:</label>
-                    <select class="bg-arrow form-control" name="passengercount">
+                    <select id="adultCount" class="bg-arrow form-control" name="passengercount">
                         <option>1</option>
                         <option>2</option>
                         <option>3</option>
@@ -50,7 +56,8 @@
                 </div>
                 <div class="form-group col-xs-4">
                     <label>Niños:</label>
-                    <select class="bg-arrow form-control">
+                    <select id="childrenCount" class="bg-arrow form-control">
+                    	<option>0</option>
                         <option>1</option>
                         <option>2</option>
                         <option>3</option>
@@ -60,7 +67,8 @@
                 </div>
                 <div class="form-group col-xs-4">
                     <label>Infantes:</label>
-                    <select class="bg-arrow form-control">
+                    <select id="infantCount" class="bg-arrow form-control">
+                        <option>0</option>
                         <option>1</option>
                         <option>2</option>
                         <option>3</option>
@@ -78,6 +86,10 @@
 
                     $("#flightSearchForm").submit(function(event) {
 
+						if ($('#adultCount').val()*2<parseInt($('#childrenCount').val())+parseInt($('#infantCount').val())){
+							alert("La cantidad de niños e infantes tiene un máximo de dos por adulto.");
+							return false;
+						}
                         $( "#loading_departure_city").html($(this).find('input[name="origen"]').val());
                         $( "#loading_return_city").html($(this).find('input[name="destino"]').val());
 
@@ -112,16 +124,77 @@
                     
                     
                     
+                   
+                    $("#origin, #destiny").select2({
+						  ajax: {
+						    url: "@@{SearchController.getAutoComplete}",
+						    dataType: 'json',
+						    delay: 250,
+						    language: "es",
+						    data: function (params) {
+						      return {
+						        q: params.term, // search term
+						        page: params.page
+						      };
+						    },
+						    processResults: function (data, params) {
+						      params.page = params.page || 1;
+						
+						      return {
+						        results: data.items,
+						        pagination: {
+						          more: (params.page * 30) < data.total_count
+						        }
+						      };
+						    },
+						    cache: true
+						  },
+						  escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+						  minimumInputLength: 1,
+						  templateResult: formatRepo,
+						  templateSelection: formatRepoSelection
+					  }).on("change", function(e) {
+					  		if (this.id=='origin') {
+					  			$('#originHdn').val($('#origin').select2('data')[0].id);
+					  		}
+					  		else {
+					  			$('#destinyHdn').val($('#destiny').select2('data')[0].id);
+					  		}
+				        });
+ ;
+ 
+ 
+ 
+ 
                     
-                    $('#origin').select2({
-					  ajax: {
-					   		 url: "@@{SearchController.getAutoComplete}",
-					   		 delay: 250,
-					   		 dataType: 'json'
-					  }
-					});
-                    
+
+					  
+           //GET DE DATOS: $('#destiny').select2('data')[0].id
            
+				        $('#startDate').datepicker({
+				            minDate: tomorrow,
+				            dateFormat: 'yy-mm-dd',
+				            language: "es",
+				            orientation: "top left",
+				            numberOfMonths: 2,
+				            autoclose: true,
+				            onClose: function (selectedDate) {
+				                var min = $(this).datepicker('getDate') || new Date();
+				                min.setDate(min.getDate() + 1);
+				                $("#endDate").datepicker("option", {minDate: min});
+				                $("#endDate").datepicker("show");
+				            }
+				        });
+				        $('#endDate').datepicker({
+				            minDate: tomorrow2,
+				            dateFormat: 'yy-mm-dd',
+				            language: "es",
+				            orientation: "top left",
+				            numberOfMonths: 2,
+				            autoclose: true
+				        });
+									    
+    
                 });
             #{/set}
             </form>
@@ -133,7 +206,38 @@
 
 #{set 'moreScripts'}
     #{get 'moreScripts' /}
+ 
+ var queryResults;
+ 
 
+    var tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    var tomorrow2 = (new Date()).setDate(tomorrow.getDate() + 1);
+    
+    
+ 
+ function markMatch(text, markup) {
+    markup.push("<span class='select2-matched'>");
+    markup.push(text);
+    markup.push("</span>");
+}
+
+
+    function formatRepoSelection (place) {
+      return place.city;
+    }
+    
+     function formatRepo (place) {
+      var markup=[];
+      if (!place)return place;
+      markMatch(place.name + " (" + place.id + ")", markup);
+      return markup.join("");
+    }
+    
+    
+    
+ 
 function getPriceSuggestionMatrixParams() {
     var searchForm = $("#flightSearchForm");
     return $.param({

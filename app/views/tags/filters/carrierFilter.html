@@ -14,7 +14,7 @@
     #{list items:_carriers.keySet(), as:'carriersKey'}
         <div class="checkbox">
             <label>
-                <input type="checkbox" name="includedcarriers" value="${carriersKey}">
+                <input class="chkAerolinea" type="checkbox" name="includedcarriers" value="${carriersKey}" checked="checked">
                 <img src="public/img/lan.jpg" title="" alt=""><span class="txt-checkbox"> ${carriersKey}</span>
             </label>
             <div class="box-number"><span>${_carriers.get(carriersKey)}</span></div>
@@ -23,3 +23,31 @@
 
     </div>
 </div>
+
+<script>
+
+$(document).ready(function() {
+	
+	$('.chkAerolinea').change(function() {
+        if(!$(this).is(":checked")) {
+        	$("div").find("[data-airline='" + "\""+ $(this).val() +"\"" + "']").hide();
+        	$('#clearCarriersFilter').prop('checked', false);
+        }
+        else {
+        	$("div").find("[data-airline='" + "\""+ $(this).val() +"\"" + "']").show();
+        }
+    });
+	
+	$('#clearCarriersFilter').change(function() {
+        if($(this).is(":checked")) {
+        	$(".ticketBaxer").show();
+        	$('.chkAerolinea').prop('checked', true);
+        }
+        else {
+        	$(".ticketBaxer").hide();
+        	$('.chkAerolinea').prop('checked', false);
+        }
+    });
+	
+});
+</script>

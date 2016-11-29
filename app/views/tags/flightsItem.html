@@ -1,4 +1,4 @@
-<div class="row ticket">
+<div class="row ticket ticketBaxer" data-airline="${_flight.departureSegment.detail.get(0).operatingAirlineCode}"> 
     <form class="form-ticket" action="@{PaymentFlowController.index}" method="post">
         <div class="col-md-9 info-flight">
             <ul>
@@ -36,17 +36,17 @@
                                 <span class="stop-txt">Directo</span>
                                 <span class="line-route"></span>
                             #{/if}
-                            #{if connectionsCount == 1 }
+                            #{elseif connectionsCount == 1 }
                                 <span class="stop-txt">${connectionsCount} escala</span>
                                 <span class="circle"></span>
                                 <span class="line-route"></span>
-                            #{/if}
-                            #{if connectionsCount == 2 }
+                            #{/elseif}
+                            #{elseif connectionsCount >= 2 }
                                 <span class="stop-txt">${connectionsCount} escalas</span>
                                 <span class="circle left-circle"></span>
                                 <span class="circle right-circle"></span>
                                 <span class="line-route"></span>
-                            #{/if}
+                            #{/elseif}
                             </a>
                         </li>
                         <li class="hour-of-flight">

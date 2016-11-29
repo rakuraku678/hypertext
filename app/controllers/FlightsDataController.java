@@ -1,11 +1,14 @@
 package controllers;
 
-import com.google.gson.JsonElement;
 import models.FlightsResultsFilters;
 import play.mvc.Controller;
 import utils.ApiFlightsSdk.v1.FlightsAltenateDates;
 import utils.ApiFlightsSdk.v1.FlightsSearch;
 import utils.dtos.AlternateDatesDto;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 public class FlightsDataController extends Controller {
 
@@ -22,6 +25,8 @@ public class FlightsDataController extends Controller {
         flightsSearch.setInboundarrivalwindow(params.get("inboundarrivalwindow"));
         JsonElement flightsResults = flightsSearch.process();
 
+        
+   
         FlightsResultsFilters flightsResultsFilters = FlightsResultsFilters.processFlightsResults(flightsResults);
 
 

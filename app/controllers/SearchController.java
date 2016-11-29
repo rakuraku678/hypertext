@@ -14,9 +14,6 @@ public class SearchController extends Controller {
     public static void getAutocomplete(String q) {
        
     	
-    	System.out.println("me llego: "+q);
-    	
-    	
     	try {
 	    	
 	    	String url =  Play.configuration.getProperty("api.flight.url")+"/v1/getAutocomplete?q="+q;
@@ -26,8 +23,8 @@ public class SearchController extends Controller {
 	    	//request.authenticate(paymentApiUser, paymentApiPassword);
 			
 			JsonElement response = request.get().getJson();
-			System.out.println("sending response: "+response.toString());
-			renderJSON(response);
+			System.out.println("sending response: "+"{\"items\":"+response.toString()+"}");
+			renderText("{\"items\":"+response.toString()+"}");
 			
 		} catch (Exception e) {
 			System.out.println(e.getStackTrace().toString());
