@@ -6,7 +6,7 @@
 
         <div class="checkbox">
             <label>
-                <input type="radio" name="outboundflightstops" value="" checked> Todas las escalas
+                <input type="radio" name="outboundflightstops" value="x" checked class="escalaRd"> Todas las escalas
             </label>
             <div class="box-number selected-box"><span>??</span></div>
         </div>
@@ -14,7 +14,7 @@
 
         <div class="checkbox">
             <label>
-                <input type="radio" name="outboundflightstops" value="0"> Directo
+                <input type="radio" name="outboundflightstops" value="0" class="escalaRd"> Directo
             </label>
             <div class="box-number"><span>??</span></div>
         </div>
@@ -22,7 +22,7 @@
 
         <div class="checkbox">
             <label>
-                <input type="radio" name="outboundflightstops" value="1"> 1 escala
+                <input type="radio" name="outboundflightstops" value="1" class="escalaRd"> 1 escala
             </label>
             <div class="box-number"><span>??</span></div>
         </div>
@@ -30,10 +30,30 @@
 
         <div class="checkbox">
             <label>
-                <input type="radio" name="outboundflightstops" value="2"> 2 o más escalas
+                <input type="radio" name="outboundflightstops" value="2" class="escalaRd"> 2 o más escalas
             </label>
             <div class="box-number"><span>??</span></div>
         </div>
 
     </div>
 </div>
+
+
+
+<script>
+
+$(document).ready(function() {
+	
+	$('.escalaRd').change(function() {
+		if ($(this).val()=='x'){
+			$('.ticketBaxer').show();
+		}
+		else {
+			$('.ticketBaxer').hide();
+        	$("div").find("[data-escala='" + $(this).val() + "']").show();
+		}
+    });
+	
+	
+});
+</script>

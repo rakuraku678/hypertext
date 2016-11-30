@@ -16,15 +16,37 @@
 
 
         <div class="checkbox">
-            <strong class="price-number-left price-range-slider-start-label"></strong>
-            <strong class="price-number-right price-range-slider-end-label"></strong>
+            <strong class="price-number-left price-range-slider-start-label" id="leftPriceRange"></strong>
+            <strong class="price-number-right price-range-slider-end-label" id="rightPriceRange"></strong>
             <div class="price-range-slider"></div>
 
             <div class="btn-filter">
-                <a href="" class="btn btn-search">Aplicar filtros</a>
+                <a href="#" class="btn btn-search" id="aplFilters">Aplicar filtros</a>
             </div>
 
         </div>
 
     </div>
 </div>
+
+<script>
+
+$(document).ready(function() {
+	
+	$('#aplFilters').click(function() {
+        var leftPrice = parseInt($("#leftPriceRange").html().substring(1));
+        var rightPrice = parseInt($("#rightPriceRange").html().substring(1));
+
+        $(".ticketBaxer").each(function( index ) {
+        	var price = parseInt($(this).data("price"))
+        	if (price<=rightPrice && price>=leftPrice ) {
+        		 $(this).show();
+        	}
+        	else {
+        		$(this).hide();
+        	}
+        });
+    });
+	
+});
+</script>
