@@ -1,9 +1,11 @@
-<div class="active-filter">
-    <h4>Filtros activos:</h4>
+  *{
+  <div class="active-filter">
+  <h4>Filtros activos:</h4>
     <div class="box-active-filter"><span class="txt-filter-activer">LATAM</span><i class="icon-close-filter"></i></div>
     <div class="box-active-filter"><span class="txt-filter-activer"></span><i class="icon-close-filter"></i></div>
+   
 </div>
-
+ }*
 <form id="filterResultForm" action="" method="" class="filter-arrive">
     #{filters.stopsFilter/}
     #{filters.carrierFilter carriers:_flightsResultsFilters.carriers /}
@@ -16,21 +18,21 @@
         <div class="body-filter">
             <span class="txt-filter">Ida:</span>
                 <div class="box-range">
-                  <strong class="price-number-left time-range-slider-start-from-label"></strong>
-                  <strong class="price-number-right time-range-slider-end-from-label"></strong>
+                  <strong class="price-number-left time-range-slider-start-from-label" id="idaHorarioLeft"></strong>
+                  <strong class="price-number-right time-range-slider-end-from-label" id="idaHorarioRight"></strong>
                 </div>
                 <div class="hour-range-from-slider"></div> 
                 <hr>
             <span class="txt-filter">Vuelta:</span>
 
                 <div class="box-range">
-                  <strong class="price-number-left time-range-slider-start-to-label"></strong>
-                  <strong class="price-number-right time-range-slider-end-to-label"></strong>
+                  <strong class="price-number-left time-range-slider-start-to-label" id="vueltaHorarioLeft"></strong>
+                  <strong class="price-number-right time-range-slider-end-to-label" id="vueltaHorarioRight"></strong>
                 </div>
                 <div class="hour-range-to-slider"></div> 
 
             <div class="btn-filter">
-                <a href="" class="btn btn-search">Aplicar filtros</a>
+                <a href="#" class="btn btn-search" id="aplFiltrosHorarios">Aplicar filtros</a>
             </div>
         </div>
     </div>
@@ -41,38 +43,24 @@
         </div>
         <div class="body-filter">
             <span class="txt-filter">Ida:</span>
-            <div class="checkbox">
-                <label>
-                  <input type="checkbox" checked> Todas los aeropuertos
-                </label>
-                <div class="box-number selected-box"><span>524</span></div>
-            </div>
 
             <div class="checkbox">
                 <label>
-                  <input type="checkbox"> Aeropuerto Buenos Aires Ministro Pistarini Ezeiza
-                </label>
-                <div class="box-number"><span>24</span></div>
-            </div>
-            <div class="checkbox">
-                <label>
-                  <input type="checkbox"> Partida y Regreso por el mismo aeropuerto
+                	#{list items:_flightsResultsFilters.outboundAirport.keySet(), as:'airportKey'}
+                		<input type="checkbox" checked="checked" class="aeroChkDeparture" value="${airportKey}"> ${airportKey}
+				    #{/list}
                 </label>
             </div>
             <hr>
             <span class="txt-filter">Vuelta:</span>
-            <div class="checkbox">
-                <label>
-                  <input type="checkbox" checked> Todas los aeropuertos
-                </label>
-                <div class="box-number selected-box"><span>524</span></div>
-            </div>
+
 
             <div class="checkbox">
                 <label>
-                  <input type="checkbox"> Aeropuerto Buenos Aires Ministro Pistarini Ezeiza
+                	#{list items:_flightsResultsFilters.inboundAirport.keySet(), as:'airportKey'}
+                		<input type="checkbox" checked="checked" class="aeroChkReturn" value="${airportKey}"> ${airportKey}<br />
+				    #{/list}
                 </label>
-                <div class="box-number"><span>24</span></div>
             </div>
             
         </div>
@@ -86,19 +74,19 @@
             <div class="">
                 <span class="txt-filter">Ida:</span>
                 <div class="box-range">
-                    <strong class="duration-slider-start-label"></strong> 
+                    <strong class="duration-slider-start-label" id="idaDuracion" ></strong> 
                     
                     <div class="duration-start-slider"></div>
                 </div>
                 <hr>
                 <span class="txt-filter">Vuelta:</span>
                 <div class="box-range">
-                    <strong class="duration-slider-end-label"></strong> 
+                    <strong class="duration-slider-end-label" id="vueltaDuracion"></strong> 
                     
                     <div class="duration-end-slider"></div>
                 </div>
                 <div class="btn-filter">
-                    <a href="" class="btn btn-search">Aplicar filtros</a>
+                    <a href="#" class="btn btn-search" id="aplFiltrosDur">Aplicar filtros</a>
                 </div>
                 
             </div>
@@ -106,47 +94,85 @@
         </div>
     </div>
 
-
-    <div class="box-filter">
-        <div class="header-filter">
-            <h3>Alianzas<i class="arrow-down"></i></h3>
-        </div>
-        <div class="body-filter">
-       
-            <div class="checkbox">
-                <label>
-                  <input type="checkbox" checked> Todas las escalas
-                </label>
-                <div class="box-number selected-box"><span>34</span></div>
-            </div>
-
-
-            <div class="checkbox">
-                <label>
-                  <input type="checkbox">
-                    <img src="public/img/lan.jpg" title="" alt=""><span class="txt-checkbox">Sky Team</span>
-                </label>
-                <div class="box-number"><span>24</span></div>
-            </div>
-
-
-            <div class="checkbox">
-                <label>
-                  <input type="checkbox"><img src="public/img/lan.jpg" title="" alt=""><span class="txt-checkbox"> One World</span>
-                </label>
-                <div class="box-number"><span>14</span></div>
-            </div>
-
-
-            <div class="checkbox">
-                <label>
-                  <input type="checkbox"><img src="public/img/lan.jpg" title="" alt=""><span class="txt-checkbox"> Star Alliance</span>
-                </label>
-                <div class="box-number"><span>304</span></div>
-            </div>
-
-        </div>
-    </div>
 </form>
+
+
+<script>
+
+$(document).ready(function() {
+	
+	$('#aplFiltrosHorarios').click(function() {
+        
+        var idaHorarioLeft = parseInt($("#idaHorarioLeft").html().replace(":",''));
+        var idaHorarioRight = parseInt($("#idaHorarioRight").html().replace(":",''));
+
+        var vueltaHorarioLeft = parseInt($("#vueltaHorarioLeft").html().replace(":",''));
+        var vueltaHorarioRight = parseInt($("#vueltaHorarioRight").html().replace(":",''));
+        
+        $(".ticketBaxer").each(function( index ) {
+        	var departureTime = parseInt($(this).data("departuretime").replace(":",''));
+        	var returnTime = parseInt($(this).data("returntime").replace(":",''));
+        	if (departureTime>=idaHorarioLeft && departureTime<=idaHorarioRight && returnTime>=vueltaHorarioLeft && returnTime<=vueltaHorarioRight) {
+        		 $(this).show();
+        	}
+        	else {
+        		$(this).hide();
+        	}
+        });
+    });
+	
+	$('#aplFiltrosDur').click(function() {
+		var idaDuracion = parseInt($("#idaDuracion").html()) * 60;
+		var vueltaDuracion = parseInt($("#vueltaDuracion").html()) * 60;
+		 $(".ticketBaxer").each(function( index ) {
+	        	var departureElapsedTime = parseInt($(this).data("departureelapsedtime"));
+	        	var returnElapsedTime = parseInt($(this).data("returnelapsedtime"));
+	        	if (idaDuracion>=departureElapsedTime && vueltaDuracion>=returnElapsedTime) {
+	        		 $(this).show();
+	        	}
+	        	else {
+	        		$(this).hide();
+	        	}
+	     });
+	});
+	
+	$('.aeroChkDeparture').change(function() {
+		var readchecks= new Array();
+		 $(".aeroChkDeparture").each(function( index ) {
+			 	if ( !readchecks.includes($(this).val())) {
+					if ($(this).prop('checked')){
+						$("div").find("[data-airportDeparture='" + $(this).val() + "']").show();
+					}
+					else {
+						$("div").find("[data-airportDeparture='" + $(this).val() + "']").hide();
+					}
+					readchecks.push($(this).val());
+			 	}
+
+				
+			 
+		 });
+       	
+   });
+	
+	$('.aeroChkReturn').change(function() {
+		var readchecks= new Array();
+		 $(".aeroChkReturn").each(function( index ) {
+			 if ( !readchecks.includes($(this).val())) {
+				if ($(this).prop('checked')){
+					$("div").find("[data-airportReturn='" + $(this).val() + "']").show();
+				}
+				else {
+					$("div").find("[data-airportReturn='" + $(this).val() + "']").hide();
+				}
+				readchecks.push($(this).val());
+			 }
+		 });
+        	
+    });
+	
+});
+
+</script>
 
 

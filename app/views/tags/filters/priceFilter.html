@@ -21,7 +21,7 @@
             <div class="price-range-slider"></div>
 
             <div class="btn-filter">
-                <a href="#" class="btn btn-search" id="aplFilters">Aplicar filtros</a>
+                <a href="#" class="btn btn-search" id="aplFiltersPrice">Aplicar filtros</a>
             </div>
 
         </div>
@@ -33,7 +33,7 @@
 
 $(document).ready(function() {
 	
-	$('#aplFilters').click(function() {
+	$('#aplFiltersPrice').click(function() {
         var leftPrice = parseInt($("#leftPriceRange").html().substring(1));
         var rightPrice = parseInt($("#rightPriceRange").html().substring(1));
 
@@ -47,6 +47,5 @@ $(document).ready(function() {
         	}
         });
     });
-	
 });
 </script>
