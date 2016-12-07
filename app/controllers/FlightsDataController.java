@@ -2,33 +2,26 @@ package controllers;
 
 import models.FlightsResultsFilters;
 import play.mvc.Controller;
+import utils.ApiFlightsSdk.v1.BFMSearch;
 import utils.ApiFlightsSdk.v1.FlightsAltenateDates;
-import utils.ApiFlightsSdk.v1.FlightsSearch;
 import utils.dtos.AlternateDatesDto;
 
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 public class FlightsDataController extends Controller {
 
     public static void index() throws InterruptedException {
-        FlightsSearch flightsSearch = new FlightsSearch();
-        flightsSearch.setOrigin(params.get("origin"));
-        flightsSearch.setDestination(params.get("destination"));
-        flightsSearch.setDeparturedate(params.get("departuredate"));
-        flightsSearch.setReturndate(params.get("returndate"));
-        flightsSearch.setPassengercount(params.get("passengercount"));
-        flightsSearch.setOutboundflightstops(params.get("outboundflightstops"));
-        flightsSearch.setIncludedcarriers(params.get("includedcarriers"));
-        flightsSearch.setOutbounddeparturewindow(params.get("outbounddeparturewindow"));
-        flightsSearch.setInboundarrivalwindow(params.get("inboundarrivalwindow"));
-        JsonElement flightsResults = flightsSearch.process();
+        BFMSearch bfmSearch  = new BFMSearch();
+        bfmSearch.setOrigin(params.get("origin"));
+        bfmSearch.setDestination(params.get("destination"));
+        bfmSearch.setDeparturedate(params.get("departuredate"));
+        bfmSearch.setReturndate(params.get("returndate"));
+        bfmSearch.addPassengerType("ADT", params.get("adultcount"));
+        bfmSearch.addPassengerType("C02", params.get("childrencount"));
+        bfmSearch.addPassengerType("INF", params.get("infantcount"));
+        JsonElement flightsResults = bfmSearch.process();
 
-        
-   
         FlightsResultsFilters flightsResultsFilters = FlightsResultsFilters.processFlightsResults(flightsResults);
-
 
         renderTemplate("FlightsDataController/flightsData.html",flightsResults, flightsResultsFilters);
     }

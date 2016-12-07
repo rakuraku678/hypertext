@@ -43,7 +43,7 @@
                 </div>
                 <div class="form-group col-xs-4">
                     <label>Adultos:</label>
-                    <select id="adultCount" class="bg-arrow form-control" name="passengercount">
+                    <select id="adultCount" class="bg-arrow form-control" name="adultcount">
                         <option>1</option>
                         <option>2</option>
                         <option>3</option>
@@ -56,7 +56,7 @@
                 </div>
                 <div class="form-group col-xs-4">
                     <label>Niños:</label>
-                    <select id="childrenCount" class="bg-arrow form-control">
+                    <select id="childrenCount" class="bg-arrow form-control" name="childrencount">
                     	<option>0</option>
                         <option>1</option>
                         <option>2</option>
@@ -67,7 +67,7 @@
                 </div>
                 <div class="form-group col-xs-4">
                     <label>Infantes:</label>
-                    <select id="infantCount" class="bg-arrow form-control">
+                    <select id="infantCount" class="bg-arrow form-control" name="infantcount">
                         <option>0</option>
                         <option>1</option>
                         <option>2</option>
@@ -245,7 +245,7 @@ function getPriceSuggestionMatrixParams() {
         destination: searchForm.find('input[name="destino"]').val(),
         departuredate: searchForm.find('input[name="partida"]').val(),
         returndate: searchForm.find('input[name="regreso"]').val(),
-        passengercount: searchForm.find('select[name="passengercount"]').val(),
+        passengercount: searchForm.find('select[name="adultcount"]').val(),
     });
 }
 
@@ -257,12 +257,9 @@ function getSearchParams() {
         destination: searchForm.find('input[name="destino"]').val(),
         departuredate: searchForm.find('input[name="partida"]').val(),
         returndate: searchForm.find('input[name="regreso"]').val(),
-        passengercount: searchForm.find('select[name="passengercount"]').val(),
-        outboundflightstops: filterForm.find('input[name="outboundflightstops"]:checked').val(),
-        includedcarriers: filterForm.find('input[name="includedcarriers"]:checked').map(
-                            function () {
-                                return this.value;
-                            }).get().join(",")
+        adultcount: searchForm.find('select[name="adultcount"]').val(),
+        childrencount: searchForm.find('select[name="childrencount"]').val(),
+        infantcount: searchForm.find('select[name="infantcount"]').val()
     });
 }
 
