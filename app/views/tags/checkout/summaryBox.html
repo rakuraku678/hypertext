@@ -1,0 +1,31 @@
+<div class="box-info-payment">
+    <div class="head-payment">
+        <h3 class="title-payment">Tu reserva</h3>
+    </div>
+    <table class="detail-payment-table">
+        <thead>
+        <tr>
+            <th></th>
+            <th>Pasajeros</th>
+            <th>Precio</th>
+            <th>Impuestos</th>
+            <th>Subtotal</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td></td>
+            <td class="txt-payment-table-mark">${_checkoutPostDto.passenger} Adultos</td>
+            <td>$${_checkoutPostDto.passengerFare}</td>
+            <td>$${_checkoutPostDto.taxFare}</td>
+            <td class="txt-payment-table-mark">$${_checkoutPostDto.totalFare}</td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="total-payment">
+        <ul>
+            <li>Total</li>
+            <li>$${_checkoutPostDto.totalFare}</li>
+        </ul>
+    </div>
+</div>

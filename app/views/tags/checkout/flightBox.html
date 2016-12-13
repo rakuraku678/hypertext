@@ -1,0 +1,34 @@
+<div class="box-info-payment">
+    <div class="head-payment">
+        <h3 class="title-payment">Tu vuelo</h3>
+    </div>
+    <div class="body-payment detail-fly-payment">
+        <ul>
+            <li>
+                <a class="btn icon-arrow-payment" data-toggle="collapse" href="#detailFlyTo" aria-expanded="false" aria-controls="detailFlyTo">
+                    <i class="icon-fly"></i>
+                    <span class="title-payment">Ida</span>
+                    <span class="date-fly-payment">${_checkoutPostDto.departureDate} (${_checkoutPostDto.departureAirportCode} > ${_checkoutPostDto.returnAirportCode})</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="collapse" id="detailFlyTo">
+        #{checkout.flightDetail /}
+        </div>
+
+        <ul>
+            <li>
+                <a class="btn icon-arrow-payment" data-toggle="collapse" href="#detailFlyFrom" aria-expanded="false" aria-controls="detailFlyFrom">
+                    <i class="icon-fly-vuelta"></i>
+                    <span class="title-payment">Vuelta</span>
+                    <span class="date-fly-payment">${_checkoutPostDto.returnDate} (${_checkoutPostDto.returnAirportCode} > ${_checkoutPostDto.departureAirportCode})</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="collapse" id="detailFlyFrom">
+            #{checkout.flightDetail /}
+        </div>
+    </div>
+</div>
