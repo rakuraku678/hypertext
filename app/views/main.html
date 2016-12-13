@@ -20,6 +20,10 @@
 		<link href="@{'/public/stylesheets/jquery-ui-1.10.4.datepicker.css'}?v=0.1" rel="stylesheet">
 		
         <link href="${play.configuration.getProperty('agency.cdn')}/public/stylesheets/${agencyConfigurationDto.template}/base.css" rel="stylesheet" media="screen,print">
+
+
+
+
         <style>${agencyConfigurationDto.customCss}</style>
     </head>
     <body>
@@ -58,12 +62,14 @@
         <script src="@@{'/public/javascripts/nouislider.min.js'}"></script>
 
 
-		<script type="text/javascript" src="@{'/public/javascripts/jquery-ui-1.10.4.datepicker.js'}"></script>
+    	<script type="text/javascript" src="@{'/public/javascripts/jquery-ui-1.10.4.datepicker.js'}"></script>
+
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 		<script type="text/javascript" src="@{'/public/javascripts/jquery.ui.datepicker-es.js'}"></script>
 		
 
-
         <script type="text/javascript">
+
 //            $(function () {
 //                $('[data-toggle="tooltip"]').tooltip()
 //            });
@@ -251,6 +257,7 @@
 //            });
 
 
+                
 
             #{get 'moreScripts' /}
         </script>

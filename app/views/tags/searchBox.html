@@ -25,7 +25,7 @@
                 </div>
                 <div class="form-group col-xs-6">
                     <label>Partida:</label>
-                    	<div class='input-group date' id='datetimepicker1'>
+                    	<div class='input-group date' id='starDateBtn'>
                             <input type="text" name="partida" autocomplete="off" id="startDate"
                                    class="form-control"  style="border-right: 0; padding-right: 0;">
         					<i class="bg-calendar input-group-addon"></i>
@@ -33,7 +33,7 @@
                 </div>
                 <div class="form-group col-xs-6">
                     <label>Regreso:</label>
-                    <div class='input-group date' id='datetimepicker1'>
+                    <div class='input-group date' id='endDateBtn'>
                         <input type="text" name="regreso" id="endDate" autocomplete="off"
                                class="form-control" value="${endDate}"
                                style="border-right: 0; padding-right: 0;">
@@ -161,41 +161,131 @@
 					  			$('#destinyHdn').val($('#destiny').select2('data')[0].id);
 					  		}
 				        });
- ;
- 
- 
- 
+ });
  
                     
 
-					  
-           //GET DE DATOS: $('#destiny').select2('data')[0].id
-           
-				        $('#startDate').datepicker({
-				            minDate: tomorrow,
-				            dateFormat: 'yy-mm-dd',
-				            language: "es",
-				            orientation: "top left",
-				            numberOfMonths: 2,
-				            autoclose: true,
-				            onClose: function (selectedDate) {
-				                var min = $(this).datepicker('getDate') || new Date();
-				                min.setDate(min.getDate() + 1);
-				                $("#endDate").datepicker("option", {minDate: min});
-				                $("#endDate").datepicker("show");
-				            }
-				        });
-				        $('#endDate').datepicker({
-				            minDate: tomorrow2,
-				            dateFormat: 'yy-mm-dd',
-				            language: "es",
-				            orientation: "top left",
-				            numberOfMonths: 2,
-				            autoclose: true
-				        });
-									    
-    
+			  var dateFormat = "dd/mm/yy";
+              var minDate = new Date(parseDate("18/12/2016"));
+              var maxDate = new Date(parseDate("09/10/2017"));
+
+              jQuery(function($) {
+                if (jQuery().datepicker) {
+                  $.datepicker.regional['es'] = {
+                      prevText: '',
+                      nextText: '',
+                      currentText: 'Hoy',
+                      monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                      monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                      dayNames: ['Domingo', 'Lunes', 'Martes', 'Mi&eacute;rcoles', 'Jueves', 'Viernes', 'S&aacute;bado'],
+                      dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mi&eacute;', 'Juv', 'Vie', 'S&aacute;b'],
+                      dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'S&aacute;'],
+                      weekHeader: 'Sm',
+                      firstDay: 1,
+                      isRTL: false,
+                      showMonthAfterYear: false,
+                      numberOfMonths: 2,
+                      dateFormat: dateFormat,
+                      yearSuffix: "",
+                      beforeShowDay: highlightDates
+                    };
+                  $.datepicker.setDefaults($.datepicker.regional['es']);
+                }
+              });
+              function parseDate(str) {
+                  var mdy = str.split('/')
+                  return new Date(parseInt(mdy[2], 10), (parseInt(mdy[1], 10) - 1), parseInt(mdy[0], 10));
+              }
+              String.prototype.replaceAll = function(search, replacement) {
+                  var target = this;
+                  return target.replace(new RegExp(search, 'g'), replacement);
+              }
+              function toSlash(str) {
+                return str.replaceAll("-","/");
+              }
+              function toHyphen(str) {
+                return str.replaceAll("/","-");
+              }
+
+                $( "#starDateBtn" ).click(function() {
+                    $("#startDate").datepicker('show')
                 });
+
+                $( "#endDateBtn" ).click(function() {
+                    $("#endDate").datepicker('show')
+                });
+
+                function getDate( element ) {
+                    var date;
+                    try {
+                        date = new Date(parseDate(element.val()));
+                    } catch( error ) {
+                        date = null;
+                    }
+                    return date;
+                }
+
+                function highlightDates(date) {
+                    var currentStartDate = getDate($("#startDate"));
+                    var currentEndDate = getDate($("#endDate"));
+
+                    if (date.getTime() === currentStartDate.getTime()) {
+                        return [true, "ui-datepicker-departure", ''];
+                    } else if (date.getTime()  === currentEndDate.getTime()) {
+                        return [true, "ui-datepicker-return", ''];
+                    } else if ( date < currentEndDate) {
+                        if (date > currentStartDate) {
+                            return [true, "ui-datepicker-range", ''];
+                        } else {
+                            return [true, '', ''];
+                        }
+                    } else {
+                        return [true, '', ''];
+                    }
+                }
+
+
+
+              $(function() {
+                $("#startDate").datepicker({
+                  minDate: 5,
+                  maxDate: 300,
+                  onClose: function(){
+                    $("#endDate").datepicker("show");
+                  }
+                }).on( "change", function() {
+                  var currentStartDate = getDate($("#startDate"));
+
+                  var min = $(this).datepicker("getDate") || new Date();
+                  min.setDate(min.getDate() + 1);
+                  if(currentStartDate <= minDate){
+                    $("#endDate").datepicker( "option", "minDate", minDate );
+                    $("#endDate").datepicker( "option", "maxDate", maxDate );
+                  }
+                  if(currentStartDate > minDate){
+                    $("#endDate").datepicker( "option", "minDate", currentStartDate );
+                  }
+                  //$("#endDate").datepicker("show");
+
+                });
+                $( "#departureDate" ).datepicker( "setDate", "" );
+              });
+              
+
+              $(function() {
+                $( "#endDate" ).datepicker({
+                  minDate: 5,
+                  maxDate: 300,
+                }).on( "change", function() {
+                  var currentEndDate = getDate($("#endDate"));
+                  if(currentEndDate <= maxDate){
+                    $("#departureDate").datepicker( "option", "minDate", minDate );
+                    $("#departureDate").datepicker( "option", "maxDate", currentEndDate );
+                  }
+                });
+                $( "#endDate" ).datepicker( "setDate", "" );
+              });
+
             #{/set}
             </form>
         </div>
