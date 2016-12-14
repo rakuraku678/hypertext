@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="9px" viewBox="0 0 20 9" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41.2 (35397) - http://www.bohemiancoding.com/sketch -->
+    <title>bg-arrow</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="bg-arrow" transform="translate(-1.000000, -1.000000)">
+            <path d="M15.0948667,2.15106667 L8.84453333,9.1664 C8.77766667,9.27293333 8.65753333,9.32846667 8.53286667,9.33186667 C8.52153333,9.33413333 8.5102,9.333 8.49773333,9.33413333 C8.48526667,9.333 8.47506667,9.333 8.4626,9.33186667 C8.33793333,9.32846667 8.21666667,9.27293333 8.15093333,9.1664 L1.9006,2.15106667 C1.79746667,1.98786667 1.85866667,1.77706667 2.0366,1.68186667 C2.21453333,1.5878 2.44346667,1.64333333 2.5466,1.80766667 L8.4966,8.48753333 L14.4466,1.80766667 C14.5497333,1.64446667 14.7786667,1.5878 14.9566,1.68186667 C15.1368,1.77593333 15.1991333,1.98673333 15.0948667,2.15106667 Z" id="Shape" fill="#666666"></path>
+            <rect id="Rectangle" x="0" y="0" width="21" height="11.3333333"></rect>
+            <rect id="Rectangle" fill="#FFFFFF" x="17" y="1.63614848" width="4" height="7.69798486"></rect>
+        </g>
+    </g>
+</svg>

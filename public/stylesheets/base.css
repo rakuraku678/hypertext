@@ -65,7 +65,7 @@
 	height: 40px;
 }
 .form-search-travel .bg-arrow {
-	background-image: url("../img/bg-arrow.svg");
+	background-image: url("../img/bg-arrow-down.svg");
 	background-repeat: no-repeat;
 	background-position: center right; 
 	-moz-appearance: none;
