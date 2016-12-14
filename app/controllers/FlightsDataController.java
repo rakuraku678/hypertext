@@ -15,8 +15,8 @@ public class FlightsDataController extends Controller {
         BFMSearch bfmSearch  = new BFMSearch();
         bfmSearch.setOrigin(params.get("origin"));
         bfmSearch.setDestination(params.get("destination"));
-        bfmSearch.setDeparturedate(params.get("departuredate"));
-        bfmSearch.setReturndate(params.get("returndate"));
+        bfmSearch.setDeparturedate(DateUtils.reformateDate(params.get("departuredate")));
+        bfmSearch.setReturndate(DateUtils.reformateDate(params.get("returndate")));
         bfmSearch.addPassengerType("ADT", params.get("adultcount"));
         bfmSearch.addPassengerType("C02", params.get("childrencount"));
         bfmSearch.addPassengerType("INF", params.get("infantcount"));
