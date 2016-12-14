@@ -26,7 +26,7 @@ lastRowDate = firstDepartureDate.minusDays(1);
                 <span>vuelta</span>
             </td>
             #{list items:0..6, as:'i'}
-                <td>${fmt.print(firstDepartureDate.plusDays(i))}</td>
+                <td>${endUserFmt.print(firstDepartureDate.plusDays(i))}</td>
             #{/list}
         </tr>
         #{list items:alternateDatesDto.detailAlternateDatesDtoList, as:'details'}
@@ -37,7 +37,7 @@ lastRowDate = firstDepartureDate.minusDays(1);
                     rowDepartureDate = null;
                 }%
                 <tr>
-                    <td class="bg-leaving">${fmt.print(details.returnDate)}</td>
+                    <td class="bg-leaving">${endUserFmt.print(details.returnDate)}</td>
             #{/if}
 
             %{
