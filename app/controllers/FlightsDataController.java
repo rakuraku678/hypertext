@@ -4,6 +4,7 @@ import models.FlightsResultsFilters;
 import play.mvc.Controller;
 import utils.ApiFlightsSdk.v1.BFMSearch;
 import utils.ApiFlightsSdk.v1.FlightsAltenateDates;
+import utils.DateUtils;
 import utils.dtos.AlternateDatesDto;
 
 import com.google.gson.JsonElement;
@@ -31,8 +32,8 @@ public class FlightsDataController extends Controller {
         FlightsAltenateDates flightsAltenateDates = new FlightsAltenateDates();
         flightsAltenateDates.setOrigin(params.get("origin"));
         flightsAltenateDates.setDestination(params.get("destination"));
-        flightsAltenateDates.setDeparturedate(params.get("departuredate"));
-        flightsAltenateDates.setReturndate(params.get("returndate"));
+        flightsAltenateDates.setDeparturedate(DateUtils.reformateDate(params.get("departuredate")));
+        flightsAltenateDates.setReturndate(DateUtils.reformateDate(params.get("returndate")));
         flightsAltenateDates.setPassengercount(params.get("passengercount"));
         JsonElement flightsAltenateDatesResults = flightsAltenateDates.process();
 
