@@ -2,6 +2,7 @@
 firstDepartureDate = alternateDatesDto.departuredate.minusDays(3);
 firstReturnDate = alternateDatesDto.returndate.minusDays(3);
 fmt = org.joda.time.format.DateTimeFormat.forPattern("yyyy-MM-dd");
+endUserFmt = org.joda.time.format.DateTimeFormat.forPattern("dd/MM/yyyy");
 lineReturnDate = null;
 rowDepartureDate = null;
 lastRowDate = firstDepartureDate.minusDays(1);
@@ -51,7 +52,7 @@ lastRowDate = firstDepartureDate.minusDays(1);
             #{if rowDepartureDate != details.departureDate }
             %{ rowDepartureDate = details.departureDate;}%
             %{ lastRowDate = details.departureDate;}%
-                <td><a href="#" class="pr-fare" data-from="${fmt.print(details.departureDate)}" data-to="${fmt.print(details.returnDate)}">$${details?.passengerFare.replace(".0","")}</a>
+                <td><a href="#" class="pr-fare" data-from="${endUserFmt.print(details.departureDate)}" data-to="${endUserFmt.print(details.returnDate)}">$${details?.passengerFare.replace(".0","")}</a>
                 *{${details.sequenceNumber}<br>}*
                 *{${details.passengerFare}<br>}*
                 *{${fmt.print(details.departureDate)}<br>}*
