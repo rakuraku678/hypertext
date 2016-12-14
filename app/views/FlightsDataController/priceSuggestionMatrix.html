@@ -51,7 +51,7 @@ lastRowDate = firstDepartureDate.minusDays(1);
             #{if rowDepartureDate != details.departureDate }
             %{ rowDepartureDate = details.departureDate;}%
             %{ lastRowDate = details.departureDate;}%
-                <td>$${details.passengerFare}
+                <td><a href="#" class="pr-fare" data-from="${fmt.print(details.departureDate)}" data-to="${fmt.print(details.returnDate)}">$${details?.passengerFare.replace(".0","")}</a>
                 *{${details.sequenceNumber}<br>}*
                 *{${details.passengerFare}<br>}*
                 *{${fmt.print(details.departureDate)}<br>}*
