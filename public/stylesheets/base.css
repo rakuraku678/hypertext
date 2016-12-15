@@ -688,6 +688,15 @@
 	width: 110px;
 	height: 35px;
 }
+.table-arrive table .pr-fare {
+	display: block;
+	padding: 10px 8px;
+	text-decoration: none;
+}
+.table-arrive table .pr-fare:hover {
+	background-color: #5E9AFC;
+	color: #fff;
+}
 .table-arrive .leaving-returning {
 	padding: 0;
 	text-transform: uppercase;

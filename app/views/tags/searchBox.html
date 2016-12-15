@@ -83,13 +83,12 @@
             #{get 'moreScripts' /}
                 $(document).ready(function() {
 
+var loadFlightData = (function() {
 
-                    $("#flightSearchForm").submit(function(event) {
-
-						if ($('#adultCount').val()*2<parseInt($('#childrenCount').val())+parseInt($('#infantCount').val())){
-							alert("La cantidad de niños e infantes tiene un máximo de dos por adulto.");
-							return false;
-						}
+            if ($('#adultCount').val()*2<parseInt($('#childrenCount').val())+parseInt($('#infantCount').val())){
+              alert("La cantidad de niños e infantes tiene un máximo de dos por adulto.");
+              return false;
+            }
                         $( "#loading_departure_city").html($(this).find('input[name="origen"]').val());
                         $( "#loading_return_city").html($(this).find('input[name="destino"]').val());
 
@@ -102,6 +101,7 @@
                             function (responseText, textStatus, XMLHttpRequest) {
                                 if (textStatus == "success") {
                                     $( "#priceSuggestionMatrix" ).show("slow");
+                                    onReadyMatrix();
                                 }
                             }
                         );
@@ -119,11 +119,27 @@
                             }
                         );
 
-                        event.preventDefault();
+                        
                     });
-                    
-                    
-                    
+
+                    $("#flightSearchForm").submit(function(event){
+                      event.preventDefault();
+                      loadFlightData();
+                    });
+
+
+              function onReadyMatrix(){
+                    $('a.pr-fare').click(function(e){
+                      e.preventDefault();
+
+                      $("#startDate").val($(this).data('from'));
+                      $("#endDate").val($(this).data('to'));
+                      $("#flightSearchForm").submit();
+
+                  });
+              }
+
+                                      
                    
                     $("#origin, #destiny").select2({
 						  ajax: {

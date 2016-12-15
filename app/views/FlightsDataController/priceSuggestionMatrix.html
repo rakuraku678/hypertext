@@ -1,6 +1,7 @@
 %{
 firstDepartureDate = alternateDatesDto.departuredate.minusDays(3);
 firstReturnDate = alternateDatesDto.returndate.minusDays(3);
+lastDepartureDate = alternateDatesDto.departuredate.plusDays(4);
 fmt = org.joda.time.format.DateTimeFormat.forPattern("yyyy-MM-dd");
 endUserFmt = org.joda.time.format.DateTimeFormat.forPattern("dd/MM/yyyy");
 lineReturnDate = null;
@@ -32,10 +33,17 @@ lastRowDate = firstDepartureDate.minusDays(1);
         #{list items:alternateDatesDto.detailAlternateDatesDtoList, as:'details'}
             #{if lineReturnDate != details.returnDate }
                 %{
+                    int daysMissing = org.joda.time.Days.daysBetween(lastRowDate, lastDepartureDate).getDays();
                     lineReturnDate = details.returnDate;
                     lastRowDate = firstDepartureDate.minusDays(1);;
                     rowDepartureDate = null;
                 }%
+                #{if daysMissing < 8 && daysMissing > 1  }
+                    #{list items:1..daysMissing-1, as:'i'}
+                    <td>-</td>
+                    #{/list}
+                #{/if}
+                </tr>
                 <tr>
                     <td class="bg-leaving">${endUserFmt.print(details.returnDate)}</td>
             #{/if}
@@ -59,9 +67,6 @@ lastRowDate = firstDepartureDate.minusDays(1);
                 *{${fmt.print(details.returnDate)}<br>}*
                 *{${details.flightsCount}<br>}*
                 </td>
-            #{/if}
-            #{if lineReturnDate != details.returnDate }
-                </tr>
             #{/if}
         #{/list}
         <tr class="bg-returning"><td colspan="8">Precio del pasaje ida y vuelta por persona. Los precios visualizados son los mejores encontrados por los usuarios en los últimos días y podrían no estar actualizados.</td></tr>
