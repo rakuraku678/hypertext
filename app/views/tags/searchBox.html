@@ -12,22 +12,22 @@
 <div class="collapse" id="collapseSearchMobile">
     <div class="well">
         <div class="bg-search">
-            <form id="flightSearchForm" class="form-search-travel" action="" method="">
+            <form id="flightSearchForm" class="form-search-travel" action="" method="" data-toggle="validator" role="form">
                 <div class="form-group col-md-12">
                     <label>Origen:</label>
-                    <select name="origenSlc" class="form-control" id="origin" > </select>
-                    <input type="hidden" name="origen" id="originHdn" /> 
+                    <select name="origenSlc" class="form-control percent" id="origin" > </select>
+                    <input type="hidden" name="origen" id="originHdn"/> 
                 </div>
                 <div class="form-group col-md-12">
                     <label>Destino:</label>
-                    <select  name="destinoSlc" class="form-control" id="destiny"> </select>
+                    <select  name="destinoSlc" class="form-control percent" id="destiny"> </select>
                     <input type="hidden" name="destino" id="destinyHdn" />
                 </div>
                 <div class="form-group col-xs-6">
                     <label>Partida:</label>
                     	<div class='input-group date' id='starDateBtn'>
                             <input type="text" name="partida" autocomplete="off" id="startDate"
-                                   class="form-control"  style="border-right: 0; padding-right: 0;">
+                                   class="form-control percent"  style="border-right: 0; padding-right: 0;">
         					<i class="bg-calendar input-group-addon"></i>
                         </div>
                 </div>
@@ -35,7 +35,7 @@
                     <label>Regreso:</label>
                     <div class='input-group date' id='endDateBtn'>
                         <input type="text" name="regreso" id="endDate" autocomplete="off"
-                               class="form-control" value="${endDate}"
+                               class="form-control percent" value="${endDate}"
                                style="border-right: 0; padding-right: 0;">
     					<i class="bg-calendar input-group-addon"></i>
     					</span>
@@ -83,7 +83,8 @@
             #{get 'moreScripts' /}
                 $(document).ready(function() {
 
-var loadFlightData = (function() {
+
+            var loadFlightData = (function() {
 
             if ($('#adultCount').val()*2<parseInt($('#childrenCount').val())+parseInt($('#infantCount').val())){
               alert("La cantidad de niños e infantes tiene un máximo de dos por adulto.");
@@ -122,9 +123,23 @@ var loadFlightData = (function() {
                         
                     });
 
-                    $("#flightSearchForm").submit(function(event){
-                      event.preventDefault();
-                      loadFlightData();
+
+
+                    $('#flightSearchForm').bootstrapValidator({
+                        fields: {
+                            'percentage': {
+                                selector: '.percent',
+                                validators: {
+                                    notEmpty: {
+                                        message: 'Este campo está vacio.'
+                                    }
+                                    
+                                }
+                            }
+                        },
+                        submitHandler: function(validator, form, submitButton) {
+                          loadFlightData();
+                        }
                     });
 
 
@@ -141,45 +156,136 @@ var loadFlightData = (function() {
 
                                       
                    
-                    $("#origin, #destiny").select2({
-						  ajax: {
-						    url: "@@{SearchController.getAutoComplete}",
-						    dataType: 'json',
-						    delay: 250,
-						    language: "es",
-						    data: function (params) {
-						      return {
-						        q: params.term, // search term
-						        page: params.page
-						      };
-						    },
-						    processResults: function (data, params) {
-						      params.page = params.page || 1;
-						
-						      return {
-						        results: data.items,
-						        pagination: {
-						          more: (params.page * 30) < data.total_count
-						        }
-						      };
-						    },
-						    cache: true
-						  },
-						  escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
-						  minimumInputLength: 1,
-						  templateResult: formatRepo,
-						  templateSelection: formatRepoSelection
-					  }).on("change", function(e) {
-					  		if (this.id=='origin') {
-					  			$('#originHdn').val($('#origin').select2('data')[0].id);
-					  		}
-					  		else {
-					  			$('#destinyHdn').val($('#destiny').select2('data')[0].id);
-					  		}
-				        });
- });
+            $("#origin").select2({
+              placeholder: {
+                "city": "Ingresa el destino de tu viaje",
+                "id": ""
+              },
+              language: {
+                inputTooShort: function(args) {
+                  return "Por favor ingresar al menos las primeras 3 letras";
+                },
+                inputTooLong: function(args) {
+                  return "";
+                },
+                errorLoading: function() {
+                  return "";
+                },
+                loadingMore: function() {
+                  return "";
+                },
+                noResults: function() {
+                  return "No se encontraron resultados";
+                },
+                searching: function() {
+                  return "Buscando...";
+                },
+                maximumSelected: function(args) {
+                  return "";
+                }
+              },
+              ajax: {
+                url: "@@{SearchController.getAutoComplete}",
+                dataType: 'json',
+                delay: 250,
+                language: "es",
+                data: function (params) {
+                  return {
+                    q: params.term, // search term
+                    page: params.page
+                  };
+                },
+                processResults: function (data, params) {
+                  params.page = params.page || 1;
+            
+                  return {
+                    results: data.items,
+                    pagination: {
+                      more: (params.page * 30) < data.total_count
+                    }
+                  };
+                },
+                cache: true
+              },
+              minimumInputLength: 1,
+              escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+              templateResult: formatRepo,
+              templateSelection: formatRepoSelection
+					  });
+            
+
+
+
+            $("#destiny").select2({
+              placeholder: {
+                "city": "Ingresa el destino de tu viaje",
+                "id": ""
+              },
+              language: {
+                inputTooShort: function(args) {
+                  return "Por favor ingresar al menos las primeras 3 letras";
+                },
+                inputTooLong: function(args) {
+                  return "";
+                },
+                errorLoading: function() {
+                  return "";
+                },
+                loadingMore: function() {
+                  return "";
+                },
+                noResults: function() {
+                  return "No se encontraron resultados";
+                },
+                searching: function() {
+                  return "Buscando...";
+                },
+                maximumSelected: function(args) {
+                  return "";
+                }
+              },
+              ajax: {
+                url: "@@{SearchController.getAutoComplete}",
+                dataType: 'json',
+                delay: 250,
+                language: "es",
+                data: function (params) {
+                  return {
+                    q: params.term, // search term
+                    page: params.page
+                  };
+                },
+                processResults: function (data, params) {
+                  params.page = params.page || 1;
+            
+                  return {
+                    results: data.items,
+                    pagination: {
+                      more: (params.page * 30) < data.total_count
+                    }
+                  };
+                },
+                cache: true
+              },
+              minimumInputLength: 1,
+              escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+              templateResult: formatRepo,
+              templateSelection: formatRepoSelection
+
+            }).on("change", function(e) {
+                  $('#destinyHdn').val($('#destiny').select2('data')[0].id);
+                });
+            
+            });
+
+
+
+
+
  
-                    
+                
+     
+               
 
 			  var dateFormat = "dd/mm/yy";
               var minDate = new Date(parseDate("18/12/2016"));
