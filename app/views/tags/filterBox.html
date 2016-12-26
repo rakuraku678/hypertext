@@ -8,7 +8,7 @@
  }*
 <form id="filterResultForm" action="" method="" class="filter-arrive">
     #{filters.stopsFilter/}
-    #{filters.carrierFilter carriers:_flightsResultsFilters.carriers /}
+    #{filters.carrierFilter carriers:_flightsResultsFilters.carriers, carriersNames: _flightsResultsFilters.carriersCodesXNames /}
     #{filters.priceFilter/}
 
     <div class="box-filter hour-filter">
@@ -181,16 +181,14 @@ $(document).ready(function() {
      	var returnElapsedTime = parseInt($(this).data("returnelapsedtime"));
      	
 
-     	if (departureElapsedTime>max){
+     	if (departureElapsedTime>maxDeparture){
      		maxDeparture = departureElapsedTime;
      	}
-     	if (returnElapsedTime>max){
+     	if (returnElapsedTime>maxReturn){
      		maxReturn = returnElapsedTime;
      	}
 	});
 	
-	 
-     
      
 	var durationSliderStart = $('.duration-start-slider')[0];
     var durationSliderEnd = $('.duration-end-slider')[0];
@@ -198,7 +196,7 @@ $(document).ready(function() {
      noUiSlider.create(durationSliderStart, {
          start: 150,
          range: {
-	            'min': 150,
+	            'min': 20,
 	            'max': maxDeparture
          },
          step: 1,
@@ -224,6 +222,13 @@ $(document).ready(function() {
          }
      });
 
+
+     var durationSliderStartLabel = $('.duration-slider-start-label');
+
+
+     var durationSliderEndLabel = $('.duration-slider-end-label');
+
+     
      durationSliderStart.noUiSlider.on('update', function(values, handle) {
          var currentMinutesDuration = (values[handle] | 0);
          durationSliderStartLabel.text(currentMinutesDuration);

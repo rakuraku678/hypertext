@@ -50,13 +50,21 @@ public class FlightsResultsFilters {
         StringBuilder airlineCodes = new StringBuilder();
         for (Map.Entry<String, Integer> entry : flightsResultsFilters.carriers.entrySet())
         {
-        	System.out.println(entry.getKey() + "/" + entry.getValue());
-        	airlineCodes.append(entry.getKey());
+        	airlineCodes.append(entry.getKey()+",");
         }
         
         JsonElement json = AirlinesSearch.process(airlineCodes.toString());
         
-        System.out.println("json: "+json.toString());
+        if (json!=null){
+        	flightsResultsFilters.carriersCodesXNames = Maps.newHashMap();
+        	JsonArray jArray = json.getAsJsonArray();
+        	for (int i = 0; i < jArray.size(); i++) {
+        		String code = jArray.get(i).getAsJsonObject().get("iataCode").getAsString();
+        		String name = jArray.get(i).getAsJsonObject().get("name").getAsString();
+        		flightsResultsFilters.carriersCodesXNames.put(code, name);
+        		
+			}
+        }
         
         return flightsResultsFilters;
     }

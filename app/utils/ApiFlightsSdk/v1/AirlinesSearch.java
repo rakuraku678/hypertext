@@ -12,7 +12,7 @@ public class AirlinesSearch extends ApiFlightsSDKBase {
 
         WS.WSRequest request = prepareRequest(ENDPOINT+"?airlineCodes="+codes);
 
-        JsonElement responseJsonObject = processResponsePost(request);
+        JsonElement responseJsonObject = processResponse(request);
 
         return responseJsonObject;
     }
