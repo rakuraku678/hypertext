@@ -171,6 +171,9 @@
                 "id": ""
               },
               language: {
+                searching: function() {
+                  return "Buscando...";
+                },
                 inputTooShort: function(args) {
                   return "Por favor ingresar al menos las primeras 3 letras";
                 },
@@ -185,9 +188,6 @@
                 },
                 noResults: function() {
                   return "No se encontraron resultados";
-                },
-                searching: function() {
-                  return "Buscando...";
                 },
                 maximumSelected: function(args) {
                   return "";
@@ -448,16 +448,18 @@
       return place.city;
     }
     
-     function formatRepo (place) {
-      var markup=[];
-      if (!place)return place;
-      markMatch(place.name + " (" + place.id + ")", markup);
-      return markup.join("");
+    function formatRepo (place) {
+        if (place.hasOwnProperty("text")){
+            return place.text;
+        }
+        else {
+            var markup=[];
+            if (!place)return place;
+            markMatch(place.name + " (" + place.id + ")", markup);
+            return markup.join("");
+        }
     }
-    
-    
-    
- 
+
 function getPriceSuggestionMatrixParams() {
     var searchForm = $("#flightSearchForm");
     return $.param({
