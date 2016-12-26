@@ -507,9 +507,6 @@ function onReadyFilters() {
     var hourRangeSliderFrom = $('.hour-range-from-slider')[0];
 
 
-    var durationSliderStart = $('.duration-start-slider')[0];
-    var durationSliderEnd = $('.duration-end-slider')[0];
-
     noUiSlider.create(priceRangeSlider, {
         start: [ 100, 500 ],
         range: {
@@ -532,7 +529,7 @@ function onReadyFilters() {
     });
 
     noUiSlider.create(hourRangeSliderTo, {
-        start: [ new Date(2000, 0, 1, 9, 0, 0, 0).getTime(), new Date(2000, 0, 1, 18, 0, 0, 0).getTime() ],
+        start: [ new Date(2000, 0, 1, 0, 0, 0, 0).getTime(), new Date(2000, 0, 1, 23, 59, 0, 0).getTime() ],
         range: {
             'min': new Date(2000, 0, 1, 0, 0, 0, 0).getTime(),
             'max': new Date(2000, 0, 2, 0, 0, 0, 0).getTime()
@@ -550,7 +547,7 @@ function onReadyFilters() {
     });
 
     noUiSlider.create(hourRangeSliderFrom, {
-        start: [ new Date(2000, 0, 1, 9, 0, 0, 0).getTime(), new Date(2000, 0, 1, 18, 0, 0, 0).getTime() ],
+        start: [ new Date(2000, 0, 1, 0, 0, 0, 0).getTime(), new Date(2000, 0, 1, 23, 59, 0, 0).getTime() ],
         range: {
             'min': new Date(2000, 0, 1, 0, 0, 0, 0).getTime(),
             'max': new Date(2000, 0, 2, 0, 0, 0, 0).getTime()
@@ -585,46 +582,6 @@ function onReadyFilters() {
         timeRangeSliderEndFromLabel.text((dateFormattedEnd === '00:00'? '24:00' : dateFormattedEnd) + ' hs');
     });
 
-
-    noUiSlider.create(durationSliderStart, {
-        start: 150,
-        range: {
-        'min': 100,
-        'max': 300
-        },
-        step: 1,
-        connect: 'lower',
-        pips: {
-        mode: 'steps',
-        density: 10
-        }
-    });
-
-
-    noUiSlider.create(durationSliderEnd, {
-        start: 150,
-        range: {
-            'min': 100,
-            'max': 300
-        },
-        step: 1,
-        connect: 'lower',
-        pips: {
-            mode: 'steps',
-            density: 10
-        }
-    });
-
-    durationSliderStart.noUiSlider.on('update', function(values, handle) {
-        var currentMinutesDuration = (values[handle] | 0);
-        durationSliderStartLabel.text(currentMinutesDuration);
-    });
-
-
-    durationSliderEnd.noUiSlider.on('update', function(values, handle) {
-        var currentMinutesDuration = (values[handle] | 0);
-        durationSliderEndLabel.text(currentMinutesDuration);
-    });
 
 
     $('.box-active-filter .icon-close-filter').click(function(){

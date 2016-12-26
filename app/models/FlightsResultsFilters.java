@@ -13,6 +13,7 @@ public class FlightsResultsFilters {
     public Map<String,Integer> carriers = Maps.newHashMap();
     public Map<String,Integer> outboundAirport = Maps.newHashMap();
     public Map<String,Integer> inboundAirport = Maps.newHashMap();
+    public Map<String,Integer> carriersNames = Maps.newHashMap();
 
     public static FlightsResultsFilters processFlightsResults(JsonElement flightsResults){
         FlightsResultsFilters flightsResultsFilters = new FlightsResultsFilters();
