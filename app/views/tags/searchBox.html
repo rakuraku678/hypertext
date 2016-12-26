@@ -90,8 +90,8 @@
                       alert("La cantidad de niños e infantes tiene un máximo de dos por adulto.");
                       return false;
                     }
-                    $( "#loading_departure_city").html($(this).find('input[name="origen"]').val());
-                    $( "#loading_return_city").html($(this).find('input[name="destino"]').val());
+                    $( "#loading_departure_city").html($('#origin').select2('data')[0].city);
+                    $( "#loading_return_city").html($('#destiny').select2('data')[0].city);
 
                     $( "#loading" ).show("fade");
                     $( "#priceSuggestionMatrix" ).html("");
