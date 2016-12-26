@@ -767,6 +767,9 @@
 .ticket .txt-view-detail ul li {
 	margin: 5px;
 }
+.ticket .txt-view-detail ul li img {
+	max-width: 32px;
+}
 .ticket .txt-view-detail ul {
 	border-bottom: 1px solid #E5E6EB; 
 	min-height: 50px;
@@ -894,6 +897,12 @@
     border-bottom: 1px solid #EEE;
     width: 100%;
 }
+
+.info-flight .txt-view-detail .well .detail-body-flight
+.airline-logo img {
+	max-width: 32px;
+}
+
 .info-flight .txt-view-detail .well .detail-body-flight
 .flight-detail-data {
 	list-style: none;
