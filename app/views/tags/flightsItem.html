@@ -41,7 +41,7 @@ data-departuretime="${_flight.departureSegment.departureTime.getAsString()}" dat
                             <span>${_flight.departureSegment.departureTime.getAsString()}</span>
                         </li>
                         <li class="stops-route">
-                            <a href="#">
+                            <a type="button" data-toggle="collapse" data-target="#departureSegment${_flight.sequenceNumber.getAsString()}" aria-expanded="false" aria-controls="collapseExample" class="link-detail-desktop">
                                 %{
                                     connectionsCount = _flight.departureSegment.flightsCount.getAsInt() - 1;
                                 }%
@@ -118,7 +118,7 @@ data-departuretime="${_flight.departureSegment.departureTime.getAsString()}" dat
                             <span>${_flight.returnSegment.departureTime.getAsString()}</span>
                         </li>
                         <li class="stops-route">
-                            <a href="#">
+                            <a type="button" data-toggle="collapse" data-target="#returnSegment${_flight.sequenceNumber.getAsString()}" aria-expanded="false" aria-controls="collapseExample2" class="link-detail-desktop">
                             %{
                                 connectionsCount = _flight.returnSegment.flightsCount.getAsInt() - 1;
                             }%
