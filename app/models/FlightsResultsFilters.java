@@ -7,12 +7,16 @@ import com.google.gson.JsonObject;
 
 import java.util.Map;
 
+import utils.ApiFlightsSdk.v1.AirlinesSearch;
+
 public class FlightsResultsFilters {
     public Map<String,Integer> outbounflightstops = Maps.newHashMap();
     public Map<String,Integer> inbounflightstops = Maps.newHashMap();
     public Map<String,Integer> carriers = Maps.newHashMap();
     public Map<String,Integer> outboundAirport = Maps.newHashMap();
     public Map<String,Integer> inboundAirport = Maps.newHashMap();
+    public Map<String,Integer> carriersNames = Maps.newHashMap();
+    public Map<String,String> carriersCodesXNames = Maps.newHashMap();
 
     public static FlightsResultsFilters processFlightsResults(JsonElement flightsResults){
         FlightsResultsFilters flightsResultsFilters = new FlightsResultsFilters();
@@ -43,6 +47,25 @@ public class FlightsResultsFilters {
             flightsResultsFilters.addInboundAirport(firstReturnSegment.get("departureAirportCode").getAsString());
         }
 
+        StringBuilder airlineCodes = new StringBuilder();
+        for (Map.Entry<String, Integer> entry : flightsResultsFilters.carriers.entrySet())
+        {
+        	airlineCodes.append(entry.getKey()+",");
+        }
+        
+        JsonElement json = AirlinesSearch.process(airlineCodes.toString());
+        
+        if (json!=null){
+        	flightsResultsFilters.carriersCodesXNames = Maps.newHashMap();
+        	JsonArray jArray = json.getAsJsonArray();
+        	for (int i = 0; i < jArray.size(); i++) {
+        		String code = jArray.get(i).getAsJsonObject().get("iataCode").getAsString();
+        		String name = jArray.get(i).getAsJsonObject().get("name").getAsString();
+        		flightsResultsFilters.carriersCodesXNames.put(code, name);
+        		
+			}
+        }
+        
         return flightsResultsFilters;
     }
 

@@ -8,14 +8,14 @@
             <label>
                 <input id="clearCarriersFilter" type="checkbox" checked> Todas las aerolíneas
             </label>
-            <div class="box-number selected-box"><span>34</span></div>
+            <div class="box-number selected-box"><span>${_carriers.size()}</span></div>
         </div>
 
     #{list items:_carriers.keySet(), as:'carriersKey'}
         <div class="checkbox">
             <label>
                 <input class="chkAerolinea" type="checkbox" name="includedcarriers" value="${carriersKey}" checked="checked">
-                <img src="public/img/lan.jpg" title="" alt=""><span class="txt-checkbox"> ${carriersKey}</span>
+                <img src="public/img/lan.jpg" title="" alt=""><span class="txt-checkbox"> ${_carriersNames.get(carriersKey)}</span>
             </label>
             <div class="box-number"><span>${_carriers.get(carriersKey)}</span></div>
         </div>
