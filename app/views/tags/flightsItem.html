@@ -30,7 +30,12 @@ data-departuretime="${_flight.departureSegment.departureTime.getAsString()}" dat
                 <li class="txt-view-detail">
                     <ul>
                         <li class="radio">
-                            <label><input type="radio" name="optiona"><img src="public/img/lan.jpg" title="" alt="">${_flight.departureSegment.airlinesCodes}</label>
+                            <label>
+                                <input type="radio" name="optiona">
+                                #{list items:_flight.departureSegment.airlinesCodes, as:"airlineCode"}
+                                    <img src="/public/img/airlines/air_${airlineCode?.getAsString().toLowerCase()}logo.gif" title="${airlineCode}" alt="${airlineCode}">
+                                #{/list}
+                            </label>
                         </li>
                         <li class="hour-of-flight">
                             <span>${_flight.departureSegment.departureTime.getAsString()}</span>
@@ -102,7 +107,12 @@ data-departuretime="${_flight.departureSegment.departureTime.getAsString()}" dat
                 <li class="txt-view-detail">
                     <ul>
                         <li class="radio">
-                            <label><input type="radio" name="optionb"><img src="public/img/lan.jpg" title="" alt="">${_flight.returnSegment.airlinesCodes}</label>
+                            <label>
+                                <input type="radio" name="optionb">
+                                #{list items:_flight.returnSegment.airlinesCodes, as:"airlineCode"}
+                                    <img src="/public/img/airlines/air_${airlineCode?.getAsString().toLowerCase()}logo.gif" title="${airlineCode}" alt="${airlineCode}">
+                                #{/list}
+                            </label>
                         </li>
                         <li class="hour-of-flight">
                             <span>${_flight.returnSegment.departureTime.getAsString()}</span>
