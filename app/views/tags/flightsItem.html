@@ -195,10 +195,15 @@ data-departuretime="${_flight.departureSegment.departureTime.getAsString()}" dat
         </div>
 
         <div class="col-md-3 ticket-detail">
+            #{if false} *{CAMBIAR ESTA CONDICION CUANDO VENGA LA INFO DE LA API}*
             <span class="last-ticket-available">
                 <i class="icon-alert-ticket"></i>
                 <span class="info-ticket-avaible">¡Últimos 2 lugares!</span>
             </span>
+            #{/if}
+            #{else}
+                <span class="last-ticket-space-saver">&nbsp;</span>
+            #{/else}
             <span class="title">Precio por Adulto</span>
             <span class="price">$${_flight.passengerFare.getAsString()}</span>
             <ul class="detail-price">

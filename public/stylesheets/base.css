@@ -1182,6 +1182,13 @@
 	display: inline-block;
 	vertical-align: middle;	
 }
+
+.ticket-detail .last-ticket-space-saver {
+	display: block;
+	padding: 5px 25px;
+	margin: 10px 0 0 -9px;
+}
+
 .icon-alert-ticket {
 	background-image: url(../img/icon-alert-ticket.svg);
 	background-repeat: no-repeat;
