@@ -81,81 +81,90 @@
                 </div>
             #{set 'moreScripts'}
             #{get 'moreScripts' /}
-                $(document).ready(function() {
 
+            $(document).ready(function() {
 
-            var loadFlightData = (function() {
+                var loadFlightData = (function() {
+                    cleanErrors();
+                    if ($('#adultCount').val()*2<parseInt($('#childrenCount').val())+parseInt($('#infantCount').val())){
+                      alert("La cantidad de niños e infantes tiene un máximo de dos por adulto.");
+                      return false;
+                    }
+                    $( "#loading_departure_city").html($(this).find('input[name="origen"]').val());
+                    $( "#loading_return_city").html($(this).find('input[name="destino"]').val());
 
-            if ($('#adultCount').val()*2<parseInt($('#childrenCount').val())+parseInt($('#infantCount').val())){
-              alert("La cantidad de niños e infantes tiene un máximo de dos por adulto.");
-              return false;
-            }
-                        $( "#loading_departure_city").html($(this).find('input[name="origen"]').val());
-                        $( "#loading_return_city").html($(this).find('input[name="destino"]').val());
+                    $( "#loading" ).show("fade");
+                    $( "#priceSuggestionMatrix" ).html("");
+                    $( "#fligthsData" ).html("");
 
-                        $( "#loading" ).show("fade");
-                        $( "#priceSuggestionMatrix" ).html("");
-                        $( "#fligthsData" ).html("");
-
-                        $( "#priceSuggestionMatrix" ).load(
-                            "/flights/matrix?" + getPriceSuggestionMatrixParams(),
-                            function (responseText, textStatus, XMLHttpRequest) {
-                                if (textStatus == "success") {
-                                    $( "#priceSuggestionMatrix" ).show("slow");
-                                    onReadyMatrix();
-                                }
+                    $( "#priceSuggestionMatrix" ).load(
+                        "/flights/matrix?" + getPriceSuggestionMatrixParams(),
+                        function (responseText, textStatus, XMLHttpRequest) {
+                            if (textStatus == "success") {
+                                $( "#priceSuggestionMatrix" ).show("slow");
+                                onReadyMatrix();
                             }
-                        );
-                        $( "#fligthsData" ).load(
-                            "/flights/data?" + getSearchParams(),
-                            function (responseText, textStatus, XMLHttpRequest) {
-                                if (textStatus == "success") {
-                                    $( "#loading" ).hide();
-                                    $( "#fligthsData" ).show("slow");
-                                    if(!$( "#filterContent" ).html().length) {
-                                        $( "#filterContent" ).html($( "#filterResult" ).html());
-                                        onReadyFilters();
-                                    }
-                                }
+                            else{
+                                showError("Error obteniendo precios para las fechas alternativas.");
                             }
-                        );
-
-                        
-                    });
-
-
-
-                    $('#flightSearchForm').bootstrapValidator({
-                        fields: {
-                            'percentage': {
-                                selector: '.percent',
-                                validators: {
-                                    notEmpty: {
-                                        message: 'Este campo está vacio.'
-                                    }
-                                    
-                                }
-                            }
-                        },
-                        submitHandler: function(validator, form, submitButton) {
-                          loadFlightData();
                         }
-                    });
+                    );
+                    $( "#fligthsData" ).load(
+                        "/flights/data?" + getSearchParams(),
+                        function (responseText, textStatus, XMLHttpRequest) {
+                            $( "#loading" ).hide();
+                            if (textStatus == "success") {
+                                $( "#fligthsData" ).show("slow");
+                                if(!$( "#filterContent" ).html().length) {
+                                    $( "#filterContent" ).html($( "#filterResult" ).html());
+                                    onReadyFilters();
+                                }
+                            }
+                            else {
+                                showError("Error obteniendo precios para la fecha buscada.");
+                            }
+                        }
+                    );
+                });
 
+                var showError = function(msg){
+                    var em = $("#errorMessage");
+                    em.append("<div>"+msg+"</div>")
+                    em.show();
+                    $('#flightSearchForm input[type="submit"]').attr('disabled', false);
+                };
 
-              function onReadyMatrix(){
+                var cleanErrors = function(){
+                    $("#errorMessage div").remove();
+                    $("#errorMessage").hide();
+                };
+
+                $('#flightSearchForm').bootstrapValidator({
+                    fields: {
+                        'percentage': {
+                            selector: '.percent',
+                            validators: {
+                                notEmpty: {
+                                    message: 'Este campo está vacio.'
+                                }
+
+                            }
+                        }
+                    },
+                    submitHandler: function(validator, form, submitButton) {
+                      loadFlightData();
+                    }
+                });
+
+                function onReadyMatrix(){
                     $('a.pr-fare').click(function(e){
-                      e.preventDefault();
+                        e.preventDefault();
+                        $("#startDate").val($(this).data('from'));
+                        $("#endDate").val($(this).data('to'));
+                        $("#flightSearchForm").submit();
+                    });
+                }
 
-                      $("#startDate").val($(this).data('from'));
-                      $("#endDate").val($(this).data('to'));
-                      $("#flightSearchForm").submit();
-
-                  });
-              }
-
-                                      
-                   
             $("#origin").select2({
               placeholder: {
                 "city": "Ingresa el destino de tu viaje",
@@ -211,10 +220,7 @@
               escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
               templateResult: formatRepo,
               templateSelection: formatRepoSelection
-					  });
-            
-
-
+            });
 
             $("#destiny").select2({
               placeholder: {

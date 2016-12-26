@@ -730,6 +730,11 @@
 	background-color: #5E9AFC;
 	color: #fff;
 }
+/* ALERT DE ERROR
+================= */
+#errorMessage {
+	margin-top: 15px;
+}
 /* TICKET
 ================= */
 .ticket {
