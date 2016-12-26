@@ -119,7 +119,9 @@ data-departuretime="${_flight.departureSegment.departureTime.getAsString()}" dat
                         </li>
                         <li class="stops-route">
                             <a href="#">
-
+                            %{
+                                connectionsCount = _flight.returnSegment.flightsCount.getAsInt() - 1;
+                            }%
                             #{if connectionsCount == 0 }
                                 <span class="stop-txt">Directo</span>
                                 <span class="line-route"></span>
