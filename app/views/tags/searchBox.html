@@ -220,6 +220,8 @@
               escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
               templateResult: formatRepo,
               templateSelection: formatRepoSelection
+            }).on("change", function(e) {
+                $('#originHdn').val($('#origin').select2('data')[0].id);
             });
 
             $("#destiny").select2({
