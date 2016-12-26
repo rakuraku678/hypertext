@@ -7,6 +7,8 @@ import com.google.gson.JsonObject;
 
 import java.util.Map;
 
+import utils.ApiFlightsSdk.v1.AirlinesSearch;
+
 public class FlightsResultsFilters {
     public Map<String,Integer> outbounflightstops = Maps.newHashMap();
     public Map<String,Integer> inbounflightstops = Maps.newHashMap();
@@ -14,6 +16,7 @@ public class FlightsResultsFilters {
     public Map<String,Integer> outboundAirport = Maps.newHashMap();
     public Map<String,Integer> inboundAirport = Maps.newHashMap();
     public Map<String,Integer> carriersNames = Maps.newHashMap();
+    public Map<String,String> carriersCodesXNames = Maps.newHashMap();
 
     public static FlightsResultsFilters processFlightsResults(JsonElement flightsResults){
         FlightsResultsFilters flightsResultsFilters = new FlightsResultsFilters();
@@ -44,6 +47,17 @@ public class FlightsResultsFilters {
             flightsResultsFilters.addInboundAirport(firstReturnSegment.get("departureAirportCode").getAsString());
         }
 
+        StringBuilder airlineCodes = new StringBuilder();
+        for (Map.Entry<String, Integer> entry : flightsResultsFilters.carriers.entrySet())
+        {
+        	System.out.println(entry.getKey() + "/" + entry.getValue());
+        	airlineCodes.append(entry.getKey());
+        }
+        
+        JsonElement json = AirlinesSearch.process(airlineCodes.toString());
+        
+        System.out.println("json: "+json.toString());
+        
         return flightsResultsFilters;
     }
 
