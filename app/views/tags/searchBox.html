@@ -119,6 +119,7 @@
                                     $( "#filterContent" ).html($( "#filterResult" ).html());
                                     onReadyFilters();
                                 }
+                                $('#flightSearchForm input[type="submit"]').attr('disabled', false);
                             }
                             else {
                                 showError("Error obteniendo precios para la fecha buscada.");
