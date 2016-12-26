@@ -15,7 +15,8 @@
         <div class="checkbox">
             <label>
                 <input class="chkAerolinea" type="checkbox" name="includedcarriers" value="${carriersKey}" checked="checked">
-                <img src="public/img/lan.jpg" title="" alt=""><span class="txt-checkbox"> ${_carriersNames.get(carriersKey)}</span>
+                #{airlineLogo carriersCode:carriersKey, carriersName: _carriersNames.get(carriersKey) /}
+                <span class="txt-checkbox"> ${_carriersNames.get(carriersKey)}</span>
             </label>
             <div class="box-number"><span>${_carriers.get(carriersKey)}</span></div>
         </div>

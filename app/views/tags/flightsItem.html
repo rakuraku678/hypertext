@@ -33,7 +33,7 @@ data-departuretime="${_flight.departureSegment.departureTime.getAsString()}" dat
                             <label>
                                 <input type="radio" name="optiona">
                                 #{list items:_flight.departureSegment.airlinesCodes, as:"airlineCode"}
-                                    <img src="/public/img/airlines/air_${airlineCode?.getAsString().toLowerCase()}logo.gif" title="${airlineCode}" alt="${airlineCode}">
+                                	#{airlineLogo carriersCode:airlineCode?.getAsString().toLowerCase(), carriersName: airlineCode /}
                                 #{/list}
                             </label>
                         </li>
@@ -110,7 +110,7 @@ data-departuretime="${_flight.departureSegment.departureTime.getAsString()}" dat
                             <label>
                                 <input type="radio" name="optionb">
                                 #{list items:_flight.returnSegment.airlinesCodes, as:"airlineCode"}
-                                    <img src="/public/img/airlines/air_${airlineCode?.getAsString().toLowerCase()}logo.gif" title="${airlineCode}" alt="${airlineCode}">
+                                	#{airlineLogo carriersCode:airlineCode?.getAsString().toLowerCase(), carriersName: airlineCode /}
                                 #{/list}
                             </label>
                         </li>
