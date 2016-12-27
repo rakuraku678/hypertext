@@ -8,7 +8,11 @@
             <label>
                 <input id="clearCarriersFilter" type="checkbox" checked> Todas las aerolíneas
             </label>
-            <div class="box-number selected-box"><span>${_carriers.size()}</span></div>
+			%{
+				def totalResults=0;
+				_carriers.each{ k, v -> totalResults=totalResults + v }
+			}%
+            <div class="box-number selected-box"><span>${totalResults}</span></div>
         </div>
 
     #{list items:_carriers.keySet(), as:'carriersKey'}
