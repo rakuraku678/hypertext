@@ -1,12 +1,22 @@
                             %{
-                              connectionsCount = _flight.departureSegment.flightsCount.getAsInt() - 1;
+                              connectionsDepartureCount = _flight.departureSegment.flightsCount.getAsInt() - 1;
+                              connectionsReturnCount = _flight.returnSegment.flightsCount.getAsInt() - 1;
                               returnElapsedTimeEX = _flight.returnSegment.elapsedTime.getAsInt();
                               departureElapsedTimeEX = _flight.departureSegment.elapsedTime.getAsInt(); 
                               airportCode=_flight.departureSegment.departureAirportCode;
                             }%
                             
-<div class="row ticket ticketBaxer" data-airportReturn="${_flight.returnAirportCode.getAsString()}" data-airportDeparture="${_flight.departureAirportCode.getAsString()}" data-departureElapsedTime="${departureElapsedTimeEX}" data-returnElapsedTime="${returnElapsedTimeEX}" data-returntime="${_flight.returnSegment.departureTime.getAsString()}" 
-data-departuretime="${_flight.departureSegment.departureTime.getAsString()}" data-price="${_flight.passengerFare.getAsString()}" data-airline="${_flight.departureSegment.detail.get(0).operatingAirlineCode}" data-escala="${connectionsCount}"> 
+<div class="row ticket ticketBaxer" 
+		data-airportReturn="${_flight.returnAirportCode.getAsString()}" 
+		data-airportDeparture="${_flight.departureAirportCode.getAsString()}" 
+		data-departureElapsedTime="${departureElapsedTimeEX}"
+		data-returnElapsedTime="${returnElapsedTimeEX}" 
+		data-returntime="${_flight.returnSegment.departureTime.getAsString()}" 
+		data-departuretime="${_flight.departureSegment.departureTime.getAsString()}" 
+		data-price="${_flight.passengerFare.getAsString()}" 
+		data-airline="${_flight.departureSegment.detail.get(0).operatingAirlineCode}" 
+		data-escala="${connectionsDepartureCount}"
+		data-returnEscala=${connectionsReturnCount}> 
     <form class="form-ticket" action="@{PaymentFlowController.index}" method="post">
         <div class="col-md-9 info-flight">
             <ul>
