@@ -23,34 +23,35 @@
     </article>
 </section>
 <section class="search-arrive payment-path">
-    <form action="@{PaymentFlowController.startPayment}" method="post">
+    <form id="checkoutForm" action="@{PaymentFlowController.startPayment}" method="post">
         <article class="container-fluid">
             <div class="row">
                 <h2>¿Quien Viaja?</h2>
                 <p class="info-help">En caso de necesitar ayuda comunicarse al correo <strong>ventaonline@travelclub.cl</strong></p>
                 <div class="col-md-8">
-                    #{checkout.passengerBox/}
+                    #{checkout.passengerBox passengerNumber: 0/}
                     #{checkout.contactBox/}
                     #{checkout.paymentBox/}
                     #{checkout.termsConditionBox/}
+                    #{checkout.hiddenInputBox bfmResultItem: bfmResultItem/}
                     <div class="col-md-12 text-right">
-                        <input type="hidden" name="departureDate" value="${checkoutPostDto.departureDate}">
-                        <input type="hidden" name="departureAirportCode" value="${checkoutPostDto.departureAirportCode}">
-                        <input type="hidden" name="returnDate" value="${checkoutPostDto.returnDate}">
-                        <input type="hidden" name="returnAirportCode" value="${checkoutPostDto.returnAirportCode}">
-                        <input type="hidden" name="taxFare" value="${checkoutPostDto.taxFare}">
-                        <input type="hidden" name="totalFare" value="${checkoutPostDto.totalFare}">
+
                         <input type="submit" class="btn btn-search" value="continuar">
                     </div>
                 </div>
                 <div class="col-md-4">
-                    #{checkout.flightBox checkoutPostDto:checkoutPostDto/}
-                    #{checkout.summaryBox checkoutPostDto:checkoutPostDto/}
+                    #{checkout.flightBox bfmResultItem:bfmResultItem/}
+                    #{checkout.summaryBox pricing:bfmResultItem.pricing/}
                 </div>
             </div>
         </article>
     </form>
 </section>
+
+#{set 'scriptFiles'}
+#{get 'scriptFiles' /}
+<script type="text/javascript" src="@{PaymentFlowController.javascript}"></script>
+#{/set}
 
 #{modalNeadHelp /}
 #{modalExpiredSession /}

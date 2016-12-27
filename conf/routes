@@ -8,8 +8,10 @@ GET     /flights/data                           FlightsDataController.index
 GET     /flights/matrix                         FlightsDataController.priceSuggestionMatrix
 
 POST    /checkout                               PaymentFlowController.index
+GET     /checkout.js                            PaymentFlowController.javascript
 GET     /checkout/callback                      PaymentFlowController.callback
 GET     /checkout/confirmation                  PaymentConfirmController.index
+POST    /checkout/booking                       BookingController.startBooking
 
 
 # Ignore favicon requests

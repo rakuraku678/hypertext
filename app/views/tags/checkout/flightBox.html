@@ -8,13 +8,13 @@
                 <a class="btn icon-arrow-payment" data-toggle="collapse" href="#detailFlyTo" aria-expanded="false" aria-controls="detailFlyTo">
                     <i class="icon-fly"></i>
                     <span class="title-payment">Ida</span>
-                    <span class="date-fly-payment">${_checkoutPostDto.departureDate} (${_checkoutPostDto.departureAirportCode} > ${_checkoutPostDto.returnAirportCode})</span>
+                    <span class="date-fly-payment">${_bfmResultItem.departureDate.getAsString()} (${_bfmResultItem.departureAirportCode.getAsString()} > ${_bfmResultItem.returnAirportCode.getAsString()})</span>
                 </a>
             </li>
         </ul>
 
         <div class="collapse" id="detailFlyTo">
-        #{checkout.flightDetail /}
+        #{checkout.flightDetail segments:_bfmResultItem.departureSegment /}
         </div>
 
         <ul>
@@ -22,13 +22,13 @@
                 <a class="btn icon-arrow-payment" data-toggle="collapse" href="#detailFlyFrom" aria-expanded="false" aria-controls="detailFlyFrom">
                     <i class="icon-fly-vuelta"></i>
                     <span class="title-payment">Vuelta</span>
-                    <span class="date-fly-payment">${_checkoutPostDto.returnDate} (${_checkoutPostDto.returnAirportCode} > ${_checkoutPostDto.departureAirportCode})</span>
+                    <span class="date-fly-payment">${_bfmResultItem.returnDate.getAsString()} (${_bfmResultItem.returnAirportCode.getAsString()} > ${_bfmResultItem.departureAirportCode.getAsString()})</span>
                 </a>
             </li>
         </ul>
 
         <div class="collapse" id="detailFlyFrom">
-            #{checkout.flightDetail /}
+            #{checkout.flightDetail segments:_bfmResultItem.returnSegment/}
         </div>
     </div>
 </div>
