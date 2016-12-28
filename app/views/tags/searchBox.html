@@ -126,6 +126,17 @@
                             }
                         }
                     );
+
+                    var searchForm = $("#flightSearchForm");
+                    var origin = searchForm.find('input[name="origen"]').val();
+                    var destination = searchForm.find('input[name="destino"]').val();
+                    var departuredate = searchForm.find('input[name="partida"]').val().split("/").join("-");
+                    var returndate = searchForm.find('input[name="regreso"]').val().split("/").join("-");
+                    var adultcount = searchForm.find('select[name="adultcount"]').val();
+                    var childrencount = searchForm.find('select[name="childrencount"]').val();
+                    var infantcount = searchForm.find('select[name="infantcount"]').val();
+
+                    window.history.pushState([], "Results", "/"+origin+"/"+destination+"/"+departuredate+"/"+returndate+"/"+adultcount+"-"+childrencount+"-"+infantcount);
                 });
 
                 var showError = function(msg){
