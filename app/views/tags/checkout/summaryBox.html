@@ -15,17 +15,17 @@
         <tbody>
         <tr>
             <td></td>
-            <td class="txt-payment-table-mark">${_checkoutPostDto.passenger} Adultos</td>
-            <td>$${_checkoutPostDto.passengerFare}</td>
-            <td>$${_checkoutPostDto.taxFare}</td>
-            <td class="txt-payment-table-mark">$${_checkoutPostDto.totalFare}</td>
+            <td class="txt-payment-table-mark">Pajeros</td>
+            <td>$${_pricing.totalPassengerFare.getAsString()}</td>
+            <td>$${_pricing.totalTax.getAsString()}</td>
+            <td class="txt-payment-table-mark">$${_pricing.totalFare.getAsString()}</td>
         </tr>
         </tbody>
     </table>
     <div class="total-payment">
         <ul>
             <li>Total</li>
-            <li>$${_checkoutPostDto.totalFare}</li>
+            <li>$${_pricing.totalFare.getAsString()}</li>
         </ul>
     </div>
 </div>

@@ -1274,6 +1274,9 @@
 	color: #fff;
 	opacity: .8;
 }
+.airlineLogo {
+	max-width: 32px !important;
+}
 /* media
 =================================== */
 

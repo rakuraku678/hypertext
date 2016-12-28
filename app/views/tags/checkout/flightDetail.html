@@ -1,27 +1,45 @@
 <div class="card card-block">
     <div class="fly-brand text-center">
-        <img src="" alt="" title="" width="136px" height="36px">
+    #{list items:_segments.airlinesCodes, as:"airlineCode"}
+        #{airlineLogo carriersCode:airlineCode?.getAsString().toLowerCase(), carriersName: airlineCode /}
+    #{/list}
     </div>
     <ul>
         <li class="name-passenger">
-            <strong class="name">Santiago</strong>
-            <span class="last-name">Arturo Merino Benítez</span>
+            <strong class="name">${_segments.departureCityCode.getAsString()}</strong>
+            <span class="last-name">${_segments.departureCityName.getAsString()}</span>
         </li>
         <li class="time">
-            <span class="to-time">19:00</span>
+            <span class="to-time">${_segments.departureTime.getAsString()}</span>
         </li>
         <li class="scale">
-            <span class="number-of-scale">1 escala</span>
+%{
+connectionsCount = _segments.flightsCount.getAsInt() - 1;
+}%
+        #{if connectionsCount == 0 }
+            <span class="number-of-scale">Directo</span>
+        #{/if}
+        #{elseif connectionsCount == 1 }
+            <span class="number-of-scale">${connectionsCount} escala</span>
+        #{/elseif}
+        #{elseif connectionsCount >= 2 }
+            <span class="number-of-scale">${connectionsCount} escalas</span>
+        #{/elseif}
             <span class="point-scale"></span>
-            <span class="duration-of-fly">10h 15m</span>
+%{
+departureElapsedTime = _segments.elapsedTime.getAsInt();
+int departureElapsedHours = departureElapsedTime / 60;
+int departureElapsedMinutes = departureElapsedTime % 60;
+}%
+            <span class="duration-of-fly">&{"%dh %02dm", departureElapsedHours, departureElapsedMinutes}</span>
         </li>
 
         <li class="time">
-            <span class="to-time">7:40</span>
+            <span class="to-time">${_segments.returnTime.getAsString()}</span>
         </li>
         <li class="name-passenger">
-            <strong class="name">Santiago</strong>
-            <span class="last-name">Arturo Merino Benítez</span>
+            <strong class="name">${_segments.returnCityCode.getAsString()}</strong>
+            <span class="last-name">${_segments.returnCityName.getAsString()}</span>
         </li>
     </ul>
 </div>

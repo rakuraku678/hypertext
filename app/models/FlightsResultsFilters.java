@@ -55,7 +55,7 @@ public class FlightsResultsFilters {
         
         JsonElement json = AirlinesSearch.process(airlineCodes.toString());
         
-        if (json!=null){
+        if (!json.isJsonNull()){
         	flightsResultsFilters.carriersCodesXNames = Maps.newHashMap();
         	JsonArray jArray = json.getAsJsonArray();
         	for (int i = 0; i < jArray.size(); i++) {

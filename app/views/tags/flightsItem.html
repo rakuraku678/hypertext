@@ -1,12 +1,22 @@
                             %{
-                              connectionsCount = _flight.departureSegment.flightsCount.getAsInt() - 1;
+                              connectionsDepartureCount = _flight.departureSegment.flightsCount.getAsInt() - 1;
+                              connectionsReturnCount = _flight.returnSegment.flightsCount.getAsInt() - 1;
                               returnElapsedTimeEX = _flight.returnSegment.elapsedTime.getAsInt();
                               departureElapsedTimeEX = _flight.departureSegment.elapsedTime.getAsInt(); 
                               airportCode=_flight.departureSegment.departureAirportCode;
                             }%
                             
-<div class="row ticket ticketBaxer" data-airportReturn="${_flight.returnAirportCode.getAsString()}" data-airportDeparture="${_flight.departureAirportCode.getAsString()}" data-departureElapsedTime="${departureElapsedTimeEX}" data-returnElapsedTime="${returnElapsedTimeEX}" data-returntime="${_flight.returnSegment.departureTime.getAsString()}" 
-data-departuretime="${_flight.departureSegment.departureTime.getAsString()}" data-price="${_flight.passengerFare.getAsString()}" data-airline="${_flight.departureSegment.detail.get(0).operatingAirlineCode}" data-escala="${connectionsCount}"> 
+<div class="row ticket ticketBaxer" 
+		data-airportReturn="${_flight.returnAirportCode.getAsString()}" 
+		data-airportDeparture="${_flight.departureAirportCode.getAsString()}" 
+		data-departureElapsedTime="${departureElapsedTimeEX}"
+		data-returnElapsedTime="${returnElapsedTimeEX}" 
+		data-returntime="${_flight.returnSegment.departureTime.getAsString()}" 
+		data-departuretime="${_flight.departureSegment.departureTime.getAsString()}" 
+		data-price="${_flight.pricing.totalPassengerFare.getAsString()}"
+		data-airline="${_flight.departureSegment.detail.get(0).operatingAirlineCode}" 
+		data-escala="${connectionsDepartureCount}"
+		data-returnEscala=${connectionsReturnCount}> 
     <form class="form-ticket" action="@{PaymentFlowController.index}" method="post">
         <div class="col-md-9 info-flight">
             <ul>
@@ -33,7 +43,7 @@ data-departuretime="${_flight.departureSegment.departureTime.getAsString()}" dat
                             <label>
                                 <input type="radio" name="optiona">
                                 #{list items:_flight.departureSegment.airlinesCodes, as:"airlineCode"}
-                                    <img src="/public/img/airlines/air_${airlineCode?.getAsString().toLowerCase()}logo.gif" title="${airlineCode}" alt="${airlineCode}">
+                                	#{airlineLogo carriersCode:airlineCode?.getAsString().toLowerCase(), carriersName: airlineCode /}
                                 #{/list}
                             </label>
                         </li>
@@ -110,7 +120,7 @@ data-departuretime="${_flight.departureSegment.departureTime.getAsString()}" dat
                             <label>
                                 <input type="radio" name="optionb">
                                 #{list items:_flight.returnSegment.airlinesCodes, as:"airlineCode"}
-                                    <img src="/public/img/airlines/air_${airlineCode?.getAsString().toLowerCase()}logo.gif" title="${airlineCode}" alt="${airlineCode}">
+                                	#{airlineLogo carriersCode:airlineCode?.getAsString().toLowerCase(), carriersName: airlineCode /}
                                 #{/list}
                             </label>
                         </li>
@@ -217,23 +227,16 @@ data-departuretime="${_flight.departureSegment.departureTime.getAsString()}" dat
                 <span class="last-ticket-space-saver">&nbsp;</span>
             #{/else}
             <span class="title">Precio por Adulto</span>
-            <span class="price">$${_flight.passengerFare.getAsString()}</span>
+            <span class="price">$${_flight.pricing.totalPassengerFare.getAsString()}</span>
             <ul class="detail-price">
-                <li><span class="item-detail">${_flight.passengers} Adulto</span><span class="item-price">$${_flight.totalPassengerFare.getAsString()}</span></li>
-                <li><span class="item-detail">Imp. y Tasas</span><span class="item-price">$${_flight.taxFare.getAsString()}</span></li>
+                <li><span class="item-detail">Pasajeros</span><span class="item-price">$${_flight.pricing.totalPassengerFare.getAsString()}</span></li>
+                <li><span class="item-detail">Imp. y Tasas</span><span class="item-price">$${_flight.pricing.totalTax.getAsString()}</span></li>
                 <li><span class="item-detail">Cargas</span><span class="item-price">$???????</span></li>
                 <hr>
-                <li><span class="item-detail">Total</span><span class="item-price">$${_flight.totalFare.getAsString()}</span></li>
+                <li><span class="item-detail">Total</span><span class="item-price">$${_flight.pricing.totalFare.getAsString()}</span></li>
             </ul>
             <div class="text-center box-ticket-submit">
-                <input type="hidden" name="departureDate" value="${_flight.departureDate.getAsString()}">
-                <input type="hidden" name="departureAirportCode" value="${_flight.departureAirportCode.getAsString()}">
-                <input type="hidden" name="returnDate" value="${_flight.returnDate.getAsString()}">
-                <input type="hidden" name="returnAirportCode" value="${_flight.returnAirportCode.getAsString()}">
-                <input type="hidden" name="passenger" value="${_flight.passengers.getAsString()}">
-                <input type="hidden" name="passengerFare" value="${_flight.passengerFare.getAsString()}">
-                <input type="hidden" name="taxFare" value="${_flight.taxFare.getAsString()}">
-                <input type="hidden" name="totalFare" value="${_flight.totalFare.getAsString()}">
+                <input type="hidden" name="bfmResultItem" value="${_flight.toString()}">
                 <input type="submit" class="btn btn-ticket" value="Comprar">
                 *{<a class="btn btn-ticket" href="@{PaymentFlowController.index}">Comprar</a>}*
 

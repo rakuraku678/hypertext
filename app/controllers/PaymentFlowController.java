@@ -1,13 +1,9 @@
 package controllers;
 
-import dto.CheckoutPostDto;
-import play.*;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import play.mvc.*;
 
-import java.lang.reflect.Field;
-import java.util.*;
-
-import models.*;
 import utils.AgencyConfigurationDto;
 import utils.ApiFlightsSdk.v1.Payment;
 import utils.TravelClubUtils;
@@ -15,15 +11,16 @@ import utils.TravelClubUtils;
 public class PaymentFlowController extends Controller {
 
     public static void index() {
-        CheckoutPostDto checkoutPostDto = new CheckoutPostDto();
 
-        for (Field f : CheckoutPostDto.class.getDeclaredFields()) {
-            checkoutPostDto.set(f.getName(),params.get(f.getName()));
-        }
+        JsonElement bfmResultItem = new JsonParser().parse(params.get("bfmResultItem"));
 
         AgencyConfigurationDto agencyConfigurationDto = TravelClubUtils.getAgencyConfiguration("56f2d58ce4b0e66b4c0cd92e");
 
-        render(agencyConfigurationDto, checkoutPostDto);
+        render(agencyConfigurationDto, bfmResultItem);
+    }
+
+    public static void javascript() {
+        render("app/views/PaymentFlowController/checkout.js");
     }
 
     public static void callback(){
