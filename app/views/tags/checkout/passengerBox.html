@@ -9,37 +9,41 @@
 
             <div class="form-group col-md-12">
                 <label class="checkbox-inline">
-                    <input type="radio" name="passenger[${_passengerNumber}][gender]" value="M"> Hombre
+                    <input type="radio" class="validatesex" name="passenger[${_passengerNumber}][gender]" value="M"> Hombre
                 </label>
                 <label class="checkbox-inline">
-                    <input type="radio" name="passenger[${_passengerNumber}][gender]" value="F"> Mujer
+                    <input type="radio" class="validatesex" name="passenger[${_passengerNumber}][gender]" value="F"> Mujer
                 </label>
             </div>
-            <div class="col-md-6 form-group">
-                <label>Nombres:</label>
-                <input type="text" class="form-control" name="passenger[${_passengerNumber}][givenName]" placeholder="Ingresa tu nombre">
-            </div>
-            <div class="col-md-6 form-group">
-                <label>Apellidos:</label>
-                <input type="text" class="form-control" name="passenger[${_passengerNumber}][surname]" placeholder="Ingresa tu apellido">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label>Nombres:</label>
+                        <input type="text" class="form-control validatefirstname" name="passenger[${_passengerNumber}][givenName]" placeholder="Ingresa tu nombre">
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>Apellidos:</label>
+                        <input type="text" class="form-control validatelastname" name="passenger[${_passengerNumber}][surname]" placeholder="Ingresa tu apellido">
+                    </div>
+                </div>
             </div>
             <div class="col-md-6 form-group">
                 <label>Tipo y número de documento:</label>
                 <div class="row">
                     <div class="col-xs-4">
-                        <select class="form-control icon-arrow-from" name="passenger[${_passengerNumber}][foid_type]">
+                        <select class="form-control icon-arrow-from validatedocument" name="passenger[${_passengerNumber}][foid_type]">
                             <option>RUT</option>
                         </select>
                     </div>
                     <div class="col-xs-8">
-                        <input type="text" class="form-control" name="passenger[${_passengerNumber}][foid]">
+                        <input type="text" class="form-control validatedocumentnum" name="passenger[${_passengerNumber}][foid]">
                     </div>
                 </div>
             </div>
 
             <div class="col-md-6 form-group">
                 <label>Fecha de nacimiento:</label>
-                <input type="date" class="form-control" name="passenger[${_passengerNumber}][DOB]">
+                <input type="date" class="form-control validatedate" name="passenger[${_passengerNumber}][DOB]">
             </div>
     </div>
 </div>

@@ -2,6 +2,8 @@
 #{set title:'PaymentFlow' /}
 
 #{set isAgencyHeader: false /}
+
+
 <section class="bg-path">
     <article class="container-fluid">
         <div class="row">
@@ -51,6 +53,130 @@
 #{set 'scriptFiles'}
 #{get 'scriptFiles' /}
 <script type="text/javascript" src="@{PaymentFlowController.javascript}"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        $('#checkoutForm input[type="submit"]').click(function() {
+
+            $('#checkoutForm').bootstrapValidator({
+                fields: {
+                    validatesex: {
+                        selector: '.validatesex',
+                        validators: {
+                            notEmpty: {
+                                message: 'Este campo está vacio.'
+                            }
+                        }
+                    },
+                    validatefirstname: {
+                        selector: '.validatefirstname',
+                        validators: {
+                            validMessage: 'Campo correcto',
+                            notEmpty: {
+                                message: 'El campo Nombre esta vacio.'
+                            },
+                            regexp: {
+                                regexp: /^[a-zA-Z_áéíóúñ\s]*$/i,
+                                message: 'Campo no válido'
+                            }
+                        }
+                    },
+                    validatelastname: {
+                        selector: '.validatelastname',
+                        validators: {
+                            validMessage: 'Campo correcto',
+                            notEmpty: {
+                                message: 'El campo Apellido esta vacio.'
+                            },
+                            regexp: {
+                                regexp: /^[a-zA-Z_áéíóúñ\s]*$/i,
+                                message: 'Campo no válido'
+                            }
+                        }
+                    },
+                    validatedocument: {
+                        selector: '.validatedocument',
+                        validators: {
+                            notEmpty: {
+                                message: 'Tipo de documento esta vacio.'
+                            }
+                        }
+                    },
+                    validatedocumentnum: {
+                        selector: '.validatedocumentnum',
+                        validators: {
+                            notEmpty: {
+                                message: 'Este campo esta vacio.'
+                            },
+                            regexp: {
+                                regexp: /^[0-9]$/i,
+                                message: 'Campo no válido'
+                            }
+                        }
+                    },
+                    validatedate: {
+                        selector: '.validatedate',
+                        validators: {
+                            notEmpty: {
+                                message: 'El campo fecha de nacimiento está vacio.'
+                            },
+                            date: {
+                                format: 'DD/MM/YYYY',
+                                message: 'día/mes/año'
+                            }
+                        }
+                    },
+                    validateemail: {
+                        selector: '.validateemail',
+                        validators: {
+                            notEmpty: {
+                                message: 'El campo Email está vacio.'
+                            },
+                            regexp: {
+                                regexp: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/i,
+                                message: 'mail@ejemplo.com'
+                            }
+                        }
+                    },
+                    validatephone: {
+                        selector: '.validatephone',
+                        validators: {
+                            notEmpty: {
+                                message: 'El campo Teléfono está vacio.'
+                            },
+                            regexp: {
+                                regexp: /^((\d{10})|(\d{13}))$/i,
+                                message: 'Campo no válido'
+                            }
+                        }
+                    },
+
+                    validatetermsconditions: {
+                        selector: '.validatetermsconditions',
+                        validators: {
+                            notEmpty: {
+                                message: 'Debes aceptar terminos y condiciones para continuar.'
+                            }
+                        }
+                    },
+                    validatepay: {
+                        selector: '.validatepay',
+                        validators: {
+                            notEmpty: {
+                                message: 'Debes seleccionar una forma de pago.'
+                            }
+                        }
+                    }
+                }
+            });
+
+
+        });
+
+    });  
+</script>
+
 #{/set}
 
 #{modalNeadHelp /}
