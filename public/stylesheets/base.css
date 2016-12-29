@@ -38,7 +38,25 @@
     opacity: 0;
   }
 }
+/* VALIDATE
+=========== */
 
+/* Color of invalid field */
+#checkoutForm .has-error .control-label,
+#checkoutForm .has-error .help-block,
+#checkoutForm .has-error .form-control-feedback {
+    color: #a94442;
+}
+#checkoutForm .has-error input {
+    border-color: #a94442!important;
+}
+
+/* Color of valid field */
+#checkoutForm .has-success .control-label,
+#checkoutForm .has-success .help-block,
+#checkoutForm .has-success .form-control-feedback {
+    color: #3c763d;
+}
 /* SEARCH
 =========== */
 .bg-search {
