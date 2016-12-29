@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+
 import dto.ErrorDto;
 import play.Play;
 import play.cache.Cache;
@@ -60,5 +61,31 @@ public class SearchController extends Controller {
         }
 
         return result;
+    }
+    public static List getCachedAirports(String q){
+        final String key = "autocomplete-" + q;
+        List r = Cache.get(key, List.class);
+        if (r == null) {
+            r = getAutoCompleteFromAPI(q);
+            if (!r.isEmpty()) {
+                Cache.set(key, r, "1d");
+            }
+        }
+        return r;
+    }
+    
+    public static String getAirportName(String airportCode){
+        List<Map> lista = getCachedAirports(airportCode);
+        String airport = "";
+        for (Map<String, String> o : lista) {
+        	for (Map.Entry<String, String> entry : o.entrySet())
+        	{
+        		if (entry.getKey().equals("name")) {
+        			airport = entry.getValue();
+        			break;
+        		}
+        	}
+		}
+        return airport;
     }
 }

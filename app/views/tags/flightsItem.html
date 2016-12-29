@@ -3,7 +3,6 @@
                               connectionsReturnCount = _flight.returnSegment.flightsCount.getAsInt() - 1;
                               returnElapsedTimeEX = _flight.returnSegment.elapsedTime.getAsInt();
                               departureElapsedTimeEX = _flight.departureSegment.elapsedTime.getAsInt(); 
-                              airportCode=_flight.departureSegment.departureAirportCode;
                             }%
                             
 <div class="row ticket ticketBaxer" 
@@ -16,7 +15,7 @@
 		data-price="${_flight.pricing.totalPassengerFare.getAsString()}"
 		data-airline="${_flight.departureSegment.detail.get(0).operatingAirlineCode}" 
 		data-escala="${connectionsDepartureCount}"
-		data-returnEscala=${connectionsReturnCount}> 
+		data-returnEscala="${connectionsReturnCount}">
     <form class="form-ticket" action="@{PaymentFlowController.index}" method="post">
         <div class="col-md-9 info-flight">
             <ul>
@@ -29,11 +28,11 @@
                         </li>
                         <li>
                             <span class="airport">${_flight.departureAirportCode.getAsString()}</span>
-                            <span class="description-airport">${_flight.departureName.getAsString()}</span>
+                            <span class="description-airport">${controllers.SearchController.getAirportName(_flight.departureAirportCode.getAsString())}</span>
                         </li>
                         <li>
                             <span class="airport">${_flight.returnAirportCode.getAsString()}</span>
-                            <span class="description-airport">${_flight.returnName.getAsString()}</span>
+                            <span class="description-airport">${controllers.SearchController.getAirportName(_flight.returnAirportCode.getAsString())}</span>
                         </li>
                     </ul>
                 </li>
@@ -106,11 +105,11 @@
                         </li>
                         <li>
                             <span class="airport">${_flight.returnAirportCode.getAsString()}</span>
-                            <span class="description-airport">${_flight.returnName.getAsString()}</span>
+                            <span class="description-airport">${controllers.SearchController.getAirportName(_flight.returnAirportCode.getAsString())}</span>
                         </li>
                         <li>
                             <span class="airport">${_flight.departureAirportCode.getAsString()}</span>
-                            <span class="description-airport">${_flight.departureName.getAsString()}</span>
+                            <span class="description-airport">${controllers.SearchController.getAirportName(_flight.departureAirportCode.getAsString())}</span>
                         </li>
                     </ul>
                 </li>

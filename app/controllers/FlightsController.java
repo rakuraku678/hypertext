@@ -12,7 +12,7 @@ import utils.TravelClubUtils;
 public class FlightsController extends Controller {
 
     public static void index() {
-        AgencyConfigurationDto agencyConfigurationDto = TravelClubUtils.getAgencyConfiguration("56f2d58ce4b0e66b4c0cd92e");
+        AgencyConfigurationDto agencyConfigurationDto = TravelClubUtils.getAgencyConfiguration("576d8872558bc20506a72392");
 
         render(agencyConfigurationDto);
     }

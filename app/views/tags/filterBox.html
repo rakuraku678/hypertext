@@ -47,7 +47,7 @@
             <div class="checkbox">
                 <label>
                 	#{list items:_flightsResultsFilters.outboundAirport.keySet(), as:'airportKey'}
-                		<input type="checkbox" checked="checked" class="aeroChkDeparture" value="${airportKey}"> ${airportKey}
+                		<input type="checkbox" checked="checked" class="aeroChkDeparture" value="${_flightsResultsFilters.outboundAirportCodes.get(airportKey)}"> ${airportKey}
 				    #{/list}
                 </label>
             </div>
@@ -58,7 +58,7 @@
             <div class="checkbox">
                 <label>
                 	#{list items:_flightsResultsFilters.inboundAirport.keySet(), as:'airportKey'}
-                		<input type="checkbox" checked="checked" class="aeroChkReturn" value="${airportKey}"> ${airportKey}<br />
+                		<input type="checkbox" checked="checked" class="aeroChkReturn" value="${_flightsResultsFilters.inboundAirportCodes.get(airportKey)}"> ${airportKey}<br />
 				    #{/list}
                 </label>
             </div>
@@ -239,6 +239,14 @@ $(document).ready(function() {
          var currentMinutesDuration = (values[handle] | 0);
          durationSliderEndLabel.text(currentMinutesDuration);
      });
+     
+     
+     
+     
+     
+     
+     
+     
 });
 
 </script>

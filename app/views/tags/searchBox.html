@@ -88,6 +88,7 @@
                     cleanErrors();
                     if ($('#adultCount').val()*2<parseInt($('#childrenCount').val())+parseInt($('#infantCount').val())){
                       alert("La cantidad de niños e infantes tiene un máximo de dos por adulto.");
+                      $('#flightSearchForm input[type="submit"]').attr('disabled', false);
                       return false;
                     }
                     $( "#loading_departure_city").html($('#origin').select2('data')[0].city);
