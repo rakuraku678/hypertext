@@ -11,7 +11,10 @@ $(document).ready(function () {
 });
 
 function startBooking() {
-    var data = JSON.stringify($("#checkoutForm").serializeJSON());
+    var formSerializeJson = $("#checkoutForm").serializeJSON();
+    formSerializeJson.bfmResultItem = $.parseJSON(formSerializeJson.bfmResultItem);
+    var data = JSON.stringify(formSerializeJson);
+    console.log(data);
     $.ajax({
         type: "POST",
         url: "@{BookingController.startBooking}",
