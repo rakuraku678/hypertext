@@ -13,7 +13,7 @@
 		data-returntime="${_flight.returnSegment.departureTime.getAsString()}" 
 		data-departuretime="${_flight.departureSegment.departureTime.getAsString()}" 
 		data-price="${_flight.pricing.totalPassengerFare.getAsString()}"
-		data-airline="${_flight.departureSegment.detail.get(0).operatingAirlineCode}" 
+		data-airline="${_flight.departureSegment.detail.get(0).operatingAirlineCode.getAsString()}" 
 		data-escala="${connectionsDepartureCount}"
 		data-returnEscala="${connectionsReturnCount}">
     <form class="form-ticket" action="@{PaymentFlowController.index}" method="post">

@@ -645,5 +645,98 @@ function onReadyFilters() {
 
     });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	var maxDeparture = 0;
+	var maxReturn = 0;
+       
+	$(".ticketBaxer").each(function( index ) {
+     	var departureElapsedTime = parseInt($(this).data("departureelapsedtime"));
+     	var returnElapsedTime = parseInt($(this).data("returnelapsedtime"));
+     	
+
+     	if (departureElapsedTime>maxDeparture){
+     		maxDeparture = departureElapsedTime;
+     	}
+     	if (returnElapsedTime>maxReturn){
+     		maxReturn = returnElapsedTime;
+     	}
+	});
+	
+     
+	var durationSliderStart = $('.duration-start-slider')[0];
+    var durationSliderEnd = $('.duration-end-slider')[0];
+     
+     noUiSlider.create(durationSliderStart, {
+         	start: maxDeparture,
+		    step: 1,
+		    connect: "lower",
+		    range: {
+		      'min': 0,
+		      'max': maxDeparture
+		    },
+		    serialization: {
+		      format: {
+		        decimals: 0
+		      }
+		    }
+     });
+
+
+     noUiSlider.create(durationSliderEnd, {
+         	start: maxReturn,
+		    step: 1,
+		    connect: "lower",
+		    range: {
+		      'min': 0,
+		      'max': maxReturn
+		    },
+		    serialization: {
+		      format: {
+		        decimals: 0
+		      }
+		    }
+     });
+
+
+     var durationSliderStartLabel = $('.duration-slider-start-label');
+
+
+     var durationSliderEndLabel = $('.duration-slider-end-label');
+
+     
+     durationSliderStart.noUiSlider.on('update', function(values, handle) {
+         var currentMinutesDuration = (values[handle] | 0);
+         durationSliderStartLabel.text(currentMinutesDuration);
+     });
+
+
+     durationSliderEnd.noUiSlider.on('update', function(values, handle) {
+         var currentMinutesDuration = (values[handle] | 0);
+         durationSliderEndLabel.text(currentMinutesDuration);
+     });
+     
+
+     
+     
+     
+     
+     
 }
 #{/set}

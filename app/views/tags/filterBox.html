@@ -1,11 +1,16 @@
-  *{
-  <div class="active-filter">
+   *{ 
+  <div class="active-filter" id="activeFilters">
   <h4>Filtros activos:</h4>
-    <div class="box-active-filter"><span class="txt-filter-activer">LATAM</span><i class="icon-close-filter"></i></div>
-    <div class="box-active-filter"><span class="txt-filter-activer"></span><i class="icon-close-filter"></i></div>
+  	#{list items:_flightsResultsFilters.carriers, as:'carriersKey'}
+  		<div class="box-active-filter"><span class="txt-filter-activer">${_flightsResultsFilters.carriersCodesXNames.get(carriersKey)}</span><i class="icon-close-filter"></i></div>
+  	#{/list}
    
+   *{ 
+    <div class="box-active-filter"><span class="txt-filter-activer"></span><i class="icon-close-filter"></i></div>
+   } *
 </div>
- }*
+  }*
+  
 <form id="filterResultForm" action="" method="" class="filter-arrive">
     #{filters.stopsFilter/}
     #{filters.carrierFilter carriers:_flightsResultsFilters.carriers, carriersNames: _flightsResultsFilters.carriersCodesXNames /}
@@ -122,8 +127,8 @@ $(document).ready(function() {
     });
 	
 	$('#aplFiltrosDur').click(function() {
-		var idaDuracion = parseInt($("#idaDuracion").html()) * 60;
-		var vueltaDuracion = parseInt($("#vueltaDuracion").html()) * 60;
+		var idaDuracion = parseInt($("#idaDuracion").html());
+		var vueltaDuracion = parseInt($("#vueltaDuracion").html());
 		 $(".ticketBaxer").each(function( index ) {
 	        	var departureElapsedTime = parseInt($(this).data("departureelapsedtime"));
 	        	var returnElapsedTime = parseInt($(this).data("returnelapsedtime"));
@@ -148,9 +153,6 @@ $(document).ready(function() {
 					}
 					readchecks.push($(this).val());
 			 	}
-
-				
-			 
 		 });
        	
    });
@@ -172,80 +174,7 @@ $(document).ready(function() {
     });
 	
 	
-	
-	var maxDeparture = 0;
-	var maxReturn = 0;
-       
-	$(".ticketBaxer").each(function( index ) {
-     	var departureElapsedTime = parseInt($(this).data("departureelapsedtime"));
-     	var returnElapsedTime = parseInt($(this).data("returnelapsedtime"));
-     	
 
-     	if (departureElapsedTime>maxDeparture){
-     		maxDeparture = departureElapsedTime;
-     	}
-     	if (returnElapsedTime>maxReturn){
-     		maxReturn = returnElapsedTime;
-     	}
-	});
-	
-     
-	var durationSliderStart = $('.duration-start-slider')[0];
-    var durationSliderEnd = $('.duration-end-slider')[0];
-     
-     noUiSlider.create(durationSliderStart, {
-         start: 150,
-         range: {
-	            'min': 20,
-	            'max': maxDeparture
-         },
-         step: 1,
-         connect: 'lower',
-         pips: {
-         mode: 'steps',
-         density: 10
-         }
-     });
-
-
-     noUiSlider.create(durationSliderEnd, {
-         start: 150,
-         range: {
-             'min': 100,
-             'max': maxReturn
-         },
-         step: 1,
-         connect: 'lower',
-         pips: {
-             mode: 'steps',
-             density: 10
-         }
-     });
-
-
-     var durationSliderStartLabel = $('.duration-slider-start-label');
-
-
-     var durationSliderEndLabel = $('.duration-slider-end-label');
-
-     
-     durationSliderStart.noUiSlider.on('update', function(values, handle) {
-         var currentMinutesDuration = (values[handle] | 0);
-         durationSliderStartLabel.text(currentMinutesDuration);
-     });
-
-
-     durationSliderEnd.noUiSlider.on('update', function(values, handle) {
-         var currentMinutesDuration = (values[handle] | 0);
-         durationSliderEndLabel.text(currentMinutesDuration);
-     });
-     
-     
-     
-     
-     
-     
-     
      
 });
 
