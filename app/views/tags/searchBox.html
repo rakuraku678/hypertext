@@ -33,7 +33,7 @@
                     <label>Partida:</label>
                     	<div class='input-group date' id='starDateBtn'>
                             <input type="text" name="partida" autocomplete="off" id="startDate"
-                                   class="form-control percent"  style="border-right: 0; padding-right: 0;">
+                                   class="form-control percent"  style="border-right: 0; padding-right: 0;" value="${params.departureDate?.replace('-','/')}">
         					<i class="bg-calendar input-group-addon"></i>
                         </div>
                 </div>
@@ -41,7 +41,7 @@
                     <label>Regreso:</label>
                     <div class='input-group date' id='endDateBtn'>
                         <input type="text" name="regreso" id="endDate" autocomplete="off"
-                               class="form-control percent" value="${endDate}"
+                               class="form-control percent" value="${params.returnDate?.replace('-','/')}"
                                style="border-right: 0; padding-right: 0;">
     					<i class="bg-calendar input-group-addon"></i>
     					</span>
@@ -314,8 +314,11 @@
             }).on("change", function(e) {
                   $('#destinyHdn').val($('#destiny').select2('data')[0].id);
                 });
-            
-            });
+
+            #{if params.destination && params.origin}
+                loadFlightData();
+            #{/if}
+        });
 
 
 
@@ -446,6 +449,7 @@
                 });
                 $('#endDate').val("${params.returnDate?.replace('-','/')}");
               });
+
 
             #{/set}
             </form>
@@ -749,9 +753,9 @@ function onReadyFilters() {
          var currentMinutesDuration = (values[handle] | 0);
          durationSliderEndLabel.text(currentMinutesDuration);
      });
-     
 
-     
+
+
      
      
      
