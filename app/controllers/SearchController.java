@@ -11,6 +11,7 @@ import play.cache.Cache;
 import play.libs.WS;
 import play.libs.WS.WSRequest;
 import play.mvc.Controller;
+import play.mvc.Util;
 
 import java.util.List;
 import java.util.Map;
@@ -34,7 +35,8 @@ public class SearchController extends Controller {
         }
     }
 
-    private static List getCachedAutoComplete(String q) {
+    @Util
+    public static List getCachedAutoComplete(String q) {
         final String key = "autocomplete-" + q;
         List r = Cache.get(key, List.class);
         if (r == null) {
