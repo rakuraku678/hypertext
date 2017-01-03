@@ -11,7 +11,7 @@ $(document).ready(function () {
 });
 
 function startBooking() {
-    var formSerializeJson = $("#checkoutForm").serializeJSON();
+    var formSerializeJson = $("#checkoutForm").serializeJSON({useIntKeysAsArrayIndex: true, checkboxUncheckedValue: false});
     formSerializeJson.bfmResultItem = $.parseJSON(formSerializeJson.bfmResultItem);
     var data = JSON.stringify(formSerializeJson);
     console.log(data);

@@ -31,8 +31,15 @@
                 <h2>¿Quien Viaja?</h2>
                 <p class="info-help">En caso de necesitar ayuda comunicarse al correo <strong>ventaonline@travelclub.cl</strong></p>
                 <div class="col-md-8">
-                    #{checkout.passengerBox passengerNumber: 1.1, passengerType: "ADT"/}
-                    #{checkout.passengerBox passengerNumber: 2.1, passengerType: "ADT"/}
+                    %{ int passengersCount = 0; }%
+                    %{ int passengersNumber = 1; }%
+                    #{list bfmResultItem.pricing.detail, as:'pricingDetails'}
+                        #{list items:1..pricingDetails.quantity.getAsInt(), as:'i'}
+                            #{checkout.passengerBox key: passengersCount, passengerNumber: passengersNumber+".1", passengerType: pricingDetails.code.getAsString() /}
+                            %{ passengersCount++; }%
+                            %{ passengersNumber++; }%
+                        #{/list}
+                    #{/list}
                     #{checkout.contactBox/}
                     #{checkout.paymentBox/}
                     #{checkout.termsConditionBox/}
@@ -60,7 +67,7 @@
 
         $('#checkoutForm input[type="submit"]').click(function() {
 
-            $('#checkoutForm').bootstrapValidator({
+            $('#checkoutForm1').bootstrapValidator({
                 fields: {
                     validatesex: {
                         selector: '.validatesex',
