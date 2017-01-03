@@ -103,7 +103,8 @@
                     $( "#loading" ).show("fade");
                     $( "#priceSuggestionMatrix" ).html("");
                     $( "#fligthsData" ).html("");
-
+					$( "#filterContent" ).html("");
+					
                     $( "#priceSuggestionMatrix" ).load(
                         "/flights/matrix?" + getPriceSuggestionMatrixParams(),
                         function (responseText, textStatus, XMLHttpRequest) {
@@ -122,10 +123,8 @@
                             $( "#loading" ).hide();
                             if (textStatus == "success") {
                                 $( "#fligthsData" ).show("slow");
-                                if(!$( "#filterContent" ).html().length) {
                                     $( "#filterContent" ).html($( "#filterResult" ).html());
                                     onReadyFilters();
-                                }
                                 $('#flightSearchForm input[type="submit"]').attr('disabled', false);
 
                                 window.history.pushState(responseText, "Results", getCurrentSearchURL());
