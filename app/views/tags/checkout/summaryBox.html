@@ -13,13 +13,15 @@
         </tr>
         </thead>
         <tbody>
+        #{list items:_pricing.detail, as:'pricingDetail'}
         <tr>
             <td></td>
-            <td class="txt-payment-table-mark">Pasajeros</td>
-            <td>$${_pricing.totalPassengerFare.getAsString()}</td>
-            <td>$${_pricing.totalTax.getAsString()}</td>
-            <td class="txt-payment-table-mark">$${_pricing.totalFare.getAsString()}</td>
+            <td class="txt-payment-table-mark">${pricingDetail.quantity.getAsString()} ${pricingDetail.code.getAsString()}</td>
+            <td>$${pricingDetail.basefare.getAsString()}</td>
+            <td>$${pricingDetail.totalTax.getAsString()}</td>
+            <td class="txt-payment-table-mark">$${pricingDetail.totalFare.getAsString()}</td>
         </tr>
+        #{/list}
         </tbody>
     </table>
     <div class="total-payment">
