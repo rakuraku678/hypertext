@@ -131,6 +131,7 @@ function startBooking() {
         success:function(result) {
             console.log("startBooking Debug");
             console.log(result);
+            console.log(JSON.stringify(result.debug));
         }
     });
 }
