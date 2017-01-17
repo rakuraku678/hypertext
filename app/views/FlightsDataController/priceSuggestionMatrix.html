@@ -13,11 +13,11 @@ lastRowDate = firstDepartureDate.minusDays(1);
     <table border="1">
         <thead>
         <tr>
-            <th colspan="4"></th>
+            <th colspan="6"></th>
             <!--<th><a href="#">Tendencia de tarifas</a></th>-->
 
             <th colspan="2" class="select-th"><a href="#">Precios +/- 5 días</a></th>
-            <th colspan="2"><a href="#">Precios por aerolíneas</a></th>
+        <!-- <th colspan="2"><a href="#">Precios por aerolíneas</a></th> -->    
         </tr>
         </thead>
         <tbody>
@@ -60,7 +60,7 @@ lastRowDate = firstDepartureDate.minusDays(1);
             #{if rowDepartureDate != details.departureDate }
             %{ rowDepartureDate = details.departureDate;}%
             %{ lastRowDate = details.departureDate;}%
-                <td><a href="#" class="pr-fare" data-from="${endUserFmt.print(details.departureDate)}" data-to="${endUserFmt.print(details.returnDate)}">$${details?.passengerFare.replace(".0","")}</a>
+                <td><a href="#" class="pr-fare" data-from="${endUserFmt.print(details.departureDate)}" data-to="${endUserFmt.print(details.returnDate)}">US$${details?.passengerFare.replace(".0","")}</a>
                 *{${details.sequenceNumber}<br>}*
                 *{${details.passengerFare}<br>}*
                 *{${fmt.print(details.departureDate)}<br>}*

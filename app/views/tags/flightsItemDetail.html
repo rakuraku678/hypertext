@@ -2,10 +2,10 @@
     <!--DETAIL TITLE FLIGHT-->
     <ul class="detail-title-flight">
         <li class="title-text-from-to">
-            ${_flightSegment.departureCityName.getAsString()}
+            ${controllers.SearchController.getAirportCity(_flightSegment.departureCityCode.getAsString())}
             <span class="airport-code">(${_flightSegment.departureCityCode.getAsString()})</span>
             <span class="title-text-to"><i class="icon-arrow-airport"></i></span>
-            ${_flightSegment.returnCityName.getAsString()}
+            ${controllers.SearchController.getAirportCity(_flightSegment.returnCityCode.getAsString())}
             <span class="airport-code">(${_flightSegment.returnCityCode.getAsString()})</span>
         </li>
         <li class="title-text-total-duration">
@@ -39,7 +39,8 @@
                                 <span class="inline-detail-airport-hour">${flightSegmentDetail.departureTime.getAsString()}</span>
                             </span>
                             <span class="inline-detail-airport-description">
-                            ${flightSegmentDetail.departureAirportDescription.getAsString()}</span>
+                            	${controllers.SearchController.getAirportCity(flightSegmentDetail.departureAirportCode.getAsString())}
+                            </span>
                         </div>
                         <div class="arrow-airport">
                             <i class="icon-arrow-airport"></i>
@@ -58,7 +59,7 @@
                                     </span>
                                 </span>
                                 <span class="inline-detail-airport-description">
-                                    ${flightSegmentDetail.arrivalAirportDescription.getAsString()}
+                                	${controllers.SearchController.getAirportCity(flightSegmentDetail.arrivalAirportCode.getAsString())}
                                 </span>
                             </span>
                         </div>

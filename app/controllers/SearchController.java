@@ -84,10 +84,24 @@ public class SearchController extends Controller {
         	{
         		if (entry.getKey().equals("name")) {
         			airport = entry.getValue();
-        			break;
+        			return airport;
         		}
         	}
 		}
         return airport;
+    }
+    public static String getAirportCity(String airportCode){
+        List<Map> lista = getCachedAirports(airportCode);
+        String city = "";
+        for (Map<String, String> o : lista) {
+        	for (Map.Entry<String, String> entry : o.entrySet())
+        	{
+        		if (entry.getKey().equals("city") ) {
+        			city = entry.getValue();
+        			return city;
+        		}
+        	}
+		}
+        return city;
     }
 }
