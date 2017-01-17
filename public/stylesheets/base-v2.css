@@ -1,0 +1,770 @@
+ 
+body {
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 400;
+}
+
+
+/*  GENERAL
+======================== */
+header {
+	position: relative;
+	z-index: 3;
+}
+.search-arrive {
+	background-color: #F5F5F5;
+}
+
+.nav-travel-viajes .box-info {
+	background-color: transparent;
+	margin: 7px;
+}
+
+.nav-travel-viajes .box-info a {
+	padding: 0;
+}
+
+.nav-travel-viajes .box-info strong,
+.nav-travel-viajes .box-info span {
+	padding: 0 5px;
+}
+.nav-travel-viajes .box-info i {
+	border-right: 1px solid #eee;
+	width: 34px;
+	height: 34px;
+}
+.navbar-default .navbar-toggle .icon-bar {
+	background-color: #fff;
+}
+.brand-desktop {
+	display: none;
+}
+.brand-mobile {
+	display: block;
+	padding: 10px;
+}
+.btn-travel {
+	box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.30);
+	border-radius: 4px;
+	background: #428BCA;
+	color: #fff;
+	padding: 10px 50px;
+	margin-top: 20px;
+	transition: all .5s;
+	width: 100%;
+}
+
+.btn-travel:hover {
+	color: #fff;
+	box-shadow: none;
+	opacity: .7;
+}
+i {
+	background-repeat: no-repeat;
+	background-position: center;
+	display: inline-block;
+	vertical-align: middle;
+}
+.icon-phone {
+	background-image: url(/public/images/icon-phone.svg);
+}
+.icon-emergency {
+	background-image: url(/public/images/icon-emergency.svg);
+}
+.icon-flight {
+	background-image: url(/public/images/travelclub/icons-aereo.svg);
+	background-repeat: no-repeat;
+	display: inline-block;
+	width: 35px;
+	height: 40px;
+	vertical-align: top;
+	margin: 5px;
+}
+.icon-hotels {
+	background-image: url(/public/images/travelclub/icons-hoteles.svg);
+	background-repeat: no-repeat;
+	display: inline-block;
+	width: 35px;
+	height: 40px;
+	vertical-align: top;
+	margin: 5px;
+}
+.icon-program {
+	background-image: url(/public/images/travelclub/icons-programas.svg);
+	background-repeat: no-repeat;
+	display: inline-block;
+	width: 35px;
+	height: 40px;
+	vertical-align: top;
+	margin: 5px;
+}
+.icon-circuit {
+	background-image: url(/public/images/travelclub/icons-circuitos.svg);
+	background-repeat: no-repeat;
+	display: inline-block;
+	width: 35px;
+	height: 40px;
+	vertical-align: top;
+	margin: 5px;
+}
+.icon-cruise {
+	background-image: url(/public/images/travelclub/icons-cruceros.svg);
+	background-repeat: no-repeat;
+	display: inline-block;
+	width: 35px;
+	height: 40px;
+	vertical-align: top;
+	margin: 5px;
+}
+.icon-fly-title {
+	background-image: url(/public/images/travelclub/icons-aereo-title.svg);
+	width: 50px;
+	height: 35px;
+}
+.icon-flag-chile {
+	background-image: url(/public/images/travelclub/icon-flag-chile.png);
+	width: 25px;
+	height: 15px;
+}
+.icon-hotels-title {
+	background-image: url(/public/images/travelclub/icons-hoteles-title.svg);
+	width: 25px;
+	height: 35px;
+}
+.icon-program-title {
+	background-image: url(/public/images/travelclub/icons-programas-title.svg);
+	width: 50px;
+	height: 35px;
+	margin-top: -10px;
+}
+.icon-star {
+	background-image: url(/public/images/travelclub/icon-star.svg);
+	width: 15px;
+	height: 15px;
+}
+.icon-star-border {
+	background-image: url(/public/images/travelclub/icon-star-border.svg);
+	width: 15px;
+	height: 15px;
+}
+h2 {
+	color: #333;
+	font-size: 28px;
+	padding: 15px;
+	text-align: center;
+}
+/* NAV TRAVEL
+=================== */
+
+.nav-travel {
+	background-color: #022565;
+	border-radius: 0;
+	margin: 0;
+
+}
+.nav-section .nav-section-general {
+	border-bottom: 1px solid #ddd;
+	margin-top: 0;
+	margin-bottom: 0;
+	text-transform: uppercase;
+}
+.nav-section .nav-section-general li a {
+	color: #fff;
+	padding-top: 8px;
+	text-transform: uppercase;
+	transition: all .2s;
+}
+.nav-section .nav-section-general li a:hover {
+	color: #5982C1;
+	background-color: #fff;
+
+}
+.nav-travel-viajes {
+	overflow: hidden;
+	width: 100%;
+}
+.nav-user-travel {
+	width: 100%;
+}
+
+.nav-user-travel ul li a,
+.nav-section-travel li a {
+	color: #fff!important;
+	transition: all .5s;
+}
+
+.nav-user-travel ul li a:hover,
+.nav-section-travel li a:hover {
+	color: #fff;
+	opacity: .7;
+}
+.nav-user-travel ul li a {
+	padding-left: 5px;
+}
+/* BOX-MESSAGE
+=========================== */
+.box-message {
+	background-color: #f2dede;
+    border-color: #ebccd1;
+    color: #a94442;
+    padding: 15px;
+    text-align: center;
+}
+.box-message p {
+	margin-bottom: 0;
+}
+/* FLIGHTS HOTELS PACKAGE
+=========================== */
+.flights-hotels-package {
+}
+.flights-hotels-package .box-data {
+	background: #FFFFFF;
+	border: 1px solid #eee;
+	border-radius: 5px;
+	overflow: hidden;
+	margin: 10px auto;
+	transition: all .6s ease;
+}
+.flights-hotels-package a {
+	display: block;
+	text-decoration: none;
+}
+.flights-hotels-package .descriptive-paragraph {
+	font-weight: 400;
+	font-size: 15px;
+	padding-top: 10px;
+    padding-bottom: 50px;
+    color: #999;
+    text-align: center;
+    width: 60%;
+    margin: 0 auto;
+}
+
+
+.flights-hotels-package .box-data:hover {
+	box-shadow: 0px 3px 10px 0px rgba(0,0,0,0.40);
+	border-color: transparent;
+}
+.flights-hotels-package .box-data .img-content {
+	position: relative;
+	height: 150px;
+}
+.flights-hotels-package .box-data .img-content img {
+	width: 100%;
+}
+.flights-hotels-package .box-data .info {
+	position: absolute;
+	z-index: 2;
+}
+
+.flights-hotels-package .box-data .img-content .img {
+	height: 150px;
+	overflow: hidden;
+}
+.flights-hotels-package .box-data .bg-filter {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0,0,0,.3);
+}
+
+.flights-hotels-package .box-data .info .icon {
+	display: inline-block;
+    height: 140px;
+    width: 45px;
+    vertical-align: top;
+}
+.flights-hotels-package .box-data .info ul {
+	display: inline-block;
+    vertical-align: top;
+    padding-left: 0px;
+    padding-top: 10px;
+    max-width: 80%;
+}
+.flights-hotels-package .box-data ul li {
+	color: #fff;
+	list-style: none;
+}
+.flights-hotels-package .box-data .location {
+	font-size: 18px;
+	letter-spacing: 0px;
+}
+
+.flights-hotels-package .box-data .description {
+	font-size: 15px;
+	letter-spacing: 0px;
+}
+.flights-hotels-package .box-data .offer-data {
+	background: #B92904;
+	box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.40);
+	position: absolute;
+	left: 0px;
+	bottom: -25px;
+	padding: 10px;
+	z-index: 3;
+}
+.flights-hotels-package .box-data .offer-data span {
+	color: #fff;
+	line-height: 2;
+}
+
+.flights-hotels-package .box-data .price {
+	height: 96px;
+}
+.flights-hotels-package .box-data .price,
+.flights-hotels-package .box-data .price-detail {
+	padding: 20px;
+	text-align: right;
+	width: 100%;
+}
+.flights-hotels-package .box-data .price li {
+	color: #333;
+	font-size: 12px;
+}
+
+.flights-hotels-package .box-data .price span {
+	font-size: 15px;
+
+}
+.flights-hotels-package .box-data .price .dollar {
+	font-size: 25px;
+}
+
+.flights-hotels-package .box-data .price-detail {
+	padding: 0 20px 5px 20px;
+}
+.flights-hotels-package .box-data .price-detail li {
+	color: #666666;
+	font-size:12px;
+}
+
+/* box dollar prize
+=================== */
+.flights-hotels-package .box-dollar-prize,
+.flights-hotels-package .box-dollar-prize:hover {
+	background-color: rgb(66, 139, 202);
+}
+
+.flights-hotels-package .box-dollar-prize .price .dollar,
+.flights-hotels-package .box-dollar-prize .price span,
+.flights-hotels-package .box-dollar-prize .price-detail li {
+	color: #fff;
+}
+/* ABOUT US
+========= */
+.about-us {
+	background-color: #F5F5F5;
+}
+
+.about-us article {
+	position: relative;
+}
+
+.about-us .bg-about-us {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 200px;
+	z-index: 1;
+}
+.about-us .bg-about-us img {
+	width: 100%;
+}
+.about-us .info-box {
+	padding-top: 125px;
+	position: relative;
+  z-index: 2;
+  text-align: center;
+}
+.about-us h2 {
+	color: #FFFFFF;
+	font-size: 28px;
+	font-weight: 400;
+	line-height: 25px;
+	text-align: center;
+	padding: 45px 10px;
+	position: absolute;
+	top: 0px;
+	left: 0;
+	right: 0;
+	width: 100%;
+	z-index: 3;
+}
+.about-us .box-about-us {
+	background: #FFFFFF;
+	border-radius: 5px;
+	margin: 10px auto;
+	overflow: hidden;
+
+	display: inline-block;
+	width: 30.33333333%;
+	margin-right: 15px;
+	margin-left: 15px;
+	text-align: left;
+	vertical-align: top;
+}
+.about-us .box-about-us .img {
+	height: 150px;
+	overflow: hidden;
+}
+.about-us .box-about-us .img img {
+	width: 100%;
+}
+
+.about-us .box-about-us h3 {
+	font-size: 20px;
+	color: #999999;
+	line-height: 25px;
+	padding: 5px 20px;
+}
+
+.about-us .box-about-us p {
+	font-size: 14px;
+	color: #666666;
+	letter-spacing: 0px;
+	padding: 5px 20px;
+}
+/* FOLLOW US
+============ */
+.follow-us {
+	text-align: center;
+	padding-top: 15px;
+}
+.follow-us ul {
+ padding: 15px;
+}
+.follow-us ul li {
+	display: inline-block;
+	list-style: none;
+}
+
+.follow-us ul li a {
+	border: 1px solid #333;
+    border-radius: 40px;
+    padding: 6px 8px;
+    margin: 5px;
+    width: 45px;
+    height: 45px;
+    display: block;
+    transition: all .5s;
+}
+
+.follow-us ul li a:hover {
+	opacity: .7;
+}
+.follow-us ul .txt-follow-us {
+	display: block;
+	margin-bottom: 10px;
+}
+.icon-twitter {
+	background-image: url(/public/images/travelclub/twitter.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 25px;
+    height: 30px;
+}
+.icon-facebook {
+	background-image: url(/public/images/travelclub/facebook.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 10px;
+    height: 30px;
+}
+.icon-instagram {
+	background-image: url(/public/images/travelclub/instagram.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 28px;
+    height: 30px;
+}
+/* NEWSLETTER
+=========== */
+.newsletter {
+	background-color: #F5F5F5;
+	padding-top: 20px;
+	padding-bottom: 45px;
+}
+.newsletter label {
+	font-size: 17px;
+	font-weight: 400;
+	color: #333333;
+	line-height: 25px;
+	margin-right: 10px;
+}
+
+.newsletter input {
+	height: 45px;
+}
+.newsletter .btn-travel {
+	border: 0;
+	margin-top: 10px;
+	margin-left: 0px;
+	width: 100%;
+}
+/* SECTION TRAVEL LINK
+====================== */
+.section-travel-link {
+	background-color: #F5F5F5;
+	padding-top: 20px;
+	padding-bottom: 45px;
+	text-align: center;
+}
+.section-travel-link h3 {
+	border-bottom: 1px solid #ddd;
+	font-size: 20px;
+	color: #666666;
+	line-height: 25px;
+}
+
+.section-travel-link ul {
+	padding-left: 0;
+}
+.section-travel-link li {
+	display: block;
+	letter-spacing: 0px;
+	list-style: none;
+	padding-top: 10px;
+}
+
+.section-travel-link a {
+	font-size: 14px;
+	color: #666666;
+	transition: all .5s;
+}
+.section-travel-link a:hover {
+	text-decoration: none;
+	opacity: .6;
+}
+
+/* ASSISTANCE SECTION
+=================================== */
+.agency-bk-color {
+	background-color: #022565;
+	color: white;
+}
+.btn-agency-color {
+	background-color: #022565;
+	color: white;
+}
+.btn-agency-color:hover {
+	color: white;
+}
+.mark-bullet .name-product {
+	color: #022565;
+}
+.mark-bullet .bullet {
+    border: 2px solid #022565;
+}
+.bg-principal .panel-heading {
+	background-color: #022565;
+}
+
+.assist-travel .bg-arrow-assist {
+	background-image: url("/public/images/bg-arrow.svg");
+	background-repeat: no-repeat;
+	background-position: center right; 
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	appearance: none;
+}
+.assist-travel .box-depart-return .bg-calendar {
+	background-image: url("/public/images/bg-calendar.svg");
+	background-repeat: no-repeat;
+	background-position: center right; 
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	appearance: none;
+	background-color: #fff;
+	width: 26px;
+	height: 27px;
+}
+
+.assist-travel .bg-arrow-up-down {
+	background-image: url("/public/images/bg-arrow-up-down.svg");
+	background-repeat: no-repeat;
+	background-position: center right; 
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	appearance: none;
+}
+.assist-travel .box-to,
+.assist-travel .box-passenger {
+	padding-left: 15px!important;
+}
+.assist-travel .box-from,
+.assist-travel .box-depart-return {
+	padding-right: 15px!important;
+}
+.assist-travel .btn-travel {
+	width: 100%!important;
+}
+/*	 FOOTER
+================*/
+.footer-themes {
+	background-color: #022565;
+
+}
+.footer-themes p {
+	color: #fff;
+}
+
+.footer-themes .box-icon-footer li {
+	list-style: none;
+	display: inline-block;
+}
+.footer-themes .box-icon-footer {
+	padding: 15px;
+    text-align: right;
+}
+/* media
+=================================== */
+
+
+@media screen and (min-width: 992px) and (max-width: 1265px) {
+	.flights-hotels-package .box-data .img-content img {
+		width: auto;
+	}
+}
+@media screen and (min-width: 768px) and (max-width: 975px) {
+	.nav-travel-viajes .box-info strong {
+		display: none;
+	}
+}
+
+@media screen and (min-width: 768px) {
+	/* GENERAL
+	===== */
+	h2 {
+		text-align: left;
+	}
+	.btn-travel {
+		width: auto;
+	}
+	.newsletter .btn-travel {
+		margin-top: 0;
+		margin-left: 10px;
+		width: auto;
+	}
+	.section-travel-link {
+		text-align: left;
+	}
+	/*
+	===*/
+	.nav-travel {
+		border: 0;
+		-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.36);
+		-moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.36);
+		box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.36);
+    	height: 100px;
+    	position: relative;
+	}
+	.nav-travel-viajes {
+		position: absolute;
+		top: 0px;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: #fff;
+	}
+	.form-search-travel .radio {
+		text-align: left!important;
+	}
+	.brand-desktop {
+		display: block !important;
+	}
+	.brand-mobile {
+		display: none;
+	}
+	.nav-section .nav-section-general {
+		border-bottom: none;
+	}
+	.nav-user-travel {
+		min-height: 60px;
+		border-bottom: 1px solid #ddd;
+
+	}
+	.nav-user-travel ul {
+		margin-right: 0;
+		padding-top: 5px;
+	}
+	.nav-user-travel ul li a {
+		color: #999!important;
+		padding-left: 15px;
+	}
+	.nav-travel-viajes .box-info {
+		background-color: #F5F5F5;
+	}
+	.nav-section-travel {
+		padding-left: 15px;
+	}
+	.nav-section-travel li {
+		margin: 0 10px;
+	}
+	.nav-section-travel li a {
+		color: #999999!important;
+
+		border-bottom: 5px solid #fff;
+	    padding: 15px 0px 0px 0px;
+	}
+	.nav-section-travel li a:hover {
+		border-bottom: 5px solid #5982C1;
+		color: #5982C1!important;
+	}
+	/*.box-offer .carousel-offer {
+		height: 417px!important;
+	}*/
+	.box-offer .carousel-caption {
+		top: 280px!important;
+	}
+	.box-promo {
+		text-align: left;
+	}
+	.box-promo p {
+		width: 90%;
+	}
+
+}
+@media screen and (max-width: 768px) {
+	.nav-user-travel {
+		margin-left: 10px;
+	}
+	.nav-travel-viajes .box-info {
+		margin-left: 0;
+		margin-bottom: 10px;
+	}
+	.nav-travel-viajes .box-info a i {
+		display: none;
+	}
+	.about-us h2 {
+		font-size: 23px;
+		padding: 15px 10px;
+		line-height: 1.5;
+	}
+	.about-us .box-about-us {
+		width: 100%;
+		margin: 0 0 15px;
+	}
+	.hidden-mobile-brand {
+		display: none!important;
+	}
+
+}
+@media screen and (max-width: 930px) {
+	.section-travel-link .col-xs-3 {
+ 		width: 100%;
+	}
+
+	.footer-themes,
+	.footer-themes .box-icon-footer {
+	    text-align: center;
+	}
+}
+@media screen and (max-width:450px) { 
+	.img-promo-travel {
+		width: 90%;
+	}
+}
