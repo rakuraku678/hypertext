@@ -1,0 +1,44 @@
+#{extends 'main.html' /}
+#{set title:'PaymentFlow' /}
+
+#{set isAgencyHeader: false /}
+
+
+<section class="bg-path">
+    <article class="container-fluid">
+        <div class="row">
+            <ul class="general-path">
+                <li>
+                    <span class="circle-path icon-checked-path"></span>
+                    <span class="name-path">búsqueda</span>
+                </li>
+                <li class="line-path">
+                    <span class="circle-path bg-circle-path">2</span>
+                    <span class="name-path">pasajeros</span>
+                </li>
+                <li>
+                    <span class="circle-path">3</span>
+                    <span class="name-path">pago</span>
+                </li>
+            </ul>
+        </div>
+    </article>
+</section>
+<section class="search-arrive payment-path">
+    <article class="container-fluid">
+        <div class="row">
+            <h2 class="text-center">Oops! Algo salio mal...</h2>
+            <div class="col-md-12">
+                <div class="alert alert-danger" role="alert">Error al procesar!</div>
+            </div>
+            <p class="info-help text-center">En caso de necesitar ayuda comunicarse al correo <strong>ventaonline@travelclub.cl</strong></p>
+        </div>
+    </article>
+</section>
+
+
+
+#{modalNeadHelp /}
+#{modalExpiredSession /}
+
+#{set isAgencyFooter: false /}

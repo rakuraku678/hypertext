@@ -17,9 +17,9 @@
         <tr>
             <td></td>
             <td class="txt-payment-table-mark">${pricingDetail.quantity.getAsString()} ${pricingDetail.code.getAsString()}</td>
-            <td>$${pricingDetail.basefare.getAsString()}</td>
-            <td>$${pricingDetail.totalTax.getAsString()}</td>
-            <td class="txt-payment-table-mark">$${pricingDetail.totalFare.getAsString()}</td>
+            <td>US$${pricingDetail.basefare.getAsString()}</td>
+            <td>US$${pricingDetail.totalTax.getAsString()}</td>
+            <td class="txt-payment-table-mark">US$${pricingDetail.totalFare.getAsString()}</td>
         </tr>
         #{/list}
         </tbody>
@@ -27,7 +27,7 @@
     <div class="total-payment">
         <ul>
             <li>Total</li>
-            <li>$${_pricing.totalFare.getAsString()}</li>
+            <li>US$${_pricing.totalFare.getAsString()}</li>
         </ul>
     </div>
 </div>

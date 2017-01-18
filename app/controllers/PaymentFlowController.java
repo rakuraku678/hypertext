@@ -19,12 +19,20 @@ public class PaymentFlowController extends Controller {
         render(agencyConfigurationDto, bfmResultItem);
     }
 
-    public static void javascript() {
-        render("app/views/PaymentFlowController/checkout.js");
+    public static void processPayment(){
+        AgencyConfigurationDto agencyConfigurationDto = TravelClubUtils.getAgencyConfiguration("56f2d58ce4b0e66b4c0cd92e");
+
+        render(agencyConfigurationDto);
     }
 
-    public static void callback(){
-        renderText("CALLBACK");
+    public static void processError(){
+        AgencyConfigurationDto agencyConfigurationDto = TravelClubUtils.getAgencyConfiguration("56f2d58ce4b0e66b4c0cd92e");
+
+        render(agencyConfigurationDto);
+    }
+
+    public static void javascript() {
+        render("app/views/PaymentFlowController/checkout.js");
     }
 
     public static void startPayment(){

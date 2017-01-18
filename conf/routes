@@ -9,9 +9,11 @@ GET     /flights/matrix                         FlightsDataController.priceSugge
 
 POST    /checkout                               PaymentFlowController.index
 GET     /checkout.js                            PaymentFlowController.javascript
-GET     /checkout/callback                      PaymentFlowController.callback
+GET     /checkout/process                       PaymentFlowController.processPayment
+GET     /checkout/error                         PaymentFlowController.processError
 GET     /checkout/confirmation                  PaymentConfirmController.index
 POST    /checkout/booking                       BookingController.startBooking
+GET     /checkout/discovery                     PaymentFlowController.discovery
 
 
 # Ignore favicon requests
