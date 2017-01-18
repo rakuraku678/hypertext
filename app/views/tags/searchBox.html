@@ -744,13 +744,19 @@ function onReadyFilters() {
      
      durationSliderStart.noUiSlider.on('update', function(values, handle) {
          var currentMinutesDuration = (values[handle] | 0);
-         durationSliderStartLabel.text(currentMinutesDuration);
+         $('#startDur').val(currentMinutesDuration);
+         var hora = parseInt(Number(currentMinutesDuration)/60);
+         var minutos = Number(currentMinutesDuration)%60;
+         durationSliderStartLabel.text(hora+"h:"+minutos+"m");
      });
 
 
      durationSliderEnd.noUiSlider.on('update', function(values, handle) {
          var currentMinutesDuration = (values[handle] | 0);
-         durationSliderEndLabel.text(currentMinutesDuration);
+         $('#endDur').val(currentMinutesDuration);
+         var hora = parseInt(Number(currentMinutesDuration)/60);
+         var minutos = Number(currentMinutesDuration)%60;
+         durationSliderEndLabel.text(hora+"h:"+minutos+"m");
      });
 
 

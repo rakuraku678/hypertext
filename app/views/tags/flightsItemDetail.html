@@ -24,6 +24,7 @@
         #{list items:_flightSegment.detail, as:'flightSegmentDetail'}
             <li class="airline-logo">
             	#{airlineLogo carriersCode:flightSegmentDetail.operatingAirlineCode.getAsString(), carriersName: flightSegmentDetail.operatingAirlineCode.getAsString() /}
+            	${_flightsResultsFilters?.carriersCodesXNames?.get(flightSegmentDetail.operatingAirlineCode.getAsString())}
             </li>
             <li class="flight-detail-data">
                 <ul>

@@ -74,6 +74,8 @@
     <div class="box-filter">
         <div class="header-filter">
             <h3>Duración<i class="arrow-down"></i></h3>
+            <input type="hidden" value="0" id="startDur" />
+            <input type="hidden" value="0" id="endDur" />
         </div>
         <div class="body-filter">
             <div class="">
@@ -127,8 +129,8 @@ $(document).ready(function() {
     });
 	
 	$('#aplFiltrosDur').click(function() {
-		var idaDuracion = parseInt($("#idaDuracion").html());
-		var vueltaDuracion = parseInt($("#vueltaDuracion").html());
+		var idaDuracion = parseInt($('#startDur').val());
+		var vueltaDuracion = parseInt($('#endDur').val());
 		 $(".ticketBaxer").each(function( index ) {
 	        	var departureElapsedTime = parseInt($(this).data("departureelapsedtime"));
 	        	var returnElapsedTime = parseInt($(this).data("returnelapsedtime"));

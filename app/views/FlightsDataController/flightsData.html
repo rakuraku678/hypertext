@@ -1,5 +1,5 @@
 #{list items:flightsResults, as:'flight'}
-    #{flightsItem flight:flight/}
+    #{flightsItem flight:flight, flightsResultsFilters:flightsResultsFilters/}
 #{/list}
 <div id="filterResult" style="display: none">
 #{filterBox flightsResultsFilters:flightsResultsFilters/}

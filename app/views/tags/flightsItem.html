@@ -43,6 +43,7 @@
                                 <input type="radio" name="optiona">
                                 #{list items:_flight.departureSegment.airlinesCodes, as:"airlineCode"}
                                 	#{airlineLogo carriersCode:airlineCode?.getAsString().toLowerCase(), carriersName: airlineCode /}
+                                	${_flightsResultsFilters?.carriersCodesXNames?.get(airlineCode.getAsString())}
                                 #{/list}
                             </label>
                         </li>
@@ -91,7 +92,7 @@
 
                         <div class="collapse" id="departureSegment${_flight.sequenceNumber.getAsString()}">
                             #{list items:_flight.departureSegment, as:'flightSegment'}
-                                #{flightsItemDetail flightSegment:flightSegment/}
+                                #{flightsItemDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters/}
                             #{/list}
                         </div>
                     </ul>
@@ -117,9 +118,11 @@
                     <ul>
                         <li class="radio">
                             <label>
+                            <label>
                                 <input type="radio" name="optionb">
                                 #{list items:_flight.returnSegment.airlinesCodes, as:"airlineCode"}
                                 	#{airlineLogo carriersCode:airlineCode?.getAsString().toLowerCase(), carriersName: airlineCode /}
+                                	${_flightsResultsFilters?.carriersCodesXNames?.get(airlineCode.getAsString())}
                                 #{/list}
                             </label>
                         </li>
@@ -169,7 +172,7 @@
 
                         <div class="collapse" id="returnSegment${_flight.sequenceNumber.getAsString()}">
                             #{list items:_flight.returnSegment, as:'flightSegment'}
-                                #{flightsItemDetail flightSegment:flightSegment/}
+                                #{flightsItemDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters/}
                             #{/list}
                         </div>
                     </ul>
