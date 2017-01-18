@@ -120,6 +120,16 @@ $(document).ready(function () {
 });
 
 function startBooking() {
+    $('#spinner-modal').modal('show');
+
+    var i = 1;
+    window.setInterval(
+            function(){
+                i=i+5;
+                $('.progress-bar').css({ width : i + "%" });
+            },
+        200);
+
     var formSerializeJson = $("#checkoutForm").serializeJSON({useIntKeysAsArrayIndex: true, checkboxUncheckedValue: false});
     formSerializeJson.bfmResultItem = $.parseJSON(formSerializeJson.bfmResultItem);
     var data = JSON.stringify(formSerializeJson);
@@ -132,6 +142,11 @@ function startBooking() {
             console.log("startBooking Debug");
             console.log(result);
             console.log(JSON.stringify(result.debug));
+            window.location=result.travelpay_location;
+        },
+        error: function (request, status, error) {
+            //alert(request.responseText);
+            window.location="@{PaymentFlowController.processError}";
         }
     });
 }
