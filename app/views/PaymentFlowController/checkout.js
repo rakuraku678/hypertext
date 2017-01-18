@@ -90,7 +90,7 @@ $(document).ready(function () {
                         message: 'El campo Teléfono está vacio.'
                     },
                     regexp: {
-                        regexp: /^((\d{10})|(\d{13}))$/i,
+                        regexp: /^((\d{9})|(\d{13}))$/i,
                         message: 'Campo no válido'
                     }
                 }
