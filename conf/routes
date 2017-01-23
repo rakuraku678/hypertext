@@ -9,9 +9,9 @@ GET     /flights/matrix                         FlightsDataController.priceSugge
 
 POST    /checkout                               PaymentFlowController.index
 GET     /checkout.js                            PaymentFlowController.javascript
-GET     /checkout/process                       PaymentFlowController.processPayment
-GET     /checkout/error                         PaymentFlowController.processError
-GET     /checkout/confirmation                  PaymentConfirmController.index
+GET     /checkout/{id}/process                  PaymentFlowController.processPayment
+GET     /checkout/{id}/error                    PaymentFlowController.processError
+GET     /checkout/{id}/confirmation             PaymentConfirmController.index
 POST    /checkout/booking                       BookingController.startBooking
 GET     /checkout/discovery                     PaymentFlowController.discovery
 

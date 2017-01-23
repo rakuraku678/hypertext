@@ -1,5 +1,6 @@
 package controllers;
 
+import com.google.common.collect.Maps;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import play.mvc.*;
@@ -7,6 +8,8 @@ import play.mvc.*;
 import utils.AgencyConfigurationDto;
 import utils.ApiFlightsSdk.v1.Payment;
 import utils.TravelClubUtils;
+
+import java.util.Map;
 
 public class PaymentFlowController extends Controller {
 
@@ -22,7 +25,10 @@ public class PaymentFlowController extends Controller {
     public static void processPayment(){
         AgencyConfigurationDto agencyConfigurationDto = TravelClubUtils.getAgencyConfiguration("56f2d58ce4b0e66b4c0cd92e");
 
-        render(agencyConfigurationDto);
+        Map processData = Maps.newHashMap();
+        processData.put("checkoutId", params.get("id"));
+
+        render(agencyConfigurationDto,processData);
     }
 
     public static void processError(){

@@ -52,7 +52,7 @@ $(document).ready(function () {
             setTimeout(function() {
                 $progressBar.css('width', '100%');
                 setTimeout(function() {
-                    window.location="@{PaymentConfirmController.index()}";
+                    window.location="@{PaymentConfirmController.index(id:processData.get("checkoutId"))}";
                 }, 500); // WAIT 5 milliseconds
             }, 2000); // WAIT 2 seconds
         }, 1000); // WAIT 1 seconds

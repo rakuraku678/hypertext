@@ -1,10 +1,13 @@
 package controllers;
 
+import com.google.common.collect.Maps;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import play.mvc.Controller;
 import play.mvc.Router;
 import utils.ApiFlightsSdk.v1.Booking;
+
+import java.util.Map;
 
 public class BookingController extends Controller {
 
@@ -13,16 +16,11 @@ public class BookingController extends Controller {
 
         Booking booking = new Booking();
 
-        Router.ActionDefinition redirectAction = Router.reverse("PaymentFlowController.processPayment");
+        Map params = Maps.newHashMap();
+        params.put("id", "_ID_");
 
-        String secure = "";
-        if(request.secure){
-            secure = "https://";
-        } else {
-            secure = "http://";
-        }
-
-        bodyJsonElement.getAsJsonObject().addProperty("redirect", secure + request.host + redirectAction.url);
+        bodyJsonElement.getAsJsonObject().addProperty("redirect",  Router.getFullUrl("PaymentFlowController.processPayment", params));
+        bodyJsonElement.getAsJsonObject().addProperty("agencyId", "55195834e4b0f0cd8b323427");
         renderJSON(booking.process(bodyJsonElement));
     }
 
