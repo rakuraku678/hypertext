@@ -4,3 +4,68 @@
 <div id="filterResult" style="display: none">
 #{filterBox flightsResultsFilters:flightsResultsFilters/}
 </div>
+
+
+
+
+<script>
+
+function isInArray(arr,obj) {
+    return (arr.indexOf(obj) != -1);
+}
+function findIndex(arr,element){
+	for (var i=0;i<arr.length;i++){
+		if (arr[i].airline==element) return i;
+	}
+}
+
+
+$( "#PXA" ).click(function() {
+	$.ajax({data: {"airlinesPrices": JSON.stringify(jsonPricesAirlines)}, url: "/flights/airlinesmatrix", success: function(result){
+        $( "#priceSuggestionMatrix" ).html(result);
+        
+        #{list items:flightsResultsFilters.carriers.keySet(), as:'carriersKey'}
+        		$(".airlinePricesNames_${carriersKey}").html("${flightsResultsFilters.carriersCodesXNames.get(carriersKey)}");
+        #{/list}
+        
+    }});
+
+});
+
+
+var jsonPricesAirlines = new Array();
+$(function () {
+
+    
+    var arrayOfAirlines = new Array();
+    var minPrice = 999999999999;
+    
+	$( ".ticketBaxer" ).each(function( index ) {
+		
+		var jsonVar = {};
+		
+		var currentAirline = $(this).data("airline");
+		
+		var firstTime = false;
+		if (!isInArray(arrayOfAirlines,currentAirline)){
+			arrayOfAirlines.push(currentAirline);
+			jsonVar.airline = currentAirline;
+			firstTime = true;
+		}
+		
+		var currentPrice = $(this).data("price");
+		
+		if (firstTime){
+			jsonVar.price = currentPrice;
+			jsonPricesAirlines.push(jsonVar);
+		}
+		else {
+			var airlineIndex = findIndex(jsonPricesAirlines,currentAirline);
+			if (parseFloat(currentPrice)<jsonPricesAirlines[airlineIndex].price){
+				jsonPricesAirlines[airlineIndex].price = currentPrice;
+			}
+		}
+	});
+});
+</script>
+	

@@ -2,12 +2,14 @@ package controllers;
 
 import models.FlightsResultsFilters;
 import play.mvc.Controller;
+import utils.DateUtils;
 import utils.ApiFlightsSdk.v1.BFMSearch;
 import utils.ApiFlightsSdk.v1.FlightsAltenateDates;
-import utils.DateUtils;
 import utils.dtos.AlternateDatesDto;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 
 public class FlightsDataController extends Controller {
 
@@ -47,6 +49,14 @@ public class FlightsDataController extends Controller {
         });
 
         renderTemplate("FlightsDataController/priceSuggestionMatrix.html",alternateDatesDto);
+    }
+    
+    public static void priceAirlinesMatrix(String airlinesPrices, String carriersNames){
+        System.out.println(carriersNames);
+        JsonArray airlineArray = new JsonParser().parse(airlinesPrices).getAsJsonArray();
+
+        
+    	renderTemplate("FlightsDataController/airlinesMatrix.html",airlineArray);
     }
 
 }

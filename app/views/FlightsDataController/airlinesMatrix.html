@@ -1,0 +1,43 @@
+<div class="table-responsive table-arrive">
+<table border="1">
+        <thead>
+        <tr>
+            <th colspan="2"></th>
+            <!--<th><a href="#">Tendencia de tarifas</a></th>-->
+
+            <th  ><a href="#">Precios +/- 5 días </a></th>
+         	<th colspan="2" class="select-th"><a href="#">Precios por aerolíneas</a></th>    
+        </tr>
+        </thead>
+        <tbody>
+		 <tr>
+		 	<td>Resumen</td>
+		 	#{list items:airlineArray, as:'airlineBlock'}
+			    <td>#{airlineLogo carriersCode:airlineBlock.airline.getAsString(), carriersName: airlineBlock.airline.getAsString() /}
+			    <label class="airlinePricesNames_${airlineBlock.airline.getAsString()}"></label>
+			    </td>
+			#{/list}
+	 	</tr>
+		<tr>
+		    <td>Directo</td>
+		    <td> </td> 
+		    <td></td>
+		    <td></td>
+		</tr>
+		
+		<tr>
+		    <td>1 escala</td>
+		    <td> </td> 
+		    <td></td>
+		    <td></td>
+		</tr>
+		
+		<tr>
+		    <td>2 escalas o más</td>
+		    <td> </td> 
+		    <td></td>
+		    <td></td>
+		</tr>
+	
+</table>
+</div>
