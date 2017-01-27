@@ -9,15 +9,15 @@ rowDepartureDate = null;
 lastRowDate = firstDepartureDate.minusDays(1);
 
 }%
-<div class="table-responsive table-arrive">
+<div class="table-responsive table-arrive" id="priceSugDiv">
     <table border="1">
         <thead>
         <tr>
             <th colspan="4"></th>
             <!--<th><a href="#">Tendencia de tarifas</a></th>-->
 
-            <th colspan="2" class="select-th"><a href="#">Precios +/- 5 días </a></th>
-         	<th colspan="2" ><a id="PXA" href="#">Precios por aerolíneas</a></th>    
+            <th colspan="2" class="select-th"><a class="priceSug" href="#">Precios +/- 5 días </a></th>
+         	<th colspan="2" ><a class="PXA" href="#">Precios por aerolíneas</a></th>    
         </tr>
         </thead>
         <tbody>
@@ -76,36 +76,3 @@ lastRowDate = firstDepartureDate.minusDays(1);
 </div>
 
 
-<script>
-
-// 	function getJsonSearchParams() {
-// 	    var searchForm = $("#flightSearchForm");
-// 	    var filterForm = $("#filterResultForm");
-// 	    return {
-// 	        origin: searchForm.find('input[name="origen"]').val(),
-// 	        destination: searchForm.find('input[name="destino"]').val(),
-// 	        departuredate: searchForm.find('input[name="partida"]').val(),
-// 	        returndate: searchForm.find('input[name="regreso"]').val(),
-// 	        adultcount: searchForm.find('select[name="adultcount"]').val(),
-// 	        childrencount: searchForm.find('select[name="childrencount"]').val(),
-// 	        infantcount: searchForm.find('select[name="infantcount"]').val(),
-// 	    };
-// 	}
-	
-	
- 	$(function() {
-	    
-// 		var jsonParameters = getJsonSearchParams();
-// 		$( ".pr-fare" ).each(function( index ) {
-// 			  var from = $(this).data("from").replace(/\//g,"-");
-// 			  var to = $(this).data("to").replace(/\//g,"-");
-// 			  var link = window.location.origin+"/"+jsonParameters.origin+"/"+jsonParameters.destination+"/"+from+"/"+to+"/"+jsonParameters.adultcount+"-"+jsonParameters.childrencount+"-"+jsonParameters.infantcount;
-// 			  $(this).attr("href",link);
-// 		});
-		
-
-
-		
- 	});
-
-</script>

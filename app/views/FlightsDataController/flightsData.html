@@ -20,23 +20,37 @@ function findIndex(arr,element){
 }
 
 
-$( "#PXA" ).click(function() {
-	$.ajax({data: {"airlinesPrices": JSON.stringify(jsonPricesAirlines)}, url: "/flights/airlinesmatrix", success: function(result){
-        $( "#priceSuggestionMatrix" ).html(result);
-        
-        #{list items:flightsResultsFilters.carriers.keySet(), as:'carriersKey'}
-        		$(".airlinePricesNames_${carriersKey}").html("${flightsResultsFilters.carriersCodesXNames.get(carriersKey)}");
-        #{/list}
-        
-    }});
-
-});
-
 
 var jsonPricesAirlines = new Array();
 $(function () {
 
     
+	
+
+	$( ".PXA" ).click(function() {
+		
+		if ($("#airlineSugDiv").html()==undefined){
+			$.ajax({data: {"airlinesPrices": JSON.stringify(jsonPricesAirlines)}, url: "/flights/airlinesmatrix", success: function(result){
+				$("#priceSugDiv").hide();
+		        $( "#priceSuggestionMatrix" ).append(result);
+		        
+		        #{list items:flightsResultsFilters.carriers.keySet(), as:'carriersKey'}
+		        		$(".airlinePricesNames_${carriersKey}").html("${flightsResultsFilters.carriersCodesXNames.get(carriersKey)}");
+		        #{/list}
+		        
+		    }});
+		}
+		else {
+			$("#priceSugDiv").hide();
+			$("#airlineSugDiv").show();
+		}
+
+	});
+
+
+
+	
+	
     var arrayOfAirlines = new Array();
     var minPrice = 999999999999;
     
@@ -44,27 +58,64 @@ $(function () {
 		
 		var jsonVar = {};
 		
-		var currentAirline = $(this).data("airline");
 		
+		var escala = 0;
+		if ($(this).data("escala")==0 && $(this).data("escala")==$(this).data("returnescala")){
+			escala = 0;
+		}
+		else  if ( ($(this).data("escala")==0 && $(this).data("returnescala") == 1 ) || 
+				($(this).data("escala")==1 && $(this).data("returnescala") == 0 ) || 
+				($(this).data("escala")==1 && $(this).data("returnescala") == 1 ) ){
+			escala = 1;
+		}
+		else {
+			escala = 2;
+		}
+		
+			
+		var currentAirline = $(this).data("airline");
+			
 		var firstTime = false;
 		if (!isInArray(arrayOfAirlines,currentAirline)){
 			arrayOfAirlines.push(currentAirline);
 			jsonVar.airline = currentAirline;
+			jsonVar.escala = escala;
 			firstTime = true;
 		}
 		
 		var currentPrice = $(this).data("price");
 		
 		if (firstTime){
-			jsonVar.price = currentPrice;
+			if (escala==0){
+				jsonVar.price0 = currentPrice;	
+			} else if (escala==1){
+				jsonVar.price1 = currentPrice;	
+			} else if (escala==2){
+				jsonVar.price2 = currentPrice;	
+			} 
 			jsonPricesAirlines.push(jsonVar);
 		}
 		else {
 			var airlineIndex = findIndex(jsonPricesAirlines,currentAirline);
-			if (parseFloat(currentPrice)<jsonPricesAirlines[airlineIndex].price){
-				jsonPricesAirlines[airlineIndex].price = currentPrice;
-			}
+			if (escala==0){
+				if (parseFloat(currentPrice)<jsonPricesAirlines[airlineIndex].price0){
+					jsonPricesAirlines[airlineIndex].price0 = currentPrice;
+					jsonPricesAirlines[airlineIndex].escala = escala;
+				}
+			} else if (escala==1){
+				if (parseFloat(currentPrice)<jsonPricesAirlines[airlineIndex].price1){
+					jsonPricesAirlines[airlineIndex].price1 = currentPrice;
+					jsonPricesAirlines[airlineIndex].escala = escala;
+				}
+			} else if (escala==2){
+				if (parseFloat(currentPrice)<jsonPricesAirlines[airlineIndex].price2){
+					jsonPricesAirlines[airlineIndex].price2 = currentPrice;
+					jsonPricesAirlines[airlineIndex].escala = escala;
+				}
+			} 
+			
 		}
+		
 	});
 });
 </script>
