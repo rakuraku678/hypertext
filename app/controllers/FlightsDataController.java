@@ -1,5 +1,11 @@
 package controllers;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.joda.time.DateTime;
+
 import models.FlightsResultsFilters;
 import play.mvc.Controller;
 import utils.DateUtils;
@@ -57,7 +63,7 @@ public class FlightsDataController extends Controller {
     	renderTemplate("FlightsDataController/airlinesMatrix.html",airlineArray);
     }
     
-    public static void lowPricesMatrix(String origin, String destination, String departureDate, String returnDate){
+    public static void lowPricesMatrix(String origin, String destination, String departureDate, String returnDate) throws ParseException{
 
 		LowFareHistory lowFareHistory = new LowFareHistory();
 		lowFareHistory.setOrigin(params.get("origin"));
