@@ -2,11 +2,9 @@
 <table border="1">
         <thead>
         <tr>
-            <th colspan="2"></th>
-            <!--<th><a href="#">Tendencia de tarifas</a></th>-->
-
             <th colspan="2" ><a href="#" class="priceSug">Precios +/- 5 días </a></th>
-         	<th colspan="2" class="select-th"><a class="PXA" href="#">Precios por aerolíneas</a></th>    
+         	<th colspan="2" class="select-th"><a class="PXA" href="#">Precios por aerolíneas</a></th>
+         	<th colspan="2" ><a class="tTar" href="#">Tendencia de Tarifas</a></th>
         </tr>
         </thead>
         <tbody>
@@ -43,17 +41,11 @@
 </div>
 
 <script>
-
-	
  	$(function() {
-	    
  		$( ".priceSug" ).click(function() { 
  			$("#airlineSugDiv").hide();
+ 			$("#tarifasDiv").hide();
  			$("#priceSugDiv").show();
  		});
-
-
-		
  	});
-
 </script>

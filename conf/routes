@@ -7,6 +7,7 @@ GET     /                                       FlightsController.index
 GET     /flights/data                           FlightsDataController.index
 GET     /flights/matrix                         FlightsDataController.priceSuggestionMatrix
 GET     /flights/airlinesmatrix                 FlightsDataController.priceAirlinesMatrix
+GET     /flights/lowpricesmatrix		        FlightsDataController.lowPricesMatrix
 
 POST    /checkout                               PaymentFlowController.index
 GET     /checkout.js                            PaymentFlowController.javascript

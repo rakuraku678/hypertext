@@ -5,6 +5,7 @@ import play.mvc.Controller;
 import utils.DateUtils;
 import utils.ApiFlightsSdk.v1.BFMSearch;
 import utils.ApiFlightsSdk.v1.FlightsAltenateDates;
+import utils.ApiFlightsSdk.v1.LowFareHistory;
 import utils.dtos.AlternateDatesDto;
 
 import com.google.gson.JsonArray;
@@ -55,5 +56,18 @@ public class FlightsDataController extends Controller {
         JsonArray airlineArray = new JsonParser().parse(airlinesPrices).getAsJsonArray();
     	renderTemplate("FlightsDataController/airlinesMatrix.html",airlineArray);
     }
+    
+    public static void lowPricesMatrix(String origin, String destination, String departureDate, String returnDate){
 
+		LowFareHistory lowFareHistory = new LowFareHistory();
+		lowFareHistory.setOrigin(params.get("origin"));
+		lowFareHistory.setDestination(params.get("destination"));
+		lowFareHistory.setDeparturedate(DateUtils.reformateDate(departureDate));
+		lowFareHistory.setReturndate(DateUtils.reformateDate(returnDate));
+		
+		JsonElement lowFaresResults = lowFareHistory.process();
+		JsonArray lowFaresArray = lowFaresResults.getAsJsonArray();
+		
+        renderTemplate("FlightsDataController/lowFareHistoryMatrix.html",lowFaresArray);
+    }
 }

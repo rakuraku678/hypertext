@@ -1,0 +1,50 @@
+<div class="table-responsive table-arrive" id="tarifasDiv">
+<table border="1">
+        <thead>
+        <tr>
+            <th colspan="2" ><a href="#" class="priceSug">Precios +/- 5 días </a></th>
+         	<th colspan="2" ><a class="PXA" href="#">Precios por aerolíneas</a></th>
+         	<th colspan="2" class="select-th"><a class="tTar" href="#">Tendencia de Tarifas</a></th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+ </table>
+  <script type="text/javascript">
+    google.charts.load("current", {packages:['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ["Fecha", "Tarifa" ],
+        #{list items:lowFaresArray, as:'fare'}
+        	["${fare.shopDate.getAsString()}", ${fare.fare.getAsString()}],
+    	#{/list}
+
+      ]);
+
+      var view = new google.visualization.DataView(data);
+
+      var options = {
+        legend: { position: "none" },
+        hAxis: {
+            direction:-1,
+            slantedText:true,
+            slantedTextAngle:45 // here you can even use 180
+        }
+      };
+      var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+      chart.draw(view, options);
+  }
+  </script>
+<div id="columnchart_values" ></div>
+
+
+
+<script>
+ 	$(function() {
+ 		$( ".priceSug" ).click(function() { 
+ 			$("#airlineSugDiv").hide();
+ 			$("#tarifasDiv").hide();
+ 			$("#priceSugDiv").show();
+ 		});
+ 	});
+</script>
