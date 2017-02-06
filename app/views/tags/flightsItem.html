@@ -38,9 +38,8 @@
                 </li>
                 <li class="txt-view-detail">
                     <ul>
-                        <li class="radio">
-                            <label>
-                                <input type="radio" name="optiona">
+                        <li>
+                            <label style="font-weight: 500;">
                                 #{list items:_flight.departureSegment.airlinesCodes, as:"airlineCode"}
                                 	#{airlineLogo carriersCode:airlineCode?.getAsString().toLowerCase(), carriersName: airlineCode /}
                                 	${_flightsResultsFilters?.carriersCodesXNames?.get(airlineCode.getAsString())}
@@ -116,10 +115,8 @@
                 </li>
                 <li class="txt-view-detail">
                     <ul>
-                        <li class="radio">
-                            <label>
-                            <label>
-                                <input type="radio" name="optionb">
+                        <li>
+                            <label style="font-weight: 500;">
                                 #{list items:_flight.returnSegment.airlinesCodes, as:"airlineCode"}
                                 	#{airlineLogo carriersCode:airlineCode?.getAsString().toLowerCase(), carriersName: airlineCode /}
                                 	${_flightsResultsFilters?.carriersCodesXNames?.get(airlineCode.getAsString())}
