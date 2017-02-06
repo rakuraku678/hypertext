@@ -50,22 +50,26 @@
             <span class="txt-filter">Ida:</span>
 
             <div class="checkbox">
-                <label>
-                	#{list items:_flightsResultsFilters.outboundAirport.keySet(), as:'airportKey'}
-                		<input type="checkbox" checked="checked" class="aeroChkDeparture" value="${_flightsResultsFilters.outboundAirportCodes.get(airportKey)}"> ${airportKey}
-				    #{/list}
-                </label>
+               
+               	#{list items:_flightsResultsFilters.outboundAirport.keySet(), as:'airportKey'}
+               		<label>
+               			<input type="checkbox" checked="checked" class="aeroChkDeparture" value="${_flightsResultsFilters.outboundAirportCodes.get(airportKey)}"> ${airportKey}
+					</label>
+			    #{/list}
+                
             </div>
             <hr>
             <span class="txt-filter">Vuelta:</span>
 
 
             <div class="checkbox">
-                <label>
-                	#{list items:_flightsResultsFilters.inboundAirport.keySet(), as:'airportKey'}
-                		<input type="checkbox" checked="checked" class="aeroChkReturn" value="${_flightsResultsFilters.inboundAirportCodes.get(airportKey)}"> ${airportKey}<br />
-				    #{/list}
-                </label>
+               
+               	#{list items:_flightsResultsFilters.inboundAirport.keySet(), as:'airportKey'}
+               		<label>
+               			<input type="checkbox" checked="checked" class="aeroChkReturn" value="${_flightsResultsFilters.inboundAirportCodes.get(airportKey)}"> ${airportKey}<br />
+			    	</label>
+			    #{/list}
+                
             </div>
             
         </div>
