@@ -2,9 +2,22 @@
 <table border="1">
         <thead>
         <tr>
-            <th colspan="2" ><a href="#" class="priceSug">Precios +/- 5 días </a></th>
-         	<th colspan="2" class="select-th"><a class="PXA" href="#">Precios por aerolíneas</a></th>
-         	<th colspan="2" ><a class="tTar" href="#">Tendencia de Tarifas</a></th>
+        %{
+        	def size=airlineArray.size();
+			def numberOfBlankColumns = size+1-3;
+        	for (i = 1; i <=numberOfBlankColumns; i++) {
+		}%
+			<th></th>
+			%{   
+			}
+			}%
+        
+        
+        
+        
+            <th  ><a href="#" class="priceSug">Precios +/- 5 días </a></th>
+         	<th class="select-th"><a class="PXA" href="#">Precios por aerolíneas</a></th>
+         	<th ><a class="tTar" href="#">Tendencia de Tarifas</a></th>
         </tr>
         </thead>
         <tbody>
