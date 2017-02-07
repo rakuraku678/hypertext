@@ -24,4 +24,9 @@ public class BookingController extends Controller {
         renderJSON(booking.process(bodyJsonElement));
     }
 
+    public static void statusBooking() {
+        Booking booking = new Booking();
+        renderJSON(booking.statusControl(params.get("id")));
+    }
+
 }

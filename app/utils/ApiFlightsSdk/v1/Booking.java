@@ -15,4 +15,14 @@ public class Booking extends ApiFlightsSDKBase {
 
         return processResponsePost(request);
     }
+
+    public JsonElement statusControl(String id){
+        WS.WSRequest request = prepareRequest(ENDPOINT + "/" + id + "/control");
+        return processResponsePost(request);
+    }
+
+    public JsonElement get(String id){
+        WS.WSRequest request = prepareRequest(ENDPOINT + "/" + id );
+        return processResponsePost(request);
+    }
 }

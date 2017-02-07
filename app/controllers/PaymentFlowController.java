@@ -31,10 +31,10 @@ public class PaymentFlowController extends Controller {
         render(agencyConfigurationDto,processData);
     }
 
-    public static void processError(){
+    public static void processError(String type){
         AgencyConfigurationDto agencyConfigurationDto = TravelClubUtils.getAgencyConfiguration("56f2d58ce4b0e66b4c0cd92e");
 
-        render(agencyConfigurationDto);
+        render(agencyConfigurationDto, type);
     }
 
     public static void javascript() {

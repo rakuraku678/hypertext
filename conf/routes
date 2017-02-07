@@ -14,8 +14,9 @@ GET     /checkout.js                            PaymentFlowController.javascript
 GET     /checkout/{id}/process                  PaymentFlowController.processPayment
 GET     /checkout/{id}/error                    PaymentFlowController.processError
 GET     /checkout/{id}/confirmation             PaymentConfirmController.index
+GET     /checkout/error/{type}                  PaymentFlowController.processError
 POST    /checkout/booking                       BookingController.startBooking
-GET     /checkout/discovery                     PaymentFlowController.discovery
+POST    /checkout/booking/status                BookingController.statusBooking
 
 
 # Ignore favicon requests

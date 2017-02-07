@@ -26,12 +26,30 @@
 </section>
 <section class="search-arrive payment-path">
     <article class="container-fluid">
+        <h2 class="text-center">Oops! Algo salio mal...</h2>
         <div class="row">
-            <h2 class="text-center">Oops! Algo salio mal...</h2>
             <div class="col-md-12">
-                <div class="alert alert-danger" role="alert">Error al procesar!</div>
+            #{if type == 'duplicity'}
+                <div class="alert alert-danger" role="alert">Lo sentimos pero alguno de los pasajeros ya posee una reserva. (code: duplicity)</div>
+            #{/if}
+            #{elseif type == 'churning'}
+                <div class="alert alert-danger" role="alert">Lo sentimos pero no se puede procesar su solicitud. (code: churning)</div>
+            #{/elseif}
+            #{elseif type == 'blackout'}
+                <div class="alert alert-danger" role="alert">Lo sentimos pero actualmente no se puede procesar su solicitud. (code: blackout)</div>
+            #{/elseif}
+            #{elseif type == 'internal'}
+                <div class="alert alert-danger" role="alert">Lo sentimos pero actualmente no se puede procesar su solicitud. (code: internal)</div>
+            #{/elseif}
+            #{else}
+                <div class="alert alert-danger" role="alert">Lo sentimos pero hubo un error al momento de procesar su solicitud!</div>
+            #{/else}
             </div>
-            <p class="info-help text-center">En caso de necesitar ayuda comunicarse al correo <strong>ventaonline@travelclub.cl</strong></p>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <p class="info-help text-center">En caso de necesitar ayuda comunicarse al correo <strong>ventaonline@travelclub.cl</strong></p>
+            </div>
         </div>
     </article>
 </section>

@@ -52,13 +52,46 @@ $(document).ready(function () {
             setTimeout(function() {
                 $progressBar.css('width', '100%');
                 setTimeout(function() {
-                    window.location="@{PaymentConfirmController.index(id:processData.get("checkoutId"))}";
                 }, 500); // WAIT 5 milliseconds
             }, 2000); // WAIT 2 seconds
         }, 1000); // WAIT 1 seconds
     }, 1000);
 
+    window.setInterval(
+            function(){
+                statusBooking();
+            },
+        1000);
+
 });
+
+
+
+
+function statusBooking() {
+    var error_location ="@{PaymentFlowController.processError(type: '_error_id_')}";
+    $.ajax({
+        type: "POST",
+        url: "@{BookingController.statusBooking}",
+        data: { id: "${processData.get("checkoutId")}"},
+        dataType: "json",
+        success:function(result) {
+            if(result.status == "success"){
+                window.location="@{PaymentConfirmController.index(id:processData.get("checkoutId"))}";
+            }
+            if(result.status == "Failure"){
+                window.location=error_location.replace("_error_id_", "failure");
+            }
+            if(result.status == "Canceled"){
+                window.location=error_location.replace("_error_id_", "canceled");
+            }
+            if(result.status == "Abandon"){
+                window.location=error_location.replace("_error_id_", "abandon");
+            }
+        }
+    });
+}
+
 
 #{/set}
 
