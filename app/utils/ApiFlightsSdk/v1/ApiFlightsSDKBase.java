@@ -20,7 +20,7 @@ public abstract class ApiFlightsSDKBase {
 
     protected static JsonElement processResponse(WS.WSRequest request) {
         System.out.println("//****************************************//");
-        System.out.println("//               Api Flights              //");
+        System.out.println("//             Api Flights GET            //");
         System.out.println("//****************************************//");
         System.out.println("// request_url: " + request.url );
         System.out.println("// request_params: " + request.parameters );
@@ -48,7 +48,7 @@ public abstract class ApiFlightsSDKBase {
 
     protected static JsonElement processResponsePost(WS.WSRequest request) {
         System.out.println("//****************************************//");
-        System.out.println("//               Api Flights              //");
+        System.out.println("//            Api Flights POST            //");
         System.out.println("//****************************************//");
         System.out.println("// request_url: " + request.url );
         System.out.println("// request_params: " + request.parameters );

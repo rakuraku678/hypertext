@@ -6,12 +6,16 @@ import com.google.gson.JsonParser;
 import play.mvc.Controller;
 import play.mvc.Router;
 import utils.ApiFlightsSdk.v1.Booking;
+import utils.ApiFlightsSdk.v1.Promotion;
+import utils.dtos.PromotionDto;
 
 import java.util.Map;
 
 public class BookingController extends Controller {
 
     public static void startBooking(String body) {
+        PromotionDto promotionDto = new Promotion().getDefault();
+
         JsonElement bodyJsonElement = new JsonParser().parse(body);
 
         Booking booking = new Booking();
@@ -19,8 +23,9 @@ public class BookingController extends Controller {
         Map params = Maps.newHashMap();
         params.put("id", "_ID_");
 
-        bodyJsonElement.getAsJsonObject().addProperty("redirect",  Router.getFullUrl("PaymentFlowController.processPayment", params));
-        bodyJsonElement.getAsJsonObject().addProperty("agencyId", "55195834e4b0f0cd8b323427");
+        bodyJsonElement.getAsJsonObject().addProperty("redirect", Router.getFullUrl("PaymentFlowController.processPayment", params));
+        bodyJsonElement.getAsJsonObject().addProperty("agencyId", promotionDto.agency.externalId);
+
         renderJSON(booking.process(bodyJsonElement));
     }
 

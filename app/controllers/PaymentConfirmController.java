@@ -9,12 +9,16 @@ import java.util.*;
 import models.*;
 import utils.AgencyConfigurationDto;
 import utils.ApiFlightsSdk.v1.Booking;
+import utils.ApiFlightsSdk.v1.Promotion;
 import utils.TravelClubUtils;
+import utils.dtos.PromotionDto;
 
 public class PaymentConfirmController extends Controller {
 
     public static void index() {
-        AgencyConfigurationDto agencyConfigurationDto = TravelClubUtils.getAgencyConfiguration("56f2d58ce4b0e66b4c0cd92e");
+        PromotionDto promotionDto = new Promotion().getDefault();
+
+        AgencyConfigurationDto agencyConfigurationDto = TravelClubUtils.getAgencyConfiguration(promotionDto.agency.externalId);
 
         Booking booking = new Booking();
         JsonElement bookingResult = booking.get(params.get("id"));

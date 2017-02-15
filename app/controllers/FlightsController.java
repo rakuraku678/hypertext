@@ -8,12 +8,17 @@ import java.util.*;
 
 import models.*;
 import utils.AgencyConfigurationDto;
+import utils.ApiFlightsSdk.v1.Promotion;
 import utils.TravelClubUtils;
+import utils.dtos.PromotionDto;
 
 public class FlightsController extends Controller {
 
     public static void index() {
-        AgencyConfigurationDto agencyConfigurationDto = TravelClubUtils.getAgencyConfiguration("576d8872558bc20506a72392");
+        PromotionDto promotionDto = new Promotion().getDefault();
+
+        AgencyConfigurationDto agencyConfigurationDto = TravelClubUtils.getAgencyConfiguration(promotionDto.agency.externalId);
+
 
         if (!Strings.isNullOrEmpty(params.get("origin"))){
             Map m = (Map) SearchController.getCachedAutoComplete(params.get("origin")).get(0);
