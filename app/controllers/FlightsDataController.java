@@ -1,13 +1,10 @@
 package controllers;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import org.joda.time.DateTime;
 
 import models.FlightsResultsFilters;
 import play.mvc.Controller;
+import utils.ApiFlightsSdk.v1.Promotion;
 import utils.DateUtils;
 import utils.ApiFlightsSdk.v1.BFMSearch;
 import utils.ApiFlightsSdk.v1.FlightsAltenateDates;
@@ -17,10 +14,13 @@ import utils.dtos.AlternateDatesDto;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import utils.dtos.PromotionDto;
 
 public class FlightsDataController extends Controller {
 
     public static void index() throws InterruptedException {
+        PromotionDto promotionDto = new Promotion().getDefault();
+
         BFMSearch bfmSearch  = new BFMSearch();
         bfmSearch.setOrigin(params.get("origin"));
         bfmSearch.setDestination(params.get("destination"));
@@ -29,6 +29,7 @@ public class FlightsDataController extends Controller {
         bfmSearch.addPassengerType("ADT", params.get("adultcount"));
         bfmSearch.addPassengerType("C02", params.get("childrencount"));
         bfmSearch.addPassengerType("INF", params.get("infantcount"));
+        bfmSearch.setPromotion(promotionDto.slug);
         JsonElement flightsResults = bfmSearch.process();
 
         FlightsResultsFilters flightsResultsFilters = FlightsResultsFilters.processFlightsResults(flightsResults);
