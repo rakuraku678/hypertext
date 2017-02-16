@@ -1,10 +1,12 @@
 <button class="btn btn-primary btn-search-mobile" type="button" data-toggle="collapse"
         data-target="#collapseSearchMobile" aria-expanded="false" aria-controls="collapseSearchMobile">
     <ul>
-        <li><i class="icon-fly-mobile-search"></i><span class="txt-fly-mobile">eze - lon</span></li>
-        <li><i class="icon-calendar-mobile-search"></i><span class="txt-calendar-mobile">Sábado 8 de Abr - Domingo 23 Abr</span>
+        <li><i class="icon-fly-mobile-search"></i>
+            <span id="citiesMobile" class="txt-fly-mobile">${params.origin} - ${params.destination}</span>
         </li>
-        <li><i class="icon-passenger-mobile-search"></i><span class="txt-passenger-mobile">1</span></li>
+        <li><i class="icon-calendar-mobile-search"></i><span id="datesMobile" class="txt-calendar-mobile">${params.departureDate?.replace('-','/')} - ${params.returnDate?.replace('-','/')}</span>
+        </li>
+        <li><i class="icon-passenger-mobile-search"></i><span id="passengersMobile" class="txt-passenger-mobile">${Integer.parseInt(params.adults) + Integer.parseInt(params.children) + Integer.parseInt(params.infants)}</span></li>
     </ul>
 </button>
 <div class="collapse" id="collapseSearchMobile">
@@ -97,6 +99,15 @@
                       $('#flightSearchForm input[type="submit"]').attr('disabled', false);
                       return false;
                     }
+
+
+                    $("#citiesMobile").html( $("#originHdn").val() + " - " + $("#destinyHdn").val() );
+                    $("#datesMobile").html( $("#startDate").val() + " - " + $("#endDate").val() );
+                    $("#passengersMobile").html(parseInt($("#adultCount").val())+parseInt($("#childrenCount").val())+parseInt($("#infantCount").val()));
+
+                    $("#collapseSearchMobile").collapse('hide');
+
+
                     $( "#loading_departure_city").html($('#origin').select2('data')[0].city);
                     $( "#loading_return_city").html($('#destiny').select2('data')[0].city);
 
