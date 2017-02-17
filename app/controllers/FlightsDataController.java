@@ -95,6 +95,12 @@ public class FlightsDataController extends Controller {
 				jsonEl.addProperty("shopDate", lowFaresArray.get(i).getAsJsonObject().get("shopDate").getAsString());
 				lowFaresArray2.add(jsonEl);
 			}
+			else {
+				JsonObject jsonEl = new JsonObject();
+				jsonEl.addProperty("fare", lowFaresArray.get(i).getAsJsonObject().get("fare").getAsString());
+				jsonEl.addProperty("shopDate", lowFaresArray.get(i).getAsJsonObject().get("shopDate").getAsString());
+				lowFaresArray2.add(jsonEl);
+			}
 		}
 		
 		System.out.println("lowfares wacho: "+lowFaresResults.toString());
