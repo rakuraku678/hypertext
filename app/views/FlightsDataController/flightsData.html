@@ -135,17 +135,17 @@ $(function () {
 	
 	$(document).on('click', '#toUsd', function() {
 		$( ".clppriceCon" ).each(function( index ) {
-			var exchangeRate = parseFloat("${dollarExchangeRate}");
-			var numToChange = parseFloat($(this).html());
-			$(this).next().html(parseFloat(numToChange / exchangeRate).toFixed(2));
-			$(this).next().removeClass("hidden");
+			$(this).prev().removeClass("hidden");
 			$(this).addClass("hidden");
 		});
 	});
 	
 	$(document).on('click', '#toWn', function() {
 		$( ".usdpriceCon" ).each(function( index ) {
-			$(this).prev().removeClass("hidden");
+			var exchangeRate = parseFloat("${dollarExchangeRate}");
+			var numToChange = parseFloat($(this).html());
+			$(this).next().html(parseFloat(numToChange * exchangeRate).toFixed(2));
+			$(this).next().removeClass("hidden");
 			$(this).addClass("hidden");
 		});
 	});
