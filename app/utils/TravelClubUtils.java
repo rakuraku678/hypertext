@@ -17,11 +17,34 @@ public class TravelClubUtils {
 		WSRequest req = WS.url(AGENCY_URL);
 		req.authenticate("E3ra79", "api33-33a");
 		req.setParameter("agencyId", agencyId);
-		HttpResponse response = req.get();
-		//String responseStr = response.getString();
-		JsonElement responseJson = response.getJson();
-		AgencyConfigurationDto agencyConfigurationDto = AgencyConfigurationDto.parseAgencyConfigurationDto(responseJson);
-		return agencyConfigurationDto;
+		System.out.println("//****************************************//");
+		System.out.println("//             Agency Conf GET            //");
+		System.out.println("//****************************************//");
+		System.out.println("// request_url: " + req.url );
+		System.out.println("// request_params: " + req.parameters );
+		System.out.println("// request_body: " + req.body );
+
+
+		try {
+			HttpResponse response = req.get();
+			//String responseStr = response.getString();
+			JsonElement responseJson = response.getJson();
+			AgencyConfigurationDto agencyConfigurationDto = AgencyConfigurationDto.parseAgencyConfigurationDto(responseJson);
+
+			if (!response.success()) {
+				System.out.println("// responde_code: " + response.getStatus());
+				System.out.println("// responde: " + responseJson);
+				System.out.println("//****************************************//");
+				throw new RuntimeException("Api Flights ERROR");
+			}
+			System.out.println("// jsonResponse: " + responseJson );
+			System.out.println("//****************************************//");
+
+			return agencyConfigurationDto;
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			throw new RuntimeException("Agency Conf process response fail.");
+		}
 	}
 	
 
