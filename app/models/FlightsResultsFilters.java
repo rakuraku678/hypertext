@@ -44,7 +44,8 @@ public class FlightsResultsFilters {
                 JsonObject returnSegmentsObject = returnSegmentsElement.getAsJsonObject();
                 flightsResultsFilters.addCarriers(returnSegmentsObject.get("operatingAirlineCode").getAsString());
             }
-
+            
+            
             JsonObject firstDepartureSegment = departureSegmentDetail.get(0).getAsJsonObject();
             JsonObject firstReturnSegment = returnSegmentDetail.get(0).getAsJsonObject();
 

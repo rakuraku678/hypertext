@@ -8,11 +8,15 @@ import org.joda.time.DateTime;
 
 import models.FlightsResultsFilters;
 import play.mvc.Controller;
+import utils.AgencyConfigurationDto;
 import utils.DateUtils;
+import utils.TravelClubUtils;
 import utils.ApiFlightsSdk.v1.BFMSearch;
 import utils.ApiFlightsSdk.v1.FlightsAltenateDates;
 import utils.ApiFlightsSdk.v1.LowFareHistory;
+import utils.ApiFlightsSdk.v1.Promotion;
 import utils.dtos.AlternateDatesDto;
+import utils.dtos.PromotionDto;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -24,6 +28,8 @@ public class FlightsDataController extends Controller {
         BFMSearch bfmSearch  = new BFMSearch();
         bfmSearch.setOrigin(params.get("origin"));
         bfmSearch.setDestination(params.get("destination"));
+        bfmSearch.setCountry(SearchController.getAirportCountry(params.get("destination")));
+        bfmSearch.setCity(SearchController.getAirportCity(params.get("destination")));
         bfmSearch.setDeparturedate(DateUtils.reformateDate(params.get("departuredate")));
         bfmSearch.setReturndate(DateUtils.reformateDate(params.get("returndate")));
         bfmSearch.addPassengerType("ADT", params.get("adultcount"));
@@ -33,7 +39,8 @@ public class FlightsDataController extends Controller {
 
         FlightsResultsFilters flightsResultsFilters = FlightsResultsFilters.processFlightsResults(flightsResults);
 
-        renderTemplate("FlightsDataController/flightsData.html",flightsResults, flightsResultsFilters);
+        String dollarExchangeRate = TravelClubUtils.getDollarExchangeRate();
+        renderTemplate("FlightsDataController/flightsData.html",flightsResults, flightsResultsFilters, dollarExchangeRate);
     }
 
     public static void priceSuggestionMatrix() throws InterruptedException {

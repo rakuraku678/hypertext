@@ -2,6 +2,14 @@
     #{flightsItem flight:flight, flightsResultsFilters:flightsResultsFilters/}
 #{/list}
 <div id="filterResult" style="display: none">
+
+
+#{if dollarExchangeRate.isNumber()}
+<div>
+	<label id="toWn" style="cursor:pointer;">CLP</label><label id="toUsd" style="cursor:pointer; float: right;">USD</label>
+</div>
+#{/if}
+
 #{filterBox flightsResultsFilters:flightsResultsFilters/}
 </div>
 
@@ -119,10 +127,31 @@ $(function () {
 					jsonPricesAirlines[airlineIndex].escala = escala;
 				}
 			} 
-			
 		}
 		
 	});
+
+	#{if dollarExchangeRate.isNumber()}
+	
+	$(document).on('click', '#toUsd', function() {
+		$( ".clppriceCon" ).each(function( index ) {
+			var exchangeRate = parseFloat("${dollarExchangeRate}");
+			var numToChange = parseFloat($(this).html());
+			$(this).next().html(parseFloat(numToChange / exchangeRate).toFixed(2));
+			$(this).next().removeClass("hidden");
+			$(this).addClass("hidden");
+		});
+	});
+	
+	$(document).on('click', '#toWn', function() {
+		$( ".usdpriceCon" ).each(function( index ) {
+			$(this).prev().removeClass("hidden");
+			$(this).addClass("hidden");
+		});
+	});
+	
+	#{/if}
+	
 });
 </script>
 	

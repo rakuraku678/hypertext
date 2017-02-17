@@ -17,6 +17,8 @@ public class BFMSearch extends ApiFlightsSDKBase {
     public String destination;
     public String departuredate;
     public String returndate;
+    public String country;
+    public String city;
     public List<Map<String,String>> passengerTypeList = Lists.newArrayList();
 
     public JsonElement process(){
@@ -64,4 +66,21 @@ public class BFMSearch extends ApiFlightsSDKBase {
             passengerTypeList.add(passengerTypeMap);
         }
     }
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+    
 }
