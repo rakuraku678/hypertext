@@ -1,0 +1,19 @@
+%{
+    cabin = _bookingCodeList?.get(_bookingCode).getAsString();
+
+    switch(cabin) {
+        case "Y" :
+            label = "Enconómica";
+            break;
+        case "C" :
+            label = "Ejecutiva";
+            break;
+        case "F" :
+            label = "Primera";
+            break;
+        default :
+            label = cabin;
+            break;
+    }
+}%
+${label}
