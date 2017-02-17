@@ -30,24 +30,68 @@
         <div class="row">
             <div class="col-md-12">
             #{if type == 'duplicity'}
-                <div class="alert alert-danger" role="alert">Lo sentimos pero alguno de los pasajeros ya posee una reserva. (code: duplicity)</div>
+                <div class="alert alert-danger" role="alert" style="width: 1000px; margin: auto; padding: 20px;">
+                    Estimado cliente,<br><br>
+                    Hemos detectado que usted tiene una reserva activa con los mismos datos.
+                    Intentelo nuevamente en los siguientes <strong>XX minutos</strong> para generar una nueva o
+                    comuniquese a <strong>ventaonline@travelclub.cl</strong> en el siguiente horario de atención:
+                    Lunes a Viernes de 9:00 a 19:00 horas.<br><br>
+                    Le agradecemos su preferencia.<br><br>
+                    Atentamente,<br><br>
+                    Departamento de Ventas On Line.<br><br>
+                    <img src="@{'/public/img/logo-payment-travel-red.svg'}">
+                </div>
             #{/if}
             #{elseif type == 'churning'}
-                <div class="alert alert-danger" role="alert">Lo sentimos pero no se puede procesar su solicitud. (code: churning)</div>
+                <div class="alert alert-danger" role="alert" style="width: 1000px; margin: auto; padding: 20px;">
+                    Estimado cliente,<br><br>
+                    Hemos detectado que usted ha realizado intenos de compra en reiteradas ocaciones,
+                    si ha tenido problemas para concretarlas por favor comuníquese con
+                    Ventas On Line de Travel Club <strong>ventaonline@travelclub.cl</strong><br><br>
+                    Le agradecemos su preferencia.<br><br>
+                    Atentamente,<br><br>
+                    Departamento de Ventas On Line.<br><br>
+                    <img src="@{'/public/img/logo-payment-travel-red.svg'}">
+                </div>
             #{/elseif}
             #{elseif type == 'blackout'}
-                <div class="alert alert-danger" role="alert">Lo sentimos pero actualmente no se puede procesar su solicitud. (code: blackout)</div>
+                <div class="alert alert-danger" role="alert" style="width: 1000px; margin: auto; padding: 20px;">
+                    Estimado cliente,<br><br>
+                    En estos momentos, la alternatica de reserva y pago no esta disponible, le solicitamos intentar nuevamente en <strong>XX minutos</strong>.<br><br>
+                    Le agradecemos su preferencia.<br><br>
+                    Atentamente,<br><br>
+                    Departamento de Ventas On Line.<br><br>
+                    <img src="@{'/public/img/logo-payment-travel-red.svg'}">
+                </div>
             #{/elseif}
             #{elseif type == 'internal'}
-                <div class="alert alert-danger" role="alert">Lo sentimos pero actualmente no se puede procesar su solicitud. (code: internal)</div>
+                <div class="alert alert-danger" role="alert" style="width: 1000px; margin: auto; padding: 20px;">
+                    Estimado cliente,<br><br>
+                    Se prodijo un error al intentar realizar la operación.<br><br>
+                    Favor, intente realizar nuevamente la operación, realice una nueva búsqueda de disponibilidad o
+                    comuníquese con nosotros al mail <strong>ventaonline@travelclub.cl</strong><br><br>
+                    Le agradecemos su preferencia.<br><br>
+                    Atentamente,<br><br>
+                    Departamento de Ventas On Line.<br><br>
+                    <img src="@{'/public/img/logo-payment-travel-red.svg'}">
+                </div>
             #{/elseif}
             #{else}
-                <div class="alert alert-danger" role="alert">Lo sentimos pero hubo un error al momento de procesar su solicitud!</div>
+                <div class="alert alert-danger" role="alert" style="width: 1000px; margin: auto; padding: 20px;">
+                    Estimado cliente,<br><br>
+                    Se prodijo un error al intentar realizar la operación.<br><br>
+                    Favor, intente realizar nuevamente la operación, realice una nueva búsqueda de disponibilidad o
+                    comuníquese con nosotros al mail <strong>ventaonline@travelclub.cl</strong><br><br>
+                    Le agradecemos su preferencia.<br><br>
+                    Atentamente,<br><br>
+                    Departamento de Ventas On Line.<br><br>
+                    <img src="@{'/public/img/logo-payment-travel-red.svg'}">
+                </div>
             #{/else}
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12" style="margin-top: 20px">
                 <p class="info-help text-center">En caso de necesitar ayuda comunicarse al correo <strong>ventaonline@travelclub.cl</strong></p>
             </div>
         </div>
