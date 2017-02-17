@@ -6,6 +6,9 @@
             <th colspan="2" ><a href="#" class="priceSug">Precios +/- 5 días </a></th>
          	<th colspan="2" ><a class="PXA" href="#">Precios por aerolíneas</a></th>
          	<th colspan="2" class="select-th"><a class="tTar" href="#">Tendencia de Tarifas</a></th>
+         	
+         	
+       
         </tr>
         </thead>
         <tbody></tbody>
@@ -16,8 +19,8 @@
     function drawChart() {
       var data = google.visualization.arrayToDataTable([
         ["Fecha", "Tarifa" ],
-        #{list items:lowFaresArray, as:'fare'}
-        	["${fare.shopDate.getAsString()}", ${fare.fare.getAsString()}],
+        #{list items:lowFaresArray2, as:'fare'}
+        		["${fare.shopDate.getAsString()}", ${fare.fare.getAsString()}],
     	#{/list}
 
       ]);

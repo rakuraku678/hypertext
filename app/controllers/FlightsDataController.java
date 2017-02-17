@@ -4,8 +4,6 @@ import java.text.ParseException;
 
 import models.FlightsResultsFilters;
 import play.mvc.Controller;
-import utils.AgencyConfigurationDto;
-import utils.ApiFlightsSdk.v1.Promotion;
 import utils.DateUtils;
 import utils.TravelClubUtils;
 import utils.ApiFlightsSdk.v1.BFMSearch;
@@ -17,8 +15,8 @@ import utils.dtos.PromotionDto;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import utils.dtos.PromotionDto;
 
 public class FlightsDataController extends Controller {
 
@@ -89,6 +87,17 @@ public class FlightsDataController extends Controller {
 		JsonElement lowFaresResults = lowFareHistory.process();
 		JsonArray lowFaresArray = lowFaresResults.getAsJsonArray();
 		
-        renderTemplate("FlightsDataController/lowFareHistoryMatrix.html",lowFaresArray);
+		JsonArray lowFaresArray2 = new JsonArray();
+		for (int i = 0; i < lowFaresArray.size(); i++) {
+			if (lowFaresArray.get(i).getAsJsonObject().get("fare").getAsString().equals("N/A")){
+				JsonObject jsonEl = new JsonObject();
+				jsonEl.addProperty("fare", "0");
+				jsonEl.addProperty("shopDate", lowFaresArray.get(i).getAsJsonObject().get("shopDate").getAsString());
+				lowFaresArray2.add(jsonEl);
+			}
+		}
+		
+		System.out.println("lowfares wacho: "+lowFaresResults.toString());
+        renderTemplate("FlightsDataController/lowFareHistoryMatrix.html",lowFaresArray2);
     }
 }
