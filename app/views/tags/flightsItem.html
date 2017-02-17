@@ -216,14 +216,23 @@
         </div>
 
         <div class="col-md-3 ticket-detail">
-            #{if false} *{CAMBIAR ESTA CONDICION CUANDO VENGA LA INFO DE LA API}*
-            <span class="last-ticket-available">
-                <i class="icon-alert-ticket"></i>
-                <span class="info-ticket-avaible">¡Últimos 2 lugares!</span>
+            *{#{if false} }**{CAMBIAR ESTA CONDICION CUANDO VENGA LA INFO DE LA API}*
+            *{<span class="last-ticket-available">}*
+                *{<i class="icon-alert-ticket"></i>}*
+                *{<span class="info-ticket-avaible">¡Últimos 2 lugares!</span>}*
+            *{</span>}*
+            *{#{/if}}*
+            *{#{else}}*
+                *{<span class="last-ticket-space-saver">&nbsp;</span>}*
+            *{#{/else}}*
+            #{if _flight.pricing.accountCode} *{CAMBIAR ESTA CONDICION CUANDO VENGA LA INFO DE LA API}*
+            <span class="private-fare">
+                <i class="icon-private-fare"></i>
+                <span class="info-private-fare">Tarifa Exclusiva</span>
             </span>
             #{/if}
             #{else}
-                <span class="last-ticket-space-saver">&nbsp;</span>
+                <span class="private-fare-space-saver">&nbsp;</span>
             #{/else}
             <span class="title">Precio por Adulto</span>
             <span class="price">$<span class="clppriceCon">${_flight.pricing.totalPassengerFare.getAsString()}</span><span class="usdpriceCon hidden"></span></span>

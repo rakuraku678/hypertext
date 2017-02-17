@@ -19,6 +19,7 @@ public class BFMSearch extends ApiFlightsSDKBase {
     public String returndate;
     public String country;
     public String city;
+    public String promotion;
     public List<Map<String,String>> passengerTypeList = Lists.newArrayList();
 
     public JsonElement process(){
@@ -32,6 +33,7 @@ public class BFMSearch extends ApiFlightsSDKBase {
         mapValues.put("departuredate",departuredate);
         mapValues.put("returndate",returndate);
         mapValues.put("passengers",passengerTypeList);
+        mapValues.put("promotion",promotion);
 
         String jsonBody = new Gson().toJson(mapValues);
 
@@ -56,6 +58,10 @@ public class BFMSearch extends ApiFlightsSDKBase {
 
     public void setReturndate(String returndate) {
         this.returndate = returndate;
+    }
+
+    public void setPromotion(String promotion) {
+        this.promotion = promotion;
     }
 
     public void addPassengerType(String passengerType, String quantity) {

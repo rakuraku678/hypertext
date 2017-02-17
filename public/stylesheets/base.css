@@ -1225,6 +1225,33 @@
 	height: 15px;
 	vertical-align: middle;
 }
+.ticket-detail .private-fare {
+	display: block;
+	background-color: #16207a;
+	color: #fff;
+	padding: 5px 25px;
+	margin: 10px 0 0 -9px;
+	text-align: left;
+	width: 100%;
+}
+.ticket-detail .private-fare .info-private-fare {
+	display: inline-block;
+	vertical-align: middle;
+}
+.ticket-detail .private-fare-space-saver {
+	display: block;
+	padding: 5px 25px;
+	margin: 10px 0 0 -9px;
+}
+.icon-private-fare {
+	background-image: url(../img/icon-private-fare.svg);
+	background-repeat: no-repeat;
+	background-position: center;
+	display: inline-block;
+	width: 32px;
+	height: 15px;
+	vertical-align: middle;
+}
 .icon-mail {
 	background-image: url(../img/icon-mail.svg);
 	background-repeat: no-repeat;
