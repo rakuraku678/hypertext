@@ -34,6 +34,8 @@ public class BFMSearch extends ApiFlightsSDKBase {
         mapValues.put("returndate",returndate);
         mapValues.put("passengers",passengerTypeList);
         mapValues.put("promotion",promotion);
+        mapValues.put("country",country);
+        mapValues.put("city",city);
 
         String jsonBody = new Gson().toJson(mapValues);
 
