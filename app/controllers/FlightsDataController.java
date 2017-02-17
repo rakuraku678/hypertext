@@ -29,13 +29,20 @@ public class FlightsDataController extends Controller {
         bfmSearch.setOrigin(params.get("origin"));
         bfmSearch.setDestination(params.get("destination"));
         bfmSearch.setCountry(SearchController.getAirportCountry(params.get("destination")));
-        bfmSearch.setCity(SearchController.getAirportCity(params.get("destination")));
+        bfmSearch.setCity(SearchController.getAirportCityCode(params.get("destination")));
         bfmSearch.setDeparturedate(DateUtils.reformateDate(params.get("departuredate")));
         bfmSearch.setReturndate(DateUtils.reformateDate(params.get("returndate")));
         bfmSearch.addPassengerType("ADT", params.get("adultcount"));
         bfmSearch.addPassengerType("C02", params.get("childrencount"));
         bfmSearch.addPassengerType("INF", params.get("infantcount"));
         bfmSearch.setPromotion(promotionDto.slug);
+        
+        
+        
+        
+        System.out.println("la ciudad saliente: "+bfmSearch.getCity());
+        System.out.println("el pais saliente: "+bfmSearch.getCountry());
+        
         JsonElement flightsResults = bfmSearch.process();
 
         FlightsResultsFilters flightsResultsFilters = FlightsResultsFilters.processFlightsResults(flightsResults);

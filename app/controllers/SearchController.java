@@ -60,6 +60,7 @@ public class SearchController extends Controller {
             map.put("name", elem.getAsJsonObject().get("name").getAsString());
             map.put("city", elem.getAsJsonObject().get("city").getAsString());
             map.put("country", elem.getAsJsonObject().get("country").getAsString());
+            map.put("iataCityCode", elem.getAsJsonObject().get("iataCityCode").getAsString());
             result.add(map);
         }
 
@@ -105,6 +106,21 @@ public class SearchController extends Controller {
 		}
         return city;
     }
+    public static String getAirportCityCode(String airportCode){
+        List<Map> lista = getCachedAirports(airportCode);
+        String city = "";
+        for (Map<String, String> o : lista) {
+        	for (Map.Entry<String, String> entry : o.entrySet())
+        	{
+        		if (entry.getKey().equals("iataCityCode") ) {
+        			city = entry.getValue();
+        			return city;
+        		}
+        	}
+		}
+        return city;
+    }
+    
     public static String getAirportCountry(String airportCode){
         List<Map> lista = getCachedAirports(airportCode);
         String country = "";

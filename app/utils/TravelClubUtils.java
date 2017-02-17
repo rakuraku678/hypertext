@@ -26,24 +26,29 @@ public class TravelClubUtils {
 	
 
 	public static String getDollarExchangeRate() {
+		try {
+		    String agencyId = new Promotion().getDefault().agency.externalId;
+		    System.out.println("request to: "+DOLLAR_EXCHANGE_RATE_URL+"/"+agencyId);
+		    
+			WSRequest req = WS.url(DOLLAR_EXCHANGE_RATE_URL+"/"+agencyId);
+			req.authenticate("E3ra79", "api33-33a");
+			HttpResponse response = req.get();
+			JsonElement responseJson = response.getJson();
+			System.out.println("response dollar api: "+responseJson.toString());
+			
+			if (responseJson.getAsJsonObject().get("error").getAsString().equals("OK")){
+				System.out.println("es ok: "+responseJson.getAsJsonObject().get("value").getAsString());
+				return responseJson.getAsJsonObject().get("value").getAsString();
+			}
+			else {
+				System.out.println("NOK");
+				return responseJson.getAsJsonObject().get("error").getAsString();
+			}	
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return "ERROR";
+		}
 
-        String agencyId = new Promotion().getDefault().agency.externalId;
-        System.out.println("request to: "+DOLLAR_EXCHANGE_RATE_URL+"/"+agencyId);
-        
-		WSRequest req = WS.url(DOLLAR_EXCHANGE_RATE_URL+"/"+agencyId);
-		req.authenticate("E3ra79", "api33-33a");
-		HttpResponse response = req.get();
-		JsonElement responseJson = response.getJson();
-		System.out.println("response dollar api: "+responseJson.toString());
-		
-		if (responseJson.getAsJsonObject().get("error").getAsString().equals("OK")){
-			System.out.println("es ok: "+responseJson.getAsJsonObject().get("value").getAsString());
-			return responseJson.getAsJsonObject().get("value").getAsString();
-		}
-		else {
-			System.out.println("NOK");
-			return responseJson.getAsJsonObject().get("error").getAsString();
-		}
 	}
 	
 }
