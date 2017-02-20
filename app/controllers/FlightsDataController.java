@@ -35,12 +35,6 @@ public class FlightsDataController extends Controller {
         bfmSearch.addPassengerType("INF", params.get("infantcount"));
         bfmSearch.setPromotion(promotionDto.slug);
         
-        
-        
-        
-        System.out.println("la ciudad saliente: "+bfmSearch.getCity());
-        System.out.println("el pais saliente: "+bfmSearch.getCountry());
-        
         JsonElement flightsResults = bfmSearch.process();
 
         FlightsResultsFilters flightsResultsFilters = FlightsResultsFilters.processFlightsResults(flightsResults);
