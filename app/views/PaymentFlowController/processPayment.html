@@ -72,6 +72,7 @@ function statusBooking() {
     var error_location ="@{PaymentFlowController.processError(type: '_error_id_')}";
     $.ajax({
         type: "POST",
+        async: false,
         url: "@{BookingController.statusBooking}",
         data: { id: "${processData.get("checkoutId")}"},
         dataType: "json",
