@@ -21,9 +21,9 @@ public class PaymentConfirmController extends Controller {
         AgencyConfigurationDto agencyConfigurationDto = TravelClubUtils.getAgencyConfiguration(promotionDto.agency.externalId);
 
         Booking booking = new Booking();
-        JsonElement bookingResult = booking.get(params.get("id"));
+        JsonElement bookingConfirmationResult = booking.confirmation(params.get("id"));
 
-        render(agencyConfigurationDto, bookingResult);
+        render(agencyConfigurationDto, bookingConfirmationResult);
     }
 
 }

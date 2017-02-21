@@ -1,0 +1,31 @@
+<div class="box-info-payment">
+    <div class="head-payment">
+        <h3 class="title-payment">Detalles de compra</h3>
+    </div>
+    <div class="body-payment">
+        <ul class="box-detail-fly-confirm">
+            <li>
+                <span class="name-detail-fly">Tarifa:</span>
+                <span class="num-detail-fly">US$${_bookingConfirmation.fareTotal?.getAsString()}</span>
+            </li>
+            <li>
+                <span class="name-detail-fly">Impuestos:</span>
+                <span class="num-detail-fly">US$${_bookingConfirmation.taxTotal?.getAsString()}</span>
+            </li>
+            <li>
+                <span class="name-detail-fly">Gastos Administrativos:</span>
+                <span class="num-detail-fly">US$${_bookingConfirmation.feeTotal?.getAsString()}</span>
+            </li>
+            <li>
+                <span class="name-detail-fly">Descuentos:</span>
+                <span class="num-detail-fly">US$${_bookingConfirmation.discountTotal?.getAsString() }</span>
+            </li>
+        </ul>
+    </div>
+    <div class="total-payment">
+        <ul>
+            <li>Total</li>
+            <li>US$${_bookingConfirmation.amountTotal?.getAsString()}</li>
+        </ul>
+    </div>
+</div>

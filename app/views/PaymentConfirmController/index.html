@@ -26,107 +26,23 @@
     <article class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <div class="alert alert-success" role="alert"><i class="icon-confirm-path"></i>Felicitaciónes <strong>Sebastián</strong>, tu vuelo ha sido confirmado!! </div>                
+                <div class="alert alert-success" role="alert"><i class="icon-confirm-path"></i>Felicitaciónes <strong>${bookingConfirmationResult.name?.getAsString()}</strong>, tu vuelo ha sido confirmado!! </div>
             </div>
             <div class="col-md-8">
                 <div class="box-info-payment">
                     <div class="head-payment">
                         <h3 class="title-payment">Detalle de tu vuelo</h3>
                     </div>
-                    <div>
-                        <table class="detail-payment-table confirm-fly-table">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Vuelo</th>
-                                    <th>Pasajeros</th>
-                                    <th>Sale</th>
-                                    <th>Llega</th>
-                                    <th>Fecha/Hora</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td>
-                                    <img src="/public/img/logo-vuelo-confirm.jpg" alt="logo-vuelo" title="vuelo">
-                                    <span class="name-company-fly">Nombre Aerolinea</span>
-                                    </td>
-                                    <td>Adulto</td>
-                                    <td>Santiago de Chile (SCL)</td>
-                                    <td>NEW YORK (JFK)</td>
-                                    <td>13/09/2016 - 19HS</td>
-                                </tr>
-
-                                <tr>
-                                    <td></td>
-                                    <td>
-                                        <img src="/public/img/logo-vuelo-confirm.jpg" alt="logo-vuelo" title="vuelo">
-                                        <span class="name-company-fly">Nombre Aerolinea</span>
-                                    </td>
-                                    <td>Adulto</td>
-                                    <td>Santiago de Chile (SCL)</td>
-                                    <td>NEW YORK (JFK)</td>
-                                    <td>13/09/2016 - 19HS</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    #{confirmation.flightDetail flights:bookingConfirmationResult.flights/}
                 </div>
                 <div class="add-for-your-travel">
                     <h2 class="title-payment">Agregá valor a tu viaje</h2>
-                    <a href="http://asistencia.travelclub.cl/" class="box-info-payment">
-                        <div class="head-payment">
-                            <h3 class="detail-title"><img src="/public/img/logo-assit-card.jpg" alt="" title="">Asisst Card</h3>
-                        </div>
-                        <div class="body-payment">
-                            <p>Es un Servicio de asistencia médica en viajes de la Agencia de Viajes Travel Club. Por un precio
-                            preferencial, nuestros clientes pueden acceder a una protección frente a emergencias médicas imprevistas en sus viajes al exterior. </p>
-                        </div>
-                    </a>
-                <div class="box-info-payment">
-                    <div class="head-payment">
-                        <h3 class="detail-title"><img src="/public/img/logo-rent-card.jpg" alt="" title="">Rent a Card</h3>
-                    </div>
-                    <div class="body-payment">
-                        <p>Las empresas de Rent a Car cuentan con servicio de emergencia en ruta las 24 horas. 
-                        Es recomendable contar con Licencia de Conducir Internacional, cuando se va a conducir un vehículo en un país extranjero</p>
-                    </div>
-                </div>
+                    #{confirmation.asisstCardBox /}
+                    #{confirmation.rentCarBox /}
                 </div>
             </div>
             <div class="col-md-4">     
-                <div class="box-info-payment">
-                    <div class="head-payment">
-                        <h3 class="title-payment">Detalles de compra</h3>
-                    </div>
-                    <div class="body-payment">
-                        <ul class="box-detail-fly-confirm">
-                            <li>
-                                <span class="name-detail-fly">Tarifa:</span>
-                                <span class="num-detail-fly">$100000</span>
-                            </li>
-                            <li>
-                                <span class="name-detail-fly">Impuestos:</span>
-                                <span class="num-detail-fly">$40000</span>
-                            </li>
-                            <li>
-                                <span class="name-detail-fly">Gastos Administrativos:</span>
-                                <span class="num-detail-fly">$0</span>
-                            </li>
-                            <li>
-                                <span class="name-detail-fly">Descuentos:</span>
-                                <span class="num-detail-fly">$0</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="total-payment">
-                        <ul>
-                            <li>Total</li>
-                            <li>US$1330</li>
-                        </ul>
-                    </div>
-                </div>
+                #{confirmation.paymentDetailBox bookingConfirmation: bookingConfirmationResult /}
             </div>
             <div class="col-md-12 text-center box-continue">
                 <button class="btn btn-secondary-travel btn-border-color-travel">continuar</button>
