@@ -3,8 +3,8 @@ package controllers;
 import com.google.common.collect.Maps;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import play.mvc.*;
 
+import play.mvc.*;
 import utils.AgencyConfigurationDto;
 import utils.ApiFlightsSdk.v1.Payment;
 import utils.ApiFlightsSdk.v1.Promotion;
@@ -16,13 +16,17 @@ import java.util.Map;
 public class PaymentFlowController extends Controller {
 
     public static void index() {
+    	
         PromotionDto promotionDto = new Promotion().getDefault();
 
         AgencyConfigurationDto agencyConfigurationDto = TravelClubUtils.getAgencyConfiguration(promotionDto.agency.externalId);
 
         JsonElement bfmResultItem = new JsonParser().parse(params.get("bfmResultItem"));
 
-        render(agencyConfigurationDto, bfmResultItem);
+        String selectedCurrency = params.get("selectedCurrency");
+        String dollarExchangeRate = TravelClubUtils.getDollarExchangeRate();
+        
+        render(agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate);
     }
 
     public static void processPayment(){

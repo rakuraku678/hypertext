@@ -6,7 +6,7 @@
 
 #{if dollarExchangeRate.isNumber()}
 <div>
-	<label id="toWn" style="cursor:pointer;">CLP</label><label id="toUsd" style="background-color: #428bca; color: white; cursor:pointer; float: right;">USD</label>
+	<label id="toWn" style="cursor:pointer; padding: 2px;">CLP</label><label id="toUsd" style="padding: 2px; background-color: #428bca; color: white; cursor:pointer; float: right;">USD</label>
 </div>
 #{/if}
 
@@ -145,6 +145,10 @@ $(function () {
 			$(this).prev().removeClass("hidden");
 			$(this).addClass("hidden");
 		});
+		$(".selCurrency").val("usd");
+		$( ".simbolCurrency" ).each(function( index ) {
+			$(this).html("US$");
+		});	
 	});
 	
 	$(document).on('click', '#toWn', function() {
@@ -160,6 +164,10 @@ $(function () {
 			$(this).next().removeClass("hidden");
 			$(this).addClass("hidden");
 		});
+		$(".selCurrency").val("clp");
+		$( ".simbolCurrency" ).each(function( index ) {
+			$(this).html("$");
+		});	
 	});
 	
 	#{/if}

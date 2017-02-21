@@ -28,7 +28,7 @@
     <form id="checkoutForm" action="javascript:void(0);" method="post">
         <article class="container-fluid">
             <div class="row">
-                <h2>¿Quien Viaja?</h2>
+                <h2>¿Quién Viaja?</h2>
                 <p class="info-help">En caso de necesitar ayuda comunicarse al correo <strong>ventaonline@travelclub.cl</strong></p>
                 <div class="col-md-8">
                     %{ int passengersCount = 0; }%
@@ -63,9 +63,36 @@
 #{set 'scriptFiles'}
 #{get 'scriptFiles' /}
 <script type="text/javascript" src="@{PaymentFlowController.javascript}"></script>
+
+
+
+
+<script type="text/javascript">
+	function numberWithCommas(x) {
+		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+	}
+
+	$(function () {
+		var selectedCurrency = "${selectedCurrency}";
+		if (selectedCurrency=="clp"){
+			$( ".usdpriceCon" ).each(function( index ) {
+				var exchangeRate = parseFloat("${dollarExchangeRate}");
+				var numToChange = parseFloat($(this).html());
+				$(this).html(numberWithCommas(parseFloat(numToChange * exchangeRate).toFixed(0)));
+			});	
+			$( ".simbolCurrency" ).each(function( index ) {
+				$(this).html("$");
+			});	
+		}
+	});
+
+</script>
+
+
 #{/set}
 
 #{modalNeadHelp /}
 #{modalExpiredSession /}
 
 #{set isAgencyFooter: false /}
+

@@ -17,6 +17,8 @@
 		data-escala="${connectionsDepartureCount}"
 		data-returnEscala="${connectionsReturnCount}">
     <form class="form-ticket" action="@{PaymentFlowController.index}" method="post">
+    	<input type="hidden" name="selectedCurrency" class="selCurrency" value="usd" id="hdnSelectedCurrency"/>
+    	
         <div class="col-md-9 info-flight">
             <ul>
                 <li class="txt-airport-date">
@@ -235,14 +237,14 @@
                 <span class="private-fare-space-saver">&nbsp;</span>
             #{/else}
             <span class="title">Precio por Adulto</span>
-            <span class="price">$<span class="usdpriceCon">${_flight.pricing.totalPassengerFare.getAsString()}</span><span class="clppriceCon hidden"></span></span>
+            <span class="price"><span class="simbolCurrency">US$</span><span class="usdpriceCon">${_flight.pricing.totalPassengerFare.getAsString()}</span><span class="clppriceCon hidden"></span></span>
             <ul class="detail-price">
-                <li><span class="item-detail">Pasajeros $</span><span class="item-price usdpriceCon">${_flight.pricing.totalPassengerFare.getAsString()}</span><span class="item-price clppriceCon hidden"></span></li>
-                <li><span class="item-detail">Imp. y Tasas $</span><span class="item-price usdpriceCon">${_flight.pricing.totalTax.getAsString()}</span><span class="item-price clppriceCon hidden"></span></li>
-                <li><span class="item-detail">Comisiones $</span><span class="item-price usdpriceCon">${_flight.pricing.totalCommission?.getAsString()}</span><span class="item-price clppriceCon hidden"></span></li>
-                <li><span class="item-detail">Fees $</span><span class="item-price usdpriceCon">${_flight.pricing.totalFee?.getAsString()}</span><span class="item-price clppriceCon hidden"></span></li>
+                <li><span class="item-detail">Pasajeros <span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalPassengerFare.getAsString()}</span><span class="item-price clppriceCon hidden"></span></li>
+                <li><span class="item-detail">Imp. y Tasas <span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalTax.getAsString()}</span><span class="item-price clppriceCon hidden"></span></li>
+                <li><span class="item-detail">Comisiones <span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalCommission?.getAsString()}</span><span class="item-price clppriceCon hidden"></span></li>
+                <li><span class="item-detail">Fees <span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalFee?.getAsString()}</span><span class="item-price clppriceCon hidden"></span></li>
                 <hr>
-                <li><span class="item-detail">Total $</span><span class="item-price usdpriceCon">${_flight.pricing.totalFare.getAsString()}</span><span class="item-price clppriceCon hidden"></span></li>
+                <li><span class="item-detail">Total <span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalFare.getAsString()}</span><span class="item-price clppriceCon hidden"></span></li>
             </ul>
             <div class="text-center box-ticket-submit">
                 <input type="hidden" name="bfmResultItem" value="${_flight.toString()}">
