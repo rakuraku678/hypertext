@@ -136,39 +136,49 @@ $(function () {
 	#{if dollarExchangeRate.isNumber()}
 	
 	$(document).on('click', '#toUsd', function() {
-		$(this).css("background-color","#428bca");
-		$(this).css("color","white");
-		$("#toWn").css("background-color","transparent");
-		$("#toWn").css("color","black");
-		
-		$( ".clppriceCon" ).each(function( index ) {
-			$(this).prev().removeClass("hidden");
-			$(this).addClass("hidden");
-		});
-		$(".selCurrency").val("usd");
-		$( ".simbolCurrency" ).each(function( index ) {
-			$(this).html("US$");
-		});	
+        setUsdExchange();
 	});
 	
 	$(document).on('click', '#toWn', function() {
-		$(this).css("background-color","#428bca");
-		$(this).css("color","white");
-		$("#toUsd").css("background-color","transparent");
-		$("#toUsd").css("color","black");
-		
-		$( ".usdpriceCon" ).each(function( index ) {
-			var exchangeRate = parseFloat("${dollarExchangeRate}");
-			var numToChange = parseFloat($(this).html());
-			$(this).next().html(numberWithCommas(parseFloat(numToChange * exchangeRate).toFixed(0)));
-			$(this).next().removeClass("hidden");
-			$(this).addClass("hidden");
-		});
-		$(".selCurrency").val("clp");
-		$( ".simbolCurrency" ).each(function( index ) {
-			$(this).html("$");
-		});	
+        setClpExchange();
 	});
+
+	function setUsdExchange() {
+        $("#toUsd").css("background-color","#428bca");
+        $("#toUsd").css("color","white");
+        $("#toWn").css("background-color","transparent");
+        $("#toWn").css("color","black");
+
+        $( ".clppriceCon" ).each(function( index ) {
+            $(this).prev().removeClass("hidden");
+            $(this).addClass("hidden");
+        });
+        $(".selCurrency").val("usd");
+        $( ".simbolCurrency" ).each(function( index ) {
+            $(this).html("US$");
+        });
+	}
+
+	function setClpExchange() {
+        $("#toWn").css("background-color","#428bca");
+        $("#toWn").css("color","white");
+        $("#toUsd").css("background-color","transparent");
+        $("#toUsd").css("color","black");
+
+        $( ".usdpriceCon" ).each(function( index ) {
+            var exchangeRate = parseFloat("${dollarExchangeRate}");
+            var numToChange = parseFloat($(this).html());
+            $(this).next().html(numberWithCommas(parseFloat(numToChange * exchangeRate).toFixed(0)));
+            $(this).next().removeClass("hidden");
+            $(this).addClass("hidden");
+        });
+        $(".selCurrency").val("clp");
+        $( ".simbolCurrency" ).each(function( index ) {
+            $(this).html("$");
+        });
+    }
+
+        $(document).ready(function () {setClpExchange()});
 	
 	#{/if}
 	
