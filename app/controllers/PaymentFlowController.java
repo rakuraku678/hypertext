@@ -23,6 +23,8 @@ public class PaymentFlowController extends Controller {
 
         JsonElement bfmResultItem = new JsonParser().parse(params.get("bfmResultItem"));
 
+        
+        System.out.println("a ver que hay aca: "+bfmResultItem.toString());
         String selectedCurrency = params.get("selectedCurrency");
         String dollarExchangeRate = TravelClubUtils.getDollarExchangeRate();
         

@@ -1,12 +1,20 @@
 <div class="box-info-payment">
     <div class="head-payment">
-        <h3 class="title-payment">Pasajero <span class="detail-title"> - Adulto(+12)</span></h3>
+    	%{
+    	 def legendPassType = "";
+    	 switch (_passengerType) {
+         	case "ADT": legendPassType="Adulto (se considera pasajero adulto mayores de 12 años)"; break;
+         	default: legendPassType="Niño (se considera niño a menor de 12 años)";
+      	 }
+    	}%
+    	
+        <h3 class="title-payment">Pasajero <span class="detail-title"> - ${legendPassType} </span></h3>
         <input type="hidden" name="passengers[${_key}][number]" value="${_passengerNumber}">
         <input type="hidden" name="passengers[${_key}][passengerType]" value="${_passengerType}">
     </div>
     <div class="body-payment">
             <div class="alert alert-info-payment">
-                <p><i class="icon-glasses"></i>Comprueba detenidamente que la información introducida coincida con la de tu pasaporte.</p>
+                <p><i class="icon-glasses"></i>Comprueba que la información ingresada coincida con la de tu documento de viaje, sea pasaporte u otro.</p>
             </div>
 
             <div class="form-group col-md-12">
@@ -21,11 +29,11 @@
                 <div class="row">
                     <div class="col-md-6 form-group">
                         <label>Nombres:</label>
-                        <input type="text" class="form-control validatefirstname" name="passengers[${_key}][givenName]" placeholder="Ingresa tu nombre">
+                        <input type="text" class="form-control validatefirstname" name="passengers[${_key}][givenName]" placeholder="ej. Roberto">
                     </div>
                     <div class="col-md-6 form-group">
                         <label>Apellidos:</label>
-                        <input type="text" class="form-control validatelastname" name="passengers[${_key}][surname]" placeholder="Ingresa tu apellido">
+                        <input type="text" class="form-control validatelastname" name="passengers[${_key}][surname]" placeholder="ej. Salamanca">
                     </div>
                 </div>
             </div>
@@ -38,7 +46,7 @@
                         </select>
                     </div>
                     <div class="col-xs-8">
-                        <input type="text" class="form-control validatedocumentnum" name="passengers[${_key}][foid]">
+                        <input type="text" class="form-control validatedocumentnum" name="passengers[${_key}][foid]" placeholder="ej. 190006441">
                     </div>
                 </div>
             </div>
