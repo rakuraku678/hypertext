@@ -14,18 +14,15 @@
         </thead>
         <tbody>
         #{list items:_pricing.detail, as:'pricingDetail'}
-        
-        
             	%{
 		    	 def passType = "";
 		    	 switch (pricingDetail.code.getAsString()) {
 		         	case "ADT": passType="Adulto"; break;
 		         	case "CHD": passType="Niño"; break;
-		         	default: passType="Infante ";
+		         	case "C02": passType="Niño"; break;
+		         	default: passType="Infante";
 		      	 }
 		    	}%
-		    	
-    	
         <tr>
             <td></td>
             <td class="txt-payment-table-mark">${pricingDetail.quantity.getAsString()} ${passType}</td>
