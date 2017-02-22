@@ -6,8 +6,8 @@
     </div>
     <ul>
         <li class="name-passenger">
-            <strong class="name">${_segments.departureCityCode.getAsString()}</strong>
-            <span class="last-name">${controllers.SearchController.getAirportCity(_segments.departureCityCode.getAsString())}</span>
+            <strong class="name">${controllers.SearchController.getAirportCity(_segments.departureCityCode.getAsString())}</strong>
+            <span class="last-name">${_segments.departureCityCode.getAsString()}</span>
         </li>
         <li class="time">
             <span class="to-time">${_segments.departureTime.getAsString()}</span>
@@ -38,8 +38,8 @@ int departureElapsedMinutes = departureElapsedTime % 60;
             <span class="to-time">${_segments.returnTime.getAsString()}</span>
         </li>
         <li class="name-passenger">
-            <strong class="name">${_segments.returnCityCode.getAsString()}</strong>
-            <span class="last-name">${controllers.SearchController.getAirportCity(_segments.returnCityCode.getAsString())}</span>
+            <strong class="name">${controllers.SearchController.getAirportCity(_segments.returnCityCode.getAsString())}</strong>
+            <span class="last-name">${_segments.returnCityCode.getAsString()}</span>
         </li>
     </ul>
 </div>
