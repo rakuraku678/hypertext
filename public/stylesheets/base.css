@@ -831,7 +831,7 @@
 .ticket .txt-airport-date .airport {
 	color: #55575F;
 	font-size: 20px;
-	text-transform: uppercase;
+	/*text-transform: uppercase;*/
 }
 /* txt-view-detail
 ======*/
