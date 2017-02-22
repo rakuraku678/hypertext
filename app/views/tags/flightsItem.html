@@ -29,12 +29,12 @@
                             <span class="fly-day">${_flight.departureDate.getAsString()}</span>
                         </li>
                         <li>
-                            <span class="airport">${_flight.departureAirportCode.getAsString()}</span>
-                            <span class="description-airport">${controllers.SearchController.getAirportName(_flight.departureAirportCode.getAsString())}</span>
+                            <span class="airport">${controllers.SearchController.getAirportName(_flight.departureAirportCode.getAsString())}</span>
+                            <span class="description-airport">${_flight.departureAirportCode.getAsString()}</span>
                         </li>
                         <li>
-                            <span class="airport">${_flight.returnAirportCode.getAsString()}</span>
-                            <span class="description-airport">${controllers.SearchController.getAirportName(_flight.returnAirportCode.getAsString())}</span>
+                            <span class="airport">${controllers.SearchController.getAirportName(_flight.returnAirportCode.getAsString())}</span>
+                            <span class="description-airport">${_flight.returnAirportCode.getAsString()}</span>
                         </li>
                     </ul>
                 </li>
@@ -86,7 +86,7 @@
                         </li>
                         <li class="detail">
                             <a type="button" data-toggle="collapse" data-target="#departureSegment${_flight.sequenceNumber.getAsString()}" aria-expanded="false" aria-controls="collapseExample" class="link-detail-desktop">
-                                detalle
+                                ver detalle
                             </a>
                             <a data-toggle="modal" data-target="#detailModalFlight" class="link-detail-mobile">detalle</a>
                         </li>
@@ -106,12 +106,12 @@
                             <span class="fly-day">${_flight.returnDate.getAsString()}</span>
                         </li>
                         <li>
-                            <span class="airport">${_flight.returnAirportCode.getAsString()}</span>
-                            <span class="description-airport">${controllers.SearchController.getAirportName(_flight.returnAirportCode.getAsString())}</span>
+                            <span class="airport">${controllers.SearchController.getAirportName(_flight.returnAirportCode.getAsString())}</span>
+                            <span class="description-airport">${_flight.returnAirportCode.getAsString()}</span>
                         </li>
                         <li>
-                            <span class="airport">${_flight.departureAirportCode.getAsString()}</span>
-                            <span class="description-airport">${controllers.SearchController.getAirportName(_flight.departureAirportCode.getAsString())}</span>
+                            <span class="airport">${controllers.SearchController.getAirportName(_flight.departureAirportCode.getAsString())}</span>
+                            <span class="description-airport">${_flight.departureAirportCode.getAsString()}</span>
                         </li>
                     </ul>
                 </li>
@@ -163,7 +163,7 @@
                         </li>
                         <li class="detail">
                             <a type="button" data-toggle="collapse" data-target="#returnSegment${_flight.sequenceNumber.getAsString()}" aria-expanded="false" aria-controls="collapseExample2" class="link-detail-desktop">
-                                detalle
+                                ver detalle
                             </a>
                              <a data-toggle="modal" data-target="#detailModalFlight" class="link-detail-mobile">detalle</a>
                         </li>
@@ -237,18 +237,17 @@
                 <span class="private-fare-space-saver">&nbsp;</span>
             #{/else}
             <span class="title">Precio por Adulto</span>
-            <span class="price"><span class="simbolCurrency">US$</span><span class="usdpriceCon">${_flight.pricing.totalPassengerFare.getAsString()}</span><span class="clppriceCon hidden"></span></span>
+            <span class="price"><span class="simbolCurrency">US$</span><span class="usdpriceCon">${_flight.pricing.adtTotalPrice.getAsString()}</span><span class="clppriceCon hidden"></span></span>
             <ul class="detail-price">
                 <li><span class="item-detail">Pasajeros <span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalPassengerFare.getAsString()}</span><span class="item-price clppriceCon hidden"></span></li>
                 <li><span class="item-detail">Imp. y Tasas <span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalTax.getAsString()}</span><span class="item-price clppriceCon hidden"></span></li>
-                <li><span class="item-detail">Comisiones <span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalCommission?.getAsString()}</span><span class="item-price clppriceCon hidden"></span></li>
-                <li><span class="item-detail">Fees <span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalFee?.getAsString()}</span><span class="item-price clppriceCon hidden"></span></li>
+                <li><span class="item-detail">Gestión agencia <span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalFee?.getAsString()}</span><span class="item-price clppriceCon hidden"></span></li>
                 <hr>
                 <li><span class="item-detail">Total <span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalFare.getAsString()}</span><span class="item-price clppriceCon hidden"></span></li>
             </ul>
             <div class="text-center box-ticket-submit">
                 <input type="hidden" name="bfmResultItem" value="${_flight.toString()}">
-                <input type="submit" class="btn btn-ticket" value="Comprar">
+                <input type="submit" class="btn btn-ticket" value="Seleccionar">
                 *{<a class="btn btn-ticket" href="@{PaymentFlowController.index}">Comprar</a>}*
 
             </div>

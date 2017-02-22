@@ -12,6 +12,7 @@ import play.libs.WS;
 import play.libs.WS.WSRequest;
 import play.mvc.Controller;
 import play.mvc.Util;
+import utils.JsonUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -56,11 +57,11 @@ public class SearchController extends Controller {
         JsonArray resultArray = request.get().getJson().getAsJsonArray();
         for (JsonElement elem : resultArray) {
             Map map = Maps.newHashMap();
-            map.put("id", elem.getAsJsonObject().get("id").getAsString());
-            map.put("name", elem.getAsJsonObject().get("name").getAsString());
-            map.put("city", elem.getAsJsonObject().get("city").getAsString());
-            map.put("country", elem.getAsJsonObject().get("country").getAsString());
-            map.put("iataCityCode", elem.getAsJsonObject().get("iataCityCode").getAsString());
+            map.put("id", JsonUtils.getStringFromJson(elem.getAsJsonObject(),"id"));
+            map.put("name", JsonUtils.getStringFromJson(elem.getAsJsonObject(),"name"));
+            map.put("city", JsonUtils.getStringFromJson(elem.getAsJsonObject(),"city"));
+            map.put("country", JsonUtils.getStringFromJson(elem.getAsJsonObject(),"country"));
+            map.put("iataCityCode", JsonUtils.getStringFromJson(elem.getAsJsonObject(),"iataCityCode"));
             result.add(map);
         }
 

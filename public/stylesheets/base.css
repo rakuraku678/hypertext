@@ -732,6 +732,10 @@
 	background-color: #5E9AFC;
 	color: #fff;
 }
+.table-arrive table .high {
+	background-color: #FA564D;
+	color: #fff;
+}
 .table-arrive .leaving-returning {
 	padding: 0;
 	text-transform: uppercase;

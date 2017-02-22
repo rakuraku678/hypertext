@@ -55,9 +55,11 @@
                                 <span class="inline-detail-airport-code-wrapper">
                                     <span class="inline-detail-airport-code">${flightSegmentDetail.arrivalAirportCode.getAsString()}</span>
                                     <span class="inline-detail-airport-hour">${flightSegmentDetail.arrivalTime.getAsString()}</span>
+                                    #{if flightSegmentDetail.departureDate != flightSegmentDetail.arrivalDate}
                                     <span class="days-difference">
                                         <span>+1 dia</span>
                                     </span>
+                                    #{/if}
                                 </span>
                                 <span class="inline-detail-airport-description">
                                 	${controllers.SearchController.getAirportCity(flightSegmentDetail.arrivalAirportCode.getAsString())}
@@ -82,13 +84,13 @@
                             <span class="inline-detail-flight-data-description">${flightSegmentDetail.flightNumber.getAsString()}</span>
                         </div>
                         <div class="inline-detail-flight-data inline-detail-flight-cabinType">
-                            <span class="inline-detail-flight-data-title">CLASE</span>
+                            <span class="inline-detail-flight-data-title">CABINA</span>
                             %{ resBookDesigCode = flightSegmentDetail.resBookDesigCode.getAsString();}%
                             <span class="inline-detail-flight-data-description">#{cabin bookingCode:resBookDesigCode, bookingCodeList:_bookingCodes/}</span>
                         </div>
                         <div class="box-airplane-name">
                             <span class="airplane-name">
-                                <i class="icon-airplane-name"></i>${flightSegmentDetail.airEquipType.getAsString()}
+                                <i class="icon-airplane-name"></i>MATERIAL DE VUELO: ${flightSegmentDetail.airEquipType.getAsString()}
                             </span>
                         </div>
                     </li>
