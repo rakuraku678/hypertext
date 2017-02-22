@@ -61,7 +61,13 @@ lastRowDate = firstDepartureDate.minusDays(1);
             #{if rowDepartureDate != details.departureDate }
             %{ rowDepartureDate = details.departureDate;}%
             %{ lastRowDate = details.departureDate;}%
-            	<td><a href="#" class="pr-fare" data-from="${endUserFmt.print(details.departureDate)}" data-to="${endUserFmt.print(details.returnDate)}">US$${details?.passengerFare.replace(".0","")}</a>
+            %{ tdClass = "";}%
+            %{ if(details.departureDate == alternateDatesDto.departuredate){
+                if(details.returnDate == alternateDatesDto.returndate)
+                tdClass = "high";
+                }
+            }%
+            	<td><a href="#" class="pr-fare ${tdClass}" data-from="${endUserFmt.print(details.departureDate)}" data-to="${endUserFmt.print(details.returnDate)}">US$${details?.passengerFare.replace(".0","")}</a>
                 *{<td><a onclick="window.location=this.href" class="pr-fare" data-from="${endUserFmt.print(details.departureDate)}" data-to="${endUserFmt.print(details.returnDate)}">US$${details?.passengerFare.replace(".0","")}</a>}*
                 *{${details.sequenceNumber}<br>}*
                 *{${details.passengerFare}<br>}*
@@ -71,7 +77,7 @@ lastRowDate = firstDepartureDate.minusDays(1);
                 </td>
             #{/if}
         #{/list}
-        <tr class="bg-returning"><td colspan="8">Precio del pasaje ida y vuelta por persona. Los precios visualizados son los mejores encontrados por los usuarios en los últimos días y podrían no estar actualizados.</td></tr>
+        <tr class="bg-returning"><td colspan="8">Precio del pasaje ida y vuelta por persona. Los precios visualizados son los mejores encontrados en los últimos días y podrían no estar actualizados.</td></tr>
         </tbody>
     </table>
 </div>
