@@ -1,31 +1,54 @@
+%{
+df = new java.text.DecimalFormat("#,###,###");
+}%
+
 <div class="box-info-payment">
     <div class="head-payment">
-        <h3 class="title-payment">Detalles de compra</h3>
+        <h3 class="title-payment">Detalles de Pago</h3>
     </div>
     <div class="body-payment">
         <ul class="box-detail-fly-confirm">
             <li>
-                <span class="name-detail-fly">Tarifa:</span>
-                <span class="num-detail-fly">US$${_bookingConfirmation.fareTotal?.getAsString()}</span>
+                <span class="name-detail-fly">Orden de pago:</span>
+                <span class="num-detail-fly">${_order.externalId?.getAsString()}</span>
+            </li>
+            #{if _order.ccAmount!=null && !_order.ccAmount.getAsString().equals("0")}
+            <li>
+                <span class="name-detail-fly">Numero de cuotas:</span>
+                <span class="num-detail-fly">${_order.installments?.getAsString()}</span>
+            </li>
+            *{<li>}*
+                *{<span class="name-detail-fly">Numero de tarjeta:</span>}*
+                *{<span class="num-detail-fly">**** **** **** XXXX</span>}*
+            *{</li>}*
+            <li>
+                <span class="name-detail-fly">Código autorización Transbank:</span>
+                <span class="num-detail-fly">${_order.ccAutorizationId?.getAsString() }</span>
             </li>
             <li>
-                <span class="name-detail-fly">Impuestos:</span>
-                <span class="num-detail-fly">US$${_bookingConfirmation.taxTotal?.getAsString()}</span>
+                <span class="name-detail-fly">Monto tarjeta:</span>
+                <span class="num-detail-fly">$ ${df.format(_order.ccAmount?.getAsNumber()) }</span>
+            </li>
+            #{/if}
+            <li>
+                &nbsp;
+            </li>
+            #{if !_order.dpAmount.getAsString().equals("0.0000")}
+            <li>
+                <span class="name-detail-fly">Código autorización DP:</span>
+                <span class="num-detail-fly">${_order.autorizationIdDp?.getAsString() }</span>
             </li>
             <li>
-                <span class="name-detail-fly">Gastos Administrativos:</span>
-                <span class="num-detail-fly">US$${_bookingConfirmation.feeTotal?.getAsString()}</span>
+                <span class="name-detail-fly">Monto DP:</span>
+                <span class="num-detail-fly">${df.format(_order.dpAmount?.getAsNumber())}</span>
             </li>
-            <li>
-                <span class="name-detail-fly">Descuentos:</span>
-                <span class="num-detail-fly">US$${_bookingConfirmation.discountTotal?.getAsString() }</span>
-            </li>
+            #{/if}
         </ul>
     </div>
     <div class="total-payment">
         <ul>
             <li>Total</li>
-            <li>US$${_bookingConfirmation.amountTotal?.getAsString()}</li>
+            <li>$ ${df.format(_order.initialAmount?.getAsNumber())}</li>
         </ul>
     </div>
 </div>

@@ -21,7 +21,7 @@
                 <td><span class="name-company-fly">${segment.flight?.getAsString()}</span></td>
                 <td>${controllers.SearchController.getAirportCity(segment.from.getAsString())}</td>
                 <td>${controllers.SearchController.getAirportCity(segment.to.getAsString())}</td>
-                <td>${segment.datetime?.getAsString()}</td>
+                <td>${new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(segment.datetime?.getAsString().replace('T', ' ')).format('dd/MM/yyyy hh:mm')}</td>
             </tr>
         #{/list}
         </tbody>

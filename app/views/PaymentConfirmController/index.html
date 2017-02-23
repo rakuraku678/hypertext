@@ -1,5 +1,5 @@
 #{extends 'main.html' /}
-#{set title:'PaymentFlow' /}
+#{set title:'Confirmation' /}
 
 #{set isAgencyHeader: false /}
 <section class="bg-path">
@@ -26,7 +26,7 @@
     <article class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <div class="alert alert-success" role="alert"><i class="icon-confirm-path"></i>Felicitaciónes <strong>${bookingConfirmationResult.name?.getAsString()}</strong>, tu vuelo ha sido confirmado!! </div>
+                <div class="alert alert-success" role="alert"><i class="icon-confirm-path"></i>Felicitaciónes <strong>${bookingConfirmationResult.order.name?.getAsString()}</strong>, tu vuelo ha sido confirmado!! </div>
             </div>
             <div class="col-md-8">
                 <div class="box-info-payment">
@@ -35,14 +35,14 @@
                     </div>
                     #{confirmation.flightDetail flights:bookingConfirmationResult.flights/}
                 </div>
-                <div class="add-for-your-travel">
-                    <h2 class="title-payment">Agregá valor a tu viaje</h2>
-                    #{confirmation.asisstCardBox /}
-                    #{confirmation.rentCarBox /}
-                </div>
+                *{<div class="add-for-your-travel">}*
+                    *{<h2 class="title-payment">Agregá valor a tu viaje</h2>}*
+                    *{#{confirmation.asisstCardBox /}}*
+                    *{#{confirmation.rentCarBox /}}*
+                *{</div>}*
             </div>
-            <div class="col-md-4">     
-                #{confirmation.paymentDetailBox bookingConfirmation: bookingConfirmationResult /}
+            <div class="col-md-4">
+                #{confirmation.paymentDetailBox order: bookingConfirmationResult.order /}
             </div>
             <div class="col-md-12 text-center box-continue">
                 <button class="btn btn-secondary-travel btn-border-color-travel">continuar</button>
