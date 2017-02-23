@@ -27,7 +27,7 @@ df = new java.text.DecimalFormat("#,###,###");
             </li>
             <li>
                 <span class="name-detail-fly">Monto tarjeta:</span>
-                <span class="num-detail-fly">$ ${df.format(_order.ccAmount?.getAsNumber()) }</span>
+                <span class="num-detail-fly">$ ${df.format(_order.ccAmount?.getAsNumber()).replace(',', '.')}</span>
             </li>
             #{/if}
             <li>
@@ -48,7 +48,7 @@ df = new java.text.DecimalFormat("#,###,###");
     <div class="total-payment">
         <ul>
             <li>Total</li>
-            <li>$ ${df.format(_order.initialAmount?.getAsNumber())}</li>
+            <li>$ ${df.format(_order.initialAmount?.getAsNumber()).replace(',', '.')}</li>
         </ul>
     </div>
 </div>
