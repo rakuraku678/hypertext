@@ -124,6 +124,10 @@ $(document).ready(function () {
         	$(this).next().next().css("display","block");
         	$(this).next().next().css("color","#a94442");
         	$(this).css("border-color","#a94442 !important");
+        	$("#btnContinue").attr("disabled","disabled");
+        }
+        else {
+        	$("#btnContinue").removeAttr("disabled");
         }
 		 
     });
