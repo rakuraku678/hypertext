@@ -25,10 +25,10 @@
 		    	}%
         <tr>
             <td></td>
-            <td class="txt-payment-table-mark">${pricingDetail.quantity.getAsString()} ${passType}</td>
-            <td><span class="simbolCurrency">US$</span><span class="usdpriceCon">${pricingDetail.basefare.getAsString()}</span></td>
-            <td><span class="simbolCurrency">US$</span><span class="usdpriceCon">${pricingDetail.totalTax.getAsString()}</span></td>
-            <td class="txt-payment-table-mark"><span class="simbolCurrency">US$</span><span class="usdpriceCon">${pricingDetail.totalFare.getAsString()}</span></td>
+            <td class="txt-payment-table-mark">${pricingDetail.quantity?.getAsString()} ${passType}</td>
+            <td><span class="simbolCurrency">US$</span><span class="usdpriceCon">${pricingDetail.basefare?.getAsString()}</span></td>
+            <td><span class="simbolCurrency">US$</span><span class="usdpriceCon">${pricingDetail.totalTax?.getAsString()}</span></td>
+            <td class="txt-payment-table-mark"><span class="simbolCurrency">US$</span><span class="usdpriceCon">${pricingDetail.totalFare?.getAsString()}</span></td>
         </tr>
         #{/list}
         </tbody>
@@ -36,7 +36,7 @@
     <div class="total-payment">
         <ul>
             <li>Total a Pagar</li>
-            <li><span class="simbolCurrency">US$</span><span class="usdpriceCon">${_pricing.totalFare.getAsString()}</span></li>
+            <li><span class="simbolCurrency">US$</span><span class="usdpriceCon">${_pricing.totalAmount?.getAsString()}</span></li>
         </ul>
     </div>
 </div>
