@@ -1288,6 +1288,11 @@
 	color: #FFFFFF;
 	letter-spacing: 0px;
 }
+.ticket-detail .price.before-discount {
+	font-size: 20px;
+	text-decoration: line-through;
+	margin-top: -10px;
+}
 .ticket-detail .detail-price {
 	color: #fff;
 	font-size: 12px;

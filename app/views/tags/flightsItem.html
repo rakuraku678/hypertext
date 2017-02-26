@@ -236,7 +236,11 @@
             #{else}
                 <span class="private-fare-space-saver">&nbsp;</span>
             #{/else}
+
             <span class="title">Precio por Adulto</span>
+            #{if _flight.pricing.adtTotalPriceBeforeDiscount && _flight.pricing.adtTotalPriceBeforeDiscount != _flight.pricing.adtTotalPrice}
+            <span class="price before-discount"><span class="simbolCurrency">US$</span><span class="usdpriceCon">${_flight.pricing.adtTotalPriceBeforeDiscount?.getAsString()}</span><span class="clppriceCon hidden"></span></span>
+            #{/if}
             <span class="price"><span class="simbolCurrency">US$</span><span class="usdpriceCon">${_flight.pricing.adtTotalPrice?.getAsString()}</span><span class="clppriceCon hidden"></span></span>
             <ul class="detail-price">
                 <li><span class="item-detail">Pasajeros <span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalPassengerFare?.getAsString()}</span><span class="item-price clppriceCon hidden"></span></li>
