@@ -31,6 +31,13 @@
             <td class="txt-payment-table-mark"><span class="simbolCurrency">US$</span><span class="usdpriceCon">${pricingDetail.totalFare?.getAsString()}</span></td>
         </tr>
         #{/list}
+        <tr>
+            <td></td>
+            <td class="txt-payment-table-mark">Gestión agencia</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td class="txt-payment-table-mark"><span class="simbolCurrency">US$</span><span class="usdpriceCon">${_pricing.totalFee?.getAsString()}</span></td>
+        </tr>
         </tbody>
     </table>
     <div class="total-payment">
