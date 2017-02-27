@@ -41,6 +41,12 @@
         </tbody>
     </table>
     <div class="total-payment">
+        #{if _pricing.totalAmountBeforeDiscount}
+        <ul>
+            <li>&nbsp;</li>
+            <li style="text-decoration: line-through;"><span class="simbolCurrency">US$</span><span class="usdpriceCon">${_pricing.totalAmountBeforeDiscount?.getAsString()}</span></li>
+        </ul>
+        #{/if}
         <ul>
             <li>Total a Pagar</li>
             <li><span class="simbolCurrency">US$</span><span class="usdpriceCon">${_pricing.totalAmount?.getAsString()}</span></li>
