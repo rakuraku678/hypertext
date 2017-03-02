@@ -67,7 +67,7 @@ lastRowDate = firstDepartureDate.minusDays(1);
                 tdClass = "high";
                 }
             }%
-            	<td><a href="#" class="pr-fare ${tdClass}" data-from="${endUserFmt.print(details.departureDate)}" data-to="${endUserFmt.print(details.returnDate)}">US$${details?.passengerFare.replace(".0","")}</a>
+            	<td><a href="#" class="pr-fare ${tdClass}" data-from="${endUserFmt.print(details.departureDate)}" data-to="${endUserFmt.print(details.returnDate)}"><span class="simbolCurrency">US$</span><span class="usdpriceCon">${details?.passengerFare.replace(".0","")}</span><span class="clppriceCon hidden"></span></a>
                 *{<td><a onclick="window.location=this.href" class="pr-fare" data-from="${endUserFmt.print(details.departureDate)}" data-to="${endUserFmt.print(details.returnDate)}">US$${details?.passengerFare.replace(".0","")}</a>}*
                 *{${details.sequenceNumber}<br>}*
                 *{${details.passengerFare}<br>}*

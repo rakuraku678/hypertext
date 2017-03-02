@@ -53,7 +53,7 @@ public class FlightsDataController extends Controller {
         flightsAltenateDates.setPassengercount(params.get("passengercount"));
         JsonElement flightsAltenateDatesResults = flightsAltenateDates.process();
 
-        AlternateDatesDto alternateDatesDto = AlternateDatesDto.parceAlternateDatesDto(flightsAltenateDatesResults);
+        AlternateDatesDto alternateDatesDto = AlternateDatesDto.parseAlternateDatesDto(flightsAltenateDatesResults);
 
         alternateDatesDto.detailAlternateDatesDtoList.sort((o1, o2) -> {
             int cmp = o1.returnDate.compareTo(o2.returnDate);

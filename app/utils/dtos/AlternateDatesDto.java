@@ -19,7 +19,7 @@ public class AlternateDatesDto implements Dto {
     public List<DetailAlternateDatesDto> detailAlternateDatesDtoList;
 
 
-    public static AlternateDatesDto parceAlternateDatesDto(JsonElement responseJson) {
+    public static AlternateDatesDto parseAlternateDatesDto(JsonElement responseJson) {
         AlternateDatesDto alternateDatesDto = new AlternateDatesDto();
         JsonObject jsonObject = responseJson.getAsJsonObject();
         alternateDatesDto.origin = JsonUtils.getStringFromJson(jsonObject, "origin");
