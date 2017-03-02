@@ -48,6 +48,19 @@ public class SearchController extends Controller {
         }
         return r;
     }
+    
+    public static int getIndexOfId(String airportCode){
+    	 List<Map> lista = getCachedAirports(airportCode);
+         int i =0;
+         for (Map<String, String> o : lista) {
+         	if (o.get("id").equals(airportCode)){
+         		return i;
+         	}
+         	i++;
+ 		}
+        return 0;
+         
+    }
 
     private static List getAutoCompleteFromAPI(String q) {
         List result = Lists.newArrayList();
@@ -83,12 +96,9 @@ public class SearchController extends Controller {
         List<Map> lista = getCachedAirports(airportCode);
         String airport = "";
         for (Map<String, String> o : lista) {
-        	for (Map.Entry<String, String> entry : o.entrySet())
-        	{
-        		if (entry.getKey().equals("name")) {
-        			airport = entry.getValue();
-        			return airport;
-        		}
+        	if (o.get("id").equals(airportCode)){
+        		airport = o.get("name");
+        		return airport;
         	}
 		}
         return airport;
@@ -97,12 +107,9 @@ public class SearchController extends Controller {
         List<Map> lista = getCachedAirports(airportCode);
         String city = "";
         for (Map<String, String> o : lista) {
-        	for (Map.Entry<String, String> entry : o.entrySet())
-        	{
-        		if (entry.getKey().equals("city") ) {
-        			city = entry.getValue();
-        			return city;
-        		}
+        	if (o.get("id").equals(airportCode)){
+        		city = o.get("city");
+        		return city;
         	}
 		}
         return city;

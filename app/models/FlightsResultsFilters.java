@@ -58,7 +58,6 @@ public class FlightsResultsFilters {
             	{
             		if (entry.getKey().equals("name")) {
             			flightsResultsFilters.addOutboundAirport(entry.getValue());
-            			System.out.println("poniendo airport code: "+departureAirportCode);
             			flightsResultsFilters.outboundAirportCodes.put(entry.getValue(),departureAirportCode);
             		}
             	}

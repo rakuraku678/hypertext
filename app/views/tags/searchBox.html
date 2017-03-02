@@ -308,15 +308,13 @@
                 },
                 processResults: function (data, params) {
                   params.page = params.page || 1;
-            
                   return {
                     results: data.items,
                     pagination: {
                       more: (params.page * 30) < data.total_count
                     }
                   };
-                },
-                cache: true
+                }
               },
               minimumInputLength: 3,
               initSelection: function(element, callback) {callback({id: element.attr('value'), city: element.attr('data-city')});},
