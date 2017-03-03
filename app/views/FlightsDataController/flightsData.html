@@ -44,6 +44,9 @@ $(function () {
 		        		$(".airlinePricesNames_${carriersKey}").html("${flightsResultsFilters.carriersCodesXNames.get(carriersKey)}");
 		        #{/list}
 		        
+	        	if ($("#toWn").hasClass("selectedCurrency")){
+	     			setClpExchange();
+	     		}
 		    }});
 		}
 		else {
