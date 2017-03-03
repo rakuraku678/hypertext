@@ -146,6 +146,10 @@ $(function () {
 	function setUsdExchange() {
         $("#toUsd").css("background-color","#428bca");
         $("#toUsd").css("color","white");
+        
+        $("#toUsd").addClass("selectedCurrency");
+        $("#toWn").removeClass("selectedCurrency");
+        
         $("#toWn").css("background-color","transparent");
         $("#toWn").css("color","black");
 
@@ -162,6 +166,8 @@ $(function () {
 	function setClpExchange() {
         $("#toWn").css("background-color","#428bca");
         $("#toWn").css("color","white");
+        $("#toWn").addClass("selectedCurrency");
+        $("#toUsd").removeClass("selectedCurrency");
         $("#toUsd").css("background-color","transparent");
         $("#toUsd").css("color","black");
 
