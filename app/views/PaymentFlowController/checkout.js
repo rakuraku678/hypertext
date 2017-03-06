@@ -55,7 +55,7 @@ $(document).ready(function () {
                         message: 'Este campo esta vacio.'
                     },
                     regexp: {
-                        regexp: /^([0-9])*$/,
+                        regexp: /^[0-9k]*$/,
                         message: 'Campo no válido'
                     }
                 }
@@ -136,6 +136,17 @@ $(document).ready(function () {
 });
 
 function startBooking() {
+	if (!checkRut($( ".validatedocumentnum" )[0])){
+    	$(this).next().next().css("display","block");
+    	$(this).next().next().css("color","#a94442");
+    	$(this).css("border-color","#a94442 !important");
+    	return false;
+    }
+    else {
+    	$("#btnContinue").removeAttr("disabled");
+    }
+	
+	
     $('#spinner-modal').modal({
         backdrop: 'static',
         keyboard: false,

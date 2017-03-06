@@ -94,6 +94,7 @@
 
                 var loadFlightData = (function() {
                     cleanErrors();
+                    window.history.pushState("responseText", "Results", getCurrentSearchURL());
                     if ($('#adultCount').val()*2<parseInt($('#childrenCount').val())+parseInt($('#infantCount').val())){
                       alert("La cantidad de niños e infantes tiene un máximo de dos por adulto.");
                       $('#flightSearchForm input[type="submit"]').attr('disabled', false);
@@ -203,7 +204,8 @@
                         e.preventDefault();
                         $("#startDate").val($(this).data('from'));
                         $("#endDate").val($(this).data('to'));
-                        $("#flightSearchForm").submit();
+                        var url = getCurrentSearchURL();
+						window.location.href = url;
                     });
                 }
 
