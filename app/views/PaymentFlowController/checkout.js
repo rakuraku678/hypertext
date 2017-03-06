@@ -55,7 +55,7 @@ $(document).ready(function () {
                         message: 'Este campo esta vacio.'
                     },
                     regexp: {
-                        regexp: /^[0-9k]*$/,
+                        regexp: /^[0-9kK]*$/,
                         message: 'Campo no válido'
                     }
                 }
