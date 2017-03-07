@@ -9,12 +9,14 @@ import java.util.List;
 
 public class AirRulesDto implements Dto {
 
+    public String code;
     public String hostCommand;
     public List<AirRulesDetailDto> rules = Lists.newArrayList();
 
     public static AirRulesDto parseAirRulesDto(JsonElement responseJson){
         AirRulesDto airRulesDto = new AirRulesDto();
         JsonObject jsonObject = responseJson.getAsJsonObject();
+        airRulesDto.code = JsonUtils.getStringFromJson(jsonObject, "code");
         airRulesDto.hostCommand = JsonUtils.getStringFromJson(jsonObject, "hostCommand");
 
         for (JsonElement ruleJsonElement : JsonUtils.getJsonArrayFromJson(jsonObject, "rules")) {

@@ -1,23 +1,34 @@
-<div class="box-info-payment">
-    <div class="head-payment">
-        <h3 class="title-payment">Air Rules</h3>
-    </div>
-    <div class="body-payment detail-fly-payment">
-    #{list items:_airRulesResultList, as:"airRulesResult"}
-        #{list items:airRulesResult.rules, as:"rules"}
-            <ul>
-                <li>
-                    <a class="btn icon-arrow-payment" data-toggle="collapse" href="#airRules${rules_index}" aria-expanded="false" aria-controls="airRules${rules_index}">
-                        <span class="title-payment">${rules.title}</span>
-                    </a>
-                </li>
-            </ul>
-            <div class="collapse" id="airRules${rules_index}">
-                <div class="form-group col-md-12">
-                    <p>${rules.text.raw()}</p>
+<a class="modalAirRulesLink" href="#" data-toggle="modal" data-target="#modalAirRules">Ver restricciones de la tarifa seleccionada</a>
+
+<!-- Modal -->
+<div class="modal fade modal-air-rules" id="modalAirRules" tabindex="-1" role="dialog" aria-labelledby="modalAirRulesLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content info-flight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="icon-close-modal"></i></button>
+                <h4 class="modal-title" id="modalAirRulesLabel">Condiciones de la tarifa</h4>
+            </div>
+            <div class="modal-body">
+                <div class="air-rules-msg-title">Estimado Cliente,</div>
+                <div class="air-rules-msg">A continuación se presentan las principales regulaciones de la tarifa seleccionada.
+                    Estas regulaciones generalmente son informadas por la línea aérea en Inglés. Si tiene alguna duda o
+                    consulta, contacte a nuestros ejecutivos a través de ventaonline@travelclub.cl De acuerdo a
+                    disponibilidad, el sistema puede entregar precio con combinación de clases, lo cual limita a regirse
+                    por la regulación de la clase más restrictiva comercializada. El pago de su reserva implica que ha
+                    aceptado las regulaciones de la tarifa.</div>
+                <div class="air-rules-box-title">Condiciones de la tarifa:</div>
+                <div class="air-rules-box">
+                #{list items:_airRulesResultList, as:"airRulesResult"}
+                    <div class="air-rules-code">${airRulesResult.code}</div>
+                    #{list items:airRulesResult.rules, as:"rules"}
+                        <div class="air-rules-title">${rules.title}</div>
+                        <div class="air-rules-text">
+                            <p>${rules.text.raw()}</p>
+                        </div>
+                    #{/list}
+                #{/list}
                 </div>
             </div>
-        #{/list}
-    #{/list}
+        </div>
     </div>
 </div>

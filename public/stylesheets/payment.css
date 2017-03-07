@@ -603,3 +603,39 @@ h2 {
 		width: 100%; 
 	}
 }
+/* modal-air-rules
+=================== */
+.modal-air-rules .air-rules-msg-title {
+	padding-bottom: 10px;
+}
+.modal-air-rules .air-rules-msg {
+}
+
+.modal-air-rules .air-rules-box-title {
+	font-weight: bold;
+	padding-top: 20px;
+	font-size: 15px;
+}
+
+.modal-air-rules .air-rules-box {
+	overflow-y: scroll;
+	height:400px;
+	border: 1px solid #ddd;
+	padding: 5px;
+}
+
+.modal-air-rules .air-rules-code {
+	font-weight: bold;
+	font-size: 15px;
+}
+.modal-air-rules .air-rules-title {
+	font-weight: bold;
+	font-size: 12px;
+	padding: 0px 12px;
+}
+.modal-air-rules .air-rules-text {
+	font-size: 12px;
+	color: #999999;
+	padding: 0px 12px;
+	margin-bottom: 0;
+}
