@@ -1,0 +1,23 @@
+<div class="box-info-payment">
+    <div class="head-payment">
+        <h3 class="title-payment">Air Rules</h3>
+    </div>
+    <div class="body-payment detail-fly-payment">
+    #{list items:_airRulesResultList, as:"airRulesResult"}
+        #{list items:airRulesResult.rules, as:"rules"}
+            <ul>
+                <li>
+                    <a class="btn icon-arrow-payment" data-toggle="collapse" href="#airRules${rules_index}" aria-expanded="false" aria-controls="airRules${rules_index}">
+                        <span class="title-payment">${rules.title}</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="collapse" id="airRules${rules_index}">
+                <div class="form-group col-md-12">
+                    <p>${rules.text.raw()}</p>
+                </div>
+            </div>
+        #{/list}
+    #{/list}
+    </div>
+</div>

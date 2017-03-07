@@ -1,16 +1,23 @@
 package controllers;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import play.mvc.*;
 import utils.AgencyConfigurationDto;
-import utils.ApiFlightsSdk.v1.Payment;
+import utils.ApiFlightsSdk.v1.AirRules;
 import utils.ApiFlightsSdk.v1.Promotion;
+import utils.JsonUtils;
 import utils.TravelClubUtils;
+import utils.dtos.AirRulesDto;
 import utils.dtos.PromotionDto;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 public class PaymentFlowController extends Controller {
@@ -27,8 +34,23 @@ public class PaymentFlowController extends Controller {
         System.out.println("a ver que hay aca: "+bfmResultItem.toString());
         String selectedCurrency = params.get("selectedCurrency");
         String dollarExchangeRate = TravelClubUtils.getDollarExchangeRate();
-        
-        render(agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate);
+
+        JsonObject bfmResultJsonObject = bfmResultItem.getAsJsonObject();
+        JsonObject pricingJsonObject = (JsonObject) JsonUtils.getJsonObjectFromJson(bfmResultJsonObject, "pricing");
+
+        List<AirRulesDto> airRulesResultList = Lists.newArrayList();
+
+        AirRules airRules = new AirRules();
+        airRules.ticketingDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        airRules.travelDate = JsonUtils.getStringFromJson(bfmResultJsonObject,"departureDate");
+        airRules.origin = JsonUtils.getStringFromJson(bfmResultJsonObject,"departureAirportCode");
+        airRules.destination = JsonUtils.getStringFromJson(bfmResultJsonObject,"returnAirportCode");
+        airRules.marketingCarrier = JsonUtils.getStringFromJson(pricingJsonObject,"validatingCarrier");
+        for (JsonElement jsonElement : JsonUtils.getJsonArrayFromJson(pricingJsonObject, "fareBasisCodes")) {
+            airRules.fareBasis = jsonElement.getAsString();
+            airRulesResultList.add(airRules.process());
+        }
+        render(agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate, airRulesResultList);
     }
 
     public static void processPayment(){
