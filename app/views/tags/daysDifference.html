@@ -1,0 +1,10 @@
+%{
+departure = _departure.getAsString();
+arrival = _arrival.getAsString();
+difference = departure.daysBetween(arrival);
+}%
+#{if difference}
+<span class="days-difference">
+    <span>+${difference} dia${difference.pluralize()} </span>
+</span>
+#{/if}

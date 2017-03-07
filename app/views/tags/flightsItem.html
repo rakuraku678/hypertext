@@ -75,6 +75,7 @@
                         </li>
                         <li class="hour-of-flight">
                             <span>${_flight.departureSegment.returnTime.getAsString()}</span>
+                            #{daysDifference departure:_flight.departureSegment.departureDate, arrival: _flight.departureSegment.returnDate/}
                         </li>
                         <li class="time">
                             %{
@@ -152,6 +153,7 @@
                         </li>
                         <li class="hour-of-flight">
                             <span>${_flight.returnSegment.returnTime.getAsString()}</span>
+                            #{daysDifference departure:_flight.returnSegment.departureDate, arrival: _flight.returnSegment.returnDate/}
                         </li>
                         <li class="time">
                         %{

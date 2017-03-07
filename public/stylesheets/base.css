@@ -1080,6 +1080,11 @@
 .info-flight .txt-view-detail .hour-of-flight {
 	width: 11%!important;
 }
+.info-flight .txt-view-detail .hour-of-flight .days-difference span {
+	color: #FA564D;
+	font-size: 10px;
+	vertical-align: middle;
+}
 .info-flight .txt-view-detail .hour-of-flight span {
 	font-size: 18px;
 	color: #616161;
