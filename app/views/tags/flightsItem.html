@@ -250,7 +250,11 @@
             #{/if}
             <span class="price"><span class="simbolCurrency">US$</span><span class="usdpriceCon">${_flight.pricing.adtTotalPrice?.getAsString()}</span><span class="clppriceCon hidden"></span></span>
             <ul class="detail-price">
-                <li><span class="item-detail">Pasajeros <span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalPassengerFare?.getAsString()}</span><span class="item-price clppriceCon hidden"></span></li>
+                %{
+                    def totalPassengers = 0
+                    _flight.pricing.detail.each{ totalPassengers += it.quantity.getAsInt()}
+                }%
+                <li><span class="item-detail">Pasajeros (${totalPassengers})<span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalPassengerFare?.getAsString()}</span><span class="item-price clppriceCon hidden"></span></li>
                 <li><span class="item-detail">Imp. y Tasas <span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalTax?.getAsString()}</span><span class="item-price clppriceCon hidden"></span></li>
                 <li><span class="item-detail">Gestión agencia <span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalFee?.getAsString()}</span><span class="item-price clppriceCon hidden"></span></li>
                 <hr>
