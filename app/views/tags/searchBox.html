@@ -13,6 +13,9 @@
     <div class="well">
         <div class="bg-search">
             <form id="flightSearchForm" class="form-search-travel" action="" method="" data-toggle="validator" role="form">
+                #{if params.promotion}
+                    <input type="hidden" name="promotion" id="promotion" value="${params.promotion}" />
+                #{/if}
                 <div class="form-group col-md-12">
                     <label>Origen:</label>
                     <select name="origenSlc" class="form-control percent" id="origin" value="${params.origin}" data-city="${originCity}">
@@ -159,7 +162,10 @@
                 }, false);
 
                 var getCurrentSearchURL = function(){
+
+                    var searchURL = "";
                     var searchForm = $("#flightSearchForm");
+                    var promotion = searchForm.find('input[name="promotion"]').val();
                     var origin = searchForm.find('input[name="origen"]').val();
                     var destination = searchForm.find('input[name="destino"]').val();
                     var departuredate = searchForm.find('input[name="partida"]').val().split("/").join("-");
@@ -167,7 +173,10 @@
                     var adultcount = searchForm.find('select[name="adultcount"]').val();
                     var childrencount = searchForm.find('select[name="childrencount"]').val();
                     var infantcount = searchForm.find('select[name="infantcount"]').val();
-                    return "/"+origin+"/"+destination+"/"+departuredate+"/"+returndate+"/"+adultcount+"-"+childrencount+"-"+infantcount;
+                    if(promotion){
+                        searchURL += "/promociones/" + promotion;
+                    }
+                    return searchURL + "/"+origin+"/"+destination+"/"+departuredate+"/"+returndate+"/"+adultcount+"-"+childrencount+"-"+infantcount;
                 };
 
                 var showError = function(msg){
@@ -511,6 +520,7 @@
 function getPriceSuggestionMatrixParams() {
     var searchForm = $("#flightSearchForm");
     return $.param({
+        promotion: searchForm.find('input[name="promotion"]').val(),
         origin: searchForm.find('input[name="origen"]').val(),
         destination: searchForm.find('input[name="destino"]').val(),
         departuredate: searchForm.find('input[name="partida"]').val(),
@@ -523,6 +533,7 @@ function getSearchParams() {
     var searchForm = $("#flightSearchForm");
     var filterForm = $("#filterResultForm");
     return $.param({
+        promotion: searchForm.find('input[name="promotion"]').val(),
         origin: searchForm.find('input[name="origen"]').val(),
         destination: searchForm.find('input[name="destino"]').val(),
         departuredate: searchForm.find('input[name="partida"]').val(),

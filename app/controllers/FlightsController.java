@@ -15,7 +15,13 @@ import utils.dtos.PromotionDto;
 public class FlightsController extends Controller {
 
     public static void index() {
-        PromotionDto promotionDto = new Promotion().getDefault();
+        PromotionDto promotionDto;
+
+        if (!Strings.isNullOrEmpty(params.get("promotion"))) {
+            promotionDto = new Promotion().getBySlug(params.get("promotion"));
+        } else {
+            promotionDto = new Promotion().getDefault();
+        }
 
         AgencyConfigurationDto agencyConfigurationDto = TravelClubUtils.getAgencyConfiguration(promotionDto.agency.externalId);
 

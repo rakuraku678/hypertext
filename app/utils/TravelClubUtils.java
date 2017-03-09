@@ -46,11 +46,14 @@ public class TravelClubUtils {
 			throw new RuntimeException("Agency Conf process response fail.");
 		}
 	}
-	
 
 	public static String getDollarExchangeRate() {
+		String agencyId = new Promotion().getDefault().agency.externalId;
+		return getDollarExchangeRate(agencyId);
+	}
+
+	public static String getDollarExchangeRate(String agencyId) {
 		try {
-		    String agencyId = new Promotion().getDefault().agency.externalId;
 		    System.out.println("request to: "+DOLLAR_EXCHANGE_RATE_URL+"/"+agencyId);
 		    
 			WSRequest req = WS.url(DOLLAR_EXCHANGE_RATE_URL+"/"+agencyId);
@@ -71,7 +74,6 @@ public class TravelClubUtils {
 			System.out.println(e.getMessage());
 			return "ERROR";
 		}
-
 	}
 	
 }

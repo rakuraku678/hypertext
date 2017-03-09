@@ -1,5 +1,6 @@
 package controllers;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.gson.JsonElement;
@@ -9,6 +10,7 @@ import com.google.gson.JsonParser;
 import play.mvc.*;
 import utils.AgencyConfigurationDto;
 import utils.ApiFlightsSdk.v1.AirRules;
+import utils.ApiFlightsSdk.v1.Booking;
 import utils.ApiFlightsSdk.v1.Promotion;
 import utils.JsonUtils;
 import utils.TravelClubUtils;
@@ -23,17 +25,20 @@ import java.util.Map;
 public class PaymentFlowController extends Controller {
 
     public static void index() {
-    	
-        PromotionDto promotionDto = new Promotion().getDefault();
+        PromotionDto promotionDto;
+        if (!Strings.isNullOrEmpty(params.get("promotion"))) {
+            promotionDto = new Promotion().getBySlug(params.get("promotion"));
+        } else {
+            promotionDto = new Promotion().getDefault();
+        }
 
         AgencyConfigurationDto agencyConfigurationDto = TravelClubUtils.getAgencyConfiguration(promotionDto.agency.externalId);
 
         JsonElement bfmResultItem = new JsonParser().parse(params.get("bfmResultItem"));
 
         
-        System.out.println("a ver que hay aca: "+bfmResultItem.toString());
         String selectedCurrency = params.get("selectedCurrency");
-        String dollarExchangeRate = TravelClubUtils.getDollarExchangeRate();
+        String dollarExchangeRate = TravelClubUtils.getDollarExchangeRate(promotionDto.agency.externalId);
 
         JsonObject bfmResultJsonObject = bfmResultItem.getAsJsonObject();
         JsonObject pricingJsonObject = (JsonObject) JsonUtils.getJsonObjectFromJson(bfmResultJsonObject, "pricing");
@@ -50,11 +55,13 @@ public class PaymentFlowController extends Controller {
             airRules.fareBasis = jsonElement.getAsString();
             airRulesResultList.add(airRules.process());
         }
-        render(agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate, airRulesResultList);
+        render(agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate, airRulesResultList, promotionDto);
     }
 
     public static void processPayment(){
-        PromotionDto promotionDto = new Promotion().getDefault();
+
+        String promotionSlug = new Booking().promotion(params.get("id"));
+        PromotionDto promotionDto = new Promotion().getBySlug(promotionSlug);
 
         AgencyConfigurationDto agencyConfigurationDto = TravelClubUtils.getAgencyConfiguration(promotionDto.agency.externalId);
 

@@ -2,6 +2,7 @@ package controllers;
 
 import java.text.ParseException;
 
+import com.google.common.base.Strings;
 import models.FlightsResultsFilters;
 import play.mvc.Controller;
 import utils.DateUtils;
@@ -21,7 +22,12 @@ import com.google.gson.JsonParser;
 public class FlightsDataController extends Controller {
 
     public static void index() throws InterruptedException {
-        PromotionDto promotionDto = new Promotion().getDefault();
+        PromotionDto promotionDto;
+        if (!Strings.isNullOrEmpty(params.get("promotion"))) {
+            promotionDto = new Promotion().getBySlug(params.get("promotion"));
+        } else {
+            promotionDto = new Promotion().getDefault();
+        }
 
         BFMSearch bfmSearch  = new BFMSearch();
         bfmSearch.setOrigin(params.get("origin"));
@@ -39,7 +45,7 @@ public class FlightsDataController extends Controller {
 
         FlightsResultsFilters flightsResultsFilters = FlightsResultsFilters.processFlightsResults(flightsResults);
 
-        String dollarExchangeRate = TravelClubUtils.getDollarExchangeRate();
+        String dollarExchangeRate = TravelClubUtils.getDollarExchangeRate(promotionDto.agency.externalId);
         renderTemplate("FlightsDataController/flightsData.html",flightsResults, flightsResultsFilters, dollarExchangeRate);
     }
 

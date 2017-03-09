@@ -26,6 +26,11 @@ public class Booking extends ApiFlightsSDKBase {
         return processResponsePost(request);
     }
 
+    public String promotion(String id){
+        WS.WSRequest request = prepareRequest(ENDPOINT + "/" + id + "/promotion");
+        return processResponsePost(request).getAsString();
+    }
+
     public JsonElement get(String id){
         WS.WSRequest request = prepareRequest(ENDPOINT + "/" + id );
         return processResponsePost(request);
