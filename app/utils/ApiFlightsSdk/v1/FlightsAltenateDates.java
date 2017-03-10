@@ -1,7 +1,13 @@
 package utils.ApiFlightsSdk.v1;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import play.libs.WS;
+
+import java.util.List;
+import java.util.Map;
 
 public class FlightsAltenateDates extends ApiFlightsSDKBase {
 
@@ -11,17 +17,25 @@ public class FlightsAltenateDates extends ApiFlightsSDKBase {
     public String destination;
     public String departuredate;
     public String returndate;
-    public String passengercount;
+    public String promotion;
+    public List<Map<String,String>> passengerTypeList = Lists.newArrayList();
 
     public JsonElement process(){
 
         WS.WSRequest request = prepareRequest(ENDPOINT);
 
-        request.setParameter("origin", origin);
-        request.setParameter("destination", destination);
-        request.setParameter("departuredate", departuredate);
-        request.setParameter("returndate", returndate);
-        request.setParameter("passengercount", passengercount);
+        Map<String, Object> mapValues = Maps.newHashMap();
+
+        mapValues.put("origin",origin);
+        mapValues.put("destination",destination);
+        mapValues.put("departuredate",departuredate);
+        mapValues.put("returndate",returndate);
+        mapValues.put("passengers",passengerTypeList);
+        mapValues.put("promotion",promotion);
+
+        String jsonBody = new Gson().toJson(mapValues);
+
+        request.body(jsonBody);
 
         JsonElement responseJsonObject = processResponse(request);
 
@@ -44,8 +58,16 @@ public class FlightsAltenateDates extends ApiFlightsSDKBase {
         this.returndate = returndate;
     }
 
-    public void setPassengercount(String passengercount) {
-        this.passengercount = passengercount;
+    public void setPromotion(String promotion) {
+        this.promotion = promotion;
     }
 
+    public void addPassengerType(String passengerType, String quantity) {
+        if(!"0".equals(quantity)) {
+            Map<String, String> passengerTypeMap = Maps.newHashMap();
+            passengerTypeMap.put("code", passengerType);
+            passengerTypeMap.put("quantity", quantity);
+            passengerTypeList.add(passengerTypeMap);
+        }
+    }
 }

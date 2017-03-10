@@ -50,13 +50,22 @@ public class FlightsDataController extends Controller {
     }
 
     public static void priceSuggestionMatrix() throws InterruptedException {
+        PromotionDto promotionDto;
+        if (!Strings.isNullOrEmpty(params.get("promotion"))) {
+            promotionDto = new Promotion().getBySlug(params.get("promotion"));
+        } else {
+            promotionDto = new Promotion().getDefault();
+        }
 
         FlightsAltenateDates flightsAltenateDates = new FlightsAltenateDates();
         flightsAltenateDates.setOrigin(params.get("origin"));
         flightsAltenateDates.setDestination(params.get("destination"));
         flightsAltenateDates.setDeparturedate(DateUtils.reformateDate(params.get("departuredate")));
         flightsAltenateDates.setReturndate(DateUtils.reformateDate(params.get("returndate")));
-        flightsAltenateDates.setPassengercount(params.get("passengercount"));
+        flightsAltenateDates.addPassengerType("ADT", params.get("adultcount"));
+        flightsAltenateDates.addPassengerType("C02", params.get("childrencount"));
+        flightsAltenateDates.addPassengerType("INF", params.get("infantcount"));
+        flightsAltenateDates.setPromotion(promotionDto.slug);
         JsonElement flightsAltenateDatesResults = flightsAltenateDates.process();
 
         AlternateDatesDto alternateDatesDto = AlternateDatesDto.parseAlternateDatesDto(flightsAltenateDatesResults);

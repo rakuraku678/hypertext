@@ -121,7 +121,7 @@
 					$( "#filterContent" ).html("");
 					
                     $( "#priceSuggestionMatrix" ).load(
-                        "/flights/matrix?" + getPriceSuggestionMatrixParams(),
+                        "/flights/matrix?" + getSearchParams(),
                         function (responseText, textStatus, XMLHttpRequest) {
                             if (textStatus == "success") {
                                 $( "#priceSuggestionMatrix" ).show("slow");
@@ -516,18 +516,6 @@
             return markup.join("");
         }
     }
-
-function getPriceSuggestionMatrixParams() {
-    var searchForm = $("#flightSearchForm");
-    return $.param({
-        promotion: searchForm.find('input[name="promotion"]').val(),
-        origin: searchForm.find('input[name="origen"]').val(),
-        destination: searchForm.find('input[name="destino"]').val(),
-        departuredate: searchForm.find('input[name="partida"]').val(),
-        returndate: searchForm.find('input[name="regreso"]').val(),
-        passengercount: searchForm.find('select[name="adultcount"]').val(),
-    });
-}
 
 function getSearchParams() {
     var searchForm = $("#flightSearchForm");

@@ -15,7 +15,7 @@ public class AlternateDatesDto implements Dto {
     public String destination;
     public DateTime departuredate;
     public DateTime returndate;
-    public int passengercount;
+    public String promotion;
     public List<DetailAlternateDatesDto> detailAlternateDatesDtoList;
 
 
@@ -24,9 +24,9 @@ public class AlternateDatesDto implements Dto {
         JsonObject jsonObject = responseJson.getAsJsonObject();
         alternateDatesDto.origin = JsonUtils.getStringFromJson(jsonObject, "origin");
         alternateDatesDto.destination = JsonUtils.getStringFromJson(jsonObject, "destination");
+        alternateDatesDto.promotion = JsonUtils.getStringFromJson(jsonObject, "promotion");
         alternateDatesDto.departuredate = JsonUtils.getDateTimeFromJson(jsonObject, "departuredate");
         alternateDatesDto.returndate = JsonUtils.getDateTimeFromJson(jsonObject, "returndate");
-        alternateDatesDto.passengercount = JsonUtils.getIntegerFromJson(jsonObject, "passengercount");
 
         JsonArray detailAlternateDatesJsonArray = jsonObject.getAsJsonArray("detailAlternateDates");
 
