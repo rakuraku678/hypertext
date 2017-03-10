@@ -81,5 +81,12 @@ lastRowDate = firstDepartureDate.minusDays(1);
         </tbody>
     </table>
 </div>
+<script>
+    $(document).ready(function () {
+        if (typeof setClpExchange !== 'undefined' && $.isFunction(setClpExchange)) {
+            setClpExchange();
+        }
+    });
+</script>
 
 
