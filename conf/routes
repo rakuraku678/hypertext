@@ -32,4 +32,5 @@ GET     /promociones/{promotion}/{origin}/{destination}/{departureDate}/{returnD
 GET     /{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}               FlightsController.index
 
 # Catch all
+*       /vol3/{controller}/{action}             {controller}.{action}
 *       /{controller}/{action}                  {controller}.{action}
