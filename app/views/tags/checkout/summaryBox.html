@@ -26,7 +26,7 @@
 		    	}%
         <tr>
             <td></td>
-            <td class="txt-payment-table-mark">${pricingDetail.quantity?.getAsString()} ${passType}${pricingDetail.quantity?.getAsString().pluralize()}</td>
+            <td class="txt-payment-table-mark">${pricingDetail.quantity?.getAsString()} ${passType}${pricingDetail.quantity?.getAsInt().pluralize()}</td>
             <td><span class="simbolCurrency">US$</span><span class="usdpriceCon">${pricingDetail.basefare?.getAsString()}</span></td>
             <td><span class="simbolCurrency">US$</span><span class="usdpriceCon">${pricingDetail.totalTax?.getAsString() ?: "0"}</span></td>
             <td class="txt-payment-table-mark"><span class="simbolCurrency">US$</span><span class="usdpriceCon">${pricingDetail.totalFare?.getAsString()}</span></td>
