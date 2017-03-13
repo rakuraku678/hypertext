@@ -51,8 +51,12 @@ public class PaymentFlowController extends Controller {
         airRules.origin = JsonUtils.getStringFromJson(bfmResultJsonObject,"departureAirportCode");
         airRules.destination = JsonUtils.getStringFromJson(bfmResultJsonObject,"returnAirportCode");
         airRules.marketingCarrier = JsonUtils.getStringFromJson(pricingJsonObject,"validatingCarrier");
-        for (JsonElement jsonElement : JsonUtils.getJsonArrayFromJson(pricingJsonObject, "fareBasisCodes")) {
-            airRules.fareBasis = jsonElement.getAsString();
+        if(pricingJsonObject.has("accountCode")){
+            airRules.accountCode = JsonUtils.getStringListFromJson(pricingJsonObject,"accountCode").get(0);
+        }
+
+        for (String fareBasis : JsonUtils.getStringListFromJson(pricingJsonObject, "fareBasisCodes")) {
+            airRules.fareBasis = fareBasis;
             airRulesResultList.add(airRules.process());
         }
         render(agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate, airRulesResultList, promotionDto);

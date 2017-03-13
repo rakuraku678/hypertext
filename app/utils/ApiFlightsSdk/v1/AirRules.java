@@ -17,6 +17,7 @@ public class AirRules extends ApiFlightsSDKBase {
     public String destination;
     public String marketingCarrier;
     public String fareBasis;
+    public String accountCode;
 
     public AirRulesDto process(){
 
@@ -30,6 +31,7 @@ public class AirRules extends ApiFlightsSDKBase {
         mapValues.put("destination",destination);
         mapValues.put("marketingCarrier",marketingCarrier);
         mapValues.put("fareBasis",fareBasis);
+        mapValues.put("accountCode",accountCode);
         String jsonBody = new Gson().toJson(mapValues);
 
         request.body(jsonBody);
