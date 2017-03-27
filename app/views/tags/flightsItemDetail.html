@@ -74,6 +74,7 @@
                             int flightElapsedMinutes = flightElapsedTime % 60;
                             }%
                             <span class="inline-detail-flight-data-description">&{"%dh %02dm", flightElapsedHours, flightElapsedMinutes}</span>
+                            
                         </div>
                         <div class="inline-detail-flight-data">
                             <span class="inline-detail-flight-data-title">VUELO N°</span>
@@ -91,6 +92,9 @@
                         </div>
                     </li>
                 </ul>
+                #{if flightSegmentDetail.extraData!=null && flightSegmentDetail.extraData.longConnection}
+                	<span class="extraInfoDetail"">Conexión por tiempo extenso, se sugiere estadía.</span>
+                #{/if}
             </li>
         #{/list}
     </ul>

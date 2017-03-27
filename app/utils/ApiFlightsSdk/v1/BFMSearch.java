@@ -3,7 +3,10 @@ package utils.ApiFlightsSdk.v1;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
 import play.libs.WS;
 
 import java.util.List;
@@ -43,10 +46,67 @@ public class BFMSearch extends ApiFlightsSDKBase {
 
         JsonElement responseJsonObject = processResponse(request);
 
+        responseJsonObject = postProcessDeparture(responseJsonObject);
         return responseJsonObject;
     }
 
-    public void setOrigin(String origin) {
+    private JsonElement postProcessDeparture(JsonElement responseJsonObject) {
+    	
+    	int i = 0;
+    	int j = 0;
+    	int elapsedTime = 0;
+    	Map mapTime = Maps.newHashMap();
+    	Gson gson = new Gson();
+    	
+    	for (JsonElement jsonElement : responseJsonObject.getAsJsonArray()) {
+            JsonObject flightsResult = jsonElement.getAsJsonObject();
+	    	JsonObject departureSegment = flightsResult.getAsJsonObject("departureSegment");
+	    	JsonObject returnSegment = flightsResult.getAsJsonObject("returnSegment");
+	    	JsonArray departureSegmentDetail = departureSegment.getAsJsonArray("detail");
+	    	JsonArray returnSegmentDetail = returnSegment.getAsJsonArray("detail");
+	    	
+	    	//Calculo tiempos de conexion para la ida
+	    	if (departureSegmentDetail.size()>1){
+		    	j = 0;
+		    	elapsedTime = 0;
+		    	mapTime = Maps.newHashMap();
+		    	for(JsonElement departureSegmentsElement : departureSegmentDetail){
+		    		if (j+1<departureSegmentDetail.size()) {
+		                elapsedTime = elapsedTime + departureSegmentsElement.getAsJsonObject().get("elapsedTime").getAsInt();
+		                if (elapsedTime>=300){
+		                	mapTime.put("longConnection", true);
+		                	JsonElement jElement = gson.toJsonTree(mapTime);
+		                	responseJsonObject.getAsJsonArray().get(i).getAsJsonObject().getAsJsonObject("departureSegment").getAsJsonArray("detail").get(j).getAsJsonObject().add("extraData", jElement);
+		                	break;
+		                }
+		    		}
+		    		j++;
+	            }
+	    	}
+	    	//Calculo tiempos de conexion para la vuelta
+	    	if (returnSegmentDetail.size()>1){
+		    	j = 0;
+		    	elapsedTime = 0;
+		    	mapTime = Maps.newHashMap();
+		    	for(JsonElement returnSegmentsElement : returnSegmentDetail){
+		    		if (j+1<returnSegmentDetail.size()) {
+		                elapsedTime = elapsedTime + returnSegmentsElement.getAsJsonObject().get("elapsedTime").getAsInt();
+		                if (elapsedTime>=300){
+		                	mapTime.put("longConnection", true);
+		                	JsonElement jElement = gson.toJsonTree(mapTime);
+		                	responseJsonObject.getAsJsonArray().get(i).getAsJsonObject().getAsJsonObject("returnSegment").getAsJsonArray("detail").get(j).getAsJsonObject().add("extraData", jElement);
+		                	break;
+		                }
+		    		}
+		    		j++;
+	            }
+	    	}
+        	i++;
+    	}
+		return responseJsonObject;
+	}
+
+	public void setOrigin(String origin) {
         this.origin = origin;
     }
 
