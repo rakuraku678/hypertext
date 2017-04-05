@@ -1,38 +1,35 @@
 
-<!-- Modal -->
-<div class="modal fade" id="detailModalFlight" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content info-flight">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="icon-close-modal"></i></button>
-        <h4 class="modal-title" id="myModalLabel">Detalle del Vuelo</h4>
-      </div>
-      <div class="modal-body txt-view-detail">
-
         <div class="well">
         <!--DETAIL TITLE FLIGHT-->
             <ul class="detail-title-flight">
                 <li class="title-text-from-to">
-                    Buenos Aires
-                    <span class="airport-code">(BUE)</span>
+                    ${controllers.SearchController.getAirportCity(_flightSegment.departureCityCode.getAsString())}
+                    <span class="airport-code">(${_flightSegment.departureCityCode.getAsString()})</span>
                     <span class="title-text-to">
                         <i class="icon-arrow-airport"></i>
                     </span>
-                    Valencia
-                    <span class="airport-code">(VLC)</span>
+                    ${controllers.SearchController.getAirportCity(_flightSegment.returnCityCode.getAsString())}
+                    <span class="airport-code">(${_flightSegment.returnCityCode.getAsString()})</span>
                 </li>
                 <li class="title-text-total-duration">                                        
                     <span class="title-duration">DURACIÓN TOTAL:</span>
+                    %{
+		                segmentElapsedTime = _flightSegment.elapsedTime.getAsInt();
+		                int segmentElapsedHours = segmentElapsedTime / 60;
+		                int segmentElapsedMinutes = segmentElapsedTime % 60;
+		            }%
                     <span class="title-duration-time">
-                    35h 40m
+                    &{"%dh %02dm", segmentElapsedHours, segmentElapsedMinutes}
                     </span>
                 </li>
             </ul>
 
         <!--DETAIL BODY FLIGHT-->
             <ul class="detail-body-flight">
+            #{list items:_flightSegment.detail, as:'flightSegmentDetail'}
                 <li class="airline-logo">
-                   
+                    #{airlineLogo carriersCode:flightSegmentDetail.operatingAirlineCode.getAsString(), carriersName: flightSegmentDetail.operatingAirlineCode.getAsString() /}
+            		${_flightsResultsFilters?.carriersCodesXNames?.get(flightSegmentDetail.operatingAirlineCode.getAsString())}
                 </li>
                 <li class="flight-detail-data">
                     <ul>
@@ -41,15 +38,16 @@
                             <div>         
                                 <span class="inline-detail-airport-date">
                                 <span class="inline-detail-airport-date-text">Sale:</span>
-                                <span>Vie 19 Ago. 2016</span>
+                                <span>${flightSegmentDetail.departureDate.getAsString()}</span>
 
                                 </span>
                                 <span class="inline-detail-airport-code-wrapper">
-                                <span class="inline-detail-airport-code">EZE</span>
-                                <span class="inline-detail-airport-hour">23:10</span>
+                                <span class="inline-detail-airport-code">${flightSegmentDetail.departureAirportCode.getAsString()}</span>
+                                <span class="inline-detail-airport-hour">${flightSegmentDetail.departureTime.getAsString()}</span>
                                 </span>
                                 <span class="inline-detail-airport-description">
-                                Buenos Aires - Aeropuerto Buenos Aires Ministro Pistarini Ezeiza (EZE) </span>
+                                	${controllers.SearchController.getAirportCity(flightSegmentDetail.departureAirportCode.getAsString())}
+                                </span>
                             </div>
                             <div class="arrow-airport">
                                 <i class="icon-arrow-airport"></i>
@@ -59,55 +57,52 @@
                                 <span class="inline-detail-airport-date">
 
                                 <span class="inline-detail-airport-date-text">Llega:</span>
-                                <span>Sáb 20 Ago. 2016</span>
+                                <span>${flightSegmentDetail.arrivalDate.getAsString()}</span>
                                 </span>
                                 <span class="inline-detail-airport-code-wrapper">
-                                <span class="inline-detail-airport-code">GRU</span>
-                                <span class="inline-detail-airport-hour">01:50</span>
+                                <span class="inline-detail-airport-code">${flightSegmentDetail.arrivalAirportCode.getAsString()}</span>
+                                <span class="inline-detail-airport-hour">${flightSegmentDetail.arrivalTime.getAsString()}</span>
                                 <span class="days-difference">
-                                <span>+1 dia</span>
+                                <span>#{daysDifference departure:flightSegmentDetail.departureDate, arrival: flightSegmentDetail.arrivalDate/}</span>
                                 </span>
                                 </span>
                                 <span class="inline-detail-airport-description">
-                                San Pablo - Aeropuerto Internacional Guarulhos (GRU)
+                                	${controllers.SearchController.getAirportCity(flightSegmentDetail.arrivalAirportCode.getAsString())}
                                 </span>
                                 </span>
                             </div>
                         </li>
 
                     <!--DETAIL DATA FLIGHT-->
-                        <li class="flight-detail-data-flight">
+                        <li class="flight-detail-data-flight" style="padding: 0;">
                             <div class="inline-detail-flight-data">
                                 <span class="inline-detail-flight-data-title">DURACIÓN</span>
-                                <span class="inline-detail-flight-data-description">2h 40m</span>
+                                %{
+		                            flightElapsedTime = flightSegmentDetail.elapsedTime.getAsInt();
+		                            int flightElapsedHours = flightElapsedTime / 60;
+		                            int flightElapsedMinutes = flightElapsedTime % 60;
+		                         }%
+                                <span class="inline-detail-flight-data-description">&{"%dh %02dm", flightElapsedHours, flightElapsedMinutes}</span>
                             </div>
                             <div class="inline-detail-flight-data">
                                 <span class="inline-detail-flight-data-title">VUELO N°</span>
-                                <span class="inline-detail-flight-data-description">16</span>
+                                <span class="inline-detail-flight-data-description">${flightSegmentDetail.flightNumber.getAsString()}</span>
                             </div>
                             <div class="inline-detail-flight-data inline-detail-flight-cabinType">
-                                <span class="inline-detail-flight-data-title">CLASE</span>
-                                <span class="inline-detail-flight-data-description">Económica</span>
+                                <span class="inline-detail-flight-data-title">CABINA</span>
+                                 %{ resBookDesigCode = flightSegmentDetail.resBookDesigCode.getAsString();}%
+                                <span class="inline-detail-flight-data-description">#{cabin bookingCode:resBookDesigCode, bookingCodeList:_bookingCodes/}</span>
                             </div>
                             <div class="box-airplane-name">
                                 <span class="airplane-name">
                                     <i class="icon-airplane-name"></i>
-                                Boeing 777-300ER
+                               MATERIAL DE VUELO: ${flightSegmentDetail.airEquipType.getAsString()}
                                 </span>
                             </div>
                         </li>
                     </ul>
                 </li>
+                #{/list}
             </ul>
         </div>
 
-        <!-- END MODAL BODY-->
-      </div>
-      <!--
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-      -->
-    </div>
-  </div>
-</div>
