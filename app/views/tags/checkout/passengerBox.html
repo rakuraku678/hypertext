@@ -4,7 +4,8 @@
     	 def legendPassType = "";
     	 switch (_passengerType) {
          	case "ADT": legendPassType="Adulto (se considera pasajero adulto mayores de 12 años)"; break;
-         	default: legendPassType="Niño (se considera niño a menor de 12 años)";
+         	case "INF": legendPassType="Infante (se considera infante a menor de 2 años)"; break;
+         	default: legendPassType="Niño (se considera niño a menor de 12 años y mayor de 2 años)";
       	 }
     	}%
     	
