@@ -1,9 +1,6 @@
 machine:
     timezone:
         America/Santiago # Set the timezone
-dependencies:
-  override:
-    - echo "No dependencies"     
 test:
     override:
     - echo "No Test"
@@ -12,7 +9,3 @@ deployment:
         branch: development
         heroku:
             appname: travelclub-hypertext-test
-#    production:
-#        branch: master
-#        heroku:
-#            appname: latercera
