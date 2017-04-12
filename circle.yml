@@ -1,6 +1,9 @@
 machine:
     timezone:
         America/Santiago # Set the timezone
+dependencies:
+  override:
+    - echo "No dependencies"
 test:
     override:
     - echo "No Test"
