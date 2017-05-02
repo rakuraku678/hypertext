@@ -136,15 +136,23 @@ $(document).ready(function () {
 });
 
 function startBooking() {
-	if (!checkRut($( ".validatedocumentnum" )[0])){
-    	$(this).next().next().css("display","block");
-    	$(this).next().next().css("color","#a94442");
-    	$(this).css("border-color","#a94442 !important");
-    	return false;
-    }
-    else {
-    	$("#btnContinue").removeAttr("disabled");
-    }
+	var error = false
+	$( ".validatedocumentnum" ).each(function( index ) {
+		if (!checkRut(this)){
+	    	$(this).next().next().css("display","block");
+	    	$(this).next().next().css("color","#a94442");
+	    	$(this).css("border-color","#a94442 !important");
+	    	error = true;
+	    	return false;
+	    }
+	    else {
+	    	$("#btnContinue").removeAttr("disabled");
+	    }
+	});
+
+	if (error){
+		return false;
+	}
 	
 	
     $('#spinner-modal').modal({

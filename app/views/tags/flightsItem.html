@@ -86,10 +86,35 @@
                             <span>&{"%dh %02dm", departureElapsedHours, departureElapsedMinutes}</span>
                         </li>
                         <li class="detail">
-                            <a type="button" data-toggle="collapse" data-target="#departureSegment${_flight.sequenceNumber.getAsString()}" aria-expanded="false" aria-controls="collapseExample" class="link-detail-desktop">
+                            <a type="button" data-toggle="collapse" data-target="#departureSegment${_flight.sequenceNumber.getAsString()}" aria-expanded="false" aria-controls="collapseExample" class="link-detail-desktop" style="font-weight: bold;">
                                 ver detalle
                             </a>
-                            <a data-toggle="modal" data-target="#detailModalFlight" class="link-detail-mobile">detalle</a>
+                            <a data-toggle="modal" data-target="#detailModalFlight${_flight.sequenceNumber.getAsString()}" class="link-detail-mobile">detalle</a>
+                            
+                            
+                            
+                            
+                            <!-- Modal -->
+							<div class="modal fade" id="detailModalFlight${_flight.sequenceNumber.getAsString()}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+							  <div class="modal-dialog" role="document">
+							    <div class="modal-content info-flight">
+							      <div class="modal-header">
+							        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="icon-close-modal"></i></button>
+							        <h4 class="modal-title" id="myModalLabel">Detalle del Vuelo</h4>
+							      </div>
+							      <div class="modal-body txt-view-detail">
+				                            #{list items:_flight.departureSegment, as:'flightSegment'}
+				                           		 #{modalDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes: _flight.pricing.bookingCodes /}
+				                            #{/list}
+	                                    <!-- END MODAL BODY-->
+							      </div>
+							    </div>
+							  </div>
+							</div>
+	                            
+                            
+                            
+                            
                         </li>
 
                         <div class="collapse" id="departureSegment${_flight.sequenceNumber.getAsString()}">
@@ -164,10 +189,30 @@
                             <span>&{"%dh %02dm", returnElapsedHours, returnElapsedMinutes}</span>
                         </li>
                         <li class="detail">
-                            <a type="button" data-toggle="collapse" data-target="#returnSegment${_flight.sequenceNumber.getAsString()}" aria-expanded="false" aria-controls="collapseExample2" class="link-detail-desktop">
+                            <a type="button" data-toggle="collapse" data-target="#returnSegment${_flight.sequenceNumber.getAsString()}" aria-expanded="false" aria-controls="collapseExample2" class="link-detail-desktop" style="font-weight: bold;">
                                 ver detalle
                             </a>
-                             <a data-toggle="modal" data-target="#detailModalFlight" class="link-detail-mobile">detalle</a>
+                             <a data-toggle="modal" data-target="#detailModalFlight2${_flight.sequenceNumber.getAsString()}" class="link-detail-mobile">detalle</a>
+                             
+                            <!-- Modal -->
+							<div class="modal fade" id="detailModalFlight2${_flight.sequenceNumber.getAsString()}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+							  <div class="modal-dialog" role="document">
+							    <div class="modal-content info-flight">
+							      <div class="modal-header">
+							        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="icon-close-modal"></i></button>
+							        <h4 class="modal-title" id="myModalLabel">Detalle del Vuelo</h4>
+							      </div>
+							      <div class="modal-body txt-view-detail">
+				                            #{list items:_flight.returnSegment, as:'flightSegment'}
+				                           		 #{modalDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes: _flight.pricing.bookingCodes /}
+				                            #{/list}
+	                                    <!-- END MODAL BODY-->
+							      </div>
+							    </div>
+							  </div>
+							</div>
+							
+							
                         </li>
                         </li>
 

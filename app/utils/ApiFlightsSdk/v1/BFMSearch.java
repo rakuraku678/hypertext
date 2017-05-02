@@ -1,13 +1,21 @@
 package utils.ApiFlightsSdk.v1;
 
+import java.util.List;
+import java.util.Map;
+
+import org.joda.time.DateTime;
+import org.joda.time.Hours;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import play.libs.WS;
+import com.google.gson.JsonObject;
 
-import java.util.List;
-import java.util.Map;
+import play.libs.WS;
 
 public class BFMSearch extends ApiFlightsSDKBase {
 
@@ -43,10 +51,73 @@ public class BFMSearch extends ApiFlightsSDKBase {
 
         JsonElement responseJsonObject = processResponse(request);
 
+        responseJsonObject = postProcessConnectionHours(responseJsonObject);
+        
         return responseJsonObject;
     }
 
-    public void setOrigin(String origin) {
+    private JsonElement postProcessConnectionHours(JsonElement responseJsonObject) {
+    	
+    	DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss");
+    	int i = 0;
+    	int j = 0;
+    	Gson gson = new Gson();
+    	Map mapTime = Maps.newHashMap();
+    	mapTime.put("longConnection", true);
+    	JsonElement jMapElement = gson.toJsonTree(mapTime);
+    	String arrivalTime = "";
+    	String departureTime = "";
+    	
+    	for (JsonElement jsonElement : responseJsonObject.getAsJsonArray()) {
+            JsonObject flightsResult = jsonElement.getAsJsonObject();
+	    	JsonObject departureSegment = flightsResult.getAsJsonObject("departureSegment");
+	    	JsonObject returnSegment = flightsResult.getAsJsonObject("returnSegment");
+	    	JsonArray departureSegmentDetail = departureSegment.getAsJsonArray("detail");
+	    	JsonArray returnSegmentDetail = returnSegment.getAsJsonArray("detail");
+	    	
+	    	//Calculo tiempos de conexion para la ida
+	    	if (departureSegmentDetail.size()>1){
+		    	j = 0;
+		    	arrivalTime = departureSegmentDetail.get(0).getAsJsonObject().get("arrivalDateTime").getAsString();
+		    	for(JsonElement departureSegmentsElement : departureSegmentDetail){
+		    		if (j>0) {
+			    		departureTime = departureSegmentsElement.getAsJsonObject().get("departureDateTime").getAsString();
+			    		DateTime arrivalDateTime = formatter.parseDateTime(arrivalTime);
+			    		DateTime departureDateTime = formatter.parseDateTime(departureTime);
+			    		int hourDiff = Hours.hoursBetween(arrivalDateTime, departureDateTime).getHours();
+			    		if (hourDiff>=5){
+		                	responseJsonObject.getAsJsonArray().get(i).getAsJsonObject().getAsJsonObject("departureSegment").getAsJsonArray("detail").get(j-1).getAsJsonObject().add("extraData", jMapElement);
+			    		}
+			    		arrivalTime = departureSegmentDetail.get(j).getAsJsonObject().get("arrivalDateTime").getAsString();
+		    		}
+		    		j++;
+		    	}
+	    	}
+	    	
+	    	//Calculo tiempos de conexion para la vuelta
+	    	if (returnSegmentDetail.size()>1){
+		    	j = 0;
+		    	arrivalTime = returnSegmentDetail.get(0).getAsJsonObject().get("arrivalDateTime").getAsString();
+		    	for(JsonElement returnSegmentsElement : returnSegmentDetail){
+		    		if (j>0) {
+			    		departureTime = returnSegmentsElement.getAsJsonObject().get("departureDateTime").getAsString();
+			    		DateTime arrivalDateTime = formatter.parseDateTime(arrivalTime);
+			    		DateTime departureDateTime = formatter.parseDateTime(departureTime);
+			    		int hourDiff = Hours.hoursBetween(arrivalDateTime, departureDateTime).getHours();
+			    		if (hourDiff>=5){
+		                	responseJsonObject.getAsJsonArray().get(i).getAsJsonObject().getAsJsonObject("returnSegment").getAsJsonArray("detail").get(j-1).getAsJsonObject().add("extraData", jMapElement);
+			    		}
+			    		arrivalTime = returnSegmentDetail.get(j).getAsJsonObject().get("arrivalDateTime").getAsString();
+		    		}
+		    		j++;
+		    	}
+	    	}
+	    	i++;
+    	}
+    	return responseJsonObject;
+    }
+
+	public void setOrigin(String origin) {
         this.origin = origin;
     }
 
