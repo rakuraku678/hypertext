@@ -171,6 +171,7 @@ function startBooking() {
 
     var formSerializeJson = $("#checkoutForm").serializeJSON({useIntKeysAsArrayIndex: true, checkboxUncheckedValue: false});
     formSerializeJson.bfmResultItem = $.parseJSON(formSerializeJson.bfmResultItem);
+    formSerializeJson.origin = window.location.origin;
     var data = JSON.stringify(formSerializeJson);
     $.ajax({
         type: "POST",
