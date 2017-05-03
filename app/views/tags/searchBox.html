@@ -163,7 +163,7 @@
 
                 var getCurrentSearchURL = function(){
 
-                    var searchURL = "";
+                    var searchURL = window.location.pathname;
                     var searchForm = $("#flightSearchForm");
                     var promotion = searchForm.find('input[name="promotion"]').val();
                     var origin = searchForm.find('input[name="origen"]').val();
@@ -173,9 +173,9 @@
                     var adultcount = searchForm.find('select[name="adultcount"]').val();
                     var childrencount = searchForm.find('select[name="childrencount"]').val();
                     var infantcount = searchForm.find('select[name="infantcount"]').val();
-                    if(promotion){
-                        searchURL += "/promociones/" + promotion;
-                    }
+                    *{if(promotion){}*
+                        *{searchURL += "/promociones/" + promotion;}*
+                    *{}}*
                     return searchURL + "/"+origin+"/"+destination+"/"+departuredate+"/"+returndate+"/"+adultcount+"-"+childrencount+"-"+infantcount;
                 };
 
