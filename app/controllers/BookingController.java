@@ -11,6 +11,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import utils.DateUtils;
 
 public class BookingController extends Controller {
 
@@ -34,7 +35,7 @@ public class BookingController extends Controller {
         	jsonEl.addProperty("surname", surname);
         	jsonEl.addProperty("foidType", passengersArray.get(i).getAsJsonObject().get("foidType").getAsString());
         	jsonEl.addProperty("foid", passengersArray.get(i).getAsJsonObject().get("foid").getAsString());
-        	jsonEl.addProperty("dateOfBirth", passengersArray.get(i).getAsJsonObject().get("dateOfBirth").getAsString());
+        	jsonEl.addProperty("dateOfBirth", DateUtils.reformateDate(passengersArray.get(i).getAsJsonObject().get("dateOfBirth").getAsString()));
         	cleanPassengersArray.add(jsonEl);
 		}
         
