@@ -173,9 +173,14 @@
                     var adultcount = searchForm.find('select[name="adultcount"]').val();
                     var childrencount = searchForm.find('select[name="childrencount"]').val();
                     var infantcount = searchForm.find('select[name="infantcount"]').val();
-                    if(promotion){
-                        searchURL += "/promociones/" + promotion;
-                    }
+                    *{if(promotion){}*
+                        *{searchURL += "/promociones/" + promotion;}*
+                    *{}}*
+
+                    var originPathArr = window.location.pathname.split("/");
+                    searchURL += "/" + originPathArr[1];
+                    searchURL += "/" + originPathArr[2];
+
                     return searchURL + "/"+origin+"/"+destination+"/"+departuredate+"/"+returndate+"/"+adultcount+"-"+childrencount+"-"+infantcount;
                 };
 

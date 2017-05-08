@@ -44,10 +44,12 @@ public class BookingController extends Controller {
         
         Booking booking = new Booking();
 
-        Map params = Maps.newHashMap();
-        params.put("id", "_ID_");
+//        Map params = Maps.newHashMap();
+//        params.put("id", "_ID_");
 
-        bodyJsonElement.getAsJsonObject().addProperty("redirect", Router.getFullUrl("PaymentFlowController.processPayment", params));
+//        bodyJsonElement.getAsJsonObject().addProperty("redirect", Router.getFullUrl("PaymentFlowController.processPayment", params));
+        String redirectRouter = bodyJsonElement.getAsJsonObject().get("origin").getAsString() + "/checkout/_ID_/process";
+        bodyJsonElement.getAsJsonObject().addProperty("redirect", redirectRouter);
 
         renderJSON(booking.process(bodyJsonElement));
     }
