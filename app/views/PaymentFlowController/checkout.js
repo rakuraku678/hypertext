@@ -3,6 +3,14 @@ $(document).ready(function () {
         $("#fingerprint").val(result);
     });
 
+    $('.validatedate').datepicker(
+        {
+            dateFormat: 'dd/mm/yy',
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-100:+0",
+            maxDate: '-1D'
+        });
     
     $('#checkoutForm').bootstrapValidator({
         fields: {
