@@ -12,3 +12,7 @@ deployment:
         branch: development
         heroku:
             appname: travelclub-hypertext-test
+ production:
+        branch: master
+        heroku:
+            appname: travelclub-hypertext
