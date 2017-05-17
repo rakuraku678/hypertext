@@ -8,10 +8,11 @@ test:
     override:
     - echo "No Test"
 deployment:
+    development:
         branch: development
         heroku:
             appname: travelclub-hypertext-test
-production:
+    production:
         branch: master
         heroku:
             appname: travelclub-hypertext
