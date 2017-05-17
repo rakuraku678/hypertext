@@ -11,6 +11,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import utils.DateUtils;
 
 public class BookingController extends Controller {
 
@@ -34,7 +35,7 @@ public class BookingController extends Controller {
         	jsonEl.addProperty("surname", surname);
         	jsonEl.addProperty("foidType", passengersArray.get(i).getAsJsonObject().get("foidType").getAsString());
         	jsonEl.addProperty("foid", passengersArray.get(i).getAsJsonObject().get("foid").getAsString());
-        	jsonEl.addProperty("dateOfBirth", passengersArray.get(i).getAsJsonObject().get("dateOfBirth").getAsString());
+        	jsonEl.addProperty("dateOfBirth", DateUtils.reformateDate(passengersArray.get(i).getAsJsonObject().get("dateOfBirth").getAsString()));
         	cleanPassengersArray.add(jsonEl);
 		}
         
@@ -43,10 +44,12 @@ public class BookingController extends Controller {
         
         Booking booking = new Booking();
 
-        Map params = Maps.newHashMap();
-        params.put("id", "_ID_");
+//        Map params = Maps.newHashMap();
+//        params.put("id", "_ID_");
 
-        bodyJsonElement.getAsJsonObject().addProperty("redirect", Router.getFullUrl("PaymentFlowController.processPayment", params));
+//        bodyJsonElement.getAsJsonObject().addProperty("redirect", Router.getFullUrl("PaymentFlowController.processPayment", params));
+        String redirectRouter = bodyJsonElement.getAsJsonObject().get("origin").getAsString() + "/checkout/_ID_/process";
+        bodyJsonElement.getAsJsonObject().addProperty("redirect", redirectRouter);
 
         renderJSON(booking.process(bodyJsonElement));
     }

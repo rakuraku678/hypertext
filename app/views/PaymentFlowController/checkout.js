@@ -3,6 +3,14 @@ $(document).ready(function () {
         $("#fingerprint").val(result);
     });
 
+    $('.validatedate').datepicker(
+        {
+            dateFormat: 'dd/mm/yy',
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-100:+0",
+            maxDate: '-1D'
+        });
     
     $('#checkoutForm').bootstrapValidator({
         fields: {
@@ -171,6 +179,7 @@ function startBooking() {
 
     var formSerializeJson = $("#checkoutForm").serializeJSON({useIntKeysAsArrayIndex: true, checkboxUncheckedValue: false});
     formSerializeJson.bfmResultItem = $.parseJSON(formSerializeJson.bfmResultItem);
+    formSerializeJson.origin = window.location.origin;
     var data = JSON.stringify(formSerializeJson);
     $.ajax({
         type: "POST",
