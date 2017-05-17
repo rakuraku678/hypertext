@@ -11,6 +11,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import controllers.SearchController;
+import utils.ApiFlightsSdk.v1.Airport;
+import utils.dtos.AirportDto;
 
 public class FlightsResultsFilters {
     public Map<String,Integer> outbounflightstops = Maps.newHashMap();
@@ -51,30 +53,14 @@ public class FlightsResultsFilters {
 
             
             String departureAirportCode = firstDepartureSegment.get("departureAirportCode").getAsString();
-            List<Map> lista = SearchController.getCachedAirports(departureAirportCode);
+            AirportDto departureAirportDto = new Airport().getByIataCode(departureAirportCode);
+            flightsResultsFilters.addOutboundAirport(departureAirportDto.name);
+            flightsResultsFilters.outboundAirportCodes.put(departureAirportDto.name,departureAirportCode);
 
-            for (Map<String, String> o : lista) {
-            	for (Map.Entry<String, String> entry : o.entrySet())
-            	{
-            		if (entry.getKey().equals("name")) {
-            			flightsResultsFilters.addOutboundAirport(entry.getValue());
-            			flightsResultsFilters.outboundAirportCodes.put(entry.getValue(),departureAirportCode);
-            		}
-            	}
-    		}
-            
             String returnAirportCode = firstReturnSegment.get("departureAirportCode").getAsString();
-            lista = SearchController.getCachedAirports(returnAirportCode);
-            
-            for (Map<String, String> o : lista) {
-            	for (Map.Entry<String, String> entry : o.entrySet())
-            	{
-            		if (entry.getKey().equals("name")) {
-            			flightsResultsFilters.addInboundAirport(entry.getValue());
-            			flightsResultsFilters.inboundAirportCodes.put(entry.getValue(), returnAirportCode);
-            		}
-            	}
-    		}
+            AirportDto returnAirportDto = new Airport().getByIataCode(returnAirportCode);
+            flightsResultsFilters.addInboundAirport(returnAirportDto.name);
+            flightsResultsFilters.inboundAirportCodes.put(returnAirportDto.name, returnAirportCode);
         }
 
         StringBuilder airlineCodes = new StringBuilder();
