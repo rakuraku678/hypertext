@@ -8,6 +8,7 @@ import java.util.*;
 
 import models.*;
 import utils.AgencyConfigurationDto;
+import utils.ApiFlightsSdk.v1.Airport;
 import utils.ApiFlightsSdk.v1.Promotion;
 import utils.TravelClubUtils;
 import utils.dtos.PromotionDto;
@@ -27,17 +28,11 @@ public class FlightsController extends Controller {
 
 
         if (!Strings.isNullOrEmpty(params.get("origin"))){
-        	int index = SearchController.getIndexOfId(params.get("origin"));
-            Map m = (Map) SearchController.getCachedAutoComplete(params.get("origin")).get(index);
-            
-            renderArgs.put("originCity", m.get("city"));
+            renderArgs.put("originCity", new Airport().getByIataCode(params.get("origin")).city);
         }
 
         if (!Strings.isNullOrEmpty(params.get("destination"))){
-        	int index = SearchController.getIndexOfId(params.get("destination"));
-            Map m = (Map) SearchController.getCachedAutoComplete(params.get("destination")).get(index);
-            
-            renderArgs.put("destinationCity", m.get("city"));
+            renderArgs.put("destinationCity", new Airport().getByIataCode(params.get("destination")).city);
         }
 
         render(agencyConfigurationDto);

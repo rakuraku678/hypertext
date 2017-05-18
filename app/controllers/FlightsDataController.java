@@ -5,12 +5,10 @@ import java.text.ParseException;
 import com.google.common.base.Strings;
 import models.FlightsResultsFilters;
 import play.mvc.Controller;
+import utils.ApiFlightsSdk.v1.*;
 import utils.DateUtils;
 import utils.TravelClubUtils;
-import utils.ApiFlightsSdk.v1.BFMSearch;
-import utils.ApiFlightsSdk.v1.FlightsAltenateDates;
-import utils.ApiFlightsSdk.v1.LowFareHistory;
-import utils.ApiFlightsSdk.v1.Promotion;
+import utils.dtos.AirportDto;
 import utils.dtos.AlternateDatesDto;
 import utils.dtos.PromotionDto;
 
@@ -32,8 +30,9 @@ public class FlightsDataController extends Controller {
         BFMSearch bfmSearch  = new BFMSearch();
         bfmSearch.setOrigin(params.get("origin"));
         bfmSearch.setDestination(params.get("destination"));
-        bfmSearch.setCountry(SearchController.getAirportCountry(params.get("destination")));
-        bfmSearch.setCity(SearchController.getAirportCityCode(params.get("destination")));
+        AirportDto destinationAirport = new Airport().getByIataCode(params.get("destination"));
+        bfmSearch.setCountry(destinationAirport.country);
+        bfmSearch.setCity(destinationAirport.iataCityCode);
         bfmSearch.setDeparturedate(DateUtils.reformateDate(params.get("departuredate")));
         bfmSearch.setReturndate(DateUtils.reformateDate(params.get("returndate")));
         bfmSearch.addPassengerType("ADT", params.get("adultcount"));
