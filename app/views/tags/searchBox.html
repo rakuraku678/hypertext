@@ -119,22 +119,7 @@
                     $( "#priceSuggestionMatrix" ).html("");
                     $( "#fligthsData" ).html("");
 					$( "#filterContent" ).html("");
-					
-                    $( "#priceSuggestionMatrix" ).load(
-                        "/flights/matrix?" + getSearchParams(),
-                        function (responseText, textStatus, XMLHttpRequest) {
-                            if (textStatus == "success") {
-                                $( "#priceSuggestionMatrix" ).show("slow");
-                                onReadyMatrix();
-                            }
-                            else{
-                                showError("Error obteniendo precios para las fechas alternativas.");
-                            }
-                        }
-                    );
-                    
-                 	
-		
+
                     $( "#fligthsData" ).load(
                         "/flights/data?" + getSearchParams(),
                         function (responseText, textStatus, XMLHttpRequest) {

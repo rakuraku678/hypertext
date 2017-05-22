@@ -1,12 +1,19 @@
 package controllers;
 
 import java.text.ParseException;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import models.FlightsResultsFilters;
 import play.mvc.Controller;
+import play.mvc.Util;
 import utils.ApiFlightsSdk.v1.*;
 import utils.DateUtils;
+import utils.JsonUtils;
 import utils.TravelClubUtils;
 import utils.dtos.AirportDto;
 import utils.dtos.AlternateDatesDto;
@@ -45,7 +52,38 @@ public class FlightsDataController extends Controller {
         FlightsResultsFilters flightsResultsFilters = FlightsResultsFilters.processFlightsResults(flightsResults);
 
         String dollarExchangeRate = TravelClubUtils.getDollarExchangeRate(promotionDto.agency.externalId);
-        renderTemplate("FlightsDataController/flightsData.html",flightsResults, flightsResultsFilters, dollarExchangeRate);
+
+        Collection airlineArray = getAirlinePriceArray(flightsResults);
+
+        renderTemplate("FlightsDataController/flightsData.html", flightsResults, flightsResultsFilters, dollarExchangeRate, airlineArray);
+    }
+
+    @Util
+    private static Collection getAirlinePriceArray(JsonElement flightsResults) {
+        Map<String, Map<String, Object>> airlineMap = Maps.newHashMap();
+        for (JsonElement json : flightsResults.getAsJsonArray()) {
+            String airlineCode = json.getAsJsonObject().get("pricing").getAsJsonObject().get("validatingCarrier").getAsString();
+            int layoverCountDeparture = json.getAsJsonObject().get("departureSegment").getAsJsonObject().get("flightsCount").getAsInt() - 1;
+            int layoverCountReturn = json.getAsJsonObject().get("returnSegment").getAsJsonObject().get("flightsCount").getAsInt() - 1;
+            int layoverCount = Math.min(2, Math.max(layoverCountDeparture, layoverCountReturn));
+            double price = json.getAsJsonObject().get("pricing").getAsJsonObject().get("adtTotalPrice").getAsDouble();
+            String key = airlineCode + "-" + layoverCount;
+
+            if (airlineMap.get(key) == null){
+                Map m = Maps.newHashMap();
+                m.put("airline", airlineCode);
+                m.put("price" + layoverCount, price);
+                airlineMap.put(key, m);
+            }
+            else {
+                Map m = airlineMap.get(key);
+                double p = (double) m.get("price" + layoverCount);
+                if (p < price) {
+                    m.put("price", p);
+                }
+            }
+        }
+        return airlineMap.values();
     }
 
     public static void priceSuggestionMatrix() throws InterruptedException {
@@ -81,7 +119,8 @@ public class FlightsDataController extends Controller {
     
     public static void priceAirlinesMatrix(String airlinesPrices, String carriersNames){
         JsonArray airlineArray = new JsonParser().parse(airlinesPrices).getAsJsonArray();
-    	renderTemplate("FlightsDataController/airlinesMatrix.html",airlineArray);
+        System.out.println(airlinesPrices);
+        renderTemplate("FlightsDataController/airlinesMatrix.html", airlineArray);
     }
     
     public static void lowPricesMatrix(String origin, String destination, String departureDate, String returnDate) throws ParseException{

@@ -1,3 +1,5 @@
+#{include "FlightsDataController/airlinesMatrix.html" /}
+
 #{list items:flightsResults, as:'flight'}
     #{flightsItem promotion: params.promotion, flight:flight, flightsResultsFilters:flightsResultsFilters/}
 #{/list}
@@ -12,9 +14,6 @@
 
 #{filterBox flightsResultsFilters:flightsResultsFilters/}
 </div>
-
-
-
 
 <script>
 
@@ -55,6 +54,32 @@ $(function () {
 			$("#airlineSugDiv").show();
 		}
 	});
+
+	$(document).on('click', '.priceSug', function() {
+		if ($("#priceSugDiv").html() == undefined) {
+			$("#priceSuggestionMatrix").load(
+					"/flights/matrix?" + getSearchParams(),
+					function (responseText, textStatus, XMLHttpRequest) {
+						if (textStatus == "success") {
+							$("#tarifasDiv").hide();
+							$("#airlineSugDiv").hide();
+							$("#priceSugDiv").show();
+							$("#priceSuggestionMatrix").show();
+							onReadyMatrix();
+						}
+						else {
+							showError("Error obteniendo precios para las fechas alternativas.");
+						}
+					}
+			);
+		}
+		else {
+			$("#tarifasDiv").hide();
+			$("#airlineSugDiv").hide();
+			$("#priceSugDiv").show();
+		}
+	});
+
 	$(document).on('click', '.tTar', function() {
 		if ($("#tarifasDiv").html()==undefined){
 			$.ajax({data: {"origin": $('#origin').val(), "destination": $('#destiny').val(), "departureDate": $('#startDate').val(), "returnDate": $('#endDate').val() }, 
@@ -74,7 +99,7 @@ $(function () {
     var arrayOfAirlines = new Array();
     var minPrice = 999999999999;
     
-	$( ".ticketBaxer" ).each(function( index ) {
+	*{$( ".ticketBaxer" ).each(function( index ) {
 		
 		var jsonVar = {};
 		
@@ -134,7 +159,7 @@ $(function () {
 			} 
 		}
 		
-	});
+	});}*
 
 	#{if dollarExchangeRate.isNumber()}
 	
