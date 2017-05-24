@@ -138,6 +138,14 @@
                         }
                     );
 
+                    $( "#priceSuggestionMatrix" ).load("/flights/matrix?" + getSearchParams(),
+                        function (responseText, textStatus, XMLHttpRequest) {
+                            if (textStatus == "success") {
+                                onReadyMatrix();
+                            }
+                        }
+                    );
+
                 });
 
                 window.addEventListener('popstate', function(event) {
