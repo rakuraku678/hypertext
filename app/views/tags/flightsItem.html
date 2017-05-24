@@ -26,7 +26,7 @@
                         <li>
                             <i class="icon-fly"></i>
                             <span class="leaving">ida</span>
-                            <span class="fly-day">${_flight.departureDate.getAsString()}</span>
+                            <span class="fly-day">${utils.DateUtils.reformateDate(_flight.departureDate.getAsString(),"yyyy-MM-dd","dd-MM-yyyy")}</span>
                         </li>
                         <li>
                             <span class="airport">${new utils.ApiFlightsSdk.v1.Airport().getByIataCode(_flight.departureAirportCode.getAsString()).name}</span>
@@ -129,7 +129,7 @@
                         <li>
                             <i class="icon-fly-vuelta"></i>
                             <span class="leaving">vuelta</span>
-                            <span class="fly-day">${_flight.returnDate.getAsString()}</span>
+                            <span class="fly-day">${utils.DateUtils.reformateDate(_flight.returnDate.getAsString(),"yyyy-MM-dd","dd-MM-yyyy")}</span>
                         </li>
                         <li>
                             <span class="airport">${new utils.ApiFlightsSdk.v1.Airport().getByIataCode(_flight.returnAirportCode.getAsString()).name}</span>
