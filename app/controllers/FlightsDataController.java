@@ -9,6 +9,7 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import models.FlightsResultsFilters;
+import play.Play;
 import play.mvc.Controller;
 import play.mvc.Util;
 import utils.ApiFlightsSdk.v1.*;

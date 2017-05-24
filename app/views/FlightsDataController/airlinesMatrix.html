@@ -4,19 +4,15 @@
         <tr>
         %{
         	def size=airlineArray.size();
-			def numberOfBlankColumns = size+1-2;
+			def numberOfBlankColumns = size+1-4;
         	for (i = 1; i <=numberOfBlankColumns; i++) {
 		}%
 			<th></th>
 			%{   
 			}
 			}%
-        
-        
-        
-        
-            <th  ><a href="#" class="priceSug">Precios +/- 5 días </a></th>
-         	<th class="select-th"><a class="PXA" href="#">Precios por aerolíneas</a></th>
+            <th colspan="2">#{if play.Play.configuration.getProperty("useShowPriceSuggestionMatrix").toString() == "Y"}<a href="#" class="priceSug">Precios +/- 5 días </a>#{/if}</th>
+         	<th colspan="2" class="select-th"><a class="PXA" href="#">Precios por aerolíneas</a></th>
          	*{<th ><a class="tTar" href="#">Tendencia de Tarifas</a></th>}*
         </tr>
         </thead>
