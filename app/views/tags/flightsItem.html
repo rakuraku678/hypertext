@@ -42,7 +42,7 @@
                     <ul>
                         <li>
                             <label style="font-weight: 500;">
-                                #{list items:_flight.departureSegment.airlinesCodes, as:"airlineCode"}
+                                #{list items:_flight.departureSegment.marketingAirline, as:"airlineCode"}
                                 	#{airlineLogo carriersCode:airlineCode?.getAsString().toLowerCase(), carriersName: airlineCode /}
                                 	${_flightsResultsFilters?.mktCarriersCodesXNames?.get(airlineCode.getAsString())}
                                 #{/list}
@@ -145,7 +145,7 @@
                     <ul>
                         <li>
                             <label style="font-weight: 500;">
-                                #{list items:_flight.returnSegment.airlinesCodes, as:"airlineCode"}
+                                #{list items:_flight.returnSegment.marketingAirline, as:"airlineCode"}
                                 	#{airlineLogo carriersCode:airlineCode?.getAsString().toLowerCase(), carriersName: airlineCode /}
                                 	${_flightsResultsFilters?.mktCarriersCodesXNames?.get(airlineCode.getAsString())}
                                 #{/list}
