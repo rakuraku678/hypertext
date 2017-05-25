@@ -38,6 +38,9 @@ public class FlightsResultsFilters {
             flightsResultsFilters.addOutbounFlightstops(departureSegmentDetail.size());
             flightsResultsFilters.addInbounFlightstops(returnSegmentDetail.size());
 
+	    System.out.println("Informacion salida - MAC: " + departureSegment.toString());
+            System.out.println("Informacion retorno - MAC: " + returnSegment.toString());
+
             for(JsonElement departureSegmentsElement : departureSegmentDetail){
                 JsonObject departureSegmentsObject = departureSegmentsElement.getAsJsonObject();
                 flightsResultsFilters.addCarriers(departureSegmentsObject.get("operatingAirlineCode").getAsString());
