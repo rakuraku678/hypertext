@@ -13,7 +13,8 @@
 		data-returntime="${_flight.returnSegment.departureTime.getAsString()}" 
 		data-departuretime="${_flight.departureSegment.departureTime.getAsString()}" 
 		data-price="${_flight.pricing.totalPassengerFare.getAsString()}"
-		data-airline="${_flight.departureSegment.detail.get(0).operatingAirlineCode.getAsString()}" 
+		data-airline="${_flight.departureSegment.detail.get(0).operatingAirlineCode.getAsString()}"
+        	data-marketingAirline="${_flight.departureSegment.detail.get(0).marketingAirline.getAsString()}"
 		data-escala="${connectionsDepartureCount}"
 		data-returnEscala="${connectionsReturnCount}">
     <form class="form-ticket" action="@{PaymentFlowController.index}" method="post">
@@ -42,7 +43,7 @@
                     <ul>
                         <li>
                             <label style="font-weight: 500;">
-                                #{list items:_flight.departureSegment.marketingAirline, as:"airlineCode"}
+                                #{list items:_flight.departureSegment.detail.get(0).marketingAirline, as:"airlineCode"}
                                 	#{airlineLogo carriersCode:airlineCode?.getAsString().toLowerCase(), carriersName: airlineCode /}
                                 	${_flightsResultsFilters?.mktCarriersCodesXNames?.get(airlineCode.getAsString())}
                                 #{/list}
@@ -145,10 +146,9 @@
                     <ul>
                         <li>
                             <label style="font-weight: 500;">
-                                #{list items:_flight.returnSegment.marketingAirline, as:"airlineCode"}
+                                #{list items:_flight.returnSegment.detail.get(0).marketingAirline, as:"airlineCode"}
                                 	#{airlineLogo carriersCode:airlineCode?.getAsString().toLowerCase(), carriersName: airlineCode /}
                                     ${_flightsResultsFilters?.mktCarriersCodesXNames?.get(airlineCode.getAsString())}
-                                    ${System.out.println("mtkAirline 3 Return: " + airlineCode.getAsString())}
                                 #{/list}
                             </label>
                         </li>
