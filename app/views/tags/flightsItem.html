@@ -147,7 +147,8 @@
                             <label style="font-weight: 500;">
                                 #{list items:_flight.returnSegment.marketingAirline, as:"airlineCode"}
                                 	#{airlineLogo carriersCode:airlineCode?.getAsString().toLowerCase(), carriersName: airlineCode /}
-                                	${_flightsResultsFilters?.mktCarriersCodesXNames?.get(airlineCode.getAsString())}
+                                    ${_flightsResultsFilters?.mktCarriersCodesXNames?.get(airlineCode.getAsString())}
+                                    ${System.out.println("mtkAirline 3 Return: " + airlineCode.getAsString())}
                                 #{/list}
                             </label>
                         </li>

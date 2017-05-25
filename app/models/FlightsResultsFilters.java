@@ -94,7 +94,7 @@ public class FlightsResultsFilters {
         }
 
         JsonElement jsonMkt = AirlinesSearch.process(mktAirlineCodes.toString());
-
+        System.out.println("Marketing Carrier: " + jsonMkt.toString());
         if (!jsonMkt.isJsonNull()){
             flightsResultsFilters.mktCarriersCodesXNames = Maps.newHashMap();
             JsonArray jArrayMkt = jsonMkt.getAsJsonArray();
