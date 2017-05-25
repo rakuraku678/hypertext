@@ -22,6 +22,7 @@ public class FlightsResultsFilters {
     public Map<String,Integer> inboundAirport = Maps.newHashMap();
     public Map<String,Integer> carriersNames = Maps.newHashMap();
     public Map<String,String> carriersCodesXNames = Maps.newHashMap();
+    public Map<String,String> mktCarriersCodesXNames = Maps.newHashMap();
     public Map<String,String> outboundAirportCodes = Maps.newHashMap();
     public Map<String,String> inboundAirportCodes = Maps.newHashMap();
 
@@ -38,16 +39,15 @@ public class FlightsResultsFilters {
             flightsResultsFilters.addOutbounFlightstops(departureSegmentDetail.size());
             flightsResultsFilters.addInbounFlightstops(returnSegmentDetail.size());
 
-	    System.out.println("Informacion salida - MAC: " + departureSegment.toString());
-            System.out.println("Informacion retorno - MAC: " + returnSegment.toString());
-
             for(JsonElement departureSegmentsElement : departureSegmentDetail){
                 JsonObject departureSegmentsObject = departureSegmentsElement.getAsJsonObject();
                 flightsResultsFilters.addCarriers(departureSegmentsObject.get("operatingAirlineCode").getAsString());
+                flightsResultsFilters.addMktCarriers(departureSegmentsObject.get("marketingAirline").getAsString());
             }
             for(JsonElement returnSegmentsElement : returnSegmentDetail){
                 JsonObject returnSegmentsObject = returnSegmentsElement.getAsJsonObject();
                 flightsResultsFilters.addCarriers(returnSegmentsObject.get("operatingAirlineCode").getAsString());
+                flightsResultsFilters.addMktCarriers(returnSegmentsObject.get("marketingAirline").getAsString());
             }
             
             
@@ -65,7 +65,7 @@ public class FlightsResultsFilters {
             flightsResultsFilters.addInboundAirport(returnAirportDto.name);
             flightsResultsFilters.inboundAirportCodes.put(returnAirportDto.name, returnAirportCode);
         }
-
+        //Operating Carrier
         StringBuilder airlineCodes = new StringBuilder();
         for (Map.Entry<String, Integer> entry : flightsResultsFilters.carriers.entrySet())
         {
@@ -84,7 +84,26 @@ public class FlightsResultsFilters {
         		
 			}
         }
-        
+
+        //Marketing Carrier
+        StringBuilder mktAirlineCodes = new StringBuilder();
+        for (Map.Entry<String, Integer> entry : flightsResultsFilters.mktcarriers.entrySet())
+        {
+            mktAirlineCodes.append(entry.getKey()+",");
+        }
+
+        JsonElement jsonMkt = AirlinesSearch.process(mktAirlineCodes.toString());
+
+        if (!jsonMc.isJsonNull()){
+            flightsResultsFilters.mktCarriersCodesXNames = Maps.newHashMap();
+            JsonArray jArrayMkt = jsonMkt.getAsJsonArray();
+            for (int i = 0; i < jArrayMkt.size(); i++) {
+                String code = jArrayMkt.get(i).getAsJsonObject().get("iataCode").getAsString();
+                String name = jArrayMkt.get(i).getAsJsonObject().get("name").getAsString();
+                flightsResultsFilters.mktCarriersCodesXNames.put(code, name);
+
+            }
+        }
         
         return flightsResultsFilters;
     }
@@ -97,6 +116,9 @@ public class FlightsResultsFilters {
     }
     private void addCarriers(String key) {
         addGeneric(carriers, key);
+    }
+    private void addMktCarriers(String key) {
+        addGeneric(mktcarriers, key);
     }
     private void addOutboundAirport(String key) {
         addGeneric(outboundAirport, key);
