@@ -112,7 +112,7 @@ public class FlightsResultsFilters {
 
     public static boolean validateAirline(String val)
     {
-        String fle = "/public/img/airlines/air_" + val.toLowerCase() + "logo.gif";
+        String fle = "public/img/airlines/air_" + val.toLowerCase() + "logo.gif";
         File ff = new File(fle);
         if(!ff.exists())
         {
