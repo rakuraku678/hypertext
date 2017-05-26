@@ -68,7 +68,7 @@ public class FlightsDataController extends Controller {
             int layoverCountReturn = json.getAsJsonObject().get("returnSegment").getAsJsonObject().get("flightsCount").getAsInt() - 1;
             int layoverCount = Math.min(2, Math.max(layoverCountDeparture, layoverCountReturn));
             double price = json.getAsJsonObject().get("pricing").getAsJsonObject().get("adtTotalPrice").getAsDouble();
-            String key = airlineCode + "-" + layoverCount;
+            String key = airlineCode;
 
             if (airlineMap.get(key) == null){
                 Map m = Maps.newHashMap();
@@ -78,9 +78,14 @@ public class FlightsDataController extends Controller {
             }
             else {
                 Map m = airlineMap.get(key);
-                double p = (double) m.get("price" + layoverCount);
-                if (p < price) {
-                    m.put("price", p);
+                if (m.get("price" + layoverCount) != null) {
+                    double p = (double) m.get("price" + layoverCount);
+                    if (p < price) {
+                        m.put("price" + layoverCount, p);
+                    }
+                }
+                else {
+                    m.put("price" + layoverCount, price);
                 }
             }
         }
