@@ -1,4 +1,4 @@
-#{if _flightFilter.validateAirline(_flight.departureSegment.detail.get(0).operatingAirlineCode.getAsString())}
+#{if _flightFilter.validateAirline(_flightSegment.detail.operatingAirlineCode.getAsString())}
         <div class="well">
         <!--DETAIL TITLE FLIGHT-->
             <ul class="detail-title-flight">
