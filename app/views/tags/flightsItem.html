@@ -5,7 +5,7 @@
                               departureElapsedTimeEX = _flight.departureSegment.elapsedTime.getAsInt(); 
                             }%
 
-#{if _flightFilter.validateAirline(_flight.departureSegment.detail.get(0).marketingAirline.getAsString())}
+#{if models.FlightsResultsFilters.validateAirline(_flight.departureSegment.detail.get(0).marketingAirline.getAsString())}
 <div class="row ticket ticketBaxer" 
 		data-airportReturn="${_flight.returnAirportCode.getAsString()}" 
 		data-airportDeparture="${_flight.departureAirportCode.getAsString()}" 
