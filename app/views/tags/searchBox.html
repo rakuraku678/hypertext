@@ -186,7 +186,9 @@
 
                 var cleanErrors = function(){
                     $("#errorMessage div").remove();
+                    $("#errorMessageBottom div").remove();
                     $("#errorMessage").hide();
+                    $("#errorMessageBottom").hide();
                 };
 
                 $('#flightSearchForm').bootstrapValidator({
