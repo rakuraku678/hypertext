@@ -1,3 +1,4 @@
+#{if _flightFilter.validateAirline(_flightSegment.detail.operatingAirlineCode.getAsString())}
 <div class="well">
     <!--DETAIL TITLE FLIGHT-->
     <ul class="detail-title-flight">
@@ -94,10 +95,11 @@
                     </li>
                 </ul>
                 #{if flightSegmentDetail.extraData!=null && flightSegmentDetail.extraData.longConnection}
-                	<span class="extraInfoDetail"">Conexión por tiempo extenso, se sugiere estadía.</span>
+                	<span class="extraInfoDetail">Conexión por tiempo extenso, se sugiere estadía.</span>
                 #{/if}
             </li>
         #{/list}
     </ul>
 </div>
+#{/if}
 <!--END WELL-->
