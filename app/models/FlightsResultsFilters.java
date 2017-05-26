@@ -2,6 +2,7 @@ package models;
 
 import java.util.List;
 import java.util.Map;
+import java.io.File;
 
 import utils.ApiFlightsSdk.v1.AirlinesSearch;
 
@@ -107,6 +108,19 @@ public class FlightsResultsFilters {
         }
         
         return flightsResultsFilters;
+    }
+
+    public static boolean validateAirline(String val)
+    {
+        String fle = "/public/img/airlines/air_" + val.toLowerCase() + "logo.gif";
+        File ff = new File(fle);
+        if(!ff.exists())
+        {
+            System.out.println("ValidateAirline: False= " + fle);
+            return false;
+        }
+        System.out.println("ValidateAirline: True= " + fle);
+        return true;
     }
 
     private void addOutbounFlightstops(int key) {

@@ -43,9 +43,11 @@ public class FlightsDataController extends Controller {
         JsonElement flightsResults = bfmSearch.process();
 
         FlightsResultsFilters flightsResultsFilters = FlightsResultsFilters.processFlightsResults(flightsResults);
+        FlightsResultsFilters flightFilter = new FlightsResultFilters();
+
 
         String dollarExchangeRate = TravelClubUtils.getDollarExchangeRate(promotionDto.agency.externalId);
-        renderTemplate("FlightsDataController/flightsData.html",flightsResults, flightsResultsFilters, dollarExchangeRate);
+        renderTemplate("FlightsDataController/flightsData.html",flightsResults, flightsResultsFilters, dollarExchangeRate, flightFilter);
     }
 
     public static void priceSuggestionMatrix() throws InterruptedException {
