@@ -9,12 +9,6 @@
 </div>
 
 <script>
-$(".collapse").on('hide.bs.collapse', function () {
-	$("#"+this.id+"Button").html("Ver detalle");
-})
-$(".collapse").on('show.bs.collapse', function () {
-	$("#"+this.id+"Button").html("Ocultar detalle");
-})
 function isInArray(arr,obj) {
     return (arr.indexOf(obj) != -1);
 }
@@ -30,6 +24,12 @@ function numberWithCommas(x) {
 
 var jsonPricesAirlines = new Array();
 $(function () {
+	$(".collapse").on('hide.bs.collapse', function () {
+		$("#"+this.id+"Button").html("Ver detalle");
+	});
+	$(".collapse").on('show.bs.collapse', function () {
+		$("#"+this.id+"Button").html("Ocultar detalle");
+	});
 	$(document).on('click', '.PXA', function() {
 		if ($("#airlineSugDiv").html()==undefined){
 			$.ajax({data: {"airlinesPrices": JSON.stringify(jsonPricesAirlines)}, url: "/flights/airlinesmatrix", success: function(result){
