@@ -5,14 +5,7 @@
 #{/list}
 <div id="filterResult" style="display: none">
 
-
-#{if dollarExchangeRate.isNumber()}
-<div>
-	<label id="toWn" style="cursor:pointer; padding: 2px;">CLP</label><label id="toUsd" style="padding: 2px; background-color: #428bca; color: white; cursor:pointer; float: right;">USD</label>
-</div>
-#{/if}
-
-#{filterBox flightsResultsFilters:flightsResultsFilters/}
+#{filterBox flightsResultsFilters:flightsResultsFilters, dollarExchangeRate: dollarExchangeRate /}
 </div>
 
 <script>
@@ -173,14 +166,14 @@ $(function () {
 	});
 
 	function setUsdExchange() {
-        $("#toUsd").css("background-color","#428bca");
-        $("#toUsd").css("color","white");
+        //$("#toUsd").css("background-color","#428bca");
+		//$("#toUsd").css("color","white");
         
         $("#toUsd").addClass("selectedCurrency");
-        $("#toWn").removeClass("selectedCurrency");
-        
-        $("#toWn").css("background-color","transparent");
-        $("#toWn").css("color","black");
+		$("#toWn").removeClass("selectedCurrency");
+
+		//$("#toWn").css("background-color","transparent");
+		//$("#toWn").css("color","black");
 
         $( ".clppriceCon" ).each(function( index ) {
             $(this).prev().removeClass("hidden");
@@ -193,12 +186,12 @@ $(function () {
 	}
 
 	function setClpExchange() {
-        $("#toWn").css("background-color","#428bca");
-        $("#toWn").css("color","white");
-        $("#toWn").addClass("selectedCurrency");
-        $("#toUsd").removeClass("selectedCurrency");
-        $("#toUsd").css("background-color","transparent");
-        $("#toUsd").css("color","black");
+		//$("#toWn").css("background-color","#428bca");
+		//$("#toWn").css("color","white");
+		$("#toWn").addClass("selectedCurrency");
+		$("#toUsd").removeClass("selectedCurrency");
+		//$("#toUsd").css("background-color","transparent");
+		//$("#toUsd").css("color","black");
 
         $( ".usdpriceCon" ).each(function( index ) {
             var exchangeRate = parseFloat("${dollarExchangeRate}");
