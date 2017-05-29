@@ -1,23 +1,14 @@
+#{include "FlightsDataController/airlinesMatrix.html" /}
+
 #{list items:flightsResults, as:'flight'}
     #{flightsItem promotion: params.promotion, flight:flight, flightsResultsFilters:flightsResultsFilters/}
 #{/list}
 <div id="filterResult" style="display: none">
 
-
-#{if dollarExchangeRate.isNumber()}
-<div>
-	<label id="toWn" style="cursor:pointer; padding: 2px;">CLP</label><label id="toUsd" style="padding: 2px; background-color: #428bca; color: white; cursor:pointer; float: right;">USD</label>
+#{filterBox flightsResultsFilters:flightsResultsFilters, dollarExchangeRate: dollarExchangeRate /}
 </div>
-#{/if}
-
-#{filterBox flightsResultsFilters:flightsResultsFilters/}
-</div>
-
-
-
 
 <script>
-
 function isInArray(arr,obj) {
     return (arr.indexOf(obj) != -1);
 }
@@ -33,6 +24,12 @@ function numberWithCommas(x) {
 
 var jsonPricesAirlines = new Array();
 $(function () {
+	$(".collapse").on('hide.bs.collapse', function () {
+		$("#"+this.id+"Button").html("Ver detalle");
+	});
+	$(".collapse").on('show.bs.collapse', function () {
+		$("#"+this.id+"Button").html("Ocultar detalle");
+	});
 	$(document).on('click', '.PXA', function() {
 		if ($("#airlineSugDiv").html()==undefined){
 			$.ajax({data: {"airlinesPrices": JSON.stringify(jsonPricesAirlines)}, url: "/flights/airlinesmatrix", success: function(result){
@@ -55,6 +52,33 @@ $(function () {
 			$("#airlineSugDiv").show();
 		}
 	});
+
+	$(document).on('click', '.priceSug', function() {
+		if ($("#priceSugDiv").html() == undefined) {
+			$("#priceSuggestionMatrix").load(
+					"/flights/matrix?" + getSearchParams(),
+					function (responseText, textStatus, XMLHttpRequest) {
+						if (textStatus == "success") {
+							$("#tarifasDiv").hide();
+							$("#airlineSugDiv").hide();
+							$("#priceSugDiv").show();
+							$("#priceSuggestionMatrix").show();
+							onReadyMatrix();
+						}
+						else {
+							showError("Error obteniendo precios para las fechas alternativas.");
+						}
+					}
+			);
+		}
+		else {
+			$("#tarifasDiv").hide();
+			$("#airlineSugDiv").hide();
+			$("#priceSugDiv").show();
+			$("#priceSuggestionMatrix").show();
+		}
+	});
+
 	$(document).on('click', '.tTar', function() {
 		if ($("#tarifasDiv").html()==undefined){
 			$.ajax({data: {"origin": $('#origin').val(), "destination": $('#destiny').val(), "departureDate": $('#startDate').val(), "returnDate": $('#endDate').val() }, 
@@ -74,7 +98,7 @@ $(function () {
     var arrayOfAirlines = new Array();
     var minPrice = 999999999999;
     
-	$( ".ticketBaxer" ).each(function( index ) {
+	*{$( ".ticketBaxer" ).each(function( index ) {
 		
 		var jsonVar = {};
 		
@@ -134,7 +158,7 @@ $(function () {
 			} 
 		}
 		
-	});
+	});}*
 
 	#{if dollarExchangeRate.isNumber()}
 	
@@ -147,14 +171,14 @@ $(function () {
 	});
 
 	function setUsdExchange() {
-        $("#toUsd").css("background-color","#428bca");
-        $("#toUsd").css("color","white");
+        //$("#toUsd").css("background-color","#428bca");
+		//$("#toUsd").css("color","white");
         
         $("#toUsd").addClass("selectedCurrency");
-        $("#toWn").removeClass("selectedCurrency");
-        
-        $("#toWn").css("background-color","transparent");
-        $("#toWn").css("color","black");
+		$("#toWn").removeClass("selectedCurrency");
+
+		//$("#toWn").css("background-color","transparent");
+		//$("#toWn").css("color","black");
 
         $( ".clppriceCon" ).each(function( index ) {
             $(this).prev().removeClass("hidden");
@@ -167,12 +191,12 @@ $(function () {
 	}
 
 	function setClpExchange() {
-        $("#toWn").css("background-color","#428bca");
-        $("#toWn").css("color","white");
-        $("#toWn").addClass("selectedCurrency");
-        $("#toUsd").removeClass("selectedCurrency");
-        $("#toUsd").css("background-color","transparent");
-        $("#toUsd").css("color","black");
+		//$("#toWn").css("background-color","#428bca");
+		//$("#toWn").css("color","white");
+		$("#toWn").addClass("selectedCurrency");
+		$("#toUsd").removeClass("selectedCurrency");
+		//$("#toUsd").css("background-color","transparent");
+		//$("#toUsd").css("color","black");
 
         $( ".usdpriceCon" ).each(function( index ) {
             var exchangeRate = parseFloat("${dollarExchangeRate}");

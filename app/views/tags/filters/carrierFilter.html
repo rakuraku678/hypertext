@@ -49,6 +49,7 @@ $(document).ready(function() {
         	$("div").find("[data-airline='" + $(this).val()  + "']").show();
         	$("#activeFilters").append('<div style="margin: 10px;" class="box-active-filter filter" data-filtervalue="'+ $(this).val()+'"><span class="txt-filter-activer">'+$(this).val()+'</span><i class="icon-close-filter"></i></div>');
         }
+        checkEmptyFilterResult();
     });
 	
 	$('#clearCarriersFilter').change(function() {
@@ -60,6 +61,7 @@ $(document).ready(function() {
         	$(".ticketBaxer").hide();
         	$('.chkAerolinea').prop('checked', false);
         }
+        checkEmptyFilterResult();
     });
 	
 });
