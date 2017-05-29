@@ -12,6 +12,27 @@
   }*
   
 <form id="filterResultForm" action="" method="" class="filter-arrive">
+
+    #{if _dollarExchangeRate.isNumber()}
+    <div class="box-filter">
+        <div class="header-filter">
+            <h3>Moneda<i class="arrow-down"></i></h3>
+        </div>
+        <div class="body-filter">
+            <div id="toWn" class="checkbox">
+                <label>
+                    <input type="radio" checked="checked" name="currencyRadio"> Pesos
+                </label>
+            </div>
+            <div id="toUsd" class="checkbox">
+                <label>
+                    <input type="radio" name="currencyRadio"> Dólares
+                </label>
+            </div>
+        </div>
+    </div>
+    #{/if}
+
     #{filters.stopsFilter/}
     #{filters.carrierFilter carriers:_flightsResultsFilters.carriers, carriersNames: _flightsResultsFilters.carriersCodesXNames /}
     #{filters.priceFilter/}
@@ -130,6 +151,7 @@ $(document).ready(function() {
         		$(this).hide();
         	}
         });
+        checkEmptyFilterResult();
     });
 	
 	$('#aplFiltrosDur').click(function() {
@@ -145,6 +167,7 @@ $(document).ready(function() {
 	        		$(this).hide();
 	        	}
 	     });
+        checkEmptyFilterResult();
 	});
 	
 	$('.aeroChkDeparture').change(function() {
@@ -160,7 +183,7 @@ $(document).ready(function() {
 					readchecks.push($(this).val());
 			 	}
 		 });
-       	
+        checkEmptyFilterResult();
    });
 	
 	$('.aeroChkReturn').change(function() {
@@ -176,16 +199,26 @@ $(document).ready(function() {
 				readchecks.push($(this).val());
 			 }
 		 });
-        	
+        checkEmptyFilterResult();
     });
-	
-	
-	
-	
-	
-     
 });
-
+var checkEmptyFilterResult = function (){
+    var qty = $(".ticketBaxer:visible").size();
+    if (qty == 0){
+        $("#errorMessageBottom div").remove();
+        var em = $("#errorMessageBottom");
+        em.append('<div>Sin resultados, por favor, <a href="#" onClick="cleanFilters()">modifica tus opciones de filtro</a>.</div>')
+        em.show();
+        $('#flightSearchForm input[type="submit"]').attr('disabled', false);
+    }
+};
+var cleanFilters = function() {
+    $("#clearCarriersFilter").prop('checked', true);
+    $("#clearStopsFilter").prop('checked', true);
+    $(".aeroChkDeparture").prop('checked', true);
+    $(".aeroChkReturn").prop('checked', true);
+    $(".ticketBaxer").show();
+}
 </script>
 
 
