@@ -5,7 +5,6 @@
                               departureElapsedTimeEX = _flight.departureSegment.elapsedTime.getAsInt(); 
                             }%
 
-#{if models.FlightsResultsFilters.validateAirline(_flight.departureSegment.detail.get(0).marketingAirline.getAsString())}
 <div class="row ticket ticketBaxer" 
 		data-airportReturn="${_flight.returnAirportCode.getAsString()}" 
 		data-airportDeparture="${_flight.departureAirportCode.getAsString()}" 
@@ -106,7 +105,7 @@
 							      </div>
 							      <div class="modal-body txt-view-detail">
 				                            #{list items:_flight.departureSegment, as:'flightSegment'}
-				                           		 #{modalDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes: _flight.pricing.bookingCodes, flightFilter:_flightFilter /}
+				                           		 #{modalDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes: _flight.pricing.bookingCodes/}
 				                            #{/list}
 	                                    <!-- END MODAL BODY-->
 							      </div>
@@ -121,7 +120,7 @@
 
                         <div class="collapse" id="departureSegment${_flight.sequenceNumber.getAsString()}">
                             #{list items:_flight.departureSegment, as:'flightSegment'}
-                                #{flightsItemDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes: _flight.pricing.bookingCodes, flightFilter:_flightFilter/}
+                                #{flightsItemDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes: _flight.pricing.bookingCodes/}
                             #{/list}
                         </div>
                     </ul>
@@ -206,7 +205,7 @@
 							      </div>
 							      <div class="modal-body txt-view-detail">
 				                            #{list items:_flight.returnSegment, as:'flightSegment'}
-				                           		 #{modalDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes: _flight.pricing.bookingCodes, flightFilter:_flightFilter /}
+				                           		 #{modalDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes: _flight.pricing.bookingCodes/}
 				                            #{/list}
 	                                    <!-- END MODAL BODY-->
 							      </div>
@@ -220,7 +219,7 @@
 
                         <div class="collapse" id="returnSegment${_flight.sequenceNumber.getAsString()}">
                             #{list items:_flight.returnSegment, as:'flightSegment'}
-                                #{flightsItemDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes:_flight.pricing.bookingCodes, flightFilter:_flightFilter/}
+                                #{flightsItemDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes:_flight.pricing.bookingCodes/}
                             #{/list}
                         </div>
                     </ul>
@@ -317,7 +316,6 @@
         </div>
     </form>
 </div>
-#{/if}
 
 <script type="text/javascript">
     $(function () {

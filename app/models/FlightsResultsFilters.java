@@ -95,7 +95,7 @@ public class FlightsResultsFilters {
         }
 
         JsonElement jsonMkt = AirlinesSearch.process(mktAirlineCodes.toString());
-        
+
         if (!jsonMkt.isJsonNull()){
             flightsResultsFilters.mktCarriersCodesXNames = Maps.newHashMap();
             JsonArray jArrayMkt = jsonMkt.getAsJsonArray();
@@ -110,18 +110,6 @@ public class FlightsResultsFilters {
         return flightsResultsFilters;
     }
 
-    public static boolean validateAirline(String val)
-    {
-        String fle = "public/img/airlines/air_" + val.toLowerCase() + "logo.gif";
-        File ff = new File(fle);
-        if(!ff.exists())
-        {
-            System.out.println("ValidateAirline: False= " + fle);
-            return false;
-        }
-        System.out.println("ValidateAirline: True= " + fle);
-        return true;
-    }
 
     private void addOutbounFlightstops(int key) {
         addGeneric(outbounflightstops, String.valueOf(key));
