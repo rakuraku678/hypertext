@@ -223,57 +223,10 @@
                         </div>
                     </ul>
                 </li>
-                *{<li class="txt-view-detail">}*
-                    *{<ul>}*
-                        *{<li class="radio">}*
-                            *{<label><input type="radio" name="optionb"><img src="public/img/lan.jpg" title="" alt=""></label>}*
-                        *{</li>}*
-                        *{<li class="hour-of-flight">}*
-                            *{<span>20:15</span>}*
-                        *{</li>}*
-                        *{<li class="stops-route">}*
-                            *{<a href="">}*
-                                *{<span class="stop-txt">3 escala</span>}*
-                                *{<span class="circle left-circle"></span>}*
-                                *{<span class="circle"></span>}*
-                                *{<span class="circle right-circle"></span>}*
-                                *{<span class="line-route"></span>}*
-                            *{</a>}*
-                        *{</li>}*
-                        *{<li class="hour-of-flight">}*
-                            *{<span>20:15</span>}*
-                        *{</li>}*
-                        *{<li class="time">}*
-                            *{<span>18h 50m</span>}*
-                        *{</li>}*
-                        *{<li class="detail">}*
-                            *{<a type="button" data-toggle="collapse" data-target="#collapseExample3" aria-expanded="false" aria-controls="collapseExample3" class="link-detail-desktop">}*
-                                *{detalle}*
-                            *{</a>}*
-                             *{<a data-toggle="modal" data-target="#detailModalFlight" class="link-detail-mobile">detalle</a>}*
-                        *{</li>}*
-                        *{</li>}*
-
-                        *{<div class="collapse" id="collapseExample3">}*
-                            *{<div class="well">}*
-                                *{...}*
-                            *{</div>}*
-                        *{</div>}*
-                    *{</ul>}*
-                *{</li>}*
             </ul>
         </div>
 
         <div class="col-md-3 ticket-detail">
-            *{#{if false} }**{CAMBIAR ESTA CONDICION CUANDO VENGA LA INFO DE LA API}*
-            *{<span class="last-ticket-available">}*
-                *{<i class="icon-alert-ticket"></i>}*
-                *{<span class="info-ticket-avaible">¡Últimos 2 lugares!</span>}*
-            *{</span>}*
-            *{#{/if}}*
-            *{#{else}}*
-                *{<span class="last-ticket-space-saver">&nbsp;</span>}*
-            *{#{/else}}*
             #{if _flight.pricing.accountCode} *{CAMBIAR ESTA CONDICION CUANDO VENGA LA INFO DE LA API}*
             <span class="private-fare">
                 <i class="icon-private-fare"></i>
@@ -315,11 +268,3 @@
         </div>
     </form>
 </div>
-
-<script type="text/javascript">
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-    })
-    #{get 'moreScripts' /}
-</script>
-

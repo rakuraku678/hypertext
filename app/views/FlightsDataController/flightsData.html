@@ -3,6 +3,11 @@
 #{list items:flightsResults, as:'flight'}
     #{flightsItem promotion: params.promotion, flight:flight, flightsResultsFilters:flightsResultsFilters/}
 #{/list}
+<script type="text/javascript">
+	$(function () {
+		$('[data-toggle="tooltip"]').tooltip();
+	})
+</script>
 <div id="filterResult" style="display: none">
 
 #{filterBox flightsResultsFilters:flightsResultsFilters, dollarExchangeRate: dollarExchangeRate /}
@@ -97,68 +102,6 @@ $(function () {
 	
     var arrayOfAirlines = new Array();
     var minPrice = 999999999999;
-    
-	*{$( ".ticketBaxer" ).each(function( index ) {
-		
-		var jsonVar = {};
-		
-		
-		var escala = 0;
-		if ($(this).data("escala")==0 && $(this).data("escala")==$(this).data("returnescala")){
-			escala = 0;
-		}
-		else  if ( ($(this).data("escala")==0 && $(this).data("returnescala") == 1 ) || 
-				($(this).data("escala")==1 && $(this).data("returnescala") == 0 ) || 
-				($(this).data("escala")==1 && $(this).data("returnescala") == 1 ) ){
-			escala = 1;
-		}
-		else {
-			escala = 2;
-		}
-		
-		var currentAirline = $(this).data("airline");
-			
-		var firstTime = false;
-		if (!isInArray(arrayOfAirlines,currentAirline)){
-			arrayOfAirlines.push(currentAirline);
-			jsonVar.airline = currentAirline;
-			jsonVar.escala = escala;
-			firstTime = true;
-		}
-		
-		var currentPrice = $(this).data("price");
-		
-		if (firstTime){
-			if (escala==0){
-				jsonVar.price0 = currentPrice;	
-			} else if (escala==1){
-				jsonVar.price1 = currentPrice;	
-			} else if (escala==2){
-				jsonVar.price2 = currentPrice;	
-			} 
-			jsonPricesAirlines.push(jsonVar);
-		}
-		else {
-			var airlineIndex = findIndex(jsonPricesAirlines,currentAirline);
-			if (escala==0){
-				if (parseFloat(currentPrice)<jsonPricesAirlines[airlineIndex].price0){
-					jsonPricesAirlines[airlineIndex].price0 = currentPrice;
-					jsonPricesAirlines[airlineIndex].escala = escala;
-				}
-			} else if (escala==1){
-				if (parseFloat(currentPrice)<jsonPricesAirlines[airlineIndex].price1){
-					jsonPricesAirlines[airlineIndex].price1 = currentPrice;
-					jsonPricesAirlines[airlineIndex].escala = escala;
-				}
-			} else if (escala==2){
-				if (parseFloat(currentPrice)<jsonPricesAirlines[airlineIndex].price2){
-					jsonPricesAirlines[airlineIndex].price2 = currentPrice;
-					jsonPricesAirlines[airlineIndex].escala = escala;
-				}
-			} 
-		}
-		
-	});}*
 
 	#{if dollarExchangeRate.isNumber()}
 	
@@ -171,14 +114,8 @@ $(function () {
 	});
 
 	function setUsdExchange() {
-        //$("#toUsd").css("background-color","#428bca");
-		//$("#toUsd").css("color","white");
-        
         $("#toUsd").addClass("selectedCurrency");
 		$("#toWn").removeClass("selectedCurrency");
-
-		//$("#toWn").css("background-color","transparent");
-		//$("#toWn").css("color","black");
 
         $( ".clppriceCon" ).each(function( index ) {
             $(this).prev().removeClass("hidden");
@@ -191,12 +128,8 @@ $(function () {
 	}
 
 	function setClpExchange() {
-		//$("#toWn").css("background-color","#428bca");
-		//$("#toWn").css("color","white");
 		$("#toWn").addClass("selectedCurrency");
 		$("#toUsd").removeClass("selectedCurrency");
-		//$("#toUsd").css("background-color","transparent");
-		//$("#toUsd").css("color","black");
 
         $( ".usdpriceCon" ).each(function( index ) {
             var exchangeRate = parseFloat("${dollarExchangeRate}");
