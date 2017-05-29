@@ -4,19 +4,15 @@
         <tr>
         %{
         	def size=airlineArray.size();
-			def numberOfBlankColumns = size+1-2;
+			def numberOfBlankColumns = size+1-4;
         	for (i = 1; i <=numberOfBlankColumns; i++) {
 		}%
 			<th></th>
 			%{   
 			}
 			}%
-        
-        
-        
-        
-            <th  ><a href="#" class="priceSug">Precios +/- 5 días </a></th>
-         	<th class="select-th"><a class="PXA" href="#">Precios por aerolíneas</a></th>
+            <th colspan="2">#{if play.Play.configuration.getProperty("useShowPriceSuggestionMatrix").toString() == "Y"}<a href="#" class="priceSug">Precios +/- 5 días </a>#{/if}</th>
+         	<th colspan="2" class="select-th"><a class="PXA" href="#">Precios por aerolíneas</a></th>
          	*{<th ><a class="tTar" href="#">Tendencia de Tarifas</a></th>}*
         </tr>
         </thead>
@@ -24,41 +20,31 @@
 		 <tr>
 		 	<td>Resumen</td>
 		 	#{list items:airlineArray, as:'airlineBlock'}
-			    <td>#{airlineLogo carriersCode:airlineBlock.airline.getAsString(), carriersName: airlineBlock.airline.getAsString() /}
-			    <label class="airlinePricesNames_${airlineBlock.airline.getAsString()}"></label>
+			    <td>#{airlineLogo carriersCode:airlineBlock.airline, carriersName: airlineBlock.airline /}
+			    <label class="airlinePricesNames_${airlineBlock.airline}"></label>
 			    </td>
 			#{/list}
 	 	</tr>
 		<tr>
 		    <td>Directo</td>
 		    #{list items:airlineArray, as:'airlineBlock'}
-		    	<td> #{if airlineBlock?.price0!=null}<span class="simbolCurrency">US$</span><span class="usdpriceCon">${airlineBlock?.price0?.getAsString()}</span> <span class="clppriceCon hidden"></span>#{/if} #{else} - #{/else}</td>
+		    	<td> #{if airlineBlock?.price0!=null}<span class="simbolCurrency">US$</span><span class="usdpriceCon">${airlineBlock?.price0}</span> <span class="clppriceCon hidden"></span>#{/if} #{else} - #{/else}</td>
 		    #{/list}
 		</tr>
 		
 		<tr>
 		    <td>1 escala</td>
 		    #{list items:airlineArray, as:'airlineBlock'}
-		    	<td> #{if airlineBlock?.price1!=null} <span class="simbolCurrency">US$</span><span class="usdpriceCon">${airlineBlock?.price1?.getAsString()}</span><span class="clppriceCon hidden"></span> #{/if} #{else} - #{/else}</td>
+		    	<td> #{if airlineBlock?.price1!=null} <span class="simbolCurrency">US$</span><span class="usdpriceCon">${airlineBlock?.price1}</span><span class="clppriceCon hidden"></span> #{/if} #{else} - #{/else}</td>
 		    #{/list}
 		</tr>
 		
 		<tr>
 		    <td>2 escalas o más</td>
 		    #{list items:airlineArray, as:'airlineBlock'}
-		    	<td> #{if airlineBlock?.price2!=null} <span class="simbolCurrency">US$</span><span class="usdpriceCon">${airlineBlock?.price2?.getAsString()}</span><span class="clppriceCon hidden"></span>#{/if} #{else} - #{/else}</td>
+		    	<td> #{if airlineBlock?.price2!=null} <span class="simbolCurrency">US$</span><span class="usdpriceCon">${airlineBlock?.price2}</span><span class="clppriceCon hidden"></span>#{/if} #{else} - #{/else}</td>
 		    #{/list}
 		</tr>
 	
 </table>
 </div>
-
-<script>
- 	$(function() {
- 		$( ".priceSug" ).click(function() { 
- 			$("#airlineSugDiv").hide();
- 			$("#tarifasDiv").hide();
- 			$("#priceSugDiv").show();
- 		});
- 	});
-</script>

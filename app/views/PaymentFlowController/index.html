@@ -44,15 +44,16 @@
                     *{#{checkout.paymentBox/}}*
                     #{checkout.termsConditionBox/}
                     #{checkout.hiddenInputBox bfmResultItem: bfmResultItem, promotion: promotionDto/}
-                    <div class="col-md-12 text-right">
-
-                        <input type="submit" name="submitButton" class="btn btn-search" value="continuar" id="btnContinue">
-                    </div>
                 </div>
                 <div class="col-md-4">
                     #{checkout.flightBox bfmResultItem:bfmResultItem/}
                     #{checkout.summaryBox pricing:bfmResultItem.pricing/}
                     #{checkout.airRules airRulesResultList:airRulesResultList/}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8 text-right">
+                    <input type="submit" name="submitButton" class="btn btn-search" value="continuar" id="btnContinue">
                 </div>
             </div>
         </article>
