@@ -12,6 +12,9 @@ import models.FlightsResultsFilters;
 import play.Play;
 import play.mvc.Controller;
 import play.mvc.Util;
+import play.templates.Template;
+import play.templates.TemplateCompiler;
+import play.templates.TemplateLoader;
 import utils.ApiFlightsSdk.v1.*;
 import utils.DateUtils;
 import utils.JsonUtils;
@@ -56,7 +59,18 @@ public class FlightsDataController extends Controller {
 
         Collection airlineArray = getAirlinePriceArray(flightsResults);
 
-        renderTemplate("FlightsDataController/flightsData.html", flightsResults, flightsResultsFilters, dollarExchangeRate, airlineArray);
+        //renderTemplate("FlightsDataController/flightsData.html", flightsResults, flightsResultsFilters, dollarExchangeRate, airlineArray);
+
+        Template template = TemplateLoader.load(template("FlightsDataController/flightsData.html"));
+
+        Map m = Maps.newHashMap();
+        m.put("flightsResults", flightsResults);
+        m.put("flightsResultsFilters", flightsResultsFilters);
+        m.put("dollarExchangeRate", dollarExchangeRate);
+        m.put("airlineArray", airlineArray);
+        m.put("params", request.params);
+
+        renderHtml(template.render(m).replaceAll("\\s{2,}"," "));
     }
 
     @Util
