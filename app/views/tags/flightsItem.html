@@ -4,7 +4,7 @@
                               returnElapsedTimeEX = _flight.returnSegment.elapsedTime.getAsInt();
                               departureElapsedTimeEX = _flight.departureSegment.elapsedTime.getAsInt(); 
                             }%
-                            
+
 <div class="row ticket ticketBaxer" 
 		data-airportReturn="${_flight.returnAirportCode.getAsString()}" 
 		data-airportDeparture="${_flight.departureAirportCode.getAsString()}" 
@@ -13,7 +13,8 @@
 		data-returntime="${_flight.returnSegment.departureTime.getAsString()}" 
 		data-departuretime="${_flight.departureSegment.departureTime.getAsString()}" 
 		data-price="${_flight.pricing.totalPassengerFare.getAsString()}"
-		data-airline="${_flight.departureSegment.detail.get(0).operatingAirlineCode.getAsString()}" 
+		data-airline="${_flight.departureSegment.detail.get(0).operatingAirlineCode.getAsString()}"
+        	data-marketingAirline="${_flight.departureSegment.detail.get(0).marketingAirline.getAsString()}"
 		data-escala="${connectionsDepartureCount}"
 		data-returnEscala="${connectionsReturnCount}">
     <form class="form-ticket" action="@{PaymentFlowController.index}" method="post">
@@ -42,9 +43,9 @@
                     <ul>
                         <li>
                             <label style="font-weight: 500;">
-                                #{list items:_flight.departureSegment.airlinesCodes, as:"airlineCode"}
+                                #{list items:_flight.departureSegment.detail.get(0).marketingAirline, as:"airlineCode"}
                                 	#{airlineLogo carriersCode:airlineCode?.getAsString().toLowerCase(), carriersName: airlineCode /}
-                                	${_flightsResultsFilters?.carriersCodesXNames?.get(airlineCode.getAsString())}
+                                	${_flightsResultsFilters?.mktCarriersCodesXNames?.get(airlineCode.getAsString())}
                                 #{/list}
                             </label>
                         </li>
@@ -104,7 +105,7 @@
 							      </div>
 							      <div class="modal-body txt-view-detail">
 				                            #{list items:_flight.departureSegment, as:'flightSegment'}
-				                           		 #{modalDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes: _flight.pricing.bookingCodes /}
+				                           		 #{modalDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes: _flight.pricing.bookingCodes/}
 				                            #{/list}
 	                                    <!-- END MODAL BODY-->
 							      </div>
@@ -145,9 +146,9 @@
                     <ul>
                         <li>
                             <label style="font-weight: 500;">
-                                #{list items:_flight.returnSegment.airlinesCodes, as:"airlineCode"}
+                                #{list items:_flight.returnSegment.detail.get(0).marketingAirline, as:"airlineCode"}
                                 	#{airlineLogo carriersCode:airlineCode?.getAsString().toLowerCase(), carriersName: airlineCode /}
-                                	${_flightsResultsFilters?.carriersCodesXNames?.get(airlineCode.getAsString())}
+                                    ${_flightsResultsFilters?.mktCarriersCodesXNames?.get(airlineCode.getAsString())}
                                 #{/list}
                             </label>
                         </li>
@@ -204,7 +205,7 @@
 							      </div>
 							      <div class="modal-body txt-view-detail">
 				                            #{list items:_flight.returnSegment, as:'flightSegment'}
-				                           		 #{modalDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes: _flight.pricing.bookingCodes /}
+				                           		 #{modalDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes: _flight.pricing.bookingCodes/}
 				                            #{/list}
 	                                    <!-- END MODAL BODY-->
 							      </div>

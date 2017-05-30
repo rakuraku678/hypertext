@@ -23,6 +23,7 @@
     <ul class="detail-body-flight">
         #{list items:_flightSegment.detail, as:'flightSegmentDetail'}
             <li class="airline-logo">
+                <span style="font-weight:bold;">Operado por </span>
             	#{airlineLogo carriersCode:flightSegmentDetail.operatingAirlineCode.getAsString(), carriersName: flightSegmentDetail.operatingAirlineCode.getAsString() /}
             	${_flightsResultsFilters?.carriersCodesXNames?.get(flightSegmentDetail.operatingAirlineCode.getAsString())}
             </li>
@@ -93,7 +94,7 @@
                     </li>
                 </ul>
                 #{if flightSegmentDetail.extraData!=null && flightSegmentDetail.extraData.longConnection}
-                	<span class="extraInfoDetail"">Conexión por tiempo extenso, se sugiere estadía.</span>
+                	<span class="extraInfoDetail">Conexión por tiempo extenso, se sugiere estadía.</span>
                 #{/if}
             </li>
         #{/list}
