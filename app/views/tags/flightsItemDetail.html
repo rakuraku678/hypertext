@@ -34,7 +34,7 @@
                         <div>
                             <span class="inline-detail-airport-date">
                                 <span class="inline-detail-airport-date-text">Sale:</span>
-                                <span>${flightSegmentDetail.departureDate.getAsString()}</span>
+                                <span>${utils.DateUtils.reformateDate(flightSegmentDetail.departureDate.getAsString(),"yyyy-MM-dd","dd-MM-yyyy")}</span>
                             </span>
                             <span class="inline-detail-airport-code-wrapper">
                                 <span class="inline-detail-airport-code">${flightSegmentDetail.departureAirportCode.getAsString()}</span>
@@ -51,7 +51,7 @@
                             <span class="inline-detail-airport">
                                 <span class="inline-detail-airport-date">
                                     <span class="inline-detail-airport-date-text">Llega:</span>
-                                    <span>${flightSegmentDetail.arrivalDate.getAsString()}</span>
+                                    <span>${utils.DateUtils.reformateDate(flightSegmentDetail.arrivalDate.getAsString(),"yyyy-MM-dd","dd-MM-yyyy")}</span>
                                 </span>
                                 <span class="inline-detail-airport-code-wrapper">
                                     <span class="inline-detail-airport-code">${flightSegmentDetail.arrivalAirportCode.getAsString()}</span>
