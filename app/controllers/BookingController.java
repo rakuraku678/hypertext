@@ -35,7 +35,7 @@ public class BookingController extends Controller {
         	jsonEl.addProperty("surname", surname);
         	jsonEl.addProperty("foidType", passengersArray.get(i).getAsJsonObject().get("foidType").getAsString());
         	jsonEl.addProperty("foid", passengersArray.get(i).getAsJsonObject().get("foid").getAsString());
-        	jsonEl.addProperty("dateOfBirth", DateUtils.reformateDate(passengersArray.get(i).getAsJsonObject().get("dateOfBirth").getAsString()));
+        	jsonEl.addProperty("dateOfBirth", DateUtils.reformateDate(passengersArray.get(i).getAsJsonObject().get("dateOfBirth").getAsString(),"dd/MM/yyyy","yyyy-MM-dd"));
         	cleanPassengersArray.add(jsonEl);
 		}
         
