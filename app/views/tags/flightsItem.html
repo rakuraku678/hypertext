@@ -4,7 +4,7 @@
                               returnElapsedTimeEX = _flight.returnSegment.elapsedTime.getAsInt();
                               departureElapsedTimeEX = _flight.departureSegment.elapsedTime.getAsInt(); 
                             }%
-                            
+
 <div class="row ticket ticketBaxer" 
 		data-airportReturn="${_flight.returnAirportCode.getAsString()}" 
 		data-airportDeparture="${_flight.departureAirportCode.getAsString()}" 
@@ -13,7 +13,8 @@
 		data-returntime="${_flight.returnSegment.departureTime.getAsString()}" 
 		data-departuretime="${_flight.departureSegment.departureTime.getAsString()}" 
 		data-price="${_flight.pricing.totalPassengerFare.getAsString()}"
-		data-airline="${_flight.departureSegment.detail.get(0).operatingAirlineCode.getAsString()}" 
+		data-airline="${_flight.departureSegment.detail.get(0).operatingAirlineCode.getAsString()}"
+        	data-marketingAirline="${_flight.departureSegment.detail.get(0).marketingAirline.getAsString()}"
 		data-escala="${connectionsDepartureCount}"
 		data-returnEscala="${connectionsReturnCount}">
     <form class="form-ticket" action="@{PaymentFlowController.index}" method="post">
@@ -26,7 +27,7 @@
                         <li>
                             <i class="icon-fly"></i>
                             <span class="leaving">ida</span>
-                            <span class="fly-day">${_flight.departureDate.getAsString()}</span>
+                            <span class="fly-day">${utils.DateUtils.reformateDate(_flight.departureDate.getAsString(),"yyyy-MM-dd","dd-MM-yyyy")}</span>
                         </li>
                         <li>
                             <span class="airport">${new utils.ApiFlightsSdk.v1.Airport().getByIataCode(_flight.departureAirportCode.getAsString()).name}</span>
@@ -42,9 +43,9 @@
                     <ul>
                         <li>
                             <label style="font-weight: 500;">
-                                #{list items:_flight.departureSegment.airlinesCodes, as:"airlineCode"}
+                                #{list items:_flight.departureSegment.detail.get(0).marketingAirline, as:"airlineCode"}
                                 	#{airlineLogo carriersCode:airlineCode?.getAsString().toLowerCase(), carriersName: airlineCode /}
-                                	${_flightsResultsFilters?.carriersCodesXNames?.get(airlineCode.getAsString())}
+                                	${_flightsResultsFilters?.mktCarriersCodesXNames?.get(airlineCode.getAsString())}
                                 #{/list}
                             </label>
                         </li>
@@ -86,8 +87,8 @@
                             <span>&{"%dh %02dm", departureElapsedHours, departureElapsedMinutes}</span>
                         </li>
                         <li class="detail">
-                            <a type="button" data-toggle="collapse" data-target="#departureSegment${_flight.sequenceNumber.getAsString()}" aria-expanded="false" aria-controls="collapseExample" class="link-detail-desktop" style="font-weight: bold;">
-                                ver detalle
+                            <a id="departureSegment${_flight.sequenceNumber.getAsString()}Button" type="button" data-toggle="collapse" data-target="#departureSegment${_flight.sequenceNumber.getAsString()}" aria-expanded="false" aria-controls="collapseExample" class="link-detail-desktop" style="font-weight: bold;">
+                                Ver detalle
                             </a>
                             <a data-toggle="modal" data-target="#detailModalFlight${_flight.sequenceNumber.getAsString()}" class="link-detail-mobile">detalle</a>
                             
@@ -104,7 +105,7 @@
 							      </div>
 							      <div class="modal-body txt-view-detail">
 				                            #{list items:_flight.departureSegment, as:'flightSegment'}
-				                           		 #{modalDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes: _flight.pricing.bookingCodes /}
+				                           		 #{modalDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes: _flight.pricing.bookingCodes/}
 				                            #{/list}
 	                                    <!-- END MODAL BODY-->
 							      </div>
@@ -129,7 +130,7 @@
                         <li>
                             <i class="icon-fly-vuelta"></i>
                             <span class="leaving">vuelta</span>
-                            <span class="fly-day">${_flight.returnDate.getAsString()}</span>
+                            <span class="fly-day">${utils.DateUtils.reformateDate(_flight.returnDate.getAsString(),"yyyy-MM-dd","dd-MM-yyyy")}</span>
                         </li>
                         <li>
                             <span class="airport">${new utils.ApiFlightsSdk.v1.Airport().getByIataCode(_flight.returnAirportCode.getAsString()).name}</span>
@@ -145,9 +146,9 @@
                     <ul>
                         <li>
                             <label style="font-weight: 500;">
-                                #{list items:_flight.returnSegment.airlinesCodes, as:"airlineCode"}
+                                #{list items:_flight.returnSegment.detail.get(0).marketingAirline, as:"airlineCode"}
                                 	#{airlineLogo carriersCode:airlineCode?.getAsString().toLowerCase(), carriersName: airlineCode /}
-                                	${_flightsResultsFilters?.carriersCodesXNames?.get(airlineCode.getAsString())}
+                                    ${_flightsResultsFilters?.mktCarriersCodesXNames?.get(airlineCode.getAsString())}
                                 #{/list}
                             </label>
                         </li>
@@ -189,8 +190,8 @@
                             <span>&{"%dh %02dm", returnElapsedHours, returnElapsedMinutes}</span>
                         </li>
                         <li class="detail">
-                            <a type="button" data-toggle="collapse" data-target="#returnSegment${_flight.sequenceNumber.getAsString()}" aria-expanded="false" aria-controls="collapseExample2" class="link-detail-desktop" style="font-weight: bold;">
-                                ver detalle
+                            <a id="returnSegment${_flight.sequenceNumber.getAsString()}Button" type="button" data-toggle="collapse" data-target="#returnSegment${_flight.sequenceNumber.getAsString()}" aria-expanded="false" aria-controls="collapseExample2" class="link-detail-desktop" style="font-weight: bold;">
+                                Ver detalle
                             </a>
                              <a data-toggle="modal" data-target="#detailModalFlight2${_flight.sequenceNumber.getAsString()}" class="link-detail-mobile">detalle</a>
                              
@@ -204,7 +205,7 @@
 							      </div>
 							      <div class="modal-body txt-view-detail">
 				                            #{list items:_flight.returnSegment, as:'flightSegment'}
-				                           		 #{modalDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes: _flight.pricing.bookingCodes /}
+				                           		 #{modalDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes: _flight.pricing.bookingCodes/}
 				                            #{/list}
 	                                    <!-- END MODAL BODY-->
 							      </div>
@@ -223,57 +224,10 @@
                         </div>
                     </ul>
                 </li>
-                *{<li class="txt-view-detail">}*
-                    *{<ul>}*
-                        *{<li class="radio">}*
-                            *{<label><input type="radio" name="optionb"><img src="public/img/lan.jpg" title="" alt=""></label>}*
-                        *{</li>}*
-                        *{<li class="hour-of-flight">}*
-                            *{<span>20:15</span>}*
-                        *{</li>}*
-                        *{<li class="stops-route">}*
-                            *{<a href="">}*
-                                *{<span class="stop-txt">3 escala</span>}*
-                                *{<span class="circle left-circle"></span>}*
-                                *{<span class="circle"></span>}*
-                                *{<span class="circle right-circle"></span>}*
-                                *{<span class="line-route"></span>}*
-                            *{</a>}*
-                        *{</li>}*
-                        *{<li class="hour-of-flight">}*
-                            *{<span>20:15</span>}*
-                        *{</li>}*
-                        *{<li class="time">}*
-                            *{<span>18h 50m</span>}*
-                        *{</li>}*
-                        *{<li class="detail">}*
-                            *{<a type="button" data-toggle="collapse" data-target="#collapseExample3" aria-expanded="false" aria-controls="collapseExample3" class="link-detail-desktop">}*
-                                *{detalle}*
-                            *{</a>}*
-                             *{<a data-toggle="modal" data-target="#detailModalFlight" class="link-detail-mobile">detalle</a>}*
-                        *{</li>}*
-                        *{</li>}*
-
-                        *{<div class="collapse" id="collapseExample3">}*
-                            *{<div class="well">}*
-                                *{...}*
-                            *{</div>}*
-                        *{</div>}*
-                    *{</ul>}*
-                *{</li>}*
             </ul>
         </div>
 
         <div class="col-md-3 ticket-detail">
-            *{#{if false} }**{CAMBIAR ESTA CONDICION CUANDO VENGA LA INFO DE LA API}*
-            *{<span class="last-ticket-available">}*
-                *{<i class="icon-alert-ticket"></i>}*
-                *{<span class="info-ticket-avaible">¡Últimos 2 lugares!</span>}*
-            *{</span>}*
-            *{#{/if}}*
-            *{#{else}}*
-                *{<span class="last-ticket-space-saver">&nbsp;</span>}*
-            *{#{/else}}*
             #{if _flight.pricing.accountCode} *{CAMBIAR ESTA CONDICION CUANDO VENGA LA INFO DE LA API}*
             <span class="private-fare">
                 <i class="icon-private-fare"></i>
@@ -315,11 +269,3 @@
         </div>
     </form>
 </div>
-
-<script type="text/javascript">
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-    })
-    #{get 'moreScripts' /}
-</script>
-

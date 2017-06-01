@@ -27,7 +27,7 @@ $(document).ready(function() {
         var rightPrice = parseInt($("#rightPriceRange").html().substring(1));
 
         $(".ticketBaxer").each(function( index ) {
-        	var price = parseInt($(this).data("price"))
+        	var price = parseInt($(this).data("price"));
         	if (price<=rightPrice && price>=leftPrice ) {
         		 $(this).show();
         	}
@@ -35,6 +35,7 @@ $(document).ready(function() {
         		$(this).hide();
         	}
         });
+        checkEmptyFilterResult();
     });
 });
 </script>

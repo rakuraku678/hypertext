@@ -38,7 +38,7 @@
                     <label>Partida:</label>
                     	<div class='input-group date' id='starDateBtn'>
                             <input type="text" name="partida" autocomplete="off" id="startDate"
-                                   class="form-control percent"  style="border-right: 0; padding-right: 0;" value="${params.departureDate?.replace('-','/')}">
+                                   class="form-control percent"  style="border-right: 0; padding-right: 0;" value="${params.departureDate}">
         					<i class="bg-calendar input-group-addon"></i>
                         </div>
                 </div>
@@ -46,7 +46,7 @@
                     <label>Regreso:</label>
                     <div class='input-group date' id='endDateBtn'>
                         <input type="text" name="regreso" id="endDate" autocomplete="off"
-                               class="form-control percent" value="${params.returnDate?.replace('-','/')}"
+                               class="form-control percent" value="${params.returnDate}"
                                style="border-right: 0; padding-right: 0;">
     					<i class="bg-calendar input-group-addon"></i>
     					</span>
@@ -119,22 +119,7 @@
                     $( "#priceSuggestionMatrix" ).html("");
                     $( "#fligthsData" ).html("");
 					$( "#filterContent" ).html("");
-					
-                    $( "#priceSuggestionMatrix" ).load(
-                        "/flights/matrix?" + getSearchParams(),
-                        function (responseText, textStatus, XMLHttpRequest) {
-                            if (textStatus == "success") {
-                                $( "#priceSuggestionMatrix" ).show("slow");
-                                onReadyMatrix();
-                            }
-                            else{
-                                showError("Error obteniendo precios para las fechas alternativas.");
-                            }
-                        }
-                    );
-                    
-                 	
-		
+
                     $( "#fligthsData" ).load(
                         "/flights/data?" + getSearchParams(),
                         function (responseText, textStatus, XMLHttpRequest) {
@@ -149,6 +134,14 @@
                             }
                             else {
                                 showError("Error obteniendo precios para la fecha buscada.");
+                            }
+                        }
+                    );
+
+                    $( "#priceSuggestionMatrix" ).load("/flights/matrix?" + getSearchParams(),
+                        function (responseText, textStatus, XMLHttpRequest) {
+                            if (textStatus == "success") {
+                                onReadyMatrix();
                             }
                         }
                     );
@@ -186,14 +179,16 @@
 
                 var showError = function(msg){
                     var em = $("#errorMessage");
-                    em.append("<div>"+msg+"</div>")
+                    em.append("<div>"+msg+"</div>");
                     em.show();
                     $('#flightSearchForm input[type="submit"]').attr('disabled', false);
                 };
 
                 var cleanErrors = function(){
                     $("#errorMessage div").remove();
+                    $("#errorMessageBottom div").remove();
                     $("#errorMessage").hide();
+                    $("#errorMessageBottom").hide();
                 };
 
                 $('#flightSearchForm').bootstrapValidator({
@@ -356,9 +351,10 @@
      
                
 
-			  var dateFormat = "dd/mm/yy";
-              var minDate = new Date(parseDate("18/12/2016"));
-              var maxDate = new Date(parseDate("09/10/2017"));
+			  //var dateFormat = "dd/mm/yy";
+              var dateFormat = "dd-mm-yy";
+              var minDate = new Date(parseDate("24-04-2017"));
+              var maxDate = new Date(parseDate("01-01-2018"));
 
               jQuery(function($) {
                 if (jQuery().datepicker) {
@@ -384,7 +380,7 @@
                 }
               });
               function parseDate(str) {
-                  var mdy = str.split('/')
+                  var mdy = str.split('-')
                   return new Date(parseInt(mdy[2], 10), (parseInt(mdy[1], 10) - 1), parseInt(mdy[0], 10));
               }
               String.prototype.replaceAll = function(search, replacement) {
@@ -459,7 +455,7 @@
                   //$("#endDate").datepicker("show");
 
                 });
-                $('#startDate').val("${params.departureDate?.replace('-','/')}");
+                $('#startDate').val("${params.departureDate}");
               });
 
 
@@ -474,7 +470,7 @@
                     $("#departureDate").datepicker( "option", "maxDate", currentEndDate );
                   }
                 });
-                $('#endDate').val("${params.returnDate?.replace('-','/')}");
+                $('#endDate').val("${params.returnDate}");
               });
 
 

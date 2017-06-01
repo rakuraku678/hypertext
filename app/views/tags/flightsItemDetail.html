@@ -23,6 +23,7 @@
     <ul class="detail-body-flight">
         #{list items:_flightSegment.detail, as:'flightSegmentDetail'}
             <li class="airline-logo">
+                <span style="font-weight:bold;">Operado por </span>
             	#{airlineLogo carriersCode:flightSegmentDetail.operatingAirlineCode.getAsString(), carriersName: flightSegmentDetail.operatingAirlineCode.getAsString() /}
             	${_flightsResultsFilters?.carriersCodesXNames?.get(flightSegmentDetail.operatingAirlineCode.getAsString())}
             </li>
@@ -33,7 +34,7 @@
                         <div>
                             <span class="inline-detail-airport-date">
                                 <span class="inline-detail-airport-date-text">Sale:</span>
-                                <span>${flightSegmentDetail.departureDate.getAsString()}</span>
+                                <span>${utils.DateUtils.reformateDate(flightSegmentDetail.departureDate.getAsString(),"yyyy-MM-dd","dd-MM-yyyy")}</span>
                             </span>
                             <span class="inline-detail-airport-code-wrapper">
                                 <span class="inline-detail-airport-code">${flightSegmentDetail.departureAirportCode.getAsString()}</span>
@@ -50,7 +51,7 @@
                             <span class="inline-detail-airport">
                                 <span class="inline-detail-airport-date">
                                     <span class="inline-detail-airport-date-text">Llega:</span>
-                                    <span>${flightSegmentDetail.arrivalDate.getAsString()}</span>
+                                    <span>${utils.DateUtils.reformateDate(flightSegmentDetail.arrivalDate.getAsString(),"yyyy-MM-dd","dd-MM-yyyy")}</span>
                                 </span>
                                 <span class="inline-detail-airport-code-wrapper">
                                     <span class="inline-detail-airport-code">${flightSegmentDetail.arrivalAirportCode.getAsString()}</span>
@@ -93,7 +94,7 @@
                     </li>
                 </ul>
                 #{if flightSegmentDetail.extraData!=null && flightSegmentDetail.extraData.longConnection}
-                	<span class="extraInfoDetail"">Conexión por tiempo extenso, se sugiere estadía.</span>
+                	<span class="extraInfoDetail">Conexión por tiempo extenso, se sugiere estadía.</span>
                 #{/if}
             </li>
         #{/list}
