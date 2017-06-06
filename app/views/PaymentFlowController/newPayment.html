@@ -1,0 +1,89 @@
+#{extends 'main.html' /}
+#{set title:'New Payment' /}
+
+#{set isAgencyHeader: true /}
+
+<style>
+    .btn-search2 {
+        box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.30);
+        border-radius: 4px;
+        background-color: #428BCA;
+        color: #fff;
+        padding: 10px 20px;
+        margin-top: 20px;
+        transition: all .5s;
+        width: 200px;
+        text-transform: uppercase;
+    }
+    .head-search {
+        border-bottom: 1px solid #eee;
+        padding-left: 15px;
+        padding-bottom: 20px;
+        margin-bottom: 15px;
+
+    }
+
+    .head-search .title-search {
+        color: #fff;
+        font-size: 18px;
+        font-weight: 600;
+        margin: 0;
+    }
+
+</style>
+
+<section class="search-arrive payment-path">
+    <article class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="box-info-payment">
+                    <div class="head-payment">
+                        <h3 class="title-payment">¿Vas a comprar tu pasaje?</h3>
+                    </div>
+                    <div class="body-payment term-and-condition">
+                        <div class="form-group col-md-12">
+                            <p>Comprá en cuotas con más de 30 bancos</p>
+                            <p>Recordá que tenés 60 minutos después de efectuada la reserva  en aerolineas.com para efectivizar el pago y emitir tu pasaje. Si realizaste tu reserva en nuestras oficinas o call center tenés 30 minutos antes del vencimiento asignado para pagarla. </p>
+                            <p>Si ya pagaste tu pasaje en aerolineas.com, podés reimprimir tu recibo de ticket electrónico desde esta página ingresando el código de la reserva y el apellido del pasajero.</p>
+                            <p>Si ya realizaste tu cambio, ingresá el código y apellido para abonarlo.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div style="background-color: #2F313A;border-radius: 5px;">
+                    <form id="flightSearchForm" class="form-search-travel bv-form" action="" method="POST">
+                    <div class="head-search">
+                        <h3 class="title-search">Para comenzar, ingresá la siguiente información:</h3>
+                    </div>
+                        <div class="form-group col-md-12">
+                            <label>Código de su reserva:</label>
+                            <input class="form-control" type="text" name="pnr">
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label>Apellido del pasajero:</label>
+                            <input class="form-control" type="text" name="surname">
+                        </div>
+                        <div class="col-md-12 text-center">
+                            <input type="submit" value="Buscar" class="btn btn-search2">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <p class="info-help text-center">En caso de necesitar ayuda comunicarse al correo <strong>ventaonline@travelclub.cl</strong></p>
+        </div>
+    </article>
+</section>
+#{set 'moreScripts' }
+#{get 'moreScripts' /}
+
+
+#{/set}
+
+
+#{modalNeadHelp /}
+#{modalExpiredSession /}
+
+#{set isAgencyFooter: true /}
