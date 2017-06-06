@@ -3,6 +3,14 @@ $(document).ready(function () {
         $("#fingerprint").val(result);
     });
 
+    $('.validatedate').datepicker(
+        {
+            dateFormat: 'dd/mm/yy',
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-100:+0",
+            maxDate: '-1D'
+        });
     
     $('#checkoutForm').bootstrapValidator({
         fields: {
@@ -136,15 +144,23 @@ $(document).ready(function () {
 });
 
 function startBooking() {
-	if (!checkRut($( ".validatedocumentnum" )[0])){
-    	$(this).next().next().css("display","block");
-    	$(this).next().next().css("color","#a94442");
-    	$(this).css("border-color","#a94442 !important");
-    	return false;
-    }
-    else {
-    	$("#btnContinue").removeAttr("disabled");
-    }
+	var error = false
+	$( ".validatedocumentnum" ).each(function( index ) {
+		if (!checkRut(this)){
+	    	$(this).next().next().css("display","block");
+	    	$(this).next().next().css("color","#a94442");
+	    	$(this).css("border-color","#a94442 !important");
+	    	error = true;
+	    	return false;
+	    }
+	    else {
+	    	$("#btnContinue").removeAttr("disabled");
+	    }
+	});
+
+	if (error){
+		return false;
+	}
 	
 	
     $('#spinner-modal').modal({
@@ -163,6 +179,7 @@ function startBooking() {
 
     var formSerializeJson = $("#checkoutForm").serializeJSON({useIntKeysAsArrayIndex: true, checkboxUncheckedValue: false});
     formSerializeJson.bfmResultItem = $.parseJSON(formSerializeJson.bfmResultItem);
+    formSerializeJson.origin = window.location.origin;
     var data = JSON.stringify(formSerializeJson);
     $.ajax({
         type: "POST",

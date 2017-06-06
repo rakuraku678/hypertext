@@ -1,16 +1,25 @@
 package controllers;
 
 import java.text.ParseException;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import models.FlightsResultsFilters;
+import play.Play;
 import play.mvc.Controller;
+import play.mvc.Util;
+import play.templates.Template;
+import play.templates.TemplateCompiler;
+import play.templates.TemplateLoader;
+import utils.ApiFlightsSdk.v1.*;
 import utils.DateUtils;
+import utils.JsonUtils;
 import utils.TravelClubUtils;
-import utils.ApiFlightsSdk.v1.BFMSearch;
-import utils.ApiFlightsSdk.v1.FlightsAltenateDates;
-import utils.ApiFlightsSdk.v1.LowFareHistory;
-import utils.ApiFlightsSdk.v1.Promotion;
+import utils.dtos.AirportDto;
 import utils.dtos.AlternateDatesDto;
 import utils.dtos.PromotionDto;
 
@@ -32,8 +41,9 @@ public class FlightsDataController extends Controller {
         BFMSearch bfmSearch  = new BFMSearch();
         bfmSearch.setOrigin(params.get("origin"));
         bfmSearch.setDestination(params.get("destination"));
-        bfmSearch.setCountry(SearchController.getAirportCountry(params.get("destination")));
-        bfmSearch.setCity(SearchController.getAirportCityCode(params.get("destination")));
+        AirportDto destinationAirport = new Airport().getByIataCode(params.get("destination"));
+        bfmSearch.setCountry(destinationAirport.country);
+        bfmSearch.setCity(destinationAirport.iataCityCode);
         bfmSearch.setDeparturedate(DateUtils.reformateDate(params.get("departuredate")));
         bfmSearch.setReturndate(DateUtils.reformateDate(params.get("returndate")));
         bfmSearch.addPassengerType("ADT", params.get("adultcount"));
@@ -46,7 +56,54 @@ public class FlightsDataController extends Controller {
         FlightsResultsFilters flightsResultsFilters = FlightsResultsFilters.processFlightsResults(flightsResults);
 
         String dollarExchangeRate = TravelClubUtils.getDollarExchangeRate(promotionDto.agency.externalId);
-        renderTemplate("FlightsDataController/flightsData.html",flightsResults, flightsResultsFilters, dollarExchangeRate);
+
+        Collection airlineArray = getAirlinePriceArray(flightsResults);
+
+        //renderTemplate("FlightsDataController/flightsData.html", flightsResults, flightsResultsFilters, dollarExchangeRate, airlineArray);
+
+        Template template = TemplateLoader.load(template("FlightsDataController/flightsData.html"));
+
+        Map m = Maps.newHashMap();
+        m.put("flightsResults", flightsResults);
+        m.put("flightsResultsFilters", flightsResultsFilters);
+        m.put("dollarExchangeRate", dollarExchangeRate);
+        m.put("airlineArray", airlineArray);
+        m.put("params", request.params);
+
+        renderHtml(template.render(m).replaceAll("\\s{2,}"," "));
+    }
+
+    @Util
+    private static Collection getAirlinePriceArray(JsonElement flightsResults) {
+        Map<String, Map<String, Object>> airlineMap = Maps.newHashMap();
+        for (JsonElement json : flightsResults.getAsJsonArray()) {
+            String airlineCode = json.getAsJsonObject().get("pricing").getAsJsonObject().get("validatingCarrier").getAsString();
+            int layoverCountDeparture = json.getAsJsonObject().get("departureSegment").getAsJsonObject().get("flightsCount").getAsInt() - 1;
+            int layoverCountReturn = json.getAsJsonObject().get("returnSegment").getAsJsonObject().get("flightsCount").getAsInt() - 1;
+            int layoverCount = Math.min(2, Math.max(layoverCountDeparture, layoverCountReturn));
+            double price = json.getAsJsonObject().get("pricing").getAsJsonObject().get("adtTotalPrice").getAsDouble();
+            String key = airlineCode;
+
+            if (airlineMap.get(key) == null){
+                Map m = Maps.newHashMap();
+                m.put("airline", airlineCode);
+                m.put("price" + layoverCount, price);
+                airlineMap.put(key, m);
+            }
+            else {
+                Map m = airlineMap.get(key);
+                if (m.get("price" + layoverCount) != null) {
+                    double p = (double) m.get("price" + layoverCount);
+                    if (p < price) {
+                        m.put("price" + layoverCount, p);
+                    }
+                }
+                else {
+                    m.put("price" + layoverCount, price);
+                }
+            }
+        }
+        return airlineMap.values();
     }
 
     public static void priceSuggestionMatrix() throws InterruptedException {
@@ -82,7 +139,8 @@ public class FlightsDataController extends Controller {
     
     public static void priceAirlinesMatrix(String airlinesPrices, String carriersNames){
         JsonArray airlineArray = new JsonParser().parse(airlinesPrices).getAsJsonArray();
-    	renderTemplate("FlightsDataController/airlinesMatrix.html",airlineArray);
+        System.out.println(airlinesPrices);
+        renderTemplate("FlightsDataController/airlinesMatrix.html", airlineArray);
     }
     
     public static void lowPricesMatrix(String origin, String destination, String departureDate, String returnDate) throws ParseException{

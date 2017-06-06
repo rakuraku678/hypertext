@@ -2,10 +2,10 @@
     <!--DETAIL TITLE FLIGHT-->
     <ul class="detail-title-flight">
         <li class="title-text-from-to">
-            ${controllers.SearchController.getAirportCity(_flightSegment.departureCityCode.getAsString())}
-            <span class="airport-code">(${_flightSegment.departureCityCode.getAsString()})</span>
+            ${new utils.ApiFlightsSdk.v1.Airport().getByIataCode(_flightSegment.departureCityCode.getAsString()).city}
+                <span class="airport-code">(${_flightSegment.departureCityCode.getAsString()})</span>
             <span class="title-text-to"><i class="icon-arrow-airport"></i></span>
-            ${controllers.SearchController.getAirportCity(_flightSegment.returnCityCode.getAsString())}
+            ${new utils.ApiFlightsSdk.v1.Airport().getByIataCode(_flightSegment.returnCityCode.getAsString()).city}
             <span class="airport-code">(${_flightSegment.returnCityCode.getAsString()})</span>
         </li>
         <li class="title-text-total-duration">
@@ -23,6 +23,7 @@
     <ul class="detail-body-flight">
         #{list items:_flightSegment.detail, as:'flightSegmentDetail'}
             <li class="airline-logo">
+                <span style="font-weight:bold;">Operado por </span>
             	#{airlineLogo carriersCode:flightSegmentDetail.operatingAirlineCode.getAsString(), carriersName: flightSegmentDetail.operatingAirlineCode.getAsString() /}
             	${_flightsResultsFilters?.carriersCodesXNames?.get(flightSegmentDetail.operatingAirlineCode.getAsString())}
             </li>
@@ -33,14 +34,14 @@
                         <div>
                             <span class="inline-detail-airport-date">
                                 <span class="inline-detail-airport-date-text">Sale:</span>
-                                <span>${flightSegmentDetail.departureDate.getAsString()}</span>
+                                <span>${utils.DateUtils.reformateDate(flightSegmentDetail.departureDate.getAsString(),"yyyy-MM-dd","dd-MM-yyyy")}</span>
                             </span>
                             <span class="inline-detail-airport-code-wrapper">
                                 <span class="inline-detail-airport-code">${flightSegmentDetail.departureAirportCode.getAsString()}</span>
                                 <span class="inline-detail-airport-hour">${flightSegmentDetail.departureTime.getAsString()}</span>
                             </span>
                             <span class="inline-detail-airport-description">
-                            	${controllers.SearchController.getAirportCity(flightSegmentDetail.departureAirportCode.getAsString())}
+                                ${new utils.ApiFlightsSdk.v1.Airport().getByIataCode(flightSegmentDetail.departureAirportCode.getAsString()).city}
                             </span>
                         </div>
                         <div class="arrow-airport">
@@ -50,7 +51,7 @@
                             <span class="inline-detail-airport">
                                 <span class="inline-detail-airport-date">
                                     <span class="inline-detail-airport-date-text">Llega:</span>
-                                    <span>${flightSegmentDetail.arrivalDate.getAsString()}</span>
+                                    <span>${utils.DateUtils.reformateDate(flightSegmentDetail.arrivalDate.getAsString(),"yyyy-MM-dd","dd-MM-yyyy")}</span>
                                 </span>
                                 <span class="inline-detail-airport-code-wrapper">
                                     <span class="inline-detail-airport-code">${flightSegmentDetail.arrivalAirportCode.getAsString()}</span>
@@ -58,7 +59,7 @@
                                     #{daysDifference departure:flightSegmentDetail.departureDate, arrival: flightSegmentDetail.arrivalDate/}
                                 </span>
                                 <span class="inline-detail-airport-description">
-                                	${controllers.SearchController.getAirportCity(flightSegmentDetail.arrivalAirportCode.getAsString())}
+                                    ${new utils.ApiFlightsSdk.v1.Airport().getByIataCode(flightSegmentDetail.arrivalAirportCode.getAsString()).city}
                                 </span>
                             </span>
                         </div>
@@ -74,6 +75,7 @@
                             int flightElapsedMinutes = flightElapsedTime % 60;
                             }%
                             <span class="inline-detail-flight-data-description">&{"%dh %02dm", flightElapsedHours, flightElapsedMinutes}</span>
+                            
                         </div>
                         <div class="inline-detail-flight-data">
                             <span class="inline-detail-flight-data-title">VUELO N°</span>
@@ -91,6 +93,9 @@
                         </div>
                     </li>
                 </ul>
+                #{if flightSegmentDetail.extraData!=null && flightSegmentDetail.extraData.longConnection}
+                	<span class="extraInfoDetail">Conexión por tiempo extenso, se sugiere estadía.</span>
+                #{/if}
             </li>
         #{/list}
     </ul>

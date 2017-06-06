@@ -19,7 +19,7 @@ import java.util.Map;
 
 public class SearchController extends Controller {
 
-    static final String URL = Play.configuration.getProperty("api.flight.url") + "/v1/getAutocomplete?q=";
+    static final String URL = Play.configuration.getProperty("api.flight.url");
 
     public static void getAutocomplete(String q) {
         try {
@@ -48,24 +48,11 @@ public class SearchController extends Controller {
         }
         return r;
     }
-    
-    public static int getIndexOfId(String airportCode){
-    	 List<Map> lista = getCachedAirports(airportCode);
-         int i =0;
-         for (Map<String, String> o : lista) {
-         	if (o.get("id").equals(airportCode)){
-         		return i;
-         	}
-         	i++;
- 		}
-        return 0;
-         
-    }
 
     private static List getAutoCompleteFromAPI(String q) {
         List result = Lists.newArrayList();
 
-        WSRequest request = WS.url(URL + q);
+        WSRequest request = WS.url(URL + "/v1/getAutocomplete?q=" + q);
 
         JsonArray resultArray = request.get().getJson().getAsJsonArray();
         for (JsonElement elem : resultArray) {
@@ -79,68 +66,5 @@ public class SearchController extends Controller {
         }
 
         return result;
-    }
-    public static List getCachedAirports(String q){
-        final String key = "autocomplete-" + q;
-        List r = Cache.get(key, List.class);
-        if (r == null) {
-            r = getAutoCompleteFromAPI(q);
-            if (!r.isEmpty()) {
-                Cache.set(key, r, "1d");
-            }
-        }
-        return r;
-    }
-    
-    public static String getAirportName(String airportCode){
-        List<Map> lista = getCachedAirports(airportCode);
-        String airport = "";
-        for (Map<String, String> o : lista) {
-        	if (o.get("id").equals(airportCode)){
-        		airport = o.get("name");
-        		return airport;
-        	}
-		}
-        return airport;
-    }
-    public static String getAirportCity(String airportCode){
-        List<Map> lista = getCachedAirports(airportCode);
-        String city = "";
-        for (Map<String, String> o : lista) {
-        	if (o.get("id").equals(airportCode)){
-        		city = o.get("city");
-        		return city;
-        	}
-		}
-        return city;
-    }
-    public static String getAirportCityCode(String airportCode){
-        List<Map> lista = getCachedAirports(airportCode);
-        String city = "";
-        for (Map<String, String> o : lista) {
-        	for (Map.Entry<String, String> entry : o.entrySet())
-        	{
-        		if (entry.getKey().equals("iataCityCode") ) {
-        			city = entry.getValue();
-        			return city;
-        		}
-        	}
-		}
-        return city;
-    }
-    
-    public static String getAirportCountry(String airportCode){
-        List<Map> lista = getCachedAirports(airportCode);
-        String country = "";
-        for (Map<String, String> o : lista) {
-        	for (Map.Entry<String, String> entry : o.entrySet())
-        	{
-        		if (entry.getKey().equals("country") ) {
-        			country = entry.getValue();
-        			return country;
-        		}
-        	}
-		}
-        return country;
     }
 }

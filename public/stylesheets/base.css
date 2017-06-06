@@ -1336,6 +1336,11 @@
 .airlineLogo {
 	max-width: 32px !important;
 }
+.extraInfoDetail {
+	background-color: #fa564d;
+    color: white;
+    padding: 5px;
+}
 /* media
 =================================== */
 
@@ -1346,7 +1351,7 @@
 
 	.ticket .info-flight {
 		margin-right: 0;
-	    display: table-row;
+	    display: table-header-group;
 	    width: 100%;
 	    position: relative;
 	    vertical-align: top;
@@ -1355,7 +1360,7 @@
 		width: 100%;
 	    position: relative;
 	    padding: 0;
-	    display: table-header-group;
+	    display: table-row;
 	}
 }
 
@@ -1437,3 +1442,4 @@
 		display: inline-block;
 	}
 }
+

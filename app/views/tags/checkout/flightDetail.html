@@ -6,7 +6,7 @@
     </div>
     <ul>
         <li class="name-passenger">
-            <strong class="name">${controllers.SearchController.getAirportCity(_segments.departureCityCode.getAsString())}</strong>
+            <strong class="name">${new utils.ApiFlightsSdk.v1.Airport().getByIataCode(_segments.departureCityCode.getAsString()).city}</strong>
             <span class="last-name">${_segments.departureCityCode.getAsString()}</span>
         </li>
         <li class="time">
@@ -38,7 +38,7 @@ int departureElapsedMinutes = departureElapsedTime % 60;
             <span class="to-time">${_segments.returnTime.getAsString()}</span>
         </li>
         <li class="name-passenger">
-            <strong class="name">${controllers.SearchController.getAirportCity(_segments.returnCityCode.getAsString())}</strong>
+            <strong class="name">${new utils.ApiFlightsSdk.v1.Airport().getByIataCode(_segments.returnCityCode.getAsString()).city}</strong>
             <span class="last-name">${_segments.returnCityCode.getAsString()}</span>
         </li>
     </ul>

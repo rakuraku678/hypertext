@@ -6,7 +6,7 @@
 
         <div class="checkbox">
             <label>
-                <input type="radio" name="outboundflightstops" value="x" checked class="escalaRd"> Todas las escalas
+                <input type="radio" name="outboundflightstops" value="x" checked class="escalaRd" id="clearStopsFilter"> Todas las escalas
             </label>
             <div class="box-number selected-box"><span id="allStops"></span></div>
         </div>
@@ -52,12 +52,11 @@ $(document).ready(function() {
 			$('.ticketBaxer').hide();
         	$("div").find("[data-escala='" + $(this).val() + "'][data-returnEscala='" + $(this).val() + "']").show();
 		}
+        checkEmptyFilterResult();
     });
 	$("#allStops").html($('.ticketBaxer').length);
 	$("#directStop").html($("div").find("[data-escala='0'][data-returnEscala='0']").length);
 	$("#oneStop").html($("div").find("[data-escala='1'][data-returnEscala='1']").length);
 	$("#twoStop").html($("div").find("[data-escala='2'][data-returnEscala='2']").length);
-	
-	
 });
 </script>
