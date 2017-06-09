@@ -12,6 +12,14 @@ $(document).ready(function () {
             maxDate: '-1D'
         });
     
+    $('.validatedatePas').datepicker(
+            {
+                dateFormat: 'dd/mm/yy',
+                changeMonth: true,
+                changeYear: true,
+            });
+        
+    
     $('#checkoutForm').bootstrapValidator({
         fields: {
             validatesex: {
@@ -69,10 +77,10 @@ $(document).ready(function () {
                 }
             },
             validatedate: {
-                selector: '.validatedate',
+                selector: '.validatedate, .validatedatePas',
                 validators: {
                     notEmpty: {
-                        message: 'El campo fecha de nacimiento está vacio.'
+                        message: 'El campo está vacio.'
                     },
                     date: {
                         format: 'DD/MM/YYYY',
@@ -80,7 +88,7 @@ $(document).ready(function () {
                     },
                     regexp: {
                         regexp: /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/,
-                        message: 'día/mes/año'
+                        message: 'Fecha no válida'
                     }
                 }
             },
@@ -144,13 +152,27 @@ $(document).ready(function () {
 		 
     });
     
+	$("#selectDoc").click(function( event ) {
+		if ($(this).val() == "PAS") {
+			$("#pasaporteBox").show();
+			$("#pasNum").show();
+			$("#rutNum").hide();
+			$("#rutNum").siblings("small").hide();
+		}
+		else {
+			$("#pasaporteBox").hide();
+			$("#rutNum").show();
+			$("#pasNum").hide();
+		}
+	});
     
 });
 
 function startBooking() {
 	var error = false
 	$( ".validatedocumentnum" ).each(function( index ) {
-		if (!checkRut(this)){
+		if (!checkRut(this) && $("#selectDoc").val()=="RUT"){
+			alert("no va: "+$("#selectDoc").val());
 	    	$(this).next().next().css("display","block");
 	    	$(this).next().next().css("color","#a94442");
 	    	$(this).css("border-color","#a94442 !important");
@@ -185,6 +207,7 @@ function startBooking() {
     formSerializeJson.bfmResultItem = $.parseJSON(formSerializeJson.bfmResultItem);
     formSerializeJson.origin = window.location.origin;
     var data = JSON.stringify(formSerializeJson);
+    console.log("datos wacho: "+data);
     $.ajax({
         type: "POST",
         url: "@{BookingController.startBooking}",
