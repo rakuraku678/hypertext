@@ -144,7 +144,7 @@ $(document).ready(function () {
         	$(this).next().next().css("display","block");
         	$(this).next().next().css("color","#a94442");
         	$(this).css("border-color","#a94442 !important");
-        	$("#btnContinue").attr("disabled","disabled");
+        	//$("#btnContinue").attr("disabled","disabled");
         }
         else {
         	$("#btnContinue").removeAttr("disabled");
@@ -172,7 +172,6 @@ function startBooking() {
 	var error = false
 	$( ".validatedocumentnum" ).each(function( index ) {
 		if (!checkRut(this) && $("#selectDoc").val()=="RUT"){
-			alert("no va: "+$("#selectDoc").val());
 	    	$(this).next().next().css("display","block");
 	    	$(this).next().next().css("color","#a94442");
 	    	$(this).css("border-color","#a94442 !important");
@@ -207,7 +206,6 @@ function startBooking() {
     formSerializeJson.bfmResultItem = $.parseJSON(formSerializeJson.bfmResultItem);
     formSerializeJson.origin = window.location.origin;
     var data = JSON.stringify(formSerializeJson);
-    console.log("datos wacho: "+data);
     $.ajax({
         type: "POST",
         url: "@{BookingController.startBooking}",

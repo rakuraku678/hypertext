@@ -63,7 +63,8 @@
            	<div class="col-md-12 form-group" id="pasaporteBox" style="display: none;">
                   <div class="col-md-6 form-group">
                       <label>Nacionalidad del pasajero:</label>
-                      <input type="text" class="form-control" name="passengers[${_key}][nacionalityPassport]" placeholder="ej. Chileno">
+                      %{nameNacionality = 'passengers['+ _key +'][nacionalityPassport]'}%
+                      #{countriesCombo countriesList:_countriesList, name:nameNacionality /}
                   </div>
                   <div class="col-md-6 form-group">
                       <label>Fecha de vencimiento de documento:</label>
@@ -71,7 +72,8 @@
                   </div>
                   <div class="col-md-6 form-group">
                       <label>Nacionalidad donde fue emitido el documento:</label>
-                      <input type="text" class="form-control" name="passengers[${_key}][countryPassport]" placeholder="ej. Chile">
+                       %{nameIssuedCountry = 'passengers['+ _key +'][countryPassport]'}%
+                      #{countriesCombo countriesList:_countriesList, name:nameIssuedCountry /}
                   </div>
            	</div>
             

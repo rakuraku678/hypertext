@@ -37,7 +37,7 @@ public class BookingController extends Controller {
         	
         	if (passengersArray.get(i).getAsJsonObject().get("foidType").getAsString().equals("PAS")){
         		jsonEl.addProperty("nacionalityPassport", passengersArray.get(i).getAsJsonObject().get("nacionalityPassport").getAsString());
-        		jsonEl.addProperty("expirationPassport", passengersArray.get(i).getAsJsonObject().get("expirationPassport").getAsString());
+        		jsonEl.addProperty("expirationPassport", DateUtils.reformateDate(passengersArray.get(i).getAsJsonObject().get("expirationPassport").getAsString(),"dd/MM/yyyy","yyyy-MM-dd"));
         		jsonEl.addProperty("countryPassport", passengersArray.get(i).getAsJsonObject().get("countryPassport").getAsString());
         	}
         	
