@@ -639,3 +639,7 @@ h2 {
 	padding: 0px 12px;
 	margin-bottom: 0;
 }
+.sub-label{
+	color: #b2b2b2;
+    font-size: 11px !important;
+}

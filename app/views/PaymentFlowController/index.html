@@ -3,7 +3,6 @@
 
 #{set isAgencyHeader: false /}
 
-
 <section class="bg-path">
     <article class="container-fluid">
         <div class="row">
@@ -35,7 +34,7 @@
                     %{ int passengersNumber = 1; }%
                     #{list bfmResultItem.pricing.detail, as:'pricingDetails'}
                         #{list items:1..pricingDetails.quantity.getAsInt(), as:'i'}
-                            #{checkout.passengerBox key: passengersCount, passengerNumber: passengersNumber+".1", passengerType: pricingDetails.code.getAsString() /}
+                            #{checkout.passengerBox key: passengersCount, passengerNumber: passengersNumber+".1", passengerType: pricingDetails.code.getAsString(), countriesList:countriesList /}
                             %{ passengersCount++; }%
                             %{ passengersNumber++; }%
                         #{/list}

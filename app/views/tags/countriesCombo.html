@@ -1,0 +1,5 @@
+<select name="${_name}" class="form-control">
+	#{list _countriesList, as:'country'}
+		<option value="${country.code}">${country.name}</option>
+	#{/list}
+</select>

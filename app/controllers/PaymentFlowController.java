@@ -1,5 +1,10 @@
 package controllers;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -7,20 +12,17 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import play.mvc.*;
+import play.mvc.Controller;
 import utils.AgencyConfigurationDto;
-import utils.ApiFlightsSdk.v1.AirRules;
-import utils.ApiFlightsSdk.v1.Booking;
-import utils.ApiFlightsSdk.v1.Promotion;
 import utils.JsonUtils;
 import utils.TravelClubUtils;
+import utils.ApiFlightsSdk.v1.AirRules;
+import utils.ApiFlightsSdk.v1.Booking;
+import utils.ApiFlightsSdk.v1.Country;
+import utils.ApiFlightsSdk.v1.Promotion;
 import utils.dtos.AirRulesDto;
+import utils.dtos.CountryDto;
 import utils.dtos.PromotionDto;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 public class PaymentFlowController extends Controller {
 
@@ -36,7 +38,6 @@ public class PaymentFlowController extends Controller {
 
         JsonElement bfmResultItem = new JsonParser().parse(params.get("bfmResultItem"));
 
-        
         String selectedCurrency = params.get("selectedCurrency");
         String dollarExchangeRate = TravelClubUtils.getDollarExchangeRate(promotionDto.agency.externalId);
 
@@ -59,7 +60,10 @@ public class PaymentFlowController extends Controller {
             airRules.fareBasis = fareBasis;
             airRulesResultList.add(airRules.process());
         }
-        render(agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate, airRulesResultList, promotionDto);
+        
+        List<CountryDto> countriesList = Country.process();
+        
+        render(agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate, airRulesResultList, promotionDto, countriesList);
     }
 
     public static void processPayment(){
