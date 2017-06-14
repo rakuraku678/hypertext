@@ -38,8 +38,12 @@ $(document).ready(function () {
                         message: 'El campo Nombre esta vacio.'
                     },
                     regexp: {
-                        regexp: /^[a-zA-Z_áéíóúñ\s]*$/i,
+                        regexp: /^[a-zA-Z\s]*$/i,
                         message: 'Campo no válido'
+                    },
+                    stringLength : {
+                    	max: 25,
+                    	message: "Máximo 25 caracteres"
                     }
                 }
             },
@@ -51,8 +55,12 @@ $(document).ready(function () {
                         message: 'El campo Apellido esta vacio.'
                     },
                     regexp: {
-                        regexp: /^[a-zA-Z_áéíóúñ\s]*$/i,
+                    	regexp: /^[a-zA-Z\s]*$/i,
                         message: 'Campo no válido'
+                    },
+                    stringLength : {
+                    	max: 25,
+                    	message: "Máximo 25 caracteres"
                     }
                 }
             },
@@ -101,8 +109,20 @@ $(document).ready(function () {
                     regexp: {
                         regexp: /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/,
                         message: 'mail@ejemplo.com'
+                    },
+                    stringLength : {
+                    	max: 25,
+                    	message: "Máximo 25 caracteres"
                     }
                 }
+            },
+            validateCountryCombo: {
+            	selector: '.validateCountryCombo',
+            	validators: {
+                    notEmpty: {
+                        message: 'Debe seleccionar un País.'
+                    }
+            	}
             },
             validatephone: {
                 selector: '.validatephone',
@@ -138,7 +158,7 @@ $(document).ready(function () {
        		startBooking();	
         }
     });
-    
+
     $( ".validatedocumentnum" ).change(function( index ) {
         if (!checkRut(this)){
         	$(this).next().next().css("display","block");
