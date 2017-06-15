@@ -84,11 +84,11 @@ $(document).ready(function () {
                 selector: '.validatedocumentnum',
                 validators: {
                     notEmpty: {
-                        message: 'Este campo esta vacio.'
+                        message: ' '
                     },
                     regexp: {
                         regexp: /^[0-9kK]*$/,
-                        message: 'Campo no válido'
+                        message: ' '
                     }
                 }
             },
@@ -157,8 +157,6 @@ $(document).ready(function () {
     });
     $( ".validatedocumentnum" ).change(function( index ) {
         if (!checkRut(this)){
-        	$(this).next().next().css("display","block");
-        	$(this).next().next().css("color","#a94442");
         	$(this).css("border-color","#a94442 !important");
         	//$("#btnContinue").attr("disabled","disabled");
         }
@@ -181,6 +179,10 @@ $(document).ready(function () {
 			$("#pasNum").hide();
 		}
 	});
+	
+	$("#btnContinue").click(function( event ) {
+		checkDates();
+	})
     
 });
 
@@ -229,8 +231,6 @@ function startBooking() {
 
 	$( ".validatedocumentnum" ).each(function( index ) {
 		if (!checkRut(this) && $("#selectDoc").val()=="RUT"){
-	    	$(this).next().next().css("display","block");
-	    	$(this).next().next().css("color","#a94442");
 	    	$(this).css("border-color","#a94442 !important");
 	    	return false;
 	    }
