@@ -147,6 +147,14 @@ $(document).ready(function () {
         }
     });
 
+    
+    $( ".validatedate, .validatedatePas" ).change(function() {
+    	checkDates();
+    });
+    
+    $( ".validatedate, .validatedatePas" ).keyup(function() {
+    	checkDates();
+    });
     $( ".validatedocumentnum" ).change(function( index ) {
         if (!checkRut(this)){
         	$(this).next().next().css("display","block");
@@ -176,6 +184,46 @@ $(document).ready(function () {
     
 });
 
+function checkDates() {
+	var ok = true;
+	var re = new RegExp(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/);
+	if ($( ".validatedate" ).val().trim()==''){
+		$( ".validatedate" ).parent().addClass("has-error");
+		$("#emptyfnac").show();
+		ok=false;
+	}
+	else if (!re.test($( ".validatedate" ).val())){
+		$( ".validatedate" ).parent().addClass("has-error");
+		$("#invfnac").show();
+		ok=false;
+	}
+	else {
+		$( ".validatedate" ).parent().removeClass("has-error");
+		$("#invfnac").hide();
+		$("#emptyfnac").hide();
+	}
+	
+	
+	if ($( "#pasaporteBox" ).css("display")=="block" && $( ".validatedatePas" ).val().trim()==''){
+		$( ".validatedatePas" ).parent().addClass("has-error")
+		$("#emptyfpas").show();
+		$('.validatedatePas').parent().parent().removeClass("has-success");
+		ok=false;
+	}
+	else if ($( "#pasaporteBox" ).css("display")=="block" && !re.test($( ".validatedatePas" ).val()) ){
+		$( ".validatedatePas" ).parent().addClass("has-error");
+		$("#invfpas").show();
+		$('.validatedatePas').parent().parent().removeClass("has-success");
+		ok=false;
+	}
+	else {
+		$( ".validatedatePas" ).parent().removeClass("has-error");
+		$("#invfpas").hide();
+		$("#emptyfpas").hide();
+	}
+	
+	return ok;
+}
 function startBooking() {
 	var error = false;
 
@@ -191,32 +239,9 @@ function startBooking() {
 	    }
 	});
 
-	var re = new RegExp(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/);
-	if ($( ".validatedate" ).val().trim()==''){
-		$( ".validatedate" ).parent().addClass("has-error");
-		$("#emptyfnac").show();
-		error=true;
+	if (!checkDates()){
+		error = true;
 	}
-	else if (!re.test($( ".validatedate" ).val())){
-		$( ".validatedate" ).parent().addClass("has-error");
-		$("#invfnac").show();
-		error=true;
-	}
-	
-	
-	
-	if ($( "#pasaporteBox" ).css("display")=="block" && $( ".validatedatePas" ).val().trim()==''){
-		$( ".validatedatePas" ).parent().addClass("has-error")
-		$("#emptyfpas").show();
-		error=true;
-	}
-	else if ($( "#pasaporteBox" ).css("display")=="block" && !re.test($( ".validatedatePas" ).val()) ){
-		$( ".validatedatePas" ).parent().addClass("has-error");
-		$("#invfpas").show();
-		error=true;
-	}
-	
-	
 	
 	if (error) {
 		var errors = $('.has-error')
