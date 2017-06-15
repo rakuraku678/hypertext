@@ -8,7 +8,7 @@
                 <a class="btn icon-arrow-payment" data-toggle="collapse" href="#detailFlyTo" aria-expanded="false" aria-controls="detailFlyTo">
                     <i class="icon-fly"></i>
                     <span class="title-payment">Ida</span>
-                    <span class="date-fly-payment">${_bfmResultItem.departureDate.getAsString()} (${_bfmResultItem.departureAirportCode.getAsString()} > ${_bfmResultItem.returnAirportCode.getAsString()}) (ver detalle)</span>
+                    <span class="date-fly-payment">${utils.DateUtils.reformateDate(_bfmResultItem.departureDate.getAsString(),"yyyy-MM-dd","dd-MM-yyyy")} (${_bfmResultItem.departureAirportCode.getAsString()} > ${_bfmResultItem.returnAirportCode.getAsString()}) (ver detalle)</span>
                 </a>
             </li>
         </ul>
@@ -22,7 +22,7 @@
                 <a class="btn icon-arrow-payment" data-toggle="collapse" href="#detailFlyFrom" aria-expanded="false" aria-controls="detailFlyFrom">
                     <i class="icon-fly-vuelta"></i>
                     <span class="title-payment">Vuelta</span>
-                    <span class="date-fly-payment">${_bfmResultItem.returnDate.getAsString()} (${_bfmResultItem.returnSegment.departureCityCode.getAsString()} > ${_bfmResultItem.returnSegment.returnCityCode.getAsString()}) (ver detalle)</span>
+                    <span class="date-fly-payment">${utils.DateUtils.reformateDate(_bfmResultItem.returnDate.getAsString(),"yyyy-MM-dd","dd-MM-yyyy")} (${_bfmResultItem.returnSegment.departureCityCode.getAsString()} > ${_bfmResultItem.returnSegment.returnCityCode.getAsString()}) (ver detalle)</span>
                 </a>
             </li>
         </ul>
