@@ -92,22 +92,6 @@ $(document).ready(function () {
                     }
                 }
             },
-            validatedate: {
-                selector: '.validatedate, .validatedatePas',
-                validators: {
-                    notEmpty: {
-                        message: 'El campo está vacio.'
-                    },
-                    date: {
-                        format: 'DD/MM/YYYY',
-                        message: 'día/mes/año'
-                    },
-                    regexp: {
-                        regexp: /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/,
-                        message: 'Fecha no válida'
-                    }
-                }
-            },
             validateemail: {
                 selector: '.validateemail',
                 validators: {
@@ -193,13 +177,13 @@ $(document).ready(function () {
 });
 
 function startBooking() {
-	var error = false
+	var error = false;
+
 	$( ".validatedocumentnum" ).each(function( index ) {
 		if (!checkRut(this) && $("#selectDoc").val()=="RUT"){
 	    	$(this).next().next().css("display","block");
 	    	$(this).next().next().css("color","#a94442");
 	    	$(this).css("border-color","#a94442 !important");
-	    	error = true;
 	    	return false;
 	    }
 	    else {
@@ -207,7 +191,36 @@ function startBooking() {
 	    }
 	});
 
-	if (error){
+	var re = new RegExp(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/);
+	if ($( ".validatedate" ).val().trim()==''){
+		$( ".validatedate" ).parent().addClass("has-error");
+		$("#emptyfnac").show();
+		error=true;
+	}
+	else if (!re.test($( ".validatedate" ).val())){
+		$( ".validatedate" ).parent().addClass("has-error");
+		$("#invfnac").show();
+		error=true;
+	}
+	
+	
+	
+	if ($( "#pasaporteBox" ).css("display")=="block" && $( ".validatedatePas" ).val().trim()==''){
+		$( ".validatedatePas" ).parent().addClass("has-error")
+		$("#emptyfpas").show();
+		error=true;
+	}
+	else if ($( "#pasaporteBox" ).css("display")=="block" && !re.test($( ".validatedatePas" ).val()) ){
+		$( ".validatedatePas" ).parent().addClass("has-error");
+		$("#invfpas").show();
+		error=true;
+	}
+	
+	
+	
+	if (error) {
+		var errors = $('.has-error')
+        $('html, body').animate({ scrollTop: errors.offset().top - 50 }, 500);
 		return false;
 	}
 	
