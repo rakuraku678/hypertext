@@ -59,6 +59,8 @@
             <div class="col-md-6 form-group">
                 <label>Fecha de nacimiento:</label>
                 <input type="text" style="margin-top: 32px;" class="form-control validatedate" name="passengers[${_key}][dateOfBirth]" placeholder="01/01/1990">
+                <small class="help-block" id="invfnac" style="display: none;">Campo no válido</small>
+                <small class="help-block" id="emptyfnac" style="display: none;">El campo esta vacio.</small>
             </div>
            	<div class="col-md-12 form-group" id="pasaporteBox" style="display: none;">
            		<div class="row">
@@ -70,6 +72,8 @@
 	                  <div class="col-md-6 form-group">
 	                      <label>Fecha de vencimiento de documento:</label>
 	                      <input type="text" class="form-control validatedatePas" name="passengers[${_key}][expirationPassport]" placeholder="ej. 01/01/1990" >
+	                      <small class="help-block" id="invfpas" style="display: none;">Campo no válido</small>
+                		  <small class="help-block" id="emptyfpas" style="display: none;">El campo esta vacio.</small>
 	                  </div>
 	                  <div class="col-md-6 form-group">
 	                      <label>Nacionalidad donde fue emitido el documento:</label>
