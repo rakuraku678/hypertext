@@ -38,12 +38,8 @@ $(document).ready(function () {
                         message: 'El campo Nombre esta vacio.'
                     },
                     regexp: {
-                        regexp: /^[a-zA-Z\s]*$/i,
+                        regexp: /^[a-zA-Z_áéíóúñ\s]*$/i,
                         message: 'Campo no válido'
-                    },
-                    stringLength : {
-                    	max: 25,
-                    	message: "Máximo 25 caracteres"
                     }
                 }
             },
@@ -55,12 +51,8 @@ $(document).ready(function () {
                         message: 'El campo Apellido esta vacio.'
                     },
                     regexp: {
-                    	regexp: /^[a-zA-Z\s]*$/i,
+                        regexp: /^[a-zA-Z_áéíóúñ\s]*$/i,
                         message: 'Campo no válido'
-                    },
-                    stringLength : {
-                    	max: 25,
-                    	message: "Máximo 25 caracteres"
                     }
                 }
             },
@@ -69,6 +61,22 @@ $(document).ready(function () {
                 validators: {
                     notEmpty: {
                         message: 'Tipo de documento esta vacio.'
+                    }
+                }
+            },
+            validatepassport: {
+                selector: '.validatepassport',
+                validators: {
+                    regexp: {
+                    	regexp: /^[a-zA-Z0-9]*$/i,
+                        message: 'Campo no válido'
+                    },
+                    stringLength : {
+                    	max: 25,
+                    	message: "Máximo 25 caracteres"
+                    },
+                    notEmpty: {
+                        message: 'El campo esta vacio.'
                     }
                 }
             },
@@ -109,10 +117,6 @@ $(document).ready(function () {
                     regexp: {
                         regexp: /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/,
                         message: 'mail@ejemplo.com'
-                    },
-                    stringLength : {
-                    	max: 25,
-                    	message: "Máximo 25 caracteres"
                     }
                 }
             },
