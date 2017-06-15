@@ -51,7 +51,7 @@
 
                     <div class="col-xs-8">
                         <input id="rutNum" type="text" class="form-control validatedocumentnum" name="passengers[${_key}][foid]" placeholder="ej. 190006441">
-                        <input id="pasNum" style="display: none;" type="text" class="form-control" name="passengers[${_key}][foid]" placeholder="ej. 190006441">
+                        <input id="pasNum" style="display: none;" type="text" class="form-control validatepassport" name="passengers[${_key}][foid]" placeholder="ej. 190006441">
                     </div>
                 </div>
             </div>
@@ -61,20 +61,22 @@
                 <input type="text" style="margin-top: 32px;" class="form-control validatedate" name="passengers[${_key}][dateOfBirth]" placeholder="01/01/1990">
             </div>
            	<div class="col-md-12 form-group" id="pasaporteBox" style="display: none;">
-                  <div class="col-md-6 form-group">
-                      <label>Nacionalidad del pasajero:</label>
-                      %{nameNacionality = 'passengers['+ _key +'][nacionalityPassport]'}%
-                      #{countriesCombo countriesList:_countriesList, name:nameNacionality /}
-                  </div>
-                  <div class="col-md-6 form-group">
-                      <label>Fecha de vencimiento de documento:</label>
-                      <input type="text" class="form-control validatedatePas" name="passengers[${_key}][expirationPassport]" placeholder="ej. 01/01/1990" >
-                  </div>
-                  <div class="col-md-6 form-group">
-                      <label>Nacionalidad donde fue emitido el documento:</label>
-                       %{nameIssuedCountry = 'passengers['+ _key +'][countryPassport]'}%
-                      #{countriesCombo countriesList:_countriesList, name:nameIssuedCountry /}
-                  </div>
+           		<div class="row">
+	                  <div class="col-md-6 form-group">
+	                      <label>Nacionalidad del pasajero:</label>
+	                      %{nameNacionality = 'passengers['+ _key +'][nacionalityPassport]'}%
+	                      #{countriesCombo countriesList:_countriesList, name:nameNacionality /}
+	                  </div>
+	                  <div class="col-md-6 form-group">
+	                      <label>Fecha de vencimiento de documento:</label>
+	                      <input type="text" class="form-control validatedatePas" name="passengers[${_key}][expirationPassport]" placeholder="ej. 01/01/1990" >
+	                  </div>
+	                  <div class="col-md-6 form-group">
+	                      <label>Nacionalidad donde fue emitido el documento:</label>
+	                       %{nameIssuedCountry = 'passengers['+ _key +'][countryPassport]'}%
+	                      #{countriesCombo countriesList:_countriesList, name:nameIssuedCountry /}
+	                  </div>
+                </div>
            	</div>
             
     </div>
