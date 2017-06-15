@@ -133,12 +133,12 @@
                             <span class="fly-day">${utils.DateUtils.reformateDate(_flight.returnDate.getAsString(),"yyyy-MM-dd","dd-MM-yyyy")}</span>
                         </li>
                         <li>
-                            <span class="airport">${new utils.ApiFlightsSdk.v1.Airport().getByIataCode(_flight.returnAirportCode.getAsString()).name}</span>
-                            <span class="description-airport">${_flight.returnAirportCode.getAsString()}</span>
+                            <span class="airport">${new utils.ApiFlightsSdk.v1.Airport().getByIataCode(_flight.returnSegment.departureCityCode.getAsString()).name}</span>
+                            <span class="description-airport">${_flight.returnSegment.departureCityCode.getAsString()}</span>
                         </li>
                         <li>
-                            <span class="airport">${new utils.ApiFlightsSdk.v1.Airport().getByIataCode(_flight.departureAirportCode.getAsString()).name}</span>
-                            <span class="description-airport">${_flight.departureAirportCode.getAsString()}</span>
+                            <span class="airport">${new utils.ApiFlightsSdk.v1.Airport().getByIataCode(_flight.returnSegment.returnCityCode.getAsString()).name}</span>
+                            <span class="description-airport">${_flight.returnSegment.returnCityCode.getAsString()}</span>
                         </li>
                     </ul>
                 </li>
