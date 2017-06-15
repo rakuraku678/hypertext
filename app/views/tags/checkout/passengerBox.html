@@ -63,6 +63,7 @@
                 <small class="help-block" id="emptyfnac" style="display: none;">El campo esta vacio.</small>
             </div>
            	<div class="col-md-12 form-group" id="pasaporteBox" style="display: none;">
+           		<div class="row">
 	                  <div class="col-md-6 form-group">
 	                      <label>Nacionalidad del pasajero:</label>
 	                      %{nameNacionality = 'passengers['+ _key +'][nacionalityPassport]'}%
@@ -74,10 +75,13 @@
 	                      <small class="help-block" id="invfpas" style="display: none;">Campo no válido</small>
                 		  <small class="help-block" id="emptyfpas" style="display: none;">El campo esta vacio.</small>
 	                  </div>
-	                  <div class="col-md-6 form-group">
-	                      <label>Nacionalidad donde fue emitido el documento:</label>
-	                       %{nameIssuedCountry = 'passengers['+ _key +'][countryPassport]'}%
-	                      #{countriesCombo countriesList:_countriesList, name:nameIssuedCountry /}
+	           </div>
+	                  <div class="row">
+		                  <div class="col-md-6 form-group" style="float: inherit !important;">
+		                      <label>Nacionalidad donde fue emitido el documento:</label>
+		                       %{nameIssuedCountry = 'passengers['+ _key +'][countryPassport]'}%
+		                      #{countriesCombo countriesList:_countriesList, name:nameIssuedCountry /}
+		                  </div>
 	                  </div>
            	</div>
             
