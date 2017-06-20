@@ -1,0 +1,6 @@
+<select name="${_name}" class="form-control validateCountryCombo">
+	<option value=""></option>
+	#{list _countriesList, as:'country'}
+		<option value="${country.code}">${country.name}</option>
+	#{/list}
+</select>

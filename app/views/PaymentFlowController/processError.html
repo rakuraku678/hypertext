@@ -54,6 +54,28 @@
                     <img src="@{'/public/img/logo-payment-travel-red.svg'}">
                 </div>
             #{/elseif}
+            #{elseif type == 'surname_validation'}
+                <div class="alert alert-danger" role="alert" style="width: 1000px; margin: auto; padding: 20px;">
+                    Estimado cliente,<br><br>
+                    Hemos detectado un error al momento de validar los datos.<br><br>
+                    Favor, intente realizar nuevamente la operación, realice una nueva búsqueda de disponibilidad o
+                    comuníquese con nosotros al mail <strong>ventaonline@travelclub.cl</strong><br><br>
+                    Atentamente,<br><br>
+                    Departamento de Ventas On Line.<br><br>
+                    <img src="@{'/public/img/logo-payment-travel-red.svg'}">
+                </div>
+            #{/elseif}
+            #{elseif type == 'pnr_notexists'}
+                <div class="alert alert-danger" role="alert" style="width: 1000px; margin: auto; padding: 20px;">
+                    Estimado cliente,<br><br>
+                    Hemos detectado un error al momento de validar los datos.<br><br>
+                    Favor, intente realizar nuevamente la operación, realice una nueva búsqueda de disponibilidad o
+                    comuníquese con nosotros al mail <strong>ventaonline@travelclub.cl</strong><br><br>
+                    Atentamente,<br><br>
+                    Departamento de Ventas On Line.<br><br>
+                    <img src="@{'/public/img/logo-payment-travel-red.svg'}">
+                </div>
+            #{/elseif}
             #{elseif type == 'blackout'}
                 <div class="alert alert-danger" role="alert" style="width: 1000px; margin: auto; padding: 20px;">
                     Estimado cliente,<br><br>

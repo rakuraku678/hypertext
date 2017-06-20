@@ -1,7 +1,11 @@
 package utils.ApiFlightsSdk.v1;
 
+import com.google.common.collect.Maps;
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import play.libs.WS;
+
+import java.util.Map;
 
 public class Booking extends ApiFlightsSDKBase {
 
@@ -13,6 +17,16 @@ public class Booking extends ApiFlightsSDKBase {
 
         request.body(body);
 
+        return processResponsePost(request);
+    }
+
+    public JsonElement retryPayment(String pnr, String surname){
+        Map dataMap = Maps.newHashMap();
+        dataMap.put("pnr", pnr);
+        dataMap.put("surname", surname);
+        WS.WSRequest request = prepareRequest(ENDPOINT + "/payment/retry");
+        String jsonBody = new Gson().toJson(dataMap);
+        request.body(jsonBody);
         return processResponsePost(request);
     }
 
