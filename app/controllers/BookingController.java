@@ -18,7 +18,6 @@ public class BookingController extends Controller {
     public static void startBooking(String body) {
 
         JsonElement bodyJsonElement = new JsonParser().parse(body);
-
         JsonArray passengersArray = bodyJsonElement.getAsJsonObject().get("passengers").getAsJsonArray();
         JsonArray cleanPassengersArray= new JsonArray();
         for (int i = 0; i < passengersArray.size(); i++) {
@@ -39,9 +38,11 @@ public class BookingController extends Controller {
         		jsonEl.addProperty("nacionalityPassport", passengersArray.get(i).getAsJsonObject().get("nacionalityPassport").getAsString());
         		jsonEl.addProperty("expirationPassport", DateUtils.reformateDate(passengersArray.get(i).getAsJsonObject().get("expirationPassport").getAsString(),"dd/MM/yyyy","yyyy-MM-dd"));
         		jsonEl.addProperty("countryPassport", passengersArray.get(i).getAsJsonObject().get("countryPassport").getAsString());
+        		jsonEl.addProperty("foid", passengersArray.get(i).getAsJsonObject().get("foid").getAsString());
+        	}else {
+        		jsonEl.addProperty("foid", passengersArray.get(i).getAsJsonObject().get("foidRut").getAsString());
         	}
         	
-        	jsonEl.addProperty("foid", passengersArray.get(i).getAsJsonObject().get("foid").getAsString());
         	jsonEl.addProperty("dateOfBirth", DateUtils.reformateDate(passengersArray.get(i).getAsJsonObject().get("dateOfBirth").getAsString(),"dd/MM/yyyy","yyyy-MM-dd"));
         	cleanPassengersArray.add(jsonEl);
 		}
