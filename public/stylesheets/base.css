@@ -355,6 +355,15 @@
 	height: 12px;
 	vertical-align: middle;
 }
+/* BANNER 
+================ */
+
+.banner-filter {
+	width: 100%;
+	min-height: 200px;
+	background-color: #8f9ea8;
+}
+
 /* validate
 ================ */
 .has-error .help-block,
@@ -849,6 +858,40 @@
 }
 .ticket .txt-view-detail .radio label input [type="radio"] {
 	width: 100%;	
+}
+/* info-detail-dues
+================ */
+
+.ticket .info-flight .info-detail-dues {
+	display: block;
+	background: #fdc130;
+	/* #5d6371 */
+    color: #8a6d3b;
+    min-height: 81px;
+}
+.ticket .info-flight .info-detail-dues .box-title-dues .title {
+	display: block;
+	line-height: 2;
+    margin-top: 10px;
+    font-size: 12px;
+}
+.ticket .info-flight .info-detail-dues .box-number-dues .title {
+	display: block;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 15px;
+}
+.ticket .info-flight .info-detail-dues .box-info-price-dues .title {
+	font-size: 17px;
+    margin-top: 10px;
+    display: block;
+}
+.ticket .info-flight .info-detail-dues .box-info-price-dues ul {
+	font-size: 10px;
+	padding: 0;
+}
+.ticket .info-flight .info-detail-dues .box-info-price-dues ul li {
+	
 }
 /* well ticket
 ================ */
