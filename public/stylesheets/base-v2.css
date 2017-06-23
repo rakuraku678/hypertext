@@ -157,7 +157,7 @@ h2 {
 =================== */
 
 .nav-travel {
-	background-color: #022565;
+	background-color: #022565!important;
 	border-radius: 0;
 	margin: 0;
 
@@ -186,7 +186,9 @@ h2 {
 .nav-user-travel {
 	width: 100%;
 }
-
+.nav-travel-viajes .navbar-nav {
+	margin: 7.5px 0;
+}
 .nav-user-travel ul li a,
 .nav-section-travel li a {
 	color: #fff!important;
