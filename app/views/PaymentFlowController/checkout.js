@@ -174,7 +174,7 @@ $(document).ready(function () {
 		 
     });
     
-	$(".validatedocument").click(function( event ) {
+	$(".validatedocument").change(function( event ) {
 		var pNum = $(this).data("pnum");
 		if ($(this).val() == "PAS") {
 			$("#pasaporteBox"+pNum).show();
