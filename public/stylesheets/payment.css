@@ -358,6 +358,20 @@ h2 {
     padding-bottom: 15px;
     text-transform: uppercase;
 }
+
+
+.box-date-birth {
+	position: relative;
+	min-height: 121px;
+}
+.modify-position-box {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+}
+.modify-position-box .validatedate {
+	width: 100%;
+}
 /* detail-fly-payment
 ==================== */
 .detail-fly-payment {
@@ -638,4 +652,8 @@ h2 {
 	color: #999999;
 	padding: 0px 12px;
 	margin-bottom: 0;
+}
+.sub-label{
+	color: #b2b2b2;
+    font-size: 11px !important;
 }

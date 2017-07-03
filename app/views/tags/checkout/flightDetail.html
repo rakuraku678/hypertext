@@ -1,12 +1,13 @@
 <div class="card card-block">
     <div class="fly-brand text-center">
     #{list items:_segments.airlinesCodes, as:"airlineCode"}
-        #{airlineLogo carriersCode:airlineCode?.getAsString().toLowerCase(), carriersName: airlineCode /}
-    #{/list}
+        #{airlineLogo carriersCode:airlineCode?.getAsString().toLowerCase(), carriersName: (new utils.ApiFlightsSdk.v1.AirlinesSearch().process(airlineCode?.getAsString())[0]?.name?.getAsString()) /}
+    #{/list}         
     </div>
     <ul>
         <li class="name-passenger">
-            <strong class="name">${new utils.ApiFlightsSdk.v1.Airport().getByIataCode(_segments.departureCityCode.getAsString()).city}</strong>
+            <strong class="name">${new utils.ApiFlightsSdk.v1.Airport().getByIataCode(_segments.departureCityCode.getAsString()).name}</strong>
+            <span class="last-name">${new utils.ApiFlightsSdk.v1.Airport().getByIataCode(_segments.departureCityCode.getAsString()).city}</span>
             <span class="last-name">${_segments.departureCityCode.getAsString()}</span>
         </li>
         <li class="time">
@@ -38,7 +39,8 @@ int departureElapsedMinutes = departureElapsedTime % 60;
             <span class="to-time">${_segments.returnTime.getAsString()}</span>
         </li>
         <li class="name-passenger">
-            <strong class="name">${new utils.ApiFlightsSdk.v1.Airport().getByIataCode(_segments.returnCityCode.getAsString()).city}</strong>
+             <strong class="name">${new utils.ApiFlightsSdk.v1.Airport().getByIataCode(_segments.returnCityCode.getAsString()).name}</strong>
+            <span class="last-name">${new utils.ApiFlightsSdk.v1.Airport().getByIataCode(_segments.returnCityCode.getAsString()).city}</span>
             <span class="last-name">${_segments.returnCityCode.getAsString()}</span>
         </li>
     </ul>

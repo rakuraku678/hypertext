@@ -40,21 +40,53 @@
             </div>
             <div class="col-md-6 form-group">
                 <label>Tipo y número de documento:</label>
+                <label class="sub-label" style="color: #3c0b9a;font-weight: bold;">*Viajes a USA, Europa, Caribe y destinos lejanos. Es Obligatorio seleccionar e ingresar información Pasaporte</label>
                 <div class="row">
                     <div class="col-xs-4">
-                        <select class="form-control icon-arrow-from validatedocument" name="passengers[${_key}][foidType]">
-                            <option>RUT</option>
+                        <select id="selectDoc" class="form-control icon-arrow-from validatedocument" name="passengers[${_key}][foidType]" data-pnum="${_key}">
+                            <option value="RUT">RUT</option>
+                            <option value="PAS">Pasaporte</option>
                         </select>
                     </div>
+
                     <div class="col-xs-8">
-                        <input type="text" class="form-control validatedocumentnum" name="passengers[${_key}][foid]" placeholder="ej. 190006441">
+                        <input id="rutNum${_key}" type="text" class="form-control validatedocumentnum" name="passengers[${_key}][foidRut]" placeholder="ej. 190006441">
+                        <input id="pasNum${_key}" style="display: none;" type="text" class="form-control validatepassport" name="passengers[${_key}][foid]" placeholder="ej. 190006441">
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-6 form-group">
-                <label>Fecha de nacimiento:</label>
-                <input type="text" class="form-control validatedate" name="passengers[${_key}][dateOfBirth]" placeholder="01/01/1990">
+            <div class="col-md-6 form-group box-date-birth">
+                <div class="modify-position-box">
+                    <label>Fecha de nacimiento:</label>
+                    <label class="sub-label" style="color: #3c0b9a;font-weight: bold;"> </label>
+                    <input type="text" class="form-control validatedate" name="passengers[${_key}][dateOfBirth]" placeholder="01/01/1990"  data-pnum="${_key}" >
+                    <small class="help-block" id="invfnac${_key}" style="display: none;">Campo no válido</small>
+                    <small class="help-block" id="emptyfnac${_key}" style="display: none;">El campo esta vacio.</small>
+                </div>
             </div>
+           	<div class="col-md-12 form-group" id="pasaporteBox${_key}" style="display: none;">
+           		<div class="row">
+	                  <div class="col-md-6 form-group">
+	                      <label>Nacionalidad del pasajero:</label>
+	                      %{nameNacionality = 'passengers['+ _key +'][nacionalityPassport]'}%
+	                      #{countriesCombo countriesList:_countriesList, name:nameNacionality /}
+	                  </div>
+	                  <div class="col-md-6 form-group">
+	                      <label>Fecha de vencimiento de documento:</label>
+	                      <input type="text" class="form-control validatedatePas" name="passengers[${_key}][expirationPassport]" placeholder="ej. 01/01/1990" data-pnum="${_key}">
+	                      <small class="help-block" id="invfpas${_key}" style="display: none;">Campo no válido</small>
+                		  <small class="help-block" id="emptyfpas${_key}" style="display: none;">El campo esta vacio.</small>
+	                  </div>
+	           </div>
+	                  <div class="row">
+		                  <div class="col-md-6 form-group" style="float: inherit !important;">
+		                      <label>Nacionalidad donde fue emitido el documento:</label>
+		                       %{nameIssuedCountry = 'passengers['+ _key +'][countryPassport]'}%
+		                      #{countriesCombo countriesList:_countriesList, name:nameIssuedCountry /}
+		                  </div>
+	                  </div>
+           	</div>
+            
     </div>
 </div>

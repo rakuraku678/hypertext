@@ -1,5 +1,10 @@
 package controllers;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -7,20 +12,17 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import play.mvc.*;
+import play.mvc.Controller;
 import utils.AgencyConfigurationDto;
-import utils.ApiFlightsSdk.v1.AirRules;
-import utils.ApiFlightsSdk.v1.Booking;
-import utils.ApiFlightsSdk.v1.Promotion;
 import utils.JsonUtils;
 import utils.TravelClubUtils;
+import utils.ApiFlightsSdk.v1.AirRules;
+import utils.ApiFlightsSdk.v1.Booking;
+import utils.ApiFlightsSdk.v1.Country;
+import utils.ApiFlightsSdk.v1.Promotion;
 import utils.dtos.AirRulesDto;
+import utils.dtos.CountryDto;
 import utils.dtos.PromotionDto;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 public class PaymentFlowController extends Controller {
 
@@ -36,7 +38,6 @@ public class PaymentFlowController extends Controller {
 
         JsonElement bfmResultItem = new JsonParser().parse(params.get("bfmResultItem"));
 
-        
         String selectedCurrency = params.get("selectedCurrency");
         String dollarExchangeRate = TravelClubUtils.getDollarExchangeRate(promotionDto.agency.externalId);
 
@@ -59,7 +60,10 @@ public class PaymentFlowController extends Controller {
             airRules.fareBasis = fareBasis;
             airRulesResultList.add(airRules.process());
         }
-        render(agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate, airRulesResultList, promotionDto);
+        
+        List<CountryDto> countriesList = Country.process();
+        
+        render(agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate, airRulesResultList, promotionDto, countriesList);
     }
 
     public static void processPayment(){
@@ -85,5 +89,79 @@ public class PaymentFlowController extends Controller {
 
     public static void javascript() {
         render("app/views/PaymentFlowController/checkout.js");
+    }
+
+    public static void newPayment(){
+        PromotionDto promotionDto;
+        if (!Strings.isNullOrEmpty(params.get("promotion"))) {
+            promotionDto = new Promotion().getBySlug(params.get("promotion"));
+        } else {
+            promotionDto = new Promotion().getDefault();
+        }
+
+        AgencyConfigurationDto agencyConfigurationDto = TravelClubUtils.getAgencyConfiguration(promotionDto.agency.externalId);
+
+        render(agencyConfigurationDto);
+    }
+
+    public static void processNewPayment(){
+        PromotionDto promotionDto;
+        if (!Strings.isNullOrEmpty(params.get("promotion"))) {
+            promotionDto = new Promotion().getBySlug(params.get("promotion"));
+        } else {
+            promotionDto = new Promotion().getDefault();
+        }
+
+        String pnr = params.get("pnr");
+        String surname = params.get("surname");
+
+        if (!Strings.isNullOrEmpty(pnr) && !Strings.isNullOrEmpty(surname)) {
+        } else {
+            redirect("PaymentFlowController.newPayment");
+        }
+
+        Booking booking = new Booking();
+        JsonElement retryPaymentResult = booking.retryPayment(pnr,surname);
+        JsonObject retryPaymentResultObject = retryPaymentResult.getAsJsonObject();
+
+        String error = JsonUtils.getStringFromJson(retryPaymentResultObject, "error");
+
+        JsonElement data = null;
+
+        switch (error) {
+            case "booking_abandon":
+                redirect("PaymentFlowController.processError", "abandon");
+                break;
+            case "booking_failure":
+                redirect("PaymentFlowController.processError", "failure");
+                break;
+            case "booking_canceled":
+                redirect("PaymentFlowController.processError", "canceled");
+                break;
+            case "booking_success":
+                data = JsonUtils.getJsonObjectFromJson(retryPaymentResultObject, "data");
+                JsonElement checkout = JsonUtils.getJsonObjectFromJson(data.getAsJsonObject(), "checkout");
+                String checkoutId = JsonUtils.getStringFromJson(checkout.getAsJsonObject(), "_id");
+                //redirect("PaymentConfirmController.index", checkoutId);
+                redirect("/checkout/"+checkoutId +"/confirmation");
+                break;
+            case "surname_validation":
+                redirect("PaymentFlowController.processError", "surname_validation");
+                break;
+            case "pnr_notexists":
+                redirect("PaymentFlowController.processError", "pnr_notexists");
+                break;
+            case "order_pending":
+                data = JsonUtils.getJsonObjectFromJson(retryPaymentResultObject, "data");
+                String travelPayLocationUrl = JsonUtils.getStringFromJson(data.getAsJsonObject(), "travelPayLocationUrl");
+                redirect(travelPayLocationUrl);
+                break;
+            default:
+                redirect("PaymentFlowController.newPayment");
+        }
+
+        AgencyConfigurationDto agencyConfigurationDto = TravelClubUtils.getAgencyConfiguration(promotionDto.agency.externalId);
+
+        render(agencyConfigurationDto, retryPaymentResultObject);
     }
 }
