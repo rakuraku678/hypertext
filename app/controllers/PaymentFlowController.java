@@ -61,9 +61,15 @@ public class PaymentFlowController extends Controller {
             airRulesResultList.add(airRules.process());
         }
         
+        Map cityMap = SearchController.getCity(JsonUtils.getStringFromJson(bfmResultJsonObject,"returnCity"));
+        boolean onlyPassport = false;
+        if (cityMap!=null){
+        	onlyPassport = (boolean) cityMap.get("onlyPassport");
+        }
+        
         List<CountryDto> countriesList = Country.process();
         
-        render(agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate, airRulesResultList, promotionDto, countriesList);
+        render(agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate, airRulesResultList, promotionDto, countriesList, onlyPassport);
     }
 
     public static void processPayment(){

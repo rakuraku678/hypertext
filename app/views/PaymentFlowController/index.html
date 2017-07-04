@@ -23,6 +23,7 @@
         </div>
     </article>
 </section>
+
 <section class="search-arrive payment-path">
     <form id="checkoutForm" action="javascript:void(0);" method="post">
         <article class="container-fluid">
@@ -34,7 +35,7 @@
                     %{ int passengersNumber = 1; }%
                     #{list bfmResultItem.pricing.detail, as:'pricingDetails'}
                         #{list items:1..pricingDetails.quantity.getAsInt(), as:'i'}
-                            #{checkout.passengerBox key: passengersCount, passengerNumber: passengersNumber+".1", passengerType: pricingDetails.code.getAsString(), countriesList:countriesList /}
+                            #{checkout.passengerBox key: passengersCount, passengerNumber: passengersNumber+".1", passengerType: pricingDetails.code.getAsString(), countriesList:countriesList, onlyPassport:onlyPassport /}
                             %{ passengersCount++; }%
                             %{ passengersNumber++; }%
                         #{/list}
