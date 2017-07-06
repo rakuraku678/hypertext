@@ -147,7 +147,6 @@ $(document).ready(function () {
         }
     });
 
-    
     $( ".validatedate" ).change(function() {
     	checkFNacDates(this);
     });
