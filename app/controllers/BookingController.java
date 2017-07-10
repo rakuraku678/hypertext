@@ -121,6 +121,7 @@ public class BookingController extends Controller {
 			return true;
 			 
 		} catch (Exception e) {
+			System.out.println("excepcion rara: "+e.getMessage());
 			return false;
 		}
     }
