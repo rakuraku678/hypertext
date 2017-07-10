@@ -16,6 +16,8 @@ public class BookingController extends Controller {
 
     public static void startBooking(String body) throws IOException {
 
+    	System.out.println("BODY START BOOKING:");
+    	System.out.println(body);
 	    JsonElement bodyJsonElement = new JsonParser().parse(body);
 	    JsonArray passengersArray = bodyJsonElement.getAsJsonObject().get("passengers").getAsJsonArray();
 	    JsonArray cleanPassengersArray= new JsonArray();
@@ -121,7 +123,8 @@ public class BookingController extends Controller {
 			return true;
 			 
 		} catch (Exception e) {
-			System.out.println("excepcion rara: "+e.getMessage());
+			System.out.println("expecion rara");
+			e.printStackTrace();
 			return false;
 		}
     }
