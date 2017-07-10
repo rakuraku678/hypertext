@@ -16,8 +16,6 @@ public class BookingController extends Controller {
 
     public static void startBooking(String body) throws IOException {
 
-    	System.out.println("BODY START BOOKING:");
-    	System.out.println(body);
 	    JsonElement bodyJsonElement = new JsonParser().parse(body);
 	    JsonArray passengersArray = bodyJsonElement.getAsJsonObject().get("passengers").getAsJsonArray();
 	    JsonArray cleanPassengersArray= new JsonArray();
@@ -93,11 +91,14 @@ public class BookingController extends Controller {
 			String expirationPassport = passengersArray.get(pNumber).getAsJsonObject().get("expirationPassport").getAsString();
 			String countryPassport = passengersArray.get(pNumber).getAsJsonObject().get("countryPassport").getAsString();
 			String foid = passengersArray.get(pNumber).getAsJsonObject().get("foid").getAsString();
-			String foidRut = passengersArray.get(pNumber).getAsJsonObject().get("foidRut").getAsString();
+			String foidRut = "";
+			if (!foidType.equals("PAS") ){
+				foidRut = passengersArray.get(pNumber).getAsJsonObject().get("foidRut").getAsString();
+			}
 			String dateOfBirth = passengersArray.get(pNumber).getAsJsonObject().get("dateOfBirth").getAsString();
 			
 			if (foidType.equals("PAS") && (Strings.isNullOrEmpty(foid) || Strings.isNullOrEmpty(nacionalityPassport) || Strings.isNullOrEmpty(expirationPassport) || Strings.isNullOrEmpty(countryPassport)) ){
-				System.out.println("cayo aca: "+foidType);
+				System.out.println("Campo vacio con Pasaporte: "+foidType);
 				System.out.println(foid);
 				System.out.println(nacionalityPassport);
 				System.out.println(expirationPassport);
@@ -109,7 +110,7 @@ public class BookingController extends Controller {
 					Strings.isNullOrEmpty(passengerType) || Strings.isNullOrEmpty(gender) ||
 					Strings.isNullOrEmpty(foidRut) || Strings.isNullOrEmpty(dateOfBirth) )
 					) {
-				System.out.println("cayo aca 2: ");
+				System.out.println("Campo vacio con RUT: "+foidType);
 				System.out.println(givenName);
 				System.out.println(surname);
 				System.out.println(number);
