@@ -95,13 +95,26 @@ public class BookingController extends Controller {
 			String dateOfBirth = passengersArray.get(pNumber).getAsJsonObject().get("dateOfBirth").getAsString();
 			
 			if (foidType.equals("PAS") && (Strings.isNullOrEmpty(foid) || Strings.isNullOrEmpty(nacionalityPassport) || Strings.isNullOrEmpty(expirationPassport) || Strings.isNullOrEmpty(countryPassport)) ){
+				System.out.println("cayo aca: "+foidType);
+				System.out.println(foid);
+				System.out.println(nacionalityPassport);
+				System.out.println(expirationPassport);
+				System.out.println(countryPassport);
 				return false;
 			}
 			else if (
-					Strings.isNullOrEmpty(givenName) || Strings.isNullOrEmpty(surname) || Strings.isNullOrEmpty(number) ||
+					!foidType.equals("PAS") && (Strings.isNullOrEmpty(givenName) || Strings.isNullOrEmpty(surname) || Strings.isNullOrEmpty(number) ||
 					Strings.isNullOrEmpty(passengerType) || Strings.isNullOrEmpty(gender) ||
-					Strings.isNullOrEmpty(foidRut) || Strings.isNullOrEmpty(dateOfBirth)
+					Strings.isNullOrEmpty(foidRut) || Strings.isNullOrEmpty(dateOfBirth) )
 					) {
+				System.out.println("cayo aca 2: ");
+				System.out.println(givenName);
+				System.out.println(surname);
+				System.out.println(number);
+				System.out.println(passengerType);
+				System.out.println(gender);
+				System.out.println(foidRut);
+				System.out.println(dateOfBirth);
 				return false;
 			}
 			
