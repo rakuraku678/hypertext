@@ -216,25 +216,13 @@
 							
                         </li>
                         </li>
+
                         <div class="collapse" id="returnSegment${_flight.sequenceNumber.getAsString()}">
                             #{list items:_flight.returnSegment, as:'flightSegment'}
                                 #{flightsItemDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes:_flight.pricing.bookingCodes/}
                             #{/list}
                         </div>
                     </ul>
-                </li>
-                <li class="info-detail-dues">
-                    <div class="col-xs-4 box-title-dues">
-                        <span class="title">Valor pagando con tus <strong>Tarjetas Travel</strong></span>
-                    </div>
-                    <div class="col-xs-4 box-number-dues"><span class="title">12 cuotas sin interes</span></div>
-                    <div class="col-xs-4 box-info-price-dues">
-                        <span class="title">$18.250</span>
-                        <ul>
-                            <li>C.A.E: 0.77%</li>
-                            <li>Costo total del crédito: $2500000</li>
-                        </ul>
-                    </div>
                 </li>
             </ul>
         </div>
