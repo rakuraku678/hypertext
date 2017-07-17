@@ -862,12 +862,30 @@
 /* info-detail-dues
 ================ */
 
-.ticket .info-flight .info-detail-dues {
-	display: block;
-	background: #fdc130;
-	/* #5d6371 */
-    color: #8a6d3b;
+.ticket .info-flight .info-detail-promo {
     min-height: 81px;
+    display: block;
+}
+.ticket .info-flight .info-detail-promo img {
+	width: 100%;
+}
+.ticket .detail-price .info-detail-dues .title {
+	display: block;
+    text-align: center;
+    font-size: 15px;
+    margin-top: 13px;
+}
+.ticket .detail-price .info-detail-dues .interest-free {
+	padding-left: 0;
+}
+.ticket .detail-price .info-detail-dues .total {
+	text-align: right;
+    font-size: 21px;
+    font-weight: 800;
+}
+.ticket .detail-price .info-detail-dues .detail {
+	text-align: right;
+	margin-bottom: 13px;
 }
 .ticket .info-flight .info-detail-dues .box-title-dues .title {
 	display: block;

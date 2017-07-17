@@ -223,18 +223,8 @@
                         </div>
                     </ul>
                 </li>
-                <li class="info-detail-dues">
-                    <div class="col-xs-4 box-title-dues">
-                        <span class="title">Valor pagando con tus <strong>Tarjetas Travel</strong></span>
-                    </div>
-                    <div class="col-xs-4 box-number-dues"><span class="title">12 cuotas sin interes</span></div>
-                    <div class="col-xs-4 box-info-price-dues">
-                        <span class="title">$18.250</span>
-                        <ul>
-                            <li>C.A.E: 0.77%</li>
-                            <li>Costo total del crédito: $2500000</li>
-                        </ul>
-                    </div>
+                <li class="info-detail-promo">
+                   <img src="@{'/public/img/promo.png'}">
                 </li>
             </ul>
         </div>
@@ -270,16 +260,18 @@
                 <li><span class="item-detail">Gestión agencia <span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalFee?.getAsString()}</span><span class="item-price clppriceCon hidden"></span></li>
                 <hr>
                 <li><span class="">Total <span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalAmount?.getAsString()}</span><span class="item-price clppriceCon hidden"></span></li>
-                <li class="">
-                    <div class="col-md-12">
-                        <span class="">Valor pagando con tus <strong>Tarjetas Travel</strong></span>
+                <li class="info-detail-dues">
+                    <div>
+                        <span class="title">Valor pagando con tus <strong>Tarjetas Travel</strong></span>
                     </div> 
-                    <div class="col-md-12"><span class="">${_flight.pricing.shareNumber.shareQuantity.getAsString()} cuotas sin interés</span></div>
-                    <div class="col-md-12">
+                    <div class="col-xs-6 interest-free"><span>${_flight.pricing.shareNumber.shareQuantity.getAsString()} cuotas sin interés</span></div>
+                    <div class="col-xs-6 total">
                     %{def shareValue = _flight.pricing.totalAmount.getAsNumber() / _flight.pricing.shareNumber.shareQuantity.getAsNumber()}%
                     %{def caeMultValue = _flight.pricing.shareNumber.cae.getAsNumber() + 1d}%
                         <span >$${Math.round(shareValue)}</span>
-                        <ul>
+                    </div>
+                    <div class="col-xs-12 detail">
+                       <ul>
                             <li>C.A.E: ${_flight.pricing.shareNumber.cae.getAsString()}%</li>
                             <li>Costo total del crédito: $${Math.round(_flight.pricing.totalAmount.getAsNumber() * caeMultValue)}</li>
                         </ul>
