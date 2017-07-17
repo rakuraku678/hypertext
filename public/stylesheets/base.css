@@ -777,7 +777,7 @@
     overflow: hidden;
     position: relative;
     width: 100%;
-    min-height: 300px;
+    min-height: 500px;
 }
 .ticket .info-flight,
 .ticket .ticket-detail {
