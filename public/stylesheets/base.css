@@ -862,16 +862,6 @@
 /* info-detail-dues
 ================ */
 
-.icon-parenth-left {
-	background-image: url(../img/icon-parenth-left.svg);
-	width: 16px;
-	height: 64px;
-}
-.icon-parenth-right {
-	background-image: url(../img/icon-parenth-right.svg);
-	width: 16px;
-	height: 64px;
-}
 
 .ticket .info-flight .info-detail-promo {
     min-height: 81px;
