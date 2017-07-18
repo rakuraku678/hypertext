@@ -37,7 +37,7 @@
                 <div class="form-group col-xs-6">
                     <label>Partida:</label>
                     	<div class='input-group date' id='starDateBtn'>
-                            <input type="text" name="partida" autocomplete="off" id="startDate"
+                            <input type="text" readonly="true" style="background-color: #fff; border-color: #fff;" name="partida" autocomplete="off" id="startDate"
                                    class="form-control percent"  style="border-right: 0; padding-right: 0;" value="${params.departureDate}">
         					<i class="bg-calendar input-group-addon"></i>
                         </div>
@@ -45,7 +45,7 @@
                 <div class="form-group col-xs-6">
                     <label>Regreso:</label>
                     <div class='input-group date' id='endDateBtn'>
-                        <input type="text" name="regreso" id="endDate" autocomplete="off"
+                        <input type="text" readonly="true" style="background-color: #fff; border-color: #fff;" name="regreso" id="endDate" autocomplete="off"
                                class="form-control percent" value="${params.returnDate}"
                                style="border-right: 0; padding-right: 0;">
     					<i class="bg-calendar input-group-addon"></i>

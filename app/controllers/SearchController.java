@@ -1,9 +1,13 @@
 package controllers;
 
+import java.util.List;
+import java.util.Map;
+
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import dto.ErrorDto;
 import play.Play;
@@ -13,9 +17,6 @@ import play.libs.WS.WSRequest;
 import play.mvc.Controller;
 import play.mvc.Util;
 import utils.JsonUtils;
-
-import java.util.List;
-import java.util.Map;
 
 public class SearchController extends Controller {
 
@@ -67,4 +68,23 @@ public class SearchController extends Controller {
 
         return result;
     }
+    
+	public static Map getCity(String iatacode) {
+		String url = Play.configuration.getProperty("flights.url");
+		WSRequest request = WS.url(url + "/city/" + iatacode);
+        
+
+        JsonObject jsonObj = request.get().getJson().getAsJsonObject();
+        System.out.println("===========================>>>>>>>>>>>>>>>>>>>>>>>>>>>"+jsonObj.toString());
+        Map map = Maps.newHashMap();
+        map.put("id", JsonUtils.getStringFromJson(jsonObj,"id"));
+        map.put("name", JsonUtils.getStringFromJson(jsonObj,"name"));
+        map.put("city", JsonUtils.getStringFromJson(jsonObj,"city"));
+        map.put("country", JsonUtils.getStringFromJson(jsonObj,"country"));
+        map.put("iataCityCode", JsonUtils.getStringFromJson(jsonObj,"iataCityCode"));
+        map.put("onlyPassport", JsonUtils.getBooleanFromJson(jsonObj,"onlyPassport"));
+
+        return map;
+    }
+	
 }
