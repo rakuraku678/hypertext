@@ -245,9 +245,14 @@
             #{/else}
             <span class="title">Precio por Adulto</span>
             #{if _flight.pricing.adtTotalPriceBeforeDiscount && _flight.pricing.adtTotalPriceBeforeDiscount != _flight.pricing.adtTotalPrice}
-            <span class="price before-discount"><span class="simbolCurrency">US$</span><span class="usdpriceCon">${_flight.pricing.adtTotalPriceBeforeDiscount?.getAsString()}</span><span class="clppriceCon hidden"></span></span>
-            #{/if}
+            <span class="price before-discount"><span class="simbolCurrency">US$</span><span class="usdpriceCon">${_flight.pricing.adtTotalPriceWithAllTaxes?.getAsString()}</span><span class="clppriceCon hidden"></span></span>
             <span class="price"><span class="simbolCurrency">US$</span><span class="usdpriceCon">${_flight.pricing.adtTotalPrice?.getAsString()}</span><span class="clppriceCon hidden"></span></span>
+            #{/if}
+            #{else}
+            <span class="price"><span class="simbolCurrency">US$</span><span class="usdpriceCon">${_flight.pricing.adtTotalPriceWithAllTaxes?.getAsString()}</span><span class="clppriceCon hidden"></span></span>
+            #{/else}
+            
+            
             <ul class="detail-price">
                 %{
                     def totalPassengers = 0
