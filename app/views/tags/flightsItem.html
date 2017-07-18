@@ -247,9 +247,13 @@
             #{/else}
             <span class="title">Precio por Adulto</span>
             #{if _flight.pricing.adtTotalPriceBeforeDiscount && _flight.pricing.adtTotalPriceBeforeDiscount != _flight.pricing.adtTotalPrice}
-            <span class="price before-discount"><span class="simbolCurrency">US$</span><span class="usdpriceCon">${_flight.pricing.adtTotalPriceBeforeDiscount?.getAsString()}</span><span class="clppriceCon hidden"></span></span>
-            #{/if}
+            <span class="price before-discount"><span class="simbolCurrency">US$</span><span class="usdpriceCon">${_flight.pricing.adtTotalPriceWithAllTaxes?.getAsString()}</span><span class="clppriceCon hidden"></span></span>
             <span class="price"><span class="simbolCurrency">US$</span><span class="usdpriceCon">${_flight.pricing.adtTotalPrice?.getAsString()}</span><span class="clppriceCon hidden"></span></span>
+            #{/if}
+            #{else}
+            <span class="price"><span class="simbolCurrency">US$</span><span class="usdpriceCon">${_flight.pricing.adtTotalPriceWithAllTaxes?.getAsString()}</span><span class="clppriceCon hidden"></span></span>
+            #{/else}
+           
             <ul class="detail-price">
                 %{
                     def totalPassengers = 0
@@ -260,24 +264,29 @@
                 <li><span class="item-detail">Gestión agencia <span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalFee?.getAsString()}</span><span class="item-price clppriceCon hidden"></span></li>
                 <hr>
                 <li><span class="">Total <span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalAmount?.getAsString()}</span><span class="item-price clppriceCon hidden"></span></li>
-                <li class="info-detail-dues">
-                    <div>
-                        <span class="title">Valor pagando con tus <strong>Tarjetas Travel</strong></span>
-                    </div> 
-                    <div class="col-xs-6 interest-free"><span>${_flight.pricing.shareNumber.shareQuantity.getAsString()} cuotas sin interés</span></div>
-                    <div class="col-xs-6 total">
-                    %{def shareValue = _flight.pricing.totalAmount.getAsNumber() / _flight.pricing.shareNumber.shareQuantity.getAsNumber()}%
-                    %{def caeMultValue = _flight.pricing.shareNumber.cae.getAsNumber() + 1d}%
-                    %{def interestValue = _flight.pricing.shareNumber.interest.getAsNumber() + 1d}%
-                        <span ><span class="simbolCurrency" style="font-size: 14px;">US$</span><span class="item-price usdpriceCon" style="font-size: 14px;">${Math.round(shareValue)}</span><span class="item-price clppriceCon hidden" style="font-size: 14px;"></span></span>
-                    </div>
-                    <div class="col-xs-12 detail">
-                       <ul>
-                            <li>C.A.E: ${_flight.pricing.shareNumber.cae.getAsString()}%</li>
-                            <li>Costo total: <span class="simbolCurrency" >US$</span><span class="item-price usdpriceCon">${Math.round(_flight.pricing.totalAmount.getAsNumber() * caeMultValue * interestValue)}</span><span class="item-price clppriceCon hidden"></span></li>
-                        </ul>
-                    </div>
-                </li>
+                
+                
+                #{if shareNumber!=null}
+	                <li class="info-detail-dues">
+	                    <div>
+	                        <span class="title">Valor pagando con tus <strong>Tarjetas Travel</strong></span>
+	                    </div> 
+	                    
+	                    <div class="col-xs-6 interest-free"><span>${_flight.pricing.shareNumber.shareQuantity.getAsString()} cuotas sin interés</span></div>
+	                    <div class="col-xs-6 total">
+	                    %{def shareValue = _flight.pricing.totalAmount.getAsNumber() / _flight.pricing.shareNumber.shareQuantity.getAsNumber()}%
+	                    %{def caeMultValue = _flight.pricing.shareNumber.cae.getAsNumber() + 1d}%
+	                    %{def interestValue = _flight.pricing.shareNumber.interest.getAsNumber() + 1d}%
+	                        <span ><span class="simbolCurrency" style="font-size: 14px;">US$</span><span class="item-price usdpriceCon" style="font-size: 14px;">${Math.round(shareValue)}</span><span class="item-price clppriceCon hidden" style="font-size: 14px;"></span></span>
+	                    </div>
+	                    <div class="col-xs-12 detail">
+	                       <ul>
+	                            <li>C.A.E: ${_flight.pricing.shareNumber.cae.getAsString()}%</li>
+	                            <li>Costo total: <span class="simbolCurrency" >US$</span><span class="item-price usdpriceCon">${Math.round(_flight.pricing.totalAmount.getAsNumber() * caeMultValue * interestValue)}</span><span class="item-price clppriceCon hidden"></span></li>
+	                        </ul>
+	                    </div>
+	                </li>
+                #{/if}
             </ul>
             <div class="text-center box-ticket-submit">
                 <input type="hidden" name="promotion" value="${_promotion}">
