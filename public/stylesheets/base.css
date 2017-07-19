@@ -355,15 +355,6 @@
 	height: 12px;
 	vertical-align: middle;
 }
-/* BANNER 
-================ */
-
-.banner-filter {
-	width: 100%;
-	min-height: 200px;
-	background-color: #8f9ea8;
-}
-
 /* validate
 ================ */
 .has-error .help-block,
