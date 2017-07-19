@@ -242,7 +242,7 @@
                 *{<span class="private-fare-space-saver">&nbsp;</span>}*
             #{/else}
             #{if _flight.pricing.adtTotalPriceBeforeDiscount && _flight.pricing.adtTotalPriceBeforeDiscount != _flight.pricing.adtTotalPrice}
-                <span class="private-fare-space-saver"><img src="http://res.cloudinary.com/hyvrprjak/image/upload/c_scale,w_60/superDosB.jpg" alt="Super Dos" title="super dos"></span>
+                <span class="private-fare-space-saver"><img src="http://res.cloudinary.com/hyvrprjak/image/upload/c_scale,w_60/v1488203856/superDosB.jpg" alt="Super Dos" title="super dos"></span>
             #{/if}
             #{else}
                 <span class="private-fare-space-saver">&nbsp;</span>
@@ -263,7 +263,7 @@
                 }%
                 <li><span class="item-detail">Pasajero${totalPassengers.pluralize()} (${totalPassengers})<span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalPassengerFare?.getAsString()}</span><span class="item-price clppriceCon hidden"></span></li>
                 <li><span class="item-detail">Imp. y Tasas <span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalTax?.getAsString()}</span><span class="item-price clppriceCon hidden"></span></li>
-                <li><span class="item-detail">Gestion agencia <span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalFee?.getAsString()}</span><span class="item-price clppriceCon hidden"></span></li>
+                <li><span class="item-detail">Gestión agencia <span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalFee?.getAsString()}</span><span class="item-price clppriceCon hidden"></span></li>
                 <hr>
                 <li><span class="">Total <span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalAmount?.getAsString()}</span><span class="item-price clppriceCon hidden"></span></li>
                 
