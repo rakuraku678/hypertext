@@ -862,12 +862,27 @@
 /* info-detail-dues
 ================ */
 
-
-.ticket .info-flight .info-detail-promo {
+@media screen and (max-width: 992px) {
+	 #bigImgPromoLi {
+	 	display:none !important;
+	 }
+	 #mobileImgPromoLi {
+	 	display:block !important;
+	 }
+}
+@media screen and (min-width: 992px) {
+	 #bigImgPromoLi {
+	 	display:block !important;
+	 }
+	 #mobileImgPromoLi {
+	 	display:none !important;
+	 }
+}
+.ticket .info-flight  {
     min-height: 81px;
     display: block;
 }
-.ticket .info-flight .info-detail-promo img {
+.ticket .info-flight img {
 	width: 100%;
 }
 .ticket .detail-price .info-detail-dues .title {
