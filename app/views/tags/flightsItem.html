@@ -223,9 +223,14 @@
                         </div>
                     </ul>
                 </li>
-                <li class="info-detail-promo">
+                <li class="info-detail-promo" id="bigImgPromoLi">
                 	#{if _flight.pricing.urlBannerImage!=null && !_flight.pricing.urlBannerImage.equals("")}
-	               		<img src="${utils.CloudinaryUtils.getUrl(_flight.pricing.urlBannerImage.getAsString(), 'q_90,c_fill,h_35,w_382', '')}">
+	               		<img style="height:130px;" src="${utils.CloudinaryUtils.getUrl(_flight.pricing.urlBannerImage.getAsString(), 'q_90,c_fill,h_130', '')}">
+                   	#{/if}
+                </li>
+                <li class="info-detail-promo" id="mobileImgPromoLi">
+                	#{if _flight.pricing.urlBannerImageMobile!=null && !_flight.pricing.urlBannerImageMobile.equals("")}
+	               		<img style="height:200px;" src="${utils.CloudinaryUtils.getUrl(_flight.pricing.urlBannerImageMobile.getAsString(), 'q_90,c_fill,h_200', '')}">
                    	#{/if}
                 </li>
             </ul>
