@@ -230,7 +230,7 @@
                 </li>
                 <li class="info-detail-promo" id="mobileImgPromoLi">
                 	#{if _flight.pricing.urlBannerImageMobile!=null && !_flight.pricing.urlBannerImageMobile.equals("")}
-	               		<img style="height:200px;" src="${utils.CloudinaryUtils.getUrl(_flight.pricing.urlBannerImageMobile.getAsString(), 'q_90,c_fill,h_200', '')}">
+	               		<img style="height:200px; margin-top: 50px;" src="${utils.CloudinaryUtils.getUrl(_flight.pricing.urlBannerImageMobile.getAsString(), 'q_90,c_fill,h_200', '')}">
                    	#{/if}
                 </li>
             </ul>
@@ -282,14 +282,12 @@
 	                    <div class="col-xs-6 interest-free"><span>${_flight.pricing.shareNumber.shareQuantity.getAsString()} cuotas sin interés</span></div>
 	                    <div class="col-xs-6 total">
 	                    %{def shareValue = _flight.pricing.totalAmount.getAsNumber() / _flight.pricing.shareNumber.shareQuantity.getAsNumber()}%
-	                    %{def caeMultValue = _flight.pricing.shareNumber.cae.getAsNumber() + 1d}%
-	                    %{def interestValue = _flight.pricing.shareNumber.interest.getAsNumber() + 1d}%
 	                        <span ><span class="simbolCurrency" style="font-size: 14px;">US$</span><span class="item-price usdpriceCon" style="font-size: 14px;">${Math.round(shareValue)}</span><span class="item-price clppriceCon hidden" style="font-size: 14px;"></span></span>
 	                    </div>
 	                    <div class="col-xs-12 detail">
 	                       <ul>
 	                            <li>C.A.E: ${_flight.pricing.shareNumber.cae.getAsString()}%</li>
-	                            <li>Costo total: <span class="simbolCurrency" >US$</span><span class="item-price usdpriceCon">${Math.round(_flight.pricing.totalAmount.getAsNumber() * caeMultValue * interestValue)}</span><span class="item-price clppriceCon hidden"></span></li>
+	                            <li>Costo total: <span class="simbolCurrency" >US$</span><span class="item-price usdpriceCon">${_flight.pricing.totalWithOverCost.getAsString()}</span><span class="item-price clppriceCon hidden"></span></li>
 	                        </ul>
 	                    </div>
 	                </li>
