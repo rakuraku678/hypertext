@@ -358,6 +358,20 @@ h2 {
     padding-bottom: 15px;
     text-transform: uppercase;
 }
+
+
+.box-date-birth {
+	position: relative;
+	min-height: 121px;
+}
+.modify-position-box {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+}
+.modify-position-box .validatedate {
+	width: 100%;
+}
 /* detail-fly-payment
 ==================== */
 .detail-fly-payment {
