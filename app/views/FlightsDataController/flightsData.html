@@ -132,9 +132,6 @@ $(function () {
 		$("#toUsd").removeClass("selectedCurrency");
 
         $( ".usdpriceCon" ).each(function( index ) {
-            var exchangeRate = parseFloat("${dollarExchangeRate}");
-            var numToChange = parseFloat($(this).html());
-            $(this).next().html(numberWithCommas(parseFloat(numToChange * exchangeRate).toFixed(0)));
             $(this).next().removeClass("hidden");
             $(this).addClass("hidden");
         });
@@ -143,9 +140,16 @@ $(function () {
             $(this).html("$");
         });
     }
-
-        $(document).ready(function () {setClpExchange()});
+	function commaToPrices() {
+		$( ".clppriceCon" ).each(function( index ) {
+			$(this).html(numberWithCommas($(this).html()));
+		});
+	}
+		
 	
+    $(document).ready(function () {setClpExchange(); commaToPrices();});
+
+        
 	#{/if}
 	
 });
