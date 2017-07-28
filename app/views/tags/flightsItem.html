@@ -283,7 +283,7 @@
 	                    <div class="col-xs-6 total">
 	                    %{def shareValue = _flight.pricing.totalAmount.getAsNumber() / _flight.pricing.shareNumber.shareQuantity.getAsNumber()}%
 	                    %{def shareValueCLP = _flight.pricingCLP.totalAmount.getAsNumber() / _flight.pricing.shareNumber.shareQuantity.getAsNumber()}%
-	                        <span ><span class="simbolCurrency" style="font-size: 14px;">US$</span><span class="item-price usdpriceCon" style="font-size: 14px;">${shareValue}</span><span class="item-price clppriceCon hidden" style="font-size: 14px;">${shareValueCLP}</span></span>
+	                        <span ><span class="simbolCurrency" style="font-size: 14px;">US$</span><span class="item-price usdpriceCon" style="font-size: 14px;">${shareValue}</span><span class="item-price clppriceCon hidden" style="font-size: 14px;">${(int) shareValueCLP}</span></span>
 	                    </div>
 	                    <div class="col-xs-12 detail">
 	                       <ul>
