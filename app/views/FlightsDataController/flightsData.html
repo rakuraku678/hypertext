@@ -145,9 +145,21 @@ $(function () {
 			$(this).html(numberWithCommas($(this).html()));
 		});
 	}
-		
+	function calculateClpExchange() {
+        $( ".usdTablePrice" ).each(function( index ) {
+            var exchangeRate = parseFloat("${dollarExchangeRate}");
+            var numToChange = parseFloat($(this).html());
+            $(this).next().html(numberWithCommas(parseFloat(numToChange * exchangeRate).toFixed(0)));
+            $(this).next().removeClass("hidden");
+            $(this).addClass("hidden");
+        });
+        $(".selCurrency").val("clp");
+        $( ".simbolCurrency" ).each(function( index ) {
+            $(this).html("$");
+        });
+    }
 	
-    $(document).ready(function () {setClpExchange(); commaToPrices();});
+    $(document).ready(function () {setClpExchange(); commaToPrices(); calculateClpExchange(); });
 
         
 	#{/if}

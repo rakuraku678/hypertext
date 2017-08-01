@@ -630,7 +630,6 @@
 ============== */
 .tickets-arrives {
 	position: relative;
-	min-height: 500px;
 }
 .preload-arrive {
 	background-color: #fff;
@@ -1381,8 +1380,8 @@
 .ticket-detail .detail-price {
 	color: #fff;
 	font-size: 12px;
-	margin: 5px auto;
-	width: 80%;
+    margin: 0px auto;
+    width: 95%;
 }
 .ticket-detail .detail-price hr {
     margin-top: 10px;
