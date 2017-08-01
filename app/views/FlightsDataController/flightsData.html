@@ -1,5 +1,5 @@
 #{include "FlightsDataController/airlinesMatrix.html" /}
-
+<input type="hidden" id="dlx" value="${dollarExchangeRate}" />
 #{list items:flightsResults, as:'flight'}
     #{flightsItem promotion: params.promotion, flight:flight, flightsResultsFilters:flightsResultsFilters/}
 #{/list}
@@ -139,6 +139,7 @@ $(function () {
         $( ".simbolCurrency" ).each(function( index ) {
             $(this).html("$");
         });
+        calculateClpExchange();
     }
 	function commaToPrices() {
 		$( ".clppriceCon" ).each(function( index ) {
