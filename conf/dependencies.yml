@@ -5,3 +5,4 @@ require:
     - play -> crud
     - play -> secure
     - com.google.guava -> guava 19.0
+    - com.cloudinary -> cloudinary 1.0.4

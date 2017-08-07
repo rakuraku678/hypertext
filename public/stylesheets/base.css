@@ -621,7 +621,6 @@
 ============== */
 .tickets-arrives {
 	position: relative;
-	min-height: 500px;
 }
 .preload-arrive {
 	background-color: #fff;
@@ -768,7 +767,7 @@
     overflow: hidden;
     position: relative;
     width: 100%;
-    min-height: 300px;
+    min-height: 500px;
 }
 .ticket .info-flight,
 .ticket .ticket-detail {
@@ -849,6 +848,77 @@
 }
 .ticket .txt-view-detail .radio label input [type="radio"] {
 	width: 100%;	
+}
+/* info-detail-dues
+================ */
+
+@media screen and (max-width: 992px) {
+	 #bigImgPromoLi {
+	 	display:none !important;
+	 }
+	 #mobileImgPromoLi {
+	 	display:block !important;
+	 }
+}
+@media screen and (min-width: 992px) {
+	 #bigImgPromoLi {
+	 	display:block !important;
+	 }
+	 #mobileImgPromoLi {
+	 	display:none !important;
+	 }
+}
+.ticket .info-flight  {
+    min-height: 81px;
+    display: block;
+}
+.ticket .info-flight img {
+	width: 100%;
+}
+.ticket .detail-price .info-detail-dues .title {
+	display: block;
+    text-align: center;
+    font-size: 15px;
+    margin-top: 13px;
+}
+.ticket .detail-price .info-detail-dues .interest-free {
+	padding-left: 0;
+	font-weight: 700;
+}
+.ticket .detail-price .info-detail-dues .total {
+	text-align: right;
+    font-size: 21px;
+    font-weight: 800;
+}
+.ticket .detail-price .info-detail-dues .detail {
+	text-align: right;
+	margin-bottom: 13px;
+	padding-left: 0;
+	font-size: 11px;
+}
+.ticket .info-flight .info-detail-dues .box-title-dues .title {
+	display: block;
+	line-height: 2;
+    margin-top: 10px;
+    font-size: 12px;
+}
+.ticket .info-flight .info-detail-dues .box-number-dues .title {
+	display: block;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 15px;
+}
+.ticket .info-flight .info-detail-dues .box-info-price-dues .title {
+	font-size: 17px;
+    margin-top: 10px;
+    display: block;
+}
+.ticket .info-flight .info-detail-dues .box-info-price-dues ul {
+	font-size: 10px;
+	padding: 0;
+}
+.ticket .info-flight .info-detail-dues .box-info-price-dues ul li {
+	
 }
 /* well ticket
 ================ */
@@ -1301,8 +1371,8 @@
 .ticket-detail .detail-price {
 	color: #fff;
 	font-size: 12px;
-	margin: 5px auto;
-	width: 80%;
+    margin: 0px auto;
+    width: 95%;
 }
 .ticket-detail .detail-price hr {
     margin-top: 10px;
