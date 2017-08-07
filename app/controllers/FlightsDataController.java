@@ -30,8 +30,9 @@ import com.google.gson.JsonParser;
 
 public class FlightsDataController extends Controller {
 
-    public static void index() throws InterruptedException {
+    public static void index(String slugAgency) throws InterruptedException {
         PromotionDto promotionDto;
+
         if (!Strings.isNullOrEmpty(params.get("promotion"))) {
             promotionDto = new Promotion().getBySlug(params.get("promotion"));
         } else {
@@ -51,6 +52,7 @@ public class FlightsDataController extends Controller {
         bfmSearch.addPassengerType("C02", params.get("childrencount"));
         bfmSearch.addPassengerType("INF", params.get("infantcount"));
         bfmSearch.setPromotion(promotionDto.slug);
+        bfmSearch.setExternalId(promotionDto.agency.externalId);
         bfmSearch.setDollarExchangeRate(dollarExchangeRate);
         
         JsonElement flightsResults = bfmSearch.process();
