@@ -42,7 +42,7 @@
         </tbody>
     </table>
     <div class="total-payment">
-        #{if _pricing.totalAmountBeforeDiscount}
+        #{if _pricingCLP.adtTotalPriceWithAllTaxes.getAsInt() > _pricingCLP.adtTotalPrice.getAsInt()}
         <ul>
             <li>&nbsp;</li>
             <li style="text-decoration: line-through;"><span class="simbolCurrency">US$</span><span class="usdpriceCon">${_pricing.totalAmountBeforeDiscount?.getAsString()}</span></li>
