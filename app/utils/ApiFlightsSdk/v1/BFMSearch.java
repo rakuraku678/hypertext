@@ -31,6 +31,7 @@ public class BFMSearch extends ApiFlightsSDKBase {
     public String externalId;
     public String dollarExchangeRate;
     public List<Map<String,String>> passengerTypeList = Lists.newArrayList();
+    public String cabin;
 
     public JsonElement process(){
 
@@ -48,6 +49,7 @@ public class BFMSearch extends ApiFlightsSDKBase {
         mapValues.put("city",city);
         mapValues.put("externalId",externalId);
         mapValues.put("dollarExchangeRate",dollarExchangeRate);
+		mapValues.put("cabin",cabin);
 
         String jsonBody = new Gson().toJson(mapValues);
 
@@ -170,6 +172,10 @@ public class BFMSearch extends ApiFlightsSDKBase {
 
 	public void setCity(String city) {
 		this.city = city;
+	}
+
+	public void setCabin(String cabin) {
+		this.cabin = cabin;
 	}
     
 }
