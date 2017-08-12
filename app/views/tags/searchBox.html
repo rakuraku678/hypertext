@@ -87,6 +87,14 @@
                     </select>
                     <span>(0 a 23 meses)</span>
                 </div>
+                <div class="form-group col-xs-8">
+                    <label>Cabina:</label>
+                    <select name="cabin" class="form-control percent" id="cabin" value="${params.cabin}">
+                        #{list items:cabinConfigurationDto.cabins, as:'cabins'}
+                        <option #{if params.cabin == cabins.key}selected#{/if} value="${cabins.key}">${cabins.value}</option>
+                        #{/list}
+                    </select>
+                </div>
                 <div class="col-md-12 text-center">
                     <input type="submit" value="Buscar Vuelos" class="btn btn-search">
                 </div>
@@ -166,6 +174,7 @@
                     var adultcount = searchForm.find('select[name="adultcount"]').val();
                     var childrencount = searchForm.find('select[name="childrencount"]').val();
                     var infantcount = searchForm.find('select[name="infantcount"]').val();
+                    var cabin = searchForm.find('select[name="cabin"]').val();
                     *{if(promotion){}*
                         *{searchURL += "/promociones/" + promotion;}*
                     *{}}*
@@ -174,7 +183,7 @@
                     searchURL += "/" + originPathArr[1];
                     searchURL += "/" + originPathArr[2];
 
-                    return searchURL + "/"+origin+"/"+destination+"/"+departuredate+"/"+returndate+"/"+adultcount+"-"+childrencount+"-"+infantcount;
+                    return searchURL + "/"+origin+"/"+destination+"/"+departuredate+"/"+returndate+"/"+adultcount+"-"+childrencount+"-"+infantcount+"/" + cabin;
                 };
 
                 var showError = function(msg){
@@ -529,7 +538,8 @@ function getSearchParams() {
         returndate: searchForm.find('input[name="regreso"]').val(),
         adultcount: searchForm.find('select[name="adultcount"]').val(),
         childrencount: searchForm.find('select[name="childrencount"]').val(),
-        infantcount: searchForm.find('select[name="infantcount"]').val()
+        infantcount: searchForm.find('select[name="infantcount"]').val(),
+        cabin: searchForm.find('select[name="cabin"]').val()
     });
 }
 
