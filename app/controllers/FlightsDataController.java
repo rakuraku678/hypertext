@@ -121,6 +121,7 @@ public class FlightsDataController extends Controller {
         flightsAltenateDates.addPassengerType("C02", params.get("childrencount"));
         flightsAltenateDates.addPassengerType("INF", params.get("infantcount"));
         flightsAltenateDates.setPromotion(promotionDto.slug);
+        flightsAltenateDates.setCabin(params.get("cabin"));
         JsonElement flightsAltenateDatesResults = flightsAltenateDates.process();
 
         AlternateDatesDto alternateDatesDto = AlternateDatesDto.parseAlternateDatesDto(flightsAltenateDatesResults);
