@@ -33,7 +33,6 @@ GET     /public/                                staticDir:public
 GET     /vuelos/compra                        FlightsController.index
 GET     /vuelos/compra/{slugAgency}/{promotion}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}             FlightsController.index
 GET     /vuelos/compra/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}               FlightsController.index
-GET     /promociones/{promotion}                            FlightsController.index
 GET     /promociones/{promotion}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}               FlightsController.index
 GET     /{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}               FlightsController.index
 
@@ -41,6 +40,7 @@ GET     /vuelos/compra/{slugAgency}/{promotion}/{origin}/{destination}/{departur
 GET     /vuelos/compra/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}               FlightsController.index
 GET     /promociones/{promotion}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}              FlightsController.index
 GET     /{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}              FlightsController.index
+GET     /promociones/{promotion}                            FlightsController.index
 
 # Catch all
 *       /vol3/{controller}/{action}             {controller}.{action}
