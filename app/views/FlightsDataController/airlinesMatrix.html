@@ -28,21 +28,21 @@
 		<tr>
 		    <td>Directo</td>
 		    #{list items:airlineArray, as:'airlineBlock'}
-		    	<td> #{if airlineBlock?.price0!=null}<span class="simbolCurrency">US$</span><span class="usdpriceCon">${airlineBlock?.price0}</span> <span class="clppriceCon hidden"></span>#{/if} #{else} - #{/else}</td>
+		    	<td> #{if airlineBlock?.price0!=null}<span class="simbolCurrency">US$</span><span class="usdTablePrice">${airlineBlock?.price0}</span> <span class="clppriceCon hidden"></span>#{/if} #{else} - #{/else}</td>
 		    #{/list}
 		</tr>
 		
 		<tr>
 		    <td>1 escala</td>
 		    #{list items:airlineArray, as:'airlineBlock'}
-		    	<td> #{if airlineBlock?.price1!=null} <span class="simbolCurrency">US$</span><span class="usdpriceCon">${airlineBlock?.price1}</span><span class="clppriceCon hidden"></span> #{/if} #{else} - #{/else}</td>
+		    	<td> #{if airlineBlock?.price1!=null} <span class="simbolCurrency">US$</span><span class="usdTablePrice">${airlineBlock?.price1}</span><span class="clppriceCon hidden"></span> #{/if} #{else} - #{/else}</td>
 		    #{/list}
 		</tr>
 		
 		<tr>
 		    <td>2 escalas o más</td>
 		    #{list items:airlineArray, as:'airlineBlock'}
-		    	<td> #{if airlineBlock?.price2!=null} <span class="simbolCurrency">US$</span><span class="usdpriceCon">${airlineBlock?.price2}</span><span class="clppriceCon hidden"></span>#{/if} #{else} - #{/else}</td>
+		    	<td> #{if airlineBlock?.price2!=null} <span class="simbolCurrency">US$</span><span class="usdTablePrice">${airlineBlock?.price2}</span><span class="clppriceCon hidden"></span>#{/if} #{else} - #{/else}</td>
 		    #{/list}
 		</tr>
 	

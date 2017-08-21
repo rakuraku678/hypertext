@@ -1,5 +1,5 @@
 #{include "FlightsDataController/airlinesMatrix.html" /}
-
+<input type="hidden" id="dlx" value="${dollarExchangeRate}" />
 #{list items:flightsResults, as:'flight'}
     #{flightsItem promotion: params.promotion, flight:flight, flightsResultsFilters:flightsResultsFilters/}
 #{/list}
@@ -132,6 +132,22 @@ $(function () {
 		$("#toUsd").removeClass("selectedCurrency");
 
         $( ".usdpriceCon" ).each(function( index ) {
+            $(this).next().removeClass("hidden");
+            $(this).addClass("hidden");
+        });
+        $(".selCurrency").val("clp");
+        $( ".simbolCurrency" ).each(function( index ) {
+            $(this).html("$");
+        });
+        calculateClpExchange();
+    }
+	function commaToPrices() {
+		$( ".clppriceCon" ).each(function( index ) {
+			$(this).html(numberWithCommas($(this).html()));
+		});
+	}
+	function calculateClpExchange() {
+        $( ".usdTablePrice" ).each(function( index ) {
             var exchangeRate = parseFloat("${dollarExchangeRate}");
             var numToChange = parseFloat($(this).html());
             $(this).next().html(numberWithCommas(parseFloat(numToChange * exchangeRate).toFixed(0)));
@@ -143,9 +159,10 @@ $(function () {
             $(this).html("$");
         });
     }
-
-        $(document).ready(function () {setClpExchange()});
 	
+    $(document).ready(function () {setClpExchange(); commaToPrices(); calculateClpExchange(); });
+
+        
 	#{/if}
 	
 });

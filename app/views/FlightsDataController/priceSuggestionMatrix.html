@@ -67,7 +67,7 @@ lastRowDate = firstDepartureDate.minusDays(1);
                 tdClass = "high";
                 }
             }%
-            	<td><a href="#" class="pr-fare ${tdClass}" data-from="${endUserFmt.print(details.departureDate)}" data-to="${endUserFmt.print(details.returnDate)}"><span class="simbolCurrency">US$</span><span class="usdpriceCon">${details?.passengerFare.replace(".0","")}</span><span class="clppriceCon hidden"></span></a>
+            	<td><a href="#" class="pr-fare ${tdClass}" data-from="${endUserFmt.print(details.departureDate)}" data-to="${endUserFmt.print(details.returnDate)}"><span class="simbolCurrency">US$</span><span class="usdTablePrice">${details?.passengerFare.replace(".0","")}</span><span class="clppriceCon hidden"></span></a>
                 *{<td><a onclick="window.location=this.href" class="pr-fare" data-from="${endUserFmt.print(details.departureDate)}" data-to="${endUserFmt.print(details.returnDate)}">US$${details?.passengerFare.replace(".0","")}</a>}*
                 *{${details.sequenceNumber}<br>}*
                 *{${details.passengerFare}<br>}*
@@ -82,10 +82,21 @@ lastRowDate = firstDepartureDate.minusDays(1);
     </table>
 </div>
 <script>
+function calculateClpExchange() {
+    $( ".usdTablePrice" ).each(function( index ) {
+        var exchangeRate = parseFloat($("#dlx").val());
+        var numToChange = parseFloat($(this).html());
+        $(this).next().html(numberWithCommas(parseFloat(numToChange * exchangeRate).toFixed(0)));
+        $(this).next().removeClass("hidden");
+        $(this).addClass("hidden");
+    });
+    $(".selCurrency").val("clp");
+    $( ".simbolCurrency" ).each(function( index ) {
+        $(this).html("$");
+    });
+}
     $(document).ready(function () {
-        if (typeof setClpExchange !== 'undefined' && $.isFunction(setClpExchange)) {
-            setClpExchange();
-        }
+    	calculateClpExchange();
     });
 </script>
 
