@@ -48,6 +48,11 @@ GET     /{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}
 GET     /{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}              FlightsController.index
 GET     /vuelos/{slugAgency}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}             						FlightsController.index
 GET     /vuelos/{slugAgency}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}             				FlightsController.index
+GET		/vuelos																																	FlightsController.index
+GET     /{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}               								FlightsController.index
+GET     /{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}              										FlightsController.index
+GET     /vuelos/{promotion}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}             						FlightsController.index
+GET     /vuelos/{promotion}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}             				FlightsController.index
 
 # Catch all
 *       /vol3/{controller}/{action}             {controller}.{action}
