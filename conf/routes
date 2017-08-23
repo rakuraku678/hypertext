@@ -42,6 +42,11 @@ GET     /promociones/{promotion}/{origin}/{destination}/{departureDate}/{returnD
 GET     /{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}              FlightsController.index
 GET     /promociones/{promotion}                            FlightsController.index
 
+GET     /vuelos/{slugAgency}/{promotion}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}             			FlightsController.index
+GET     /vuelos/{slugAgency}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}             						FlightsController.index
+GET     /vuelos/{slugAgency}/{promotion}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}             	FlightsController.index
+GET     /vuelos/{slugAgency}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}             				FlightsController.index
+
 # Catch all
 *       /vol3/{controller}/{action}             {controller}.{action}
 *       /{controller}/{action}                  {controller}.{action}
