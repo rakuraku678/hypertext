@@ -32,8 +32,8 @@ GET     /public/                                staticDir:public
 #SEARCH /EZE/SCL/06-01-2017/10-01-2017/2-1-0
 GET     /{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}               FlightsController.index
 GET     /{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}              FlightsController.index
-GET     /vuelos/{slugAgency}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}             						FlightsController.index
-GET     /vuelos/{slugAgency}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}             				FlightsController.index
+GET     /vuelos/{promotion}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}             						FlightsController.index
+GET     /vuelos/{promotion}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}             				FlightsController.index
 
 # Catch all
 *       /vol3/{controller}/{action}             {controller}.{action}
