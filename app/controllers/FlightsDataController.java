@@ -2,22 +2,17 @@ package controllers;
 
 import java.text.ParseException;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 import com.google.common.base.Strings;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import models.FlightsResultsFilters;
-import play.Play;
 import play.mvc.Controller;
 import play.mvc.Util;
 import play.templates.Template;
-import play.templates.TemplateCompiler;
 import play.templates.TemplateLoader;
 import utils.ApiFlightsSdk.v1.*;
 import utils.DateUtils;
-import utils.JsonUtils;
 import utils.TravelClubUtils;
 import utils.dtos.AirportDto;
 import utils.dtos.AlternateDatesDto;
@@ -51,6 +46,7 @@ public class FlightsDataController extends Controller {
         bfmSearch.addPassengerType("ADT", params.get("adultcount"));
         bfmSearch.addPassengerType("C02", params.get("childrencount"));
         bfmSearch.addPassengerType("INF", params.get("infantcount"));
+        bfmSearch.setCabin(params.get("cabin"));
         bfmSearch.setPromotion(promotionDto.slug);
         bfmSearch.setExternalId(promotionDto.agency.externalId);
         bfmSearch.setDollarExchangeRate(dollarExchangeRate);
@@ -125,6 +121,7 @@ public class FlightsDataController extends Controller {
         flightsAltenateDates.addPassengerType("C02", params.get("childrencount"));
         flightsAltenateDates.addPassengerType("INF", params.get("infantcount"));
         flightsAltenateDates.setPromotion(promotionDto.slug);
+        flightsAltenateDates.setCabin(params.get("cabin"));
         JsonElement flightsAltenateDatesResults = flightsAltenateDates.process();
 
         AlternateDatesDto alternateDatesDto = AlternateDatesDto.parseAlternateDatesDto(flightsAltenateDatesResults);
