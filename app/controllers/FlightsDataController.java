@@ -39,8 +39,11 @@ public class FlightsDataController extends Controller {
         bfmSearch.setOrigin(params.get("origin"));
         bfmSearch.setDestination(params.get("destination"));
         AirportDto destinationAirport = new Airport().getByIataCode(params.get("destination"));
+        AirportDto departureAirport = new Airport().getByIataCode(params.get("origin"));
         bfmSearch.setCountry(destinationAirport.country);
         bfmSearch.setCity(destinationAirport.iataCityCode);
+        bfmSearch.setDepartureCountry(departureAirport.country);
+        bfmSearch.setDepartureCity(departureAirport.iataCityCode);
         bfmSearch.setDeparturedate(DateUtils.reformateDate(params.get("departuredate")));
         bfmSearch.setReturndate(DateUtils.reformateDate(params.get("returndate")));
         bfmSearch.addPassengerType("ADT", params.get("adultcount"));
