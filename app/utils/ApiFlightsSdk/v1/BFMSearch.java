@@ -27,6 +27,9 @@ public class BFMSearch extends ApiFlightsSDKBase {
     public String returndate;
     public String country;
     public String city;
+    public String departureCountry;
+    public String departureCity;
+    
     public String promotion;
     public String externalId;
     public String dollarExchangeRate;
@@ -47,6 +50,8 @@ public class BFMSearch extends ApiFlightsSDKBase {
         mapValues.put("promotion",promotion);
         mapValues.put("country",country);
         mapValues.put("city",city);
+        mapValues.put("departureCountry",departureCountry);
+        mapValues.put("departureCity",departureCity);
         mapValues.put("externalId",externalId);
         mapValues.put("dollarExchangeRate",dollarExchangeRate);
 		mapValues.put("cabin",cabin);
@@ -176,6 +181,14 @@ public class BFMSearch extends ApiFlightsSDKBase {
 
 	public void setCabin(String cabin) {
 		this.cabin = cabin;
+	}
+
+	public void setDepartureCountry(String departureCountry) {
+		this.departureCountry = departureCountry;
+	}
+
+	public void setDepartureCity(String departureCity) {
+		this.departureCity = departureCity;
 	}
     
 }
