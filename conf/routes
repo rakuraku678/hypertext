@@ -30,28 +30,11 @@ GET     /public-vol3/                                staticDir:public
 GET     /public/                                staticDir:public
 
 #SEARCH /EZE/SCL/06-01-2017/10-01-2017/2-1-0
-GET     /vuelos/compra                        FlightsController.index
-GET     /vuelos/compra/{slugAgency}/{promotion}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}             FlightsController.index
-GET     /vuelos/compra/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}               FlightsController.index
-GET     /promociones/{promotion}                            FlightsController.index
-GET     /promociones/{promotion}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}               FlightsController.index
-GET     /{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}               FlightsController.index
-#GET     /{origin}/{destination}/{origin2}/{destination2}/{departureDate}/{returnDate}/{adults}-{children}-{infants}               FlightsController.index
-
-GET     /vuelos/compra/{slugAgency}/{promotion}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}            FlightsController.index
-GET     /vuelos/compra/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}               FlightsController.index
-GET     /promociones/{promotion}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}              FlightsController.index
-GET     /{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}              FlightsController.index
-
-GET     /vuelos/{slugAgency}/{promotion}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}             			FlightsController.index
-GET     /{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}               FlightsController.index
-GET     /{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}              FlightsController.index
-GET     /vuelos/{slugAgency}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}             						FlightsController.index
-GET     /vuelos/{slugAgency}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}             				FlightsController.index
-GET		/vuelos																																	FlightsController.index
-GET     /{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}               								FlightsController.index
-GET     /{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}              										FlightsController.index
-GET     /vuelos/{promotion}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}             						FlightsController.index
+GET	/vuelos																			FlightsController.index
+GET	/vuelos/{promotion}																	FlightsController.index
+GET     /{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}               						FlightsController.index
+GET     /{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}              							FlightsController.index
+GET     /vuelos/{promotion}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}             					FlightsController.index
 GET     /vuelos/{promotion}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}             				FlightsController.index
 
 # Catch all
