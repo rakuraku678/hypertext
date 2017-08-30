@@ -89,7 +89,7 @@
                 </div>
                 <div class="form-group col-xs-12">
                     <label>Cabina:</label>
-                    <select name="cabin" class="form-control percent" id="cabin">
+                    <select name="cabin" class="form-control bg-arrow" id="cabin">
                         #{list items:cabinConfigurationDto.cabins, as:'cabins'}
                             <option value="${cabins.key}"
                             #{if params.cabin == null && cabins.key == "Y"}selected#{/if}
