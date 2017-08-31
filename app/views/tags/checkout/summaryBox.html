@@ -13,7 +13,7 @@
         </tr>
         </thead>
         <tbody>
-        #{list items:_pricing.detail, as:'pricingDetail'}
+        #{list items:_pricingCLP.detail, as:'pricingDetail'}
             	%{
 		    	 def passType = "";
 		    	 switch (pricingDetail.code.getAsString()) {
@@ -27,9 +27,9 @@
         <tr>
             <td></td>
             <td class="txt-payment-table-mark">${pricingDetail.quantity?.getAsString()} ${passType}${pricingDetail.quantity?.getAsInt().pluralize()}</td>
-            <td><span class="simbolCurrency">US$</span><span class="usdpriceCon">${pricingDetail.basefare?.getAsString()}</span></td>
-            <td><span class="simbolCurrency">US$</span><span class="usdpriceCon">${pricingDetail.totalTax?.getAsString() ?: "0"}</span></td>
-            <td class="txt-payment-table-mark"><span class="simbolCurrency">US$</span><span class="usdpriceCon">${pricingDetail.totalFare?.getAsString()}</span></td>
+            <td><span class="simbolCurrency">US$</span><span class="clppriceCon">${pricingDetail.basefare?.getAsString()}</span></td>
+            <td><span class="simbolCurrency">US$</span><span class="clppriceCon">${pricingDetail.totalTax?.getAsString() ?: "0"}</span></td>
+            <td class="txt-payment-table-mark"><span class="simbolCurrency">US$</span><span class="clppriceCon">${pricingDetail.totalFare?.getAsString()}</span></td>
         </tr>
         #{/list}
         <tr>
@@ -37,7 +37,7 @@
             <td class="txt-payment-table-mark">Gestión agencia</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
-            <td class="txt-payment-table-mark"><span class="simbolCurrency">US$</span><span class="usdpriceCon">${_pricing.totalFee?.getAsString()}</span></td>
+            <td class="txt-payment-table-mark"><span class="simbolCurrency">US$</span><span class="clppriceCon">${_pricingCLP.totalFee?.getAsString()}</span></td>
         </tr>
         </tbody>
     </table>
@@ -45,12 +45,12 @@
         #{if _pricingCLP.adtTotalPriceWithAllTaxes.getAsInt() > _pricingCLP.adtTotalPrice.getAsInt()}
         <ul>
             <li>&nbsp;</li>
-            <li style="text-decoration: line-through;"><span class="simbolCurrency">US$</span><span class="usdpriceCon">${_pricing.totalAmountBeforeDiscount?.getAsString()}</span></li>
+            <li style="text-decoration: line-through;"><span class="simbolCurrency">US$</span><span class="clppriceCon">${_pricingCLP.totalAmountBeforeDiscount?.getAsString()}</span></li>
         </ul>
         #{/if}
         <ul>
             <li>Total a Pagar</li>
-            <li><span class="simbolCurrency">US$</span><span class="usdpriceCon">${_pricing.totalAmount?.getAsString()}</span></li>
+            <li><span class="simbolCurrency">US$</span><span class="clppriceCon">${_pricingCLP.totalAmount?.getAsString()}</span></li>
         </ul>
     </div>
 </div>
