@@ -12,8 +12,8 @@
 			%{   
 			}
 			}%
-            <th colspan="2">#{if play.Play.configuration.getProperty("useShowPriceSuggestionMatrix").toString() == "Y"}<a href="#" class="priceSug">Precios +/- 5 d√≠as </a>#{/if}</th>
-         	<th colspan="2" class="select-th"><a class="PXA" href="#">Precios por aerol√≠neas</a></th>
+            <th colspan="2">#{if play.Play.configuration.getProperty("useShowPriceSuggestionMatrix").toString() == "Y"}<a href="#" class="priceSug">Precios +/- 5 dÌas </a>#{/if}</th>
+         	<th colspan="2" class="select-th"><a class="PXA" href="#">Precios por aerolÌneas</a></th>
          	*{<th ><a class="tTar" href="#">Tendencia de Tarifas</a></th>}*
         </tr>
         </thead>
@@ -41,7 +41,7 @@
 		</tr>
 		
 		<tr>
-		    <td>2 escalas o m√°s</td>
+		    <td>2 escalas o m·s</td>
 		    #{list items:airlineArray, as:'airlineBlock'}
 		    	<td> #{if airlineBlock?.price2!=null} <span class="simbolCurrency">US$</span><span class="usdTablePrice">${airlineBlock?.price2}</span><span class="clppriceCon hidden"></span>#{/if} #{else} - #{/else}</td>
 		    #{/list}
@@ -52,6 +52,6 @@
 #{/if}
 #{else}
                 <div id="bannerDelta" style="display: block">
-                    <img style="height:130px; margin-top: 50px;" src="http://res.cloudinary.com/hyvrprjak/image/upload/q_90/bannerDelta.jpg">
+                    <img style="height:130px; margin-top: 50px;" src="http://res.cloudinary.com/hyvrprjak/image/upload/v1504557774/bannerDelta.jpg">
                 </div>
 #{/else}
