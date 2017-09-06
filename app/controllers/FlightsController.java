@@ -4,10 +4,12 @@ import com.google.common.base.Strings;
 
 import play.mvc.Controller;
 import utils.AgencyConfigurationDto;
-import utils.ApiFlightsSdk.v1.CabinConfiguration;
+import utils.ConfigurationDto;
+import utils.FlightsUtils;
 import utils.TravelClubUtils;
 import utils.ApiFlightsSdk.v1.Agency;
 import utils.ApiFlightsSdk.v1.Airport;
+import utils.ApiFlightsSdk.v1.CabinConfiguration;
 import utils.ApiFlightsSdk.v1.Promotion;
 import utils.dtos.AgencyDto;
 import utils.dtos.CabinConfigurationDto;
@@ -44,8 +46,6 @@ public class FlightsController extends Controller {
         if (!Strings.isNullOrEmpty(params.get("destination"))){
             renderArgs.put("destinationCity", new Airport().getByIataCode(params.get("destination")).city);
         }
-
         render(agencyConfigurationDto,cabinConfigurationDto);
     }
-
 }

@@ -85,6 +85,9 @@
 			$( ".simbolCurrency" ).each(function( index ) {
 				$(this).html("$");
 			});	
+			$( ".clppriceCon" ).each(function( index ) {
+				$(this).html(numberWithCommas($(this).html()));
+			});	
 		}
 	});
 
