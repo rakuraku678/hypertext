@@ -33,6 +33,7 @@
             <td class="txt-payment-table-mark"><span class="simbolCurrency">US$</span><span class="clppriceCon">${pricingDetail.totalFare?.getAsString()}</span></td>
         </tr>
         #{/list}
+        #{if _pricingCLP?.totalFee!=null && _pricingCLP?.totalFee.getAsInt()>0 && !_pricingCLP?.totalFee.getAsString().trim().equals('')}
         <tr>
             <td></td>
             <td class="txt-payment-table-mark">Gestión agencia</td>
@@ -40,6 +41,7 @@
             <td>&nbsp;</td>
             <td class="txt-payment-table-mark"><span class="simbolCurrency">US$</span><span class="clppriceCon">${_pricingCLP.totalFee?.getAsString()}</span></td>
         </tr>
+        #{/if}
         </tbody>
     </table>
     <div class="total-payment">
