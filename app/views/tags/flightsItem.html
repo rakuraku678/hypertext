@@ -3,7 +3,7 @@
                               connectionsReturnCount = _flight.returnSegment.flightsCount.getAsInt() - 1;
                               returnElapsedTimeEX = _flight.returnSegment.elapsedTime.getAsInt();
                               departureElapsedTimeEX = _flight.departureSegment.elapsedTime.getAsInt();
-                              baxterHeight = _flight.pricing.shareNumber!=null? '400px':'300px';
+                              baxterHeight = _flight.pricing.shareNumber!=null? '320px':'300px';
                             }%
 
 <div class="row ticket ticketBaxer" 
@@ -226,7 +226,7 @@
                 </li>
                 <li class="info-detail-promo" id="bigImgPromoLi">
                 	#{if _flight.pricing.urlBannerImage!=null && !_flight.pricing.urlBannerImage.equals("")}
-	               		<img style="height:130px; margin-top: 50px;" src="${utils.CloudinaryUtils.getUrl(_flight.pricing.urlBannerImage.getAsString(), 'q_90,c_fill,h_130', '')}">
+	               		<img style="height:auto;" src="${utils.CloudinaryUtils.getUrl(_flight.pricing.urlBannerImage.getAsString(), 'q_90,c_fill,h_130', '')}">
                    	#{/if}
                 </li>
                 <li class="info-detail-promo" id="mobileImgPromoLi">
@@ -248,10 +248,10 @@
                 *{<span class="private-fare-space-saver">&nbsp;</span>}*
             #{/else}
             #{if _flight.pricing.adtTotalPriceBeforeDiscount && _flight.pricing.adtTotalPriceBeforeDiscount != _flight.pricing.adtTotalPrice}
-                <span class="private-fare-space-saver"><img src="http://res.cloudinary.com/hyvrprjak/image/upload/c_scale,w_60/superDosB.jpg" alt="Super Dos" title="super dos"></span>
+                <span class="private-fare-space-saver" id="private-fare-img"><img src="http://res.cloudinary.com/hyvrprjak/image/upload/c_scale,w_60/superDosB.jpg" alt="Super Dos" title="super dos"></span>
             #{/if}
             #{else}
-                <span class="private-fare-space-saver">&nbsp;</span>
+                <span class="private-fare-space-saver" id="private-fare-img">&nbsp;</span>
             #{/else}
             <span class="title">Precio por Adulto</span>
             #{if _flight.pricingCLP.adtTotalPriceWithAllTaxes.getAsInt() > _flight.pricingCLP.adtTotalPrice.getAsInt() && _flight.pricing.adtTotalPriceBeforeDiscount && _flight.pricing.adtTotalPriceBeforeDiscount != _flight.pricing.adtTotalPrice}
