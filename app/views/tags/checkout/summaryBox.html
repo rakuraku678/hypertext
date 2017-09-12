@@ -16,12 +16,11 @@
         #{list items:_pricingCLP.detail, as:'pricingDetail'}
             	%{
 		    	 def passType = "";
-		    	 def totalPrice = "";
 		    	 switch (pricingDetail.code.getAsString()) {
-		         	case "ADT": passType="Adulto"; totalPrice = _pricingCLP.totalAdt.getAsString(); break;
-		         	case "CHD": passType="Niño"; totalPrice = _pricingCLP.totalChd.getAsString(); break;
-		         	case "C02": passType="Niño"; totalPrice = _pricingCLP.totalChd.getAsString(); break;
-		         	case "INF": passType="Infante"; totalPrice = _pricingCLP.totalAdt.getAsString(); break;
+		         	case "ADT": passType="Adulto"; break;
+		         	case "CHD": passType="Niño"; break;
+		         	case "C02": passType="Niño"; break;
+		         	case "INF": passType="Infante"; break;
 		         	default: passType="Pasajero";
 		      	 }
 		    	}%
