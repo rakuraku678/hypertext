@@ -70,7 +70,6 @@ public class PaymentFlowController extends Controller {
         }
         
         List<CountryDto> countriesList = Country.process();
-        
         render(agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate, airRulesResultList, promotionDto, countriesList, onlyPassport);
     }
 
