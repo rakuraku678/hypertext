@@ -3,7 +3,7 @@
                               connectionsReturnCount = _flight.returnSegment.flightsCount.getAsInt() - 1;
                               returnElapsedTimeEX = _flight.returnSegment.elapsedTime.getAsInt();
                               departureElapsedTimeEX = _flight.departureSegment.elapsedTime.getAsInt();
-                              baxterHeight = _flight.pricing.shareNumber!=null? '500px':'300px';
+                              baxterHeight = _flight.pricing.shareNumber!=null? '400px':'300px';
                             }%
 
 <div class="row ticket ticketBaxer" 
@@ -272,24 +272,22 @@
                 }%
                 <li><span class="item-detail">Pasajero${totalPassengers.pluralize()} (${totalPassengers})<span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalPassengerFare?.getAsString()}</span><span class="item-price clppriceCon hidden">${_flight.pricingCLP.totalPassengerFare?.getAsString()}</span></li>
                 <li><span class="item-detail">Imp. y Tasas <span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalTax?.getAsString()}</span><span class="item-price clppriceCon hidden">${_flight.pricingCLP.totalTax?.getAsString()}</span></li>
-                <li><span class="item-detail">Gestión agencia <span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalFee?.getAsString()}</span><span class="item-price clppriceCon hidden">${_flight.pricingCLP.totalFee?.getAsString()}</span></li>
+                #{if _flight.pricingCLP?.totalFee!=null && _flight.pricingCLP?.totalFee.getAsInt()>0 && !_flight.pricingCLP?.totalFee.getAsString().trim().equals('')}
+                	<li><span class="item-detail">Gestión agencia <span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalFee?.getAsString()}</span><span class="item-price clppriceCon hidden">${_flight.pricingCLP.totalFee?.getAsString()}</span></li>
+                #{/if}
                 <hr>
                 <li><span class="">Total <span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalAmount?.getAsString()}</span><span class="item-price clppriceCon hidden">${_flight.pricingCLP.totalAmount?.getAsString()}</span></li>
                 
                 
                 #{if _flight.pricing.shareNumber!=null}
 	                <li class="info-detail-dues">
-	                    <div>
-	                        <span class="title">Valor pagando con tus <strong>Tarjetas Travel</strong></span>
-	                    </div> 
-	                    
 	                    <div class="col-xs-6 interest-free" style="padding-right: 5px;"><span>${_flight.pricing.shareNumber.shareQuantity.getAsString()} cuotas sin interés</span></div>
-	                    <div class="col-xs-6 total" style="padding-left: 5px; padding-right: 5px;">
+	                    <div class="col-xs-6 total" style="padding-left: 5px; padding-right: 0px;">
 	                    %{def shareValue =  new java.text.DecimalFormat("#.##").format(_flight.pricing.totalAmount.getAsNumber() / _flight.pricing.shareNumber.shareQuantity.getAsNumber())}%
 	                    %{def shareValueCLP = _flight.pricingCLP.totalAmount.getAsNumber() / _flight.pricing.shareNumber.shareQuantity.getAsNumber()}%
 	                        <span ><span class="simbolCurrency" style="font-size: 14px;">US$</span><span class="item-price usdpriceCon" style="font-size: 14px; padding-top: 7px;">${shareValue}</span><span class="item-price clppriceCon hidden" style="font-size: 14px; padding-top: 7px;">${(int) shareValueCLP}</span></span>
 	                    </div>
-	                    <div class="col-xs-12 detail">
+	                    <div class="col-xs-12 detail" style="padding-right:0px;">
 	                       <ul>
 	                            <li>C.A.E: ${_flight.pricing.shareNumber.cae.getAsString()}%</li>
 	                            <li>Costo total: <span class="simbolCurrency" >US$</span><span class="item-price usdpriceCon">${_flight.pricing.totalWithOverCost.getAsString()}</span><span class="item-price clppriceCon hidden">${_flight.pricingCLP.totalWithOverCost.getAsString()}</span></li>
