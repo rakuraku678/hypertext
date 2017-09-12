@@ -266,25 +266,46 @@
             #{/else}
            
             <ul class="detail-price">
-                %{
-                    def totalPassengers = 0
-                    _flight.pricing.detail.each{ totalPassengers += it.quantity.getAsInt()}
-                }%
-                <li><span class="item-detail">Pasajero${totalPassengers.pluralize()} (${totalPassengers})<span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalPassengerFare?.getAsString()}</span><span class="item-price clppriceCon hidden">${_flight.pricingCLP.totalPassengerFare?.getAsString()}</span></li>
-                
-                
+        
+              
+				#{list items:_pricingCLP.detail, as:'pricingDetail'}
+		          	%{
+				    	 def passType = "";
+				    	 def totalPrice = "";
+				    	 switch (pricingDetail.code.getAsString()) {
+				         	case "ADT": passType="Adulto"; totalPrice = _pricingCLP.totalAdt.getAsString(); break;
+				         	case "CHD": passType="Niño"; totalPrice = _pricingCLP.totalChd.getAsString(); break;
+				         	case "C02": passType="Niño"; totalPrice = _pricingCLP.totalChd.getAsString(); break;
+				         	case "INF": passType="Infante"; totalPrice = _pricingCLP.totalAdt.getAsString(); break;
+				         	default: passType="Pasajero";
+		      	 }
+		    	}%
+		    		<li><span class="item-detail">${_flight.pricing.detail.getAsJsonArray().get(0).getAsJsonObject().quantity.getAsInt()} Adulto${_flight.pricing.detail.getAsJsonArray().get(0).getAsJsonObject().quantity.getAsInt().pluralize()}<span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalAdt.getAsString()}</span><span class="item-price clppriceCon hidden">${_flight.pricingCLP.totalAdt.getAsString()}</span></li>
+		            <td class="txt-payment-table-mark">${pricingDetail.quantity?.getAsString()} ${passType}${pricingDetail.quantity?.getAsInt().pluralize()}</td>
+		            <td><span class="simbolCurrency">US$</span><span class="clppriceCon">${pricingDetail.basefare?.getAsString()}</span></td>
+		            <td><span class="simbolCurrency">US$</span><span class="clppriceCon">${pricingDetail.totalTax?.getAsString() ?: "0"}</span></td>
+		            <td class="txt-payment-table-mark"><span class="simbolCurrency">US$</span><span class="clppriceCon">${pricingDetail.totalPrice?.getAsString()}</span></td>
+		        #{/list}
+        
+        
+        
+        *{                
                 	<li><span class="item-detail">${_flight.pricing.detail.getAsJsonArray().get(0).getAsJsonObject().quantity.getAsInt()} Adulto${_flight.pricing.detail.getAsJsonArray().get(0).getAsJsonObject().quantity.getAsInt().pluralize()}<span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalAdt.getAsString()}</span><span class="item-price clppriceCon hidden">${_flight.pricingCLP.totalAdt.getAsString()}</span></li>
+                	
+                #{if _flight.pricing.detail.getAsJsonArray().size()>1}	
                 	<li><span class="item-detail">${_flight.pricing.detail.getAsJsonArray().get(1).getAsJsonObject().quantity.getAsInt()} Niño${_flight.pricing.detail.getAsJsonArray().get(1).getAsJsonObject().quantity.getAsInt().pluralize()}<span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalChd.getAsString()}</span><span class="item-price clppriceCon hidden">${_flight.pricingCLP.totalChd.getAsString()}</span></li>
+                #{/if}
+                #{if _flight.pricing.detail.getAsJsonArray().size()>2}
                 	<li><span class="item-detail">${_flight.pricing.detail.getAsJsonArray().get(2).getAsJsonObject().quantity.getAsInt()} Infante${_flight.pricing.detail.getAsJsonArray().get(2).getAsJsonObject().quantity.getAsInt().pluralize()}<span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalInf.getAsString()}</span><span class="item-price clppriceCon hidden">${_flight.pricingCLP.totalInf.getAsString()}</span></li>
-                
+                #{/if}
                 
                 
                 <li><span class="item-detail">Imp. y Tasas <span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalTax?.getAsString()}</span><span class="item-price clppriceCon hidden">${_flight.pricingCLP.totalTax?.getAsString()}</span></li>
                 <li><span class="item-detail">Gestión agencia <span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalFee?.getAsString()}</span><span class="item-price clppriceCon hidden">${_flight.pricingCLP.totalFee?.getAsString()}</span></li>
                 <hr>
-                <li><span class="">Total <span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.finalShowingSum?.getAsString()}</span><span class="item-price clppriceCon hidden">${_flight.pricingCLP.finalShowingSum?.getAsString()}</span></li>
+                <li><span class="">Total <span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalAmount?.getAsString()}</span><span class="item-price clppriceCon hidden">${_flight.pricingCLP.totalAmount?.getAsString()}</span></li>
                 
-                
+        }*        
                 #{if _flight.pricing.shareNumber!=null}
 	                <li class="info-detail-dues">
 	                    <div>
