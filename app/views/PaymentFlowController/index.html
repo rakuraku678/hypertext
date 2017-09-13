@@ -47,7 +47,7 @@
                 </div>
                 <div class="col-md-4">
                     #{checkout.flightBox bfmResultItem:bfmResultItem/}
-                    #{checkout.summaryBox pricing:bfmResultItem.pricing, pricingCLP:bfmResultItem.pricingCLP/}
+                    #{checkout.summaryBox pricing:bfmResultItem.pricing, pricingCLP:bfmResultItem.pricingCLP, selectedCurrency:selectedCurrency/}
                     #{checkout.airRules airRulesResultList:airRulesResultList/}
                 </div>
             </div>
@@ -76,19 +76,22 @@
 
 	$(function () {
 		var selectedCurrency = "${selectedCurrency}";
-		if (selectedCurrency=="clp"){
-			$( ".usdpriceCon" ).each(function( index ) {
-				var exchangeRate = parseFloat("${dollarExchangeRate}");
-				var numToChange = parseFloat($(this).html());
-				$(this).html(numberWithCommas(parseFloat(numToChange * exchangeRate).toFixed(0)));
-			});	
-			$( ".simbolCurrency" ).each(function( index ) {
-				$(this).html("$");
-			});	
-			$( ".clppriceCon" ).each(function( index ) {
+		$( ".clppriceCon" ).each(function( index ) {
 				$(this).html(numberWithCommas($(this).html()));
 			});	
-		}
+// 		if (selectedCurrency=="clp"){
+// 			$( ".usdpriceCon" ).each(function( index ) {
+// 				var exchangeRate = parseFloat("${dollarExchangeRate}");
+// 				var numToChange = parseFloat($(this).html());
+// 				$(this).html(numberWithCommas(parseFloat(numToChange * exchangeRate).toFixed(0)));
+// 			});	
+// 			$( ".simbolCurrency" ).each(function( index ) {
+// 				$(this).html("$");
+// 			});	
+// 			$( ".clppriceCon" ).each(function( index ) {
+// 				$(this).html(numberWithCommas($(this).html()));
+// 			});	
+// 		}
 	});
 
 </script>

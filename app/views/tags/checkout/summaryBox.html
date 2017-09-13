@@ -13,44 +13,85 @@
         </tr>
         </thead>
         <tbody>
-        #{list items:_pricingCLP.detail, as:'pricingDetail'}
-            	%{
-		    	 def passType = "";
-		    	 switch (pricingDetail.code.getAsString()) {
-		         	case "ADT": passType="Adulto"; break;
-		         	case "CHD": passType="Niño"; break;
-		         	case "C02": passType="Niño"; break;
-		         	case "INF": passType="Infante"; break;
-		         	default: passType="Pasajero";
-		      	 }
-		    	}%
-        <tr>
-            <td></td>
-            <td class="txt-payment-table-mark">${pricingDetail.quantity?.getAsString()} ${passType}${pricingDetail.quantity?.getAsInt().pluralize()}</td>
-            <td><span class="simbolCurrency">US$</span><span class="clppriceCon">${pricingDetail.basefare?.getAsString()}</span></td>
-            <td><span class="simbolCurrency">US$</span><span class="clppriceCon">${pricingDetail.totalTax?.getAsString() ?: "0"}</span></td>
-            <td class="txt-payment-table-mark"><span class="simbolCurrency">US$</span><span class="clppriceCon">${pricingDetail.totalFare?.getAsString()}</span></td>
-        </tr>
-        #{/list}
+        #{if _selectedCurrency=='clp'}
+	        #{list items:_pricingCLP.detail, as:'pricingDetail'}
+	            	%{
+			    	 def passType = "";
+			    	 switch (pricingDetail.code.getAsString()) {
+			         	case "ADT": passType="Adulto"; break;
+			         	case "CHD": passType="Niño"; break;
+			         	case "C02": passType="Niño"; break;
+			         	case "INF": passType="Infante"; break;
+			         	default: passType="Pasajero";
+			      	 }
+			    	}%
+	        <tr>
+	            <td></td>
+	            <td class="txt-payment-table-mark">${pricingDetail.quantity?.getAsString()} ${passType}${pricingDetail.quantity?.getAsInt().pluralize()}</td>
+	            <td><span class="simbolCurrency">$</span><span class="clppriceCon">${pricingDetail.basefare?.getAsString()}</span></td>
+	            <td><span class="simbolCurrency">$</span><span class="clppriceCon">${pricingDetail.totalTax?.getAsString() ?: "0"}</span></td>
+	            <td class="txt-payment-table-mark"><span class="simbolCurrency">$</span><span class="clppriceCon">${pricingDetail.totalFare?.getAsString()}</span></td>
+	        </tr>
+	        #{/list}
+        #{/if}
+        #{else}
+        	#{list items:_pricing.detail, as:'pricingDetail'}
+	            	%{
+			    	 def passType = "";
+			    	 switch (pricingDetail.code.getAsString()) {
+			         	case "ADT": passType="Adulto"; break;
+			         	case "CHD": passType="Niño"; break;
+			         	case "C02": passType="Niño"; break;
+			         	case "INF": passType="Infante"; break;
+			         	default: passType="Pasajero";
+			      	 }
+			    	}%
+	        <tr>
+	            <td></td>
+	            <td class="txt-payment-table-mark">${pricingDetail.quantity?.getAsString()} ${passType}${pricingDetail.quantity?.getAsInt().pluralize()}</td>
+	            <td><span class="simbolCurrency">US$</span><span class="clppriceCon">${pricingDetail.basefare?.getAsString()}</span></td>
+	            <td><span class="simbolCurrency">US$</span><span class="clppriceCon">${pricingDetail.totalTax?.getAsString() ?: "0"}</span></td>
+	            <td class="txt-payment-table-mark"><span class="simbolCurrency">US$</span><span class="clppriceCon">${pricingDetail.totalFare?.getAsString()}</span></td>
+	        </tr>
+	        #{/list}
+        #{/else}
+        
+        #{if _pricingCLP?.totalFee!=null && _pricingCLP?.totalFee.getAsInt()>0 && !_pricingCLP?.totalFee.getAsString().trim().equals('')}
         <tr>
             <td></td>
             <td class="txt-payment-table-mark">Gestión agencia</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
-            <td class="txt-payment-table-mark"><span class="simbolCurrency">US$</span><span class="clppriceCon">${_pricingCLP.totalFee?.getAsString()}</span></td>
+            #{if _selectedCurrency=='clp'}
+            	<td class="txt-payment-table-mark"><span class="simbolCurrency">$</span><span class="clppriceCon">${_pricingCLP.totalFee?.getAsString()}</span></td>
+            #{/if}
+            #{else}
+            	<td class="txt-payment-table-mark"><span class="simbolCurrency">US$</span><span class="clppriceCon">${_pricing.totalFee?.getAsString()}</span></td>
+            #{/else}
         </tr>
+        #{/if}
         </tbody>
     </table>
     <div class="total-payment">
         #{if _pricingCLP.adtTotalPriceWithAllTaxes.getAsInt() > _pricingCLP.adtTotalPrice.getAsInt()}
         <ul>
             <li>&nbsp;</li>
-            <li style="text-decoration: line-through;"><span class="simbolCurrency">US$</span><span class="clppriceCon">${_pricingCLP.totalAmountBeforeDiscount?.getAsString()}</span></li>
+            #{if _selectedCurrency=='clp'}
+            	<li style="text-decoration: line-through;"><span class="simbolCurrency">$</span><span class="clppriceCon">${_pricingCLP.totalAmountBeforeDiscount?.getAsString()}</span></li>
+            #{/if}
+           	#{else}
+           		<li style="text-decoration: line-through;"><span class="simbolCurrency">US$</span><span class="clppriceCon">${_pricing.totalAmountBeforeDiscount?.getAsString()}</span></li>
+           	#{/else}
         </ul>
         #{/if}
         <ul>
             <li>Total a Pagar</li>
-            <li><span class="simbolCurrency">US$</span><span class="clppriceCon">${_pricingCLP.totalAmount?.getAsString()}</span></li>
+            #{if _selectedCurrency=='clp'}
+            	<li><span class="simbolCurrency">$</span><span class="clppriceCon">${_pricingCLP.totalAmount?.getAsString()}</span></li>
+           	#{/if}
+           	#{else}
+           		<li><span class="simbolCurrency">US$</span><span class="clppriceCon">${_pricing.totalAmount?.getAsString()}</span></li>
+           	#{/else}
         </ul>
     </div>
 </div>
