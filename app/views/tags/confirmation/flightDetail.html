@@ -21,7 +21,7 @@
                 <td><span class="name-company-fly">${segment.flight?.getAsString()}</span></td>
                 <td>${new utils.ApiFlightsSdk.v1.Airport().getByIataCode(segment.from.getAsString()).city}</td>
                 <td>${new utils.ApiFlightsSdk.v1.Airport().getByIataCode(segment.to.getAsString()).city}</td>
-                <td>${new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(segment.datetime?.getAsString().replace('T', ' ')).format('dd/MM/yyyy hh:mm')}</td>
+                    <td>${new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(segment.datetime?.getAsString().replace('T', ' ')).format('dd/MM/yyyy HH:mm')}</td>
             </tr>
         #{/list}
         </tbody>

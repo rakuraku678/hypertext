@@ -5,6 +5,7 @@ dist/
 logs/
 test-result/
 eclipse/
+nbproject/
 lib/
 tmp/
 .svn/

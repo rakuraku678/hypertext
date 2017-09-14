@@ -3,7 +3,7 @@
                               connectionsReturnCount = _flight.returnSegment.flightsCount.getAsInt() - 1;
                               returnElapsedTimeEX = _flight.returnSegment.elapsedTime.getAsInt();
                               departureElapsedTimeEX = _flight.departureSegment.elapsedTime.getAsInt();
-                              baxterHeight = _flight.pricing.shareNumber!=null? '500px':'300px';
+                              baxterHeight = _flight.pricing.shareNumber!=null? '320px':'350px';
                             }%
 
 <div class="row ticket ticketBaxer" 
@@ -226,7 +226,7 @@
                 </li>
                 <li class="info-detail-promo" id="bigImgPromoLi">
                 	#{if _flight.pricing.urlBannerImage!=null && !_flight.pricing.urlBannerImage.equals("")}
-	               		<img style="height:130px; margin-top: 50px;" src="${utils.CloudinaryUtils.getUrl(_flight.pricing.urlBannerImage.getAsString(), 'q_90,c_fill,h_130', '')}">
+	               		<img style="height:auto;" src="${utils.CloudinaryUtils.getUrl(_flight.pricing.urlBannerImage.getAsString(), 'q_90,c_fill,h_130', '')}">
                    	#{/if}
                 </li>
                 <li class="info-detail-promo" id="mobileImgPromoLi">
@@ -248,51 +248,57 @@
                 *{<span class="private-fare-space-saver">&nbsp;</span>}*
             #{/else}
             #{if _flight.pricing.adtTotalPriceBeforeDiscount && _flight.pricing.adtTotalPriceBeforeDiscount != _flight.pricing.adtTotalPrice}
-                <span class="private-fare-space-saver"><img src="http://res.cloudinary.com/hyvrprjak/image/upload/c_scale,w_60/superDosB.jpg" alt="Super Dos" title="super dos"></span>
+                <span class="private-fare-space-saver" id="private-fare-img"><img src="http://res.cloudinary.com/hyvrprjak/image/upload/c_scale,w_60/superDosB.jpg" alt="Super Dos" title="super dos"></span>
             #{/if}
             #{else}
-                <span class="private-fare-space-saver">&nbsp;</span>
+                <span class="private-fare-space-saver" id="private-fare-img">&nbsp;</span>
             #{/else}
             <span class="title">Precio por Adulto</span>
             #{if _flight.pricingCLP.adtTotalPriceWithAllTaxes.getAsInt() > _flight.pricingCLP.adtTotalPrice.getAsInt() && _flight.pricing.adtTotalPriceBeforeDiscount && _flight.pricing.adtTotalPriceBeforeDiscount != _flight.pricing.adtTotalPrice}
-            <span class="price before-discount"><span class="simbolCurrency">US$</span><span class="usdpriceCon">${_flight.pricing.adtTotalPriceWithAllTaxes?.getAsString()}</span><span class="clppriceCon hidden">${_flight.pricingCLP.adtTotalPriceWithAllTaxes?.getAsString()}</span></span>
-            <span class="price"><span class="simbolCurrency">US$</span><span class="usdpriceCon">${_flight.pricing.adtTotalPrice?.getAsString()}</span><span class="clppriceCon hidden">${_flight.pricingCLP.adtTotalPrice?.getAsString()}</span></span>
+            <span class="price before-discount"><span class="usdpriceCon"><span class="simbolCurrency">US$</span>${_flight.pricing.adtTotalPriceWithAllTaxes?.getAsString()}</span><span class="clppriceCon hidden">${_flight.pricingCLP.adtTotalPriceWithAllTaxes?.getAsString()}</span></span>
+            <span class="price"><span class="usdpriceCon"><span class="simbolCurrency">US$</span>${_flight.pricing.adtTotalPrice?.getAsString()}</span><span class="clppriceCon hidden">${_flight.pricingCLP.adtTotalPrice?.getAsString()}</span></span>
             #{/if}
             #{elseif _flight.pricingCLP.adtTotalPriceWithAllTaxes.getAsInt() <= _flight.pricingCLP.adtTotalPrice.getAsInt() && _flight.pricing.adtTotalPriceBeforeDiscount && _flight.pricing.adtTotalPriceBeforeDiscount != _flight.pricing.adtTotalPrice}
-            <span class="price"><span class="simbolCurrency">US$</span><span class="usdpriceCon">${_flight.pricing.adtTotalPrice?.getAsString()}</span><span class="clppriceCon hidden">${_flight.pricingCLP.adtTotalPrice?.getAsString()}</span></span>
+            <span class="price"><span class="usdpriceCon"><span class="simbolCurrency">US$</span>${_flight.pricing.adtTotalPrice?.getAsString()}</span><span class="clppriceCon hidden">${_flight.pricingCLP.adtTotalPrice?.getAsString()}</span></span>
             #{/elseif}
             #{else}
-            <span class="price"><span class="simbolCurrency">US$</span><span class="usdpriceCon">${_flight.pricing.adtTotalPriceWithAllTaxes?.getAsString()}</span><span class="clppriceCon hidden">${_flight.pricingCLP.adtTotalPriceWithAllTaxes?.getAsString()}</span></span>
+            <span class="price"><span class="usdpriceCon"><span class="simbolCurrency">US$</span>${_flight.pricing.adtTotalPriceWithAllTaxes?.getAsString()}</span><span class="clppriceCon hidden">${_flight.pricingCLP.adtTotalPriceWithAllTaxes?.getAsString()}</span></span>
             #{/else}
            
             <ul class="detail-price">
-                %{
-                    def totalPassengers = 0
-                    _flight.pricing.detail.each{ totalPassengers += it.quantity.getAsInt()}
-                }%
-                <li><span class="item-detail">Pasajero${totalPassengers.pluralize()} (${totalPassengers})<span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalPassengerFare?.getAsString()}</span><span class="item-price clppriceCon hidden">${_flight.pricingCLP.totalPassengerFare?.getAsString()}</span></li>
-                <li><span class="item-detail">Imp. y Tasas <span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalTax?.getAsString()}</span><span class="item-price clppriceCon hidden">${_flight.pricingCLP.totalTax?.getAsString()}</span></li>
-                <li><span class="item-detail">Gestión agencia <span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalFee?.getAsString()}</span><span class="item-price clppriceCon hidden">${_flight.pricingCLP.totalFee?.getAsString()}</span></li>
+        
+		              
+                      
+               	<li><span class="item-detail">${_flight.pricing.detail.getAsJsonArray().get(0).getAsJsonObject().quantity.getAsInt()} Adulto${_flight.pricing.detail.getAsJsonArray().get(0).getAsJsonObject().quantity.getAsInt().pluralize()}</span><span class="item-price usdpriceCon"><span class="simbolCurrency">US$</span>${_flight.pricing.totalAdt.getAsString()}</span><span class="item-price clppriceCon hidden">${_flight.pricingCLP.totalAdt.getAsString()}</span></li>
+                	
+                #{if _flight.pricing.detail.getAsJsonArray().size()>1}	
+                	<li><span class="item-detail">${_flight.pricing.detail.getAsJsonArray().get(1).getAsJsonObject().quantity.getAsInt()} Niño${_flight.pricing.detail.getAsJsonArray().get(1).getAsJsonObject().quantity.getAsInt().pluralize()}</span><span class="item-price usdpriceCon"><span class="simbolCurrency">US$</span>${_flight.pricing.totalChd.getAsString()}</span><span class="item-price clppriceCon hidden">${_flight.pricingCLP.totalChd.getAsString()}</span></li>
+                #{/if}
+                #{if _flight.pricing.detail.getAsJsonArray().size()>2}
+                	<li><span class="item-detail">${_flight.pricing.detail.getAsJsonArray().get(2).getAsJsonObject().quantity.getAsInt()} Infante${_flight.pricing.detail.getAsJsonArray().get(2).getAsJsonObject().quantity.getAsInt().pluralize()}</span><span class="item-price usdpriceCon"><span class="simbolCurrency">US$</span>${_flight.pricing.totalInf.getAsString()}</span><span class="item-price clppriceCon hidden">${_flight.pricingCLP.totalInf.getAsString()}</span></li>
+                #{/if}
+                
+                
+                <li><span class="item-detail">Imp. y Tasas</span><span class="item-price usdpriceCon"><span class="simbolCurrency">US$ </span>${_flight.pricing.totalTax?.getAsString()}</span><span class="item-price clppriceCon hidden">${_flight.pricingCLP.totalTax?.getAsString()}</span></li>
+                #{if _flight.pricingCLP?.totalFee!=null && _flight.pricingCLP?.totalFee.getAsInt()>0 && !_flight.pricingCLP?.totalFee.getAsString().trim().equals('')}
+                	<li><span class="item-detail">Gestión agencia </span><span class="item-price usdpriceCon"><span class="simbolCurrency">US$ </span>${_flight.pricing.totalFee?.getAsString()}</span><span class="item-price clppriceCon hidden">${_flight.pricingCLP.totalFee?.getAsString()}</span></li>
+                #{/if}
                 <hr>
-                <li><span class="">Total <span class="simbolCurrency">US$</span></span><span class="item-price usdpriceCon">${_flight.pricing.totalAmount?.getAsString()}</span><span class="item-price clppriceCon hidden">${_flight.pricingCLP.totalAmount?.getAsString()}</span></li>
-                
-                
+                <li><span class="">Total </span><span class="item-price usdpriceCon"><span class="simbolCurrency">US$ </span>${_flight.pricing.totalAmount?.getAsString()}</span><span class="item-price clppriceCon hidden">${_flight.pricingCLP.totalAmount?.getAsString()}</span></li>
+                <li style="text-align: center;">Incluye tasas e impuestos</li>
+              
                 #{if _flight.pricing.shareNumber!=null}
 	                <li class="info-detail-dues">
-	                    <div>
-	                        <span class="title">Valor pagando con tus <strong>Tarjetas Travel</strong></span>
-	                    </div> 
-	                    
 	                    <div class="col-xs-6 interest-free" style="padding-right: 5px;"><span>${_flight.pricing.shareNumber.shareQuantity.getAsString()} cuotas sin interés</span></div>
-	                    <div class="col-xs-6 total" style="padding-left: 5px; padding-right: 5px;">
+	                    <div class="col-xs-6 total" style="padding-left: 5px; padding-right: 0px;">
 	                    %{def shareValue =  new java.text.DecimalFormat("#.##").format(_flight.pricing.totalAmount.getAsNumber() / _flight.pricing.shareNumber.shareQuantity.getAsNumber())}%
 	                    %{def shareValueCLP = _flight.pricingCLP.totalAmount.getAsNumber() / _flight.pricing.shareNumber.shareQuantity.getAsNumber()}%
-	                        <span ><span class="simbolCurrency" style="font-size: 14px;">US$</span><span class="item-price usdpriceCon" style="font-size: 14px; padding-top: 7px;">${shareValue}</span><span class="item-price clppriceCon hidden" style="font-size: 14px; padding-top: 7px;">${(int) shareValueCLP}</span></span>
+	                        <span ><span class="item-price usdpriceCon" style="font-size: 14px; padding-top: 7px;"><span class="simbolCurrency" style="font-size: 14px;">US$ </span>${shareValue}</span><span class="item-price clppriceCon hidden" style="font-size: 14px; padding-top: 7px;">${(int) shareValueCLP}</span></span>
 	                    </div>
-	                    <div class="col-xs-12 detail">
+	                    <div class="col-xs-12 detail" style="padding-right:0px;">
 	                       <ul>
 	                            <li>C.A.E: ${_flight.pricing.shareNumber.cae.getAsString()}%</li>
-	                            <li>Costo total: <span class="simbolCurrency" >US$</span><span class="item-price usdpriceCon">${_flight.pricing.totalWithOverCost.getAsString()}</span><span class="item-price clppriceCon hidden">${_flight.pricingCLP.totalWithOverCost.getAsString()}</span></li>
+	                            <li>Costo total: <span class="item-price usdpriceCon"><span class="simbolCurrency" >US$ </span>${_flight.pricing.totalWithOverCost.getAsString()}</span><span class="item-price clppriceCon hidden">${_flight.pricingCLP.totalWithOverCost.getAsString()}</span></li>
 	                        </ul>
 	                    </div>
 	                </li>
