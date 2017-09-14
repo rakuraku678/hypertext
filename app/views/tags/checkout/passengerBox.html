@@ -71,7 +71,7 @@
             </div>
            	<div class="col-md-12 form-group" id="pasaporteBox${_key}" #{if !_onlyPassport}style="display: none;"#{/if}>
            		<div class="row">
-	                  <div class="col-md-6 form-group">
+                          <div class="col-md-6 form-group">
 	                      <label>Nacionalidad del pasajero:</label>
 	                      %{nameNacionality = 'passengers['+ _key +'][nacionalityPassport]'}%
 	                      #{countriesCombo countriesList:_countriesList, name:nameNacionality /}
@@ -83,14 +83,33 @@
                 		  <small class="help-block" id="emptyfpas${_key}" style="display: none;">El campo esta vacio.</small>
 	                  </div>
 	           </div>
-	                  <div class="row">
-		                  <div class="col-md-6 form-group" style="float: inherit !important;">
-		                      <label>Nacionalidad donde fue emitido el documento:</label>
-		                       %{nameIssuedCountry = 'passengers['+ _key +'][countryPassport]'}%
-		                      #{countriesCombo countriesList:_countriesList, name:nameIssuedCountry /}
-		                  </div>
-	                  </div>
+               <div class="row">
+                  <div class="col-md-6 form-group" style="float: inherit !important;">
+                      <label>Nacionalidad donde fue emitido el documento:</label>
+                       %{nameIssuedCountry = 'passengers['+ _key +'][countryPassport]'}%
+                      #{countriesCombo countriesList:_countriesList, name:nameIssuedCountry /}
+                  </div>
+               </div>
            	</div>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label>Linea:</label>
+                        <select name="passengers[${_key}][FFPAirlineIataCode]" class="form-control bg-arrow" id="FFPAirlineIataCode">
+                            #{list items:_airlineIataCodes, as:'airlineIataCode'}
+                            <option value="${airlineIataCode}">
+                                ${airlineIataCode}
+                            </option>
+                            #{/list}s
+                        </select>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>N de Pasajero:</label>
+                        <input type="text" class="form-control" name="passengers[${_key}][FFPNumber]" placeholder="ej. 123456789" maxlength="20">
+                    </div>
+                </div>
+            </div>
+
             
     </div>
 </div>
