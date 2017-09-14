@@ -3,8 +3,18 @@
                               connectionsReturnCount = _flight.returnSegment.flightsCount.getAsInt() - 1;
                               returnElapsedTimeEX = _flight.returnSegment.elapsedTime.getAsInt();
                               departureElapsedTimeEX = _flight.departureSegment.elapsedTime.getAsInt();
-                              baxterHeight = _flight.pricing.shareNumber!=null? '320px':'350px';
+                              baxterHeight = _flight.pricing.shareNumber!=null? '350px':'320px';
                             }%
+			#{if baxterHeight == "350px" && _flight.pricing.accountCode}
+			%{
+				baxterHeight = "390px";
+			}%
+			#{/if}
+			#{if baxterHeight == "320px" && _flight.pricing.accountCode}
+			%{
+				baxterHeight = "350px";
+			}%
+			#{/if}
 
 <div class="row ticket ticketBaxer" 
 		data-airportReturn="${_flight.returnAirportCode.getAsString()}" 
