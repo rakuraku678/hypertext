@@ -15,6 +15,8 @@ import com.google.gson.JsonParser;
 import play.mvc.Controller;
 import utils.AgencyConfigurationDto;
 import utils.ApiFlightsSdk.v1.*;
+import utils.ConfigurationDto;
+import utils.FlightsUtils;
 import utils.JsonUtils;
 import utils.TravelClubUtils;
 import utils.dtos.AirRulesDto;
@@ -86,10 +88,9 @@ public class PaymentFlowController extends Controller {
 
     public static void processError(String type){
         PromotionDto promotionDto = new Promotion().getDefault();
-
         AgencyConfigurationDto agencyConfigurationDto = TravelClubUtils.getAgencyConfiguration(promotionDto.agency.externalId);
-
-        render(agencyConfigurationDto, type);
+        ConfigurationDto configurationDto = FlightsUtils.getConfiguration();
+        render(agencyConfigurationDto, type, configurationDto);
     }
 
     public static void javascript() {
