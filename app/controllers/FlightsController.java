@@ -2,10 +2,10 @@ package controllers;
 
 import com.google.common.base.Strings;
 
+import dto.StateDto;
 import play.mvc.Controller;
 import utils.AgencyConfigurationDto;
-import utils.ConfigurationDto;
-import utils.FlightsUtils;
+import utils.CrossLoginUtils;
 import utils.TravelClubUtils;
 import utils.ApiFlightsSdk.v1.Agency;
 import utils.ApiFlightsSdk.v1.Airport;
@@ -47,5 +47,11 @@ public class FlightsController extends Controller {
             renderArgs.put("destinationCity", new Airport().getByIataCode(params.get("destination")).city);
         }
         render(agencyConfigurationDto,cabinConfigurationDto);
+    }
+    public static void testapitoken(){
+    	String token = CrossLoginUtils.getTransactionToken("56253033e4b0c01cd8c07852", "test", "state");
+    	StateDto stateDto = CrossLoginUtils.getState(token);
+
+    	renderJSON(stateDto);
     }
 }

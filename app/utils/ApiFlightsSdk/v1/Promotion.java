@@ -13,6 +13,8 @@ public class Promotion extends ApiFlightsSDKBase {
     }
 
     public PromotionDto getBySlug(String slug){
+    	
+    	System.out.println("el momento antesssssssssssssssssssssssssssssssssssssssssssssssssssssss: "+ENDPOINT + "/" + slug );
         WS.WSRequest request = prepareRequest(ENDPOINT + "/" + slug );
         return PromotionDto.parsePromotionDto(processResponse(request));
     }
