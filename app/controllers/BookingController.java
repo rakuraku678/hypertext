@@ -8,6 +8,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import play.libs.WS;
 import play.mvc.Controller;
 import utils.DateUtils;
 import utils.ApiFlightsSdk.v1.Booking;
@@ -132,4 +133,14 @@ public class BookingController extends Controller {
 			return false;
 		}
     }
+	public static void getPaxAutocompletById(String body){
+
+		String url = "http://inscripcionesalianzas.travelclub.cl/api/"+ body;
+		System.out.println(url);
+		WS.WSRequest request = WS.url(url);
+		WS.HttpResponse response = request.get();
+		JsonElement jsonResponse = response.getJson();
+		renderJSON(jsonResponse.getAsJsonObject());
+	}
+
 }

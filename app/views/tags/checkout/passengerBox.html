@@ -18,6 +18,38 @@
                 <p><i class="icon-glasses"></i>Comprueba que la información ingresada coincida con la de tu documento de viaje, sea pasaporte u otro.</p>
             </div>
 
+            <div class="col-md-6 form-group">
+                <label>Tipo y número de documento:</label>
+                <label class="sub-label" style="color: #3c0b9a;font-weight: bold;">*Para viajes a USA, Europa, Caribe y destinos lejanos, es necesario seleccionar e ingresar información de pasaporte.</label>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <select id="selectDoc" class="form-control icon-arrow-from validatedocument" name="passengers[${_key}][foidType]" data-pnum="${_key}">
+                            #{if !_onlyPassport}
+                            <option value="RUT">RUT</option>
+                            #{/if}
+                            <option value="PAS">Pasaporte</option>
+                        </select>
+                    </div>
+
+                    <div class="col-xs-8">
+                        #{if !_onlyPassport}
+                        <input id="rutNum${_key}" type="text" class="form-control validatedocumentnum" autocomplete="off" name="passengers[${_key}][foidRut]" placeholder="ej. 190006441">
+                        #{/if}
+                        <input id="pasNum${_key}" #{if !_onlyPassport}style="display: none;"#{/if} type="text" class="form-control validatepassport" autocomplete="off" name="passengers[${_key}][foid]" placeholder="ej. 190006441">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 form-group box-date-birth">
+                <div class="modify-position-box">
+                    <label>Fecha de nacimiento:</label>
+                    <label class="sub-label" style="color: #3c0b9a;font-weight: bold;"> </label>
+                    <input type="text" class="form-control validatedate" name="passengers[${_key}][dateOfBirth]" placeholder="01/01/1990"  data-pnum="${_key}" >
+                    <small class="help-block" id="invfnac${_key}" style="display: none;">Campo no válido</small>
+                    <small class="help-block" id="emptyfnac${_key}" style="display: none;">El campo esta vacio.</small>
+                </div>
+            </div>
+
             <div class="form-group col-md-12">
                 <label class="checkbox-inline">
                     <input type="radio" class="validatesex" name="passengers[${_key}][gender]" value="M"> Hombre
@@ -38,37 +70,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 form-group">
-                <label>Tipo y número de documento:</label>
-                <label class="sub-label" style="color: #3c0b9a;font-weight: bold;">*Para viajes a USA, Europa, Caribe y destinos lejanos, es necesario seleccionar e ingresar información de pasaporte.</label>
-                <div class="row">
-                    <div class="col-xs-4">
-                        <select id="selectDoc" class="form-control icon-arrow-from validatedocument" name="passengers[${_key}][foidType]" data-pnum="${_key}">
-                            #{if !_onlyPassport}
-                            <option value="RUT">RUT</option>
-                            #{/if}
-                            <option value="PAS">Pasaporte</option>
-                        </select>
-                    </div>
 
-                    <div class="col-xs-8">
-                    	#{if !_onlyPassport}
-                        <input id="rutNum${_key}" type="text" class="form-control validatedocumentnum" name="passengers[${_key}][foidRut]" placeholder="ej. 190006441">
-                        #{/if}
-                        <input id="pasNum${_key}" #{if !_onlyPassport}style="display: none;"#{/if} type="text" class="form-control validatepassport" name="passengers[${_key}][foid]" placeholder="ej. 190006441">
-                    </div>
-                </div>
-            </div>
 
-            <div class="col-md-6 form-group box-date-birth">
-                <div class="modify-position-box">
-                    <label>Fecha de nacimiento:</label>
-                    <label class="sub-label" style="color: #3c0b9a;font-weight: bold;"> </label>
-                    <input type="text" class="form-control validatedate" name="passengers[${_key}][dateOfBirth]" placeholder="01/01/1990"  data-pnum="${_key}" >
-                    <small class="help-block" id="invfnac${_key}" style="display: none;">Campo no válido</small>
-                    <small class="help-block" id="emptyfnac${_key}" style="display: none;">El campo esta vacio.</small>
-                </div>
-            </div>
+
            	<div class="col-md-12 form-group" id="pasaporteBox${_key}" #{if !_onlyPassport}style="display: none;"#{/if}>
            		<div class="row">
                           <div class="col-md-6 form-group">
@@ -105,7 +109,7 @@
                     </div>
                     <div class="col-md-6 form-group">
                         <label>N de Pasajero:</label>
-                        <input type="text" class="form-control" name="passengers[${_key}][FFPNumber]" placeholder="ej. 123456789" maxlength="20">
+                        <input id="FFPNumber${_key}" type="text" class="form-control" name="passengers[${_key}][FFPNumber]" placeholder="ej. 123456789" maxlength="20">
                     </div>
                 </div>
             </div>
@@ -113,3 +117,29 @@
             
     </div>
 </div>
+<script type="text/javascript" src="@{'/public/playmanual/jquery-1.6.min.js'}"></script>
+<script>
+
+$(document).ready(function () {
+    $('#rutNum${_key}').keypress(function (e) {
+        if ($(this).val().length > 8){
+            if (e.which == 13) {
+                e.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: "@{BookingController.getPaxAutocompletById}",
+                    data: $('#rutNum${_key}').val(),
+                    dataType: "json",
+                    success:function(result) {
+                        if (result.alianza[0].id != 0){
+                            $('#FFPNumber${_key}').val(result.alianza[0].id)
+                            alert(result.alianza[0].id);
+                        }
+                    }
+                });
+            return false;
+            }
+        }
+    });
+});
+</script>
