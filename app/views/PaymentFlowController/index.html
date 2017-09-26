@@ -1,7 +1,7 @@
 #{extends 'main.html' /}
 #{set title:'PaymentFlow' /}
 
-#{set isAgencyHeader: false /}
+#{set isAgencyHeader: true /}
 
 <section class="bg-path">
     <article class="container-fluid">
@@ -47,7 +47,7 @@
                 </div>
                 <div class="col-md-4">
                     #{checkout.flightBox bfmResultItem:bfmResultItem/}
-                    #{checkout.summaryBox pricing:bfmResultItem.pricing, pricingCLP:bfmResultItem.pricingCLP/}
+                    #{checkout.summaryBox pricing:bfmResultItem.pricing, pricingCLP:bfmResultItem.pricingCLP, selectedCurrency:selectedCurrency/}
                     #{checkout.airRules airRulesResultList:airRulesResultList/}
                 </div>
             </div>
@@ -76,16 +76,22 @@
 
 	$(function () {
 		var selectedCurrency = "${selectedCurrency}";
-		if (selectedCurrency=="clp"){
-			$( ".usdpriceCon" ).each(function( index ) {
-				var exchangeRate = parseFloat("${dollarExchangeRate}");
-				var numToChange = parseFloat($(this).html());
-				$(this).html(numberWithCommas(parseFloat(numToChange * exchangeRate).toFixed(0)));
+		$( ".clppriceCon" ).each(function( index ) {
+				$(this).html(numberWithCommas($(this).html()));
 			});	
-			$( ".simbolCurrency" ).each(function( index ) {
-				$(this).html("$");
-			});	
-		}
+// 		if (selectedCurrency=="clp"){
+// 			$( ".usdpriceCon" ).each(function( index ) {
+// 				var exchangeRate = parseFloat("${dollarExchangeRate}");
+// 				var numToChange = parseFloat($(this).html());
+// 				$(this).html(numberWithCommas(parseFloat(numToChange * exchangeRate).toFixed(0)));
+// 			});	
+// 			$( ".simbolCurrency" ).each(function( index ) {
+// 				$(this).html("$");
+// 			});	
+// 			$( ".clppriceCon" ).each(function( index ) {
+// 				$(this).html(numberWithCommas($(this).html()));
+// 			});	
+// 		}
 	});
 
 </script>
@@ -96,5 +102,5 @@
 #{modalNeadHelp /}
 #{modalExpiredSession /}
 
-#{set isAgencyFooter: false /}
+#{set isAgencyFooter: true /}
 
