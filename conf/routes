@@ -43,7 +43,7 @@ GET     /vuelos/compra/{origin}/{destination}/{departureDate}/{returnDate}/{adul
 GET     /promociones/{promotion}                                                                                                                                FlightsController.index
 GET     /promociones/{promotion}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}                                              FlightsController.index
 
-
+GET		/auth/{hash}				OAuthController.renderBancoChileLogin
 
 
 # Catch all

@@ -58,9 +58,28 @@
             </div>
         </article>
     </form>
+                    <a class="btn btn-search" id="btnLogin">Loguearse</a>
+                <div id="loginDiv"></div>
 </section>
 
 #{spinnerModal/}
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+
+      </div>
+      <div class="modal-body" id="loginModalBody" style="height:400px; overflow: hidden;">
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
 
 #{set 'scriptFiles'}
 #{get 'scriptFiles' /}
@@ -92,6 +111,24 @@
 // 				$(this).html(numberWithCommas($(this).html()));
 // 			});	
 // 		}
+
+        $( "#btnLogin" ).click(function( event ) {
+            var hash = "holache";
+            $('<iframe src="/auth/'+hash+'" frameborder="0" style="position: relative; top: -100px;" width="500" height="500" scrolling="no" id="myFrame"></iframe>').appendTo('#loginModalBody');
+            $('#modalLogin').modal('show');
+//          $.ajax({
+//              type: "GET",
+//              url: "@{OAuthController.renderBancoChileLogin}",
+//              data: {hash: "holachabosnyhghg"},
+//              success:function(result) {
+//                  $('<iframe src="'+result+'" frameborder="0" style="position: relative; top: -100px;" width="500" height="500" scrolling="no" id="myFrame"></iframe>').appendTo('#loginModalBody');
+//                  $('#modalLogin').modal('show');
+//              },
+//              error: function (request, status, error) {
+//                  $("#resultadologin").html(error+request);
+//              }
+//          });
+        });
 	});
 
 </script>
