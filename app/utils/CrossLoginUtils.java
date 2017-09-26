@@ -109,4 +109,40 @@ public class CrossLoginUtils {
             throw new RuntimeException("CrossLogin getState fail.");
         }
     }
+    
+    public static Map<String,String> getBchToken(String state, String clientId) {
+        WSRequest req = WS.url(ENDPOINT+"/transaction/v1/bchTokenRequest");
+        req.setHeader("Content-Type", "application/json");
+        
+        Map dataMap = Maps.newHashMap();
+        dataMap.put("state", state);
+        dataMap.put("clientId", clientId);
+        String json = new Gson().toJson(dataMap);
+        req.body(json);
+        Map<String,String> responseMap = Maps.newHashMap();
+        try {
+            HttpResponse response = req.post();
+            JsonElement responseJson = response.getJson();
+            JsonObject jsonObject = responseJson.getAsJsonObject();
+            String bchToken = JsonUtils.getStringFromJson(jsonObject, "bchToken");
+            String appToken = JsonUtils.getStringFromJson(jsonObject, "appToken");
+            responseMap.put("bchToken", bchToken);
+            responseMap.put("appToken", appToken);
+            
+            if (!response.success()) {
+                System.out.println("// responde_code: " + response.getStatus());
+                System.out.println("// responde: " + responseJson.toString());
+                System.out.println("//****************************************//");
+                throw new RuntimeException("CrossLogin service ERROR");
+            }
+            System.out.println("// jsonResponse: " + responseJson.toString() );
+            System.out.println("//****************************************//");
+
+            return responseMap;
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            throw new RuntimeException("CrossLogin getBchToken fail.");
+        }
+    }
+    
 }

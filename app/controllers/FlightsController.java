@@ -17,6 +17,11 @@ import utils.dtos.PromotionDto;
 
 public class FlightsController extends Controller {
 
+
+    public static void d() {
+    	String token = CrossLoginUtils.getTransactionToken("56253033e4b0c01cd8c07852","test","state");
+    	renderJSON(CrossLoginUtils.getState(token));
+    }
     public static void index(String slugAgency) {
         PromotionDto promotionDto;
         String externalId = "";
