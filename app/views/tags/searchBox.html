@@ -143,7 +143,10 @@
                                 window.history.pushState(responseText, "Results", getCurrentSearchURL());
                             }
                             else {
-                                showError("Error obteniendo precios para la fecha buscada.");
+                                $( "#fligthsDataError" ).html($( "#errorPriceDates" ).html("Esto no funciona amigo"));
+                                $( "#fligthsDataError" ).show("slow");
+
+                                <!--showError("Error obteniendo precios para la fecha buscada.");-->
                             }
                         }
                     );
