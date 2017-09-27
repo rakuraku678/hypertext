@@ -8,7 +8,7 @@ import utils.AESEncryptorUtil;
 public class OAuthController extends Controller {
 
 	
-	private static final String OAUTH_SERVER_URL = "http://190.98.204.155:7001/AuthServer/oauth/authorize";
+	private static final String OAUTH_SERVER_URL = "http://190.98.204.155:7001/AuthServer/oauth/authorize";//https://200.14.140.84:4443/AuthServer/oauth/authorize
 	private static final String OAUTH_SERVER_URL_PROD = "https://servicios.bancochile.cl/AuthServer/authorization";
     private static final String AES_KEY = "Bar12345Bar12345";
 
