@@ -18,7 +18,6 @@ public class FlightsAltenateDates extends ApiFlightsSDKBase {
     public String departuredate;
     public String returndate;
     public String promotion;
-    public String cabin;
     public List<Map<String,String>> passengerTypeList = Lists.newArrayList();
 
     public JsonElement process(){
@@ -33,7 +32,6 @@ public class FlightsAltenateDates extends ApiFlightsSDKBase {
         mapValues.put("returndate",returndate);
         mapValues.put("passengers",passengerTypeList);
         mapValues.put("promotion",promotion);
-        mapValues.put("cabin",cabin);
 
         String jsonBody = new Gson().toJson(mapValues);
 
@@ -62,10 +60,6 @@ public class FlightsAltenateDates extends ApiFlightsSDKBase {
 
     public void setPromotion(String promotion) {
         this.promotion = promotion;
-    }
-
-    public void setCabin(String cabin) {
-        this.cabin = cabin;
     }
 
     public void addPassengerType(String passengerType, String quantity) {

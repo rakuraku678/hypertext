@@ -26,13 +26,14 @@
 </section>
 <section class="search-arrive payment-path">
     <article class="container-fluid">
+        <h2 class="text-center">Oops! Algo salio mal...</h2>
         <div class="row">
             <div class="col-md-12">
             #{if type == 'duplicity'}
                 <div class="alert alert-danger" role="alert" style="width: 1000px; margin: auto; padding: 20px;">
                     Estimado cliente,<br><br>
                     Hemos detectado que usted tiene una reserva activa con los mismos datos.
-                    Intentelo nuevamente en los siguientes <strong>${configurationDto.maxMinsForPendingBooking} minutos</strong> para generar una nueva o
+                    Intentelo nuevamente en los siguientes <strong>XX minutos</strong> para generar una nueva o
                     comuniquese a <strong>ventaonline@travelclub.cl</strong> en el siguiente horario de atención:
                     Lunes a Viernes de 9:00 a 19:00 horas.<br><br>
                     Le agradecemos su preferencia.<br><br>
@@ -78,7 +79,7 @@
             #{elseif type == 'blackout'}
                 <div class="alert alert-danger" role="alert" style="width: 1000px; margin: auto; padding: 20px;">
                     Estimado cliente,<br><br>
-                    En estos momentos, la alternatica de reserva y pago no esta disponible, le solicitamos intentar nuevamente en <strong>${configurationDto.maxMinsForPendingBooking} minutos</strong>.<br><br>
+                    En estos momentos, la alternatica de reserva y pago no esta disponible, le solicitamos intentar nuevamente en <strong>XX minutos</strong>.<br><br>
                     Le agradecemos su preferencia.<br><br>
                     Atentamente,<br><br>
                     Departamento de Ventas On Line.<br><br>

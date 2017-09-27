@@ -37,23 +37,24 @@
                 <div class="form-group col-xs-6">
                     <label>Partida:</label>
                     	<div class='input-group date' id='starDateBtn'>
-                            <input type="text" readonly="true" name="partida" autocomplete="off" id="startDate"
-                                   class="form-delta form-control percent" value="${params.departureDate}">
-        					<i class="form-delta bg-calendar input-group-addon"></i>
+                            <input type="text" readonly="true" style="background-color: #fff; border-color: #fff;" name="partida" autocomplete="off" id="startDate"
+                                   class="form-control percent"  style="border-right: 0; padding-right: 0;" value="${params.departureDate}">
+        					<i class="bg-calendar input-group-addon"></i>
                         </div>
                 </div>
                 <div class="form-group col-xs-6">
                     <label>Regreso:</label>
                     <div class='input-group date' id='endDateBtn'>
-                        <input type="text" readonly="true" name="regreso" id="endDate" autocomplete="off"
-                               class="form-delta form-control percent" value="${params.returnDate}">
-    					<i class="form-delta bg-calendar input-group-addon"></i>
+                        <input type="text" readonly="true" style="background-color: #fff; border-color: #fff;" name="regreso" id="endDate" autocomplete="off"
+                               class="form-control percent" value="${params.returnDate}"
+                               style="border-right: 0; padding-right: 0;">
+    					<i class="bg-calendar input-group-addon"></i>
     					</span>
                     </div>
                 </div>
                 <div class="form-group col-xs-4">
                     <label>Adultos:</label>
-                    <select id="adultCount" class="form-delta bg-arrow form-control" name="adultcount">
+                    <select id="adultCount" class="bg-arrow form-control" name="adultcount">
                         <option #{if params.adults == "1"}selected#{/if}>1</option>
                         <option #{if params.adults == "2"}selected#{/if}>2</option>
                         <option #{if params.adults == "3"}selected#{/if}>3</option>
@@ -66,7 +67,7 @@
                 </div>
                 <div class="form-group col-xs-4">
                     <label>Niños:</label>
-                    <select id="childrenCount" class="form-delta bg-arrow form-control" name="childrencount">
+                    <select id="childrenCount" class="bg-arrow form-control" name="childrencount">
                     	<option #{if params.children == "0"}selected#{/if}>0</option>
                         <option #{if params.children == "1"}selected#{/if}>1</option>
                         <option #{if params.children == "2"}selected#{/if}>2</option>
@@ -77,7 +78,7 @@
                 </div>
                 <div class="form-group col-xs-4">
                     <label>Infantes:</label>
-                    <select id="infantCount" class="form-delta bg-arrow form-control" name="infantcount">
+                    <select id="infantCount" class="bg-arrow form-control" name="infantcount">
                         <option #{if params.infants == "0"}selected#{/if}>0</option>
                         <option #{if params.infants == "1"}selected#{/if}>1</option>
                         <option #{if params.infants == "2"}selected#{/if}>2</option>
@@ -86,18 +87,6 @@
                     </select>
                     <span>(0 a 23 meses)</span>
                 </div>
-                <div class="form-group col-xs-12">
-                    <label>Cabina:</label>
-                    <select name="cabin" class="form-delta form-control bg-arrow" id="cabin">
-                        #{list items:cabinConfigurationDto.cabins, as:'cabins'}
-                            <option value="${cabins.key}"
-                            #{if params.cabin == null && cabins.key == "Y"}selected#{/if}
-                            #{if params.cabin == cabins.key}selected#{/if} >
-                            ${cabins.value}
-                            </option>
-                        #{/list}
-                    </select>
-                </div>
                 <div class="col-md-12 text-center">
                     <input type="submit" value="Buscar Vuelos" class="btn btn-search">
                 </div>
@@ -105,6 +94,7 @@
             #{get 'moreScripts' /}
 
             $(document).ready(function() {
+
                 var loadFlightData = (function() {
                     cleanErrors();
                     window.history.pushState("responseText", "Results", getCurrentSearchURL());
@@ -176,7 +166,6 @@
                     var adultcount = searchForm.find('select[name="adultcount"]').val();
                     var childrencount = searchForm.find('select[name="childrencount"]').val();
                     var infantcount = searchForm.find('select[name="infantcount"]').val();
-                    var cabin = searchForm.find('select[name="cabin"]').val();
                     *{if(promotion){}*
                         *{searchURL += "/promociones/" + promotion;}*
                     *{}}*
@@ -185,7 +174,7 @@
                     searchURL += "/" + originPathArr[1];
                     searchURL += "/" + originPathArr[2];
 
-                    return searchURL + "/"+origin+"/"+destination+"/"+departuredate+"/"+returndate+"/"+adultcount+"-"+childrencount+"-"+infantcount+"/" + cabin;
+                    return searchURL + "/"+origin+"/"+destination+"/"+departuredate+"/"+returndate+"/"+adultcount+"-"+childrencount+"-"+infantcount;
                 };
 
                 var showError = function(msg){
@@ -540,8 +529,7 @@ function getSearchParams() {
         returndate: searchForm.find('input[name="regreso"]').val(),
         adultcount: searchForm.find('select[name="adultcount"]').val(),
         childrencount: searchForm.find('select[name="childrencount"]').val(),
-        infantcount: searchForm.find('select[name="infantcount"]').val(),
-        cabin: searchForm.find('select[name="cabin"]').val()
+        infantcount: searchForm.find('select[name="infantcount"]').val()
     });
 }
 

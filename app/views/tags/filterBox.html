@@ -14,7 +14,7 @@
 <form id="filterResultForm" action="" method="" class="filter-arrive">
 
     #{if _dollarExchangeRate.isNumber()}
-    <div class="box-filter" id="exchangeFilter">
+    <div class="box-filter">
         <div class="header-filter">
             <h3>Moneda<i class="arrow-down"></i></h3>
         </div>
@@ -37,7 +37,7 @@
     #{filters.carrierFilter carriers:_flightsResultsFilters.carriers, carriersNames: _flightsResultsFilters.carriersCodesXNames /}
     #{filters.priceFilter/}
 
-    <div class="box-filter hour-filter" id="hoursFilter">
+    <div class="box-filter hour-filter">
         <div class="header-filter">
             <h3>Horarios<i class="arrow-down"></i></h3>
         </div>
@@ -63,7 +63,7 @@
         </div>
     </div>
 
-    <div class="box-filter" id="airportsFilter">
+    <div class="box-filter">
         <div class="header-filter">
             <h3>Aeropuertos<i class="arrow-down"></i></h3>
         </div>
@@ -96,7 +96,7 @@
         </div>
     </div>
 
-    <div class="box-filter" id="durationFilter">
+    <div class="box-filter">
         <div class="header-filter">
             <h3>Duración<i class="arrow-down"></i></h3>
             <input type="hidden" value="0" id="startDur" />

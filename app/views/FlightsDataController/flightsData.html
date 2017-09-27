@@ -126,7 +126,7 @@ $(function () {
             $(this).html("US$");
         });
 	}
-var changedCLP=false;
+
 	function setClpExchange() {
 		$("#toWn").addClass("selectedCurrency");
 		$("#toUsd").removeClass("selectedCurrency");
@@ -136,12 +136,9 @@ var changedCLP=false;
             $(this).addClass("hidden");
         });
         $(".selCurrency").val("clp");
-        if (!changedCLP) {
-	 		$( ".clppriceCon" ).each(function( index ) {
-	            $(this).html("$"+$(this).html());
-	        });
-	 		changedCLP = true;
-        }
+        $( ".simbolCurrency" ).each(function( index ) {
+            $(this).html("$");
+        });
         calculateClpExchange();
     }
 	function commaToPrices() {
