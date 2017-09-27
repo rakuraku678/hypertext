@@ -1,22 +1,14 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="15px" height="10px" viewBox="0 0 15 10" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 39.1 (31720) - http://www.bohemiancoding.com/sketch -->
-    <title>Shape</title>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="9px" viewBox="0 0 20 9" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41.2 (35397) - http://www.bohemiancoding.com/sketch -->
+    <title>bg-arrow</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
-    <g id="Pax" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.618936567">
-        <g id="passangers-1_color_detail_path_1" transform="translate(-125.000000, -691.000000)" stroke="#979797" fill="#999999">
-            <g id="Content" transform="translate(23.000000, 229.000000)">
-                <g id="Main" transform="translate(0.000000, 63.000000)">
-                    <g id="passanger-1">
-                        <g id="Group-13" transform="translate(39.000000, 193.000000)">
-                            <g id="email-copy-4" transform="translate(0.000000, 156.000000)">
-                                <path d="M76.9509556,51.5032786 L70.8389464,58.3638088 C70.7732627,58.467808 70.6555793,58.5218603 70.5344749,58.5252813 C70.5228434,58.5273339 70.5118961,58.5266497 70.5002646,58.5280181 C70.4879489,58.5266497 70.4776858,58.5273339 70.4660543,58.5252813 C70.3442657,58.5218603 70.2258982,58.467808 70.1608986,58.3638088 L64.0488894,51.5032786 C63.9483112,51.3431745 64.0078371,51.1372286 64.1823095,51.0448608 C64.356782,50.952493 64.579833,51.0072295 64.6810954,51.1680178 L70.5002646,57.7001293 L76.3187496,51.1680178 C76.420012,51.0079137 76.6437473,50.9531772 76.8175355,51.0448608 C76.9913238,51.1365443 77.0522181,51.3431745 76.9509556,51.5032786 L76.9509556,51.5032786 Z" id="Shape"></path>
-                            </g>
-                        </g>
-                    </g>
-                </g>
-            </g>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="bg-arrow" transform="translate(-1.000000, -1.000000)">
+            <path d="M15.0948667,2.15106667 L8.84453333,9.1664 C8.77766667,9.27293333 8.65753333,9.32846667 8.53286667,9.33186667 C8.52153333,9.33413333 8.5102,9.333 8.49773333,9.33413333 C8.48526667,9.333 8.47506667,9.333 8.4626,9.33186667 C8.33793333,9.32846667 8.21666667,9.27293333 8.15093333,9.1664 L1.9006,2.15106667 C1.79746667,1.98786667 1.85866667,1.77706667 2.0366,1.68186667 C2.21453333,1.5878 2.44346667,1.64333333 2.5466,1.80766667 L8.4966,8.48753333 L14.4466,1.80766667 C14.5497333,1.64446667 14.7786667,1.5878 14.9566,1.68186667 C15.1368,1.77593333 15.1991333,1.98673333 15.0948667,2.15106667 Z" id="Shape" fill="#666666"></path>
+            <rect id="Rectangle" x="0" y="0" width="21" height="11.3333333"></rect>
+            <rect id="Rectangle" fill="#FFFFFF" x="17" y="1.63614848" width="4" height="7.69798486"></rect>
         </g>
     </g>
 </svg>

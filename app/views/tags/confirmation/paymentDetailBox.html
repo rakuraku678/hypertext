@@ -14,11 +14,11 @@ df = new java.text.DecimalFormat("#,###,###");
             </li>
             #{if _order.ccAmount!=null && !_order.ccAmount.getAsString().equals("0")}
             <li>
-                <span class="name-detail-fly">Número de cuotas:</span>
+                <span class="name-detail-fly">Numero de cuotas:</span>
                 <span class="num-detail-fly">${_order.installments?.getAsString()}</span>
             </li>
             *{<li>}*
-                *{<span class="name-detail-fly">Número de tarjeta:</span>}*
+                *{<span class="name-detail-fly">Numero de tarjeta:</span>}*
                 *{<span class="num-detail-fly">**** **** **** XXXX</span>}*
             *{</li>}*
             <li>
@@ -35,12 +35,11 @@ df = new java.text.DecimalFormat("#,###,###");
             </li>
             #{if !_order.dpAmount.getAsString().equals("0.0000")}
             <li>
-                <span class="name-detail-fly" id="coddpdk">Código autorización Dólares Premio:</span>
-                <span class="name-detail-fly" id="coddpmv">Código autorización DP:</span>
+                <span class="name-detail-fly">Código autorización DP:</span>
                 <span class="num-detail-fly">${_order.autorizationIdDp?.getAsString() }</span>
             </li>
             <li>
-                <span class="name-detail-fly">Monto Dólares Premio:</span>
+                <span class="name-detail-fly">Monto DP:</span>
                 <span class="num-detail-fly">${df.format(_order.dpAmount?.getAsNumber())}</span>
             </li>
             #{/if}
