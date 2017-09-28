@@ -143,10 +143,7 @@
                                 window.history.pushState(responseText, "Results", getCurrentSearchURL());
                             }
                             else {
-                                $( "#fligthsDataError" ).html($( "#errorPriceDates" ).html("Esto no funciona amigo"));
-                                $( "#fligthsDataError" ).show("slow");
-
-                                <!--showError("Error obteniendo precios para la fecha buscada.");-->
+                                showError("Lo sentimos, no pudimos encontrar vuelos disponibles para tu búsqueda, intenta nuevamente cambiando de fecha o destino.");
                             }
                         }
                     );
@@ -192,8 +189,9 @@
                 };
 
                 var showError = function(msg){
+                    $("#errorMessage").html("");
                     var em = $("#errorMessage");
-                    em.append("<div>"+msg+"</div>");
+                    em.append("<img src='/public/images/Pointer.png' /><p>"+msg+"</p>");
                     em.show();
                     $('#flightSearchForm input[type="submit"]').attr('disabled', false);
                 };
