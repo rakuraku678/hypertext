@@ -36,7 +36,7 @@ GET     /{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}
 GET     /{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}              										FlightsController.index
 GET     /vuelos/{promotion}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}             						FlightsController.index
 GET     /vuelos/{promotion}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}             				FlightsController.index
-GET     /flights/{promotion}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/		             				FlightsController.index
+GET     /flights/{promotion}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}		             				FlightsController.index
 GET     /flights/{promotion}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}             				FlightsController.index
 
 #opcion de busqueda antigua /EZE/SCL/06-01-2017/10-01-2017/2-1-0
@@ -46,7 +46,7 @@ GET     /vuelos/compra/{origin}/{destination}/{departureDate}/{returnDate}/{adul
 GET     /promociones/{promotion}                                                                                                                                FlightsController.index
 GET     /promociones/{promotion}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}                                              FlightsController.index
 
-GET		/auth/{hash}				OAuthController.renderBancoChileLogin
+GET		/auth/{hash}/{agencyId}				OAuthController.renderBancoChileLogin
 
 
 # Catch all

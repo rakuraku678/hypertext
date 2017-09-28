@@ -1,9 +1,9 @@
 package controllers;
 
 import play.Logger;
-import play.Play;
 import play.mvc.Controller;
 import utils.AESEncryptorUtil;
+import utils.CrossLoginUtils;
 
 public class OAuthController extends Controller {
 
@@ -13,9 +13,13 @@ public class OAuthController extends Controller {
     private static final String AES_KEY = "Bar12345Bar12345";
 
     
-    public static void renderBancoChileLogin(String hash) {
-System.out.println("el hash que llega es: "+hash);
+    public static void renderBancoChileLogin(String hash, String agencyId) {
+    	System.out.println("el hash que llega es: "+hash);
         try {
+        	String token = CrossLoginUtils.getTransactionToken(agencyId,"test","state");
+
+            Logger.info("Token obtenido de API CROSSLOGIN: " + token);
+            
             String state = hash+";"+"travel_club";
 
             state = AESEncryptorUtil.encrypt(state, AES_KEY);
