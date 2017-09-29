@@ -8,25 +8,27 @@ import utils.CrossLoginUtils;
 public class OAuthController extends Controller {
 
 	
-	private static final String OAUTH_SERVER_URL = "http://190.98.204.155:7001/AuthServer/oauth/authorize";//https://200.14.140.84:4443/AuthServer/oauth/authorize
+	private static final String OAUTH_SERVER_URL = "http://190.98.204.155:7001/AuthServer/oauth/authorize";//";//https://200.14.140.84:4443/AuthServer/oauth/authorize"; //http://190.98.204.155:7001/AuthServer/oauth/authorize";//
 	private static final String OAUTH_SERVER_URL_PROD = "https://servicios.bancochile.cl/AuthServer/authorization";
     private static final String AES_KEY = "Bar12345Bar12345";
 
     
-    public static void renderBancoChileLogin(String hash, String agencyId) {
-    	System.out.println("el hash que llega es: "+hash);
+    public static void renderBancoChileLogin(String agencyId) {
         try {
         	String token = CrossLoginUtils.getTransactionToken(agencyId,"test","state");
 
             Logger.info("Token obtenido de API CROSSLOGIN: " + token);
+            //valor1;valor2;valor3;valorN;tokenDeAplicación;agencia
             
-            String state = hash+";"+"travel_club";
+           
+            String hash = "n";
+            String state = hash+";"+token+";travel_club";
 
             state = AESEncryptorUtil.encrypt(state, AES_KEY);
 
             String clientId = "travel_club";
 
-            String callbackUrl = "CALLBACK URL";
+            String callbackUrl = "";
             String travelClubLoginUrl = OAUTH_SERVER_URL + "?response_type=code&state=" + state + "&client_id=" + clientId + "&scope=read+write+delete";
 
             Logger.info("Url de login a banco: " + travelClubLoginUrl);
@@ -38,27 +40,22 @@ public class OAuthController extends Controller {
         }
     }
 
-//    public static void verifyBancoChileLogin(String code, String state) {
-//
-//        CheckoutOrder order = null;
-//        String orderHash = null;
+//    public static void verifyBancoChileLogin(String state) {
 //
 //        Logger.info("Datos recibidos de bch luego del login:");
-//        Logger.info("code: " + code);
 //        Logger.info("state: " + state);
-//
+//        String previousState = "";
 //        try {
 //
 //            Logger.info("Se desencriptda orderHash...");
 //
 //            String stateDecrypted = AESEncryptorUtil.decrypt(state, AES_KEY);
-//            orderHash = stateDecrypted.split(";")[0];
+//            previousState = stateDecrypted.split(";")[0];
 //
-//            Logger.info("orderHash: " + orderHash);
+//            Logger.info("orderHash: " + previousState);
 //
 //            Logger.info("Se verificará el login...");
 //
-//            BchLoginForCheckout bchLoginForCheckout = new BchLoginForCheckout(code, state, orderHash);
 //
 //            order = bchLoginForCheckout.getOrder();
 //

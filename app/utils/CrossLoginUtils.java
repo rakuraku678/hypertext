@@ -8,6 +8,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import dto.StateDto;
+import play.Logger;
 import play.Play;
 import play.libs.WS;
 import play.libs.WS.HttpResponse;
@@ -29,6 +30,8 @@ public class CrossLoginUtils {
         req.body(json);
         
         try {
+        	System.out.println("enviando request a: "+ENDPOINT+"/transaction/v1/generateToken");
+        	System.out.println(json.toString());
             HttpResponse response = req.post();
             JsonElement responseJson = response.getJson();
             JsonObject jsonObject = responseJson.getAsJsonObject();

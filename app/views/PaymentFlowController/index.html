@@ -69,9 +69,6 @@
 <div class="modal fade" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-
-      </div>
       <div class="modal-body" id="loginModalBody" style="height:400px; overflow: hidden;">
       </div>
 
@@ -113,9 +110,8 @@
 // 		}
 
         $( "#btnLogin" ).click(function( event ) {
-            var hash = "holache";
-            var agency = "${promotionDto.agency.slug}";//56253033e4b0c01cd8c07852
-            $('<iframe src="/auth/'+hash+'/'+agency+'" frameborder="0" style="position: relative; top: -100px;" width="500" height="500" scrolling="no" id="myFrame"></iframe>').appendTo('#loginModalBody');
+            var agency = "56253033e4b0c01cd8c07852";//"${promotionDto.agency.id}";
+            $('<iframe src="/auth/'+agency+'" frameborder="0" style="padding-left: 50px; position: relative; top: -100px;" width="500" height="500" scrolling="no" id="myFrame"></iframe>').appendTo('#loginModalBody');
             $('#modalLogin').modal('show');
 //          $.ajax({
 //              type: "GET",

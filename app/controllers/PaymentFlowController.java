@@ -14,6 +14,7 @@ import com.google.gson.JsonParser;
 
 import play.mvc.Controller;
 import utils.AgencyConfigurationDto;
+import utils.CacheUtils;
 import utils.ConfigurationDto;
 import utils.FlightsUtils;
 import utils.JsonUtils;
@@ -70,6 +71,9 @@ public class PaymentFlowController extends Controller {
         }
         
         List<CountryDto> countriesList = Country.process();
+        
+        CacheUtils.setSelectionFlight(bfmResultItem);
+        
         render(agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate, airRulesResultList, promotionDto, countriesList, onlyPassport);
     }
 
