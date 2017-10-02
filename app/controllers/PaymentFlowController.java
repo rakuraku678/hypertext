@@ -73,10 +73,62 @@ public class PaymentFlowController extends Controller {
         List<CountryDto> countriesList = Country.process();
         
         CacheUtils.setSelectionFlight(bfmResultItem);
-        
-        render(agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate, airRulesResultList, promotionDto, countriesList, onlyPassport);
+        String transactionId = bfmResultItem.getAsJsonObject().get("transactionId").getAsString();
+        render(agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate, airRulesResultList, promotionDto, countriesList, onlyPassport, transactionId);
     }
+    
+    
+    
+    
+    
+    
 
+    public static void reloadWithTransaction(String transactionId, String promoSlug, String selectedCurrency) {
+        PromotionDto promotionDto;
+        if (!Strings.isNullOrEmpty(promoSlug)) {
+            promotionDto = new Promotion().getBySlug(promoSlug);
+        } else {
+            promotionDto = new Promotion().getDefault();
+        }
+
+        AgencyConfigurationDto agencyConfigurationDto = TravelClubUtils.getAgencyConfiguration(promotionDto.agency.externalId);
+        String selectedFlightBfm = CacheUtils.getCachedFlightSelection(transactionId);
+        JsonElement bfmResultItem = new JsonParser().parse(selectedFlightBfm);
+
+        String dollarExchangeRate = TravelClubUtils.getDollarExchangeRate(promotionDto.agency.externalId);
+
+        JsonObject bfmResultJsonObject = bfmResultItem.getAsJsonObject();
+        JsonObject pricingJsonObject = (JsonObject) JsonUtils.getJsonObjectFromJson(bfmResultJsonObject, "pricing");
+
+        List<AirRulesDto> airRulesResultList = Lists.newArrayList();
+
+        AirRules airRules = new AirRules();
+        airRules.ticketingDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        airRules.travelDate = JsonUtils.getStringFromJson(bfmResultJsonObject,"departureDate");
+        airRules.origin = JsonUtils.getStringFromJson(bfmResultJsonObject,"departureAirportCode");
+        airRules.destination = JsonUtils.getStringFromJson(bfmResultJsonObject,"returnAirportCode");
+        airRules.marketingCarrier = JsonUtils.getStringFromJson(pricingJsonObject,"validatingCarrier");
+        if(pricingJsonObject.has("accountCode")){
+            airRules.accountCode = JsonUtils.getStringListFromJson(pricingJsonObject,"accountCode").get(0);
+        }
+
+        for (String fareBasis : JsonUtils.getStringListFromJson(pricingJsonObject, "fareBasisCodes")) {
+            airRules.fareBasis = fareBasis;
+            airRulesResultList.add(airRules.process());
+        }
+        
+        Map cityMap = SearchController.getCity(JsonUtils.getStringFromJson(bfmResultJsonObject,"returnCity"));
+        boolean onlyPassport = false;
+        if (cityMap!=null){
+        	onlyPassport = (boolean) cityMap.get("onlyPassport");
+        }
+        
+        List<CountryDto> countriesList = Country.process();
+        
+        render("PaymentFlowController/index.html",agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate, airRulesResultList, promotionDto, countriesList, onlyPassport, transactionId);
+    }
+    
+    
     public static void processPayment(){
 
         String promotionSlug = new Booking().promotion(params.get("id"));

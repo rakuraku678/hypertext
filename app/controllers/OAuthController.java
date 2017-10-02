@@ -1,8 +1,12 @@
 package controllers;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+
 import play.Logger;
 import play.mvc.Controller;
 import utils.AESEncryptorUtil;
+import utils.CacheUtils;
 import utils.CrossLoginUtils;
 
 public class OAuthController extends Controller {
@@ -13,16 +17,15 @@ public class OAuthController extends Controller {
     private static final String AES_KEY = "Bar12345Bar12345";
 
     
-    public static void renderBancoChileLogin(String agencyId) {
+    public static void renderBancoChileLogin(String transactionId, String promoSlug, String selectedCurrency, String agencyId) {
         try {
+        	
         	String token = CrossLoginUtils.getTransactionToken(agencyId,"test","state");
 
             Logger.info("Token obtenido de API CROSSLOGIN: " + token);
             //valor1;valor2;valor3;valorN;tokenDeAplicación;agencia
             
-           
-            String hash = "n";
-            String state = hash+";"+token+";travel_club";
+            String state = transactionId+";"+promoSlug+";"+selectedCurrency+";"+token+";travel_club";
 
             state = AESEncryptorUtil.encrypt(state, AES_KEY);
 
@@ -34,10 +37,20 @@ public class OAuthController extends Controller {
             Logger.info("Url de login a banco: " + travelClubLoginUrl);
             render("/PaymentFlowController/redirectToLogin.html", travelClubLoginUrl, callbackUrl);
 
-
         } catch (Exception ex){
         	ex.printStackTrace();
         }
+    }
+    
+    public static void bancoChileEndPoint(String state) throws GeneralSecurityException, IOException {
+      Logger.info("Datos recibidos de bch luego del login:");
+      Logger.info("state: " + state);
+      String stateDecrypted = AESEncryptorUtil.decrypt(state, AES_KEY);
+      String transactionId = stateDecrypted.split(";")[0];
+      String promoSlug = stateDecrypted.split(";")[1];
+      String selectedCurrency = stateDecrypted.split(";")[2];
+      PaymentFlowController.reloadWithTransaction(transactionId,promoSlug, selectedCurrency);
+      
     }
 
 //    public static void verifyBancoChileLogin(String state) {
@@ -47,7 +60,7 @@ public class OAuthController extends Controller {
 //        String previousState = "";
 //        try {
 //
-//            Logger.info("Se desencriptda orderHash...");
+//            Logger.info("Se desencripta orderHash...");
 //
 //            String stateDecrypted = AESEncryptorUtil.decrypt(state, AES_KEY);
 //            previousState = stateDecrypted.split(";")[0];

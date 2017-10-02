@@ -9,23 +9,23 @@ import play.cache.Cache;
 
 public class CacheUtils {
 
-    public static JsonElement getCachedFlightSelection(String key){
+    public static String getCachedFlightSelection(String key){
         
-        JsonElement jsonSelection = Cache.get(key, JsonElement.class);
-        if (jsonSelection == null) {
+        String selectedFlightBfm = Cache.get(key, String.class);
+        if (selectedFlightBfm == null) {
             return null;
         }
-        return jsonSelection;
+        return selectedFlightBfm;
     }
 
 	//TODO hay que hacer esto
 	public static String generateKey(JsonElement bfmResultItem) {
-		String key = DigestUtils.md5Hex(bfmResultItem.toString());
-		System.out.println("la key guachin: "+key);
+		String key = bfmResultItem.getAsJsonObject().get("transactionId").getAsString();
+		System.out.println("la key: "+key);
 		return key;
 	}
 	public static void setSelectionFlight(JsonElement bfmResultItem) {
 		String key = generateKey(bfmResultItem);
-		Cache.set(key, bfmResultItem, "1d");
+		Cache.set(key, bfmResultItem.toString(), "1d");
 	}
 }

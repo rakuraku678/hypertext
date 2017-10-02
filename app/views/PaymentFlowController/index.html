@@ -111,7 +111,10 @@
 
         $( "#btnLogin" ).click(function( event ) {
             var agency = "56253033e4b0c01cd8c07852";//"${promotionDto.agency.id}";
-            $('<iframe src="/auth/'+agency+'" frameborder="0" style="padding-left: 50px; position: relative; top: -100px;" width="500" height="500" scrolling="no" id="myFrame"></iframe>').appendTo('#loginModalBody');
+            var transactionId = "${transactionId}";
+            var promoSlug = "${promotionDto.slug}";
+            var selectedCurrency = "${selectedCurrency}";
+            $('<iframe src="/auth/'+transactionId+'/'+promoSlug+'/'+selectedCurrency+'/'+agency+'" frameborder="0" style="padding-left: 50px; position: relative; top: -100px;" width="500" height="500" scrolling="no" id="myFrame"></iframe>').appendTo('#loginModalBody');
             $('#modalLogin').modal('show');
 //          $.ajax({
 //              type: "GET",
