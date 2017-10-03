@@ -36,6 +36,9 @@ public class BookingController extends Controller {
 	    	jsonEl.addProperty("givenName", givenName);
 	    	jsonEl.addProperty("surname", surname);
 	    	jsonEl.addProperty("foidType", passengersArray.get(i).getAsJsonObject().get("foidType").getAsString());
+			jsonEl.addProperty("FFPAirlineIataCode", passengersArray.get(i).getAsJsonObject().get("FFPAirlineIataCode").getAsString());
+			jsonEl.addProperty("FFPNumber", passengersArray.get(i).getAsJsonObject().get("FFPNumber").getAsString());
+
 	    	
 	    	if (passengersArray.get(i).getAsJsonObject().get("foidType").getAsString().equals("PAS")){
 	    		jsonEl.addProperty("nacionalityPassport", passengersArray.get(i).getAsJsonObject().get("nacionalityPassport").getAsString());
@@ -59,7 +62,7 @@ public class BookingController extends Controller {
 	//    params.put("id", "_ID_");
 	
 	//    bodyJsonElement.getAsJsonObject().addProperty("redirect", Router.getFullUrl("PaymentFlowController.processPayment", params));
-	    String redirectRouter = bodyJsonElement.getAsJsonObject().get("origin").getAsString() + "/checkout/_ID_/process";
+	    String redirectRouter = bodyJsonElement.getAsJsonObject().get("origin").getAsString() + "/chckout/_ID_/process";
 	    bodyJsonElement.getAsJsonObject().addProperty("redirect", redirectRouter);
 	
 	    renderJSON(booking.process(bodyJsonElement));	
