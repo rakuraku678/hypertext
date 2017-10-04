@@ -50,6 +50,11 @@
                     #{checkout.summaryBox pricing:bfmResultItem.pricing, pricingCLP:bfmResultItem.pricingCLP, selectedCurrency:selectedCurrency/}
                     #{checkout.airRules airRulesResultList:airRulesResultList/}
                 </div>
+                #{if params.promotion == "traveldelta"}
+                <div class="col-md-4" id="banner_checkout_delta" >
+                    <img src="http://res.cloudinary.com/hyvrprjak/image/upload/v1507124198/BancoChile-MiniSites/banner_checkout_500x500.png"/>
+                </div>
+                #{/if}
             </div>
             <div class="row">
                 <div class="col-md-8 text-right">
