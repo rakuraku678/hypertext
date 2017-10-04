@@ -14,11 +14,14 @@ import com.google.gson.JsonParser;
 
 import play.mvc.Controller;
 import utils.AgencyConfigurationDto;
-import utils.ApiFlightsSdk.v1.*;
 import utils.ConfigurationDto;
 import utils.FlightsUtils;
 import utils.JsonUtils;
 import utils.TravelClubUtils;
+import utils.ApiFlightsSdk.v1.AirRules;
+import utils.ApiFlightsSdk.v1.Booking;
+import utils.ApiFlightsSdk.v1.Country;
+import utils.ApiFlightsSdk.v1.Promotion;
 import utils.dtos.AirRulesDto;
 import utils.dtos.CountryDto;
 import utils.dtos.PromotionDto;
@@ -65,12 +68,9 @@ public class PaymentFlowController extends Controller {
         if (cityMap!=null){
         	onlyPassport = (boolean) cityMap.get("onlyPassport");
         }
-
-        List<String> airlineIataCodes = Alliance.getFFPWhiteList(JsonUtils.getStringFromJson(pricingJsonObject,"validatingCarrier"));
         
         List<CountryDto> countriesList = Country.process();
-        
-        render(agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate, airRulesResultList, promotionDto, countriesList, onlyPassport,airlineIataCodes);
+        render(agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate, airRulesResultList, promotionDto, countriesList, onlyPassport);
     }
 
     public static void processPayment(){

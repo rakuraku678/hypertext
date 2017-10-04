@@ -35,7 +35,7 @@
                     %{ int passengersNumber = 1; }%
                     #{list bfmResultItem.pricing.detail, as:'pricingDetails'}
                         #{list items:1..pricingDetails.quantity.getAsInt(), as:'i'}
-                            #{checkout.passengerBox key: passengersCount, passengerNumber: passengersNumber+".1", passengerType: pricingDetails.code.getAsString(), countriesList:countriesList, onlyPassport:onlyPassport, airlineIataCodes:airlineIataCodes /}
+                            #{checkout.passengerBox key: passengersCount, passengerNumber: passengersNumber+".1", passengerType: pricingDetails.code.getAsString(), countriesList:countriesList, onlyPassport:onlyPassport /}
                             %{ passengersCount++; }%
                             %{ passengersNumber++; }%
                         #{/list}
