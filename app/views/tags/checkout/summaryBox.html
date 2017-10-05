@@ -57,9 +57,9 @@
 	        <tr>
 	            <td></td>
 	            <td class="txt-payment-table-mark">${pricingDetail.quantity?.getAsString()} ${passType}${pricingDetail.quantity?.getAsInt().pluralize()}</td>
-	            <td><span class="simbolCurrency">US$</span><span class="clppriceCon" >${basefareByQuantity.round(2).toString().replaceAll('\\.',',')}</span></td>
-	            <td><span class="simbolCurrency">US$</span><span class="clppriceCon" >${totalTaxByQuantity.round(2).toString().replaceAll('\\.',',') ?: "0"}</span></td>
-	            <td class="txt-payment-table-mark"><span class="simbolCurrency">US$</span><span class="clppriceCon">${subTotal.round(2).toString().replaceAll('\\.',',')}</span></td>
+	            <td><span class="simbolCurrency">US$</span><span class="clppriceCon" >${basefareByQuantity.round(2).format('00.00').toString().replaceAll('\\.',',')}</span></td>
+	            <td><span class="simbolCurrency">US$</span><span class="clppriceCon" >${totalTaxByQuantity.round(2).format('00.00').toString().replaceAll('\\.',',') ?: "0"}</span></td>
+	            <td class="txt-payment-table-mark"><span class="simbolCurrency">US$</span><span class="clppriceCon">${subTotal.round(2).format('00.00').toString().replaceAll('\\.',',')}</span></td>
 	        </tr>
 	        #{/list}
         #{/else}
@@ -74,7 +74,7 @@
             	<td class="txt-payment-table-mark"><span class="simbolCurrency">$</span><span class="clppriceCon">${_pricingCLP.totalFee?.getAsString()}</span></td>
             #{/if}
             #{else}
-            	<td class="txt-payment-table-mark"><span class="simbolCurrency">US$</span><span class="clppriceCon">${_pricing.totalFee?.getAsString()}</span></td>
+            	<td class="txt-payment-table-mark"><span class="simbolCurrency">US$</span><span class="clppriceCon">${_pricing.totalFee?.getAsString().replaceAll('\\.',',')}</span></td>
             #{/else}
         </tr>
         #{/if}
