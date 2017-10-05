@@ -12,6 +12,7 @@ import play.libs.WS;
 import play.mvc.Controller;
 import utils.DateUtils;
 import utils.ApiFlightsSdk.v1.Booking;
+import utils.JsonUtils;
 
 public class BookingController extends Controller {
 
@@ -133,11 +134,39 @@ public class BookingController extends Controller {
 			return false;
 		}
     }
-	public static void getPaxAutocompletById(String body){
-
-		String url = "http://inscripcionesalianzas.travelclub.cl/api/"+ body;
+	private static JsonObject getTokenByRut(String rut){
+		String url = "https://kdu.cl/apipax/passenger/v1/rut/" + rut;
 		System.out.println(url);
 		WS.WSRequest request = WS.url(url);
+		request.setHeader("Authorization","Basic a2R1OmtkdQ==");
+		WS.HttpResponse response = request.get();
+		JsonElement jsonResponse = response.getJson();
+		return(jsonResponse.getAsJsonObject());
+	}
+	public static void getPaxByToken(String body){
+		String token = params.get("token");
+		String url = "https://kdu.cl/apipax/passenger/v1/"+ token;
+		System.out.println(url);
+		WS.WSRequest request = WS.url(url);
+		request.setHeader("Authorization","Basic a2R1OmtkdQ==");
+		WS.HttpResponse response = request.get();
+		JsonElement jsonResponse = response.getJson();
+		renderJSON(jsonResponse.getAsJsonObject());
+	}
+
+	public static void getFFPNumberByRut(){
+		String rut = params.get("rut");
+		JsonObject tokenResponce = getTokenByRut(rut);
+
+		if (JsonUtils.getStringFromJson(tokenResponce, "error") != null){
+			renderJSON(tokenResponce);
+		}
+
+		String token = JsonUtils.getStringFromJson(tokenResponce, "token");
+		String url = "https://kdu.cl/apipax/passenger/v1/"+ token;
+		System.out.println(url);
+		WS.WSRequest request = WS.url(url);
+		request.setHeader("Authorization","Basic a2R1OmtkdQ==");
 		WS.HttpResponse response = request.get();
 		JsonElement jsonResponse = response.getJson();
 		renderJSON(jsonResponse.getAsJsonObject());

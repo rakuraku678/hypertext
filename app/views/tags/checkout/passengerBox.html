@@ -121,22 +121,31 @@
 <script>
 
 $(document).ready(function () {
+    var availableAirlines = ${new com.google.gson.Gson().toJson(_airlineIataCodes).raw()};
     $('#rutNum${_key}').keypress(function (e) {
         if ($(this).val().length > 8){
             if (e.which == 13) {
-                e.preventDefault();
+                e.preventDefault();                
                 $.ajax({
-                    type: "POST",
-                    url: "@{BookingController.getPaxAutocompletById}",
-                    data: $('#rutNum${_key}').val(),
+                    type: "GET",
+                    url: "@{BookingController.getFFPNumberByRut}" +"?rut="+ $('#rutNum${_key}').val(),
                     dataType: "json",
                     success:function(result) {
-                        if (result.alianza[0].id != 0){
-                            $('#FFPNumber${_key}').val(result.alianza[0].id)
-                            alert(result.alianza[0].id);
-                        }
+                        if(result.code != 400){      
+                            for (var ffp in result.client.regularPassengers){
+                                for (var aa in availableAirlines) {
+                                    if(availableAirlines[aa] == result.client.regularPassengers[ffp].alliance){
+                                        $('#FFPNumber${_key}').val(result.client.regularPassengers[ffp].number);
+                                        $('#FFPAirlineIataCode').val(availableAirlines[aa]);
+                                    }
+                                }
+                            }                                                      
+                        }else{
+                            $('#FFPNumber${_key}').val("");
+                        }                        
                     }
                 });
+
             return false;
             }
         }
