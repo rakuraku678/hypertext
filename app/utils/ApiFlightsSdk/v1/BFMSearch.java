@@ -54,9 +54,9 @@ public class BFMSearch extends ApiFlightsSDKBase {
         mapValues.put("departureCity",departureCity);
         mapValues.put("externalId",externalId);
         mapValues.put("dollarExchangeRate",dollarExchangeRate);
-        mapValues.put("cabin",cabin);
-
-        String jsonBody = new Gson().toJson(mapValues);
+		mapValues.put("cabin",cabin);
+		
+		String jsonBody = new Gson().toJson(mapValues);
 
         request.body(jsonBody);
 
