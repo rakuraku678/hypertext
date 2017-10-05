@@ -24,14 +24,14 @@
 			         	case "INF": passType="Infante"; break;
 			         	default: passType="Pasajero";
 			      	 }
-			      	 
+			      	 def basefareByQuantity = pricingDetail.basefare.getAsInt() * pricingDetail.quantity?.getAsInt();
 			      	 def totalTaxByQuantity = pricingDetail.totalTax?.getAsInt() * pricingDetail.quantity?.getAsInt();
-			      	 def subTotal = totalTaxByQuantity + pricingDetail.basefare.getAsInt();
+			      	 def subTotal = basefareByQuantity + totalTaxByQuantity;
 			    	}%
 	        <tr>
 	            <td></td>
 	            <td class="txt-payment-table-mark">${pricingDetail.quantity?.getAsString()} ${passType}${pricingDetail.quantity?.getAsInt().pluralize()}</td>
-	            <td><span class="simbolCurrency">$</span><span class="clppriceCon">${pricingDetail.basefare?.getAsString()}</span></td>
+	            <td><span class="simbolCurrency">$</span><span class="clppriceCon">${basefareByQuantity}</span></td>
 	            <td><span class="simbolCurrency">$</span><span class="clppriceCon">${totalTaxByQuantity ?: "0"}</span></td>
 	            <td class="txt-payment-table-mark"><span class="simbolCurrency">$</span><span class="clppriceCon">${subTotal}</span></td>
 	        </tr>
@@ -48,14 +48,14 @@
 			         	case "INF": passType="Infante"; break;
 			         	default: passType="Pasajero";
 			      	 }
-			      	 
+			      	 def basefareByQuantity = pricingDetail.basefare.getAsFloat() * pricingDetail.quantity?.getAsInt();
 			      	 def totalTaxByQuantity = pricingDetail.totalTax?.getAsFloat() * pricingDetail.quantity?.getAsInt();
-			      	 def subTotal = totalTaxByQuantity + pricingDetail.basefare.getAsFloat();
+			      	 def subTotal = totalTaxByQuantity + basefareByQuantity;
 			    	}%
 	        <tr>
 	            <td></td>
 	            <td class="txt-payment-table-mark">${pricingDetail.quantity?.getAsString()} ${passType}${pricingDetail.quantity?.getAsInt().pluralize()}</td>
-	            <td><span class="simbolCurrency">US$</span><span class="clppriceCon">${pricingDetail.basefare?.getAsString()}</span></td>
+	            <td><span class="simbolCurrency">US$</span><span class="clppriceCon">${basefareByQuantity}</span></td>
 	            <td><span class="simbolCurrency">US$</span><span class="clppriceCon">${totalTaxByQuantity ?: "0"}</span></td>
 	            <td class="txt-payment-table-mark"><span class="simbolCurrency">US$</span><span class="clppriceCon">${subTotal}</span></td>
 	        </tr>
