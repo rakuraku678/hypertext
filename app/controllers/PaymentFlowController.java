@@ -1,6 +1,8 @@
 package controllers;
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -8,10 +10,12 @@ import java.util.Map;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import org.hibernate.mapping.Collection;
 import play.mvc.Controller;
 import utils.AgencyConfigurationDto;
 import utils.ConfigurationDto;
@@ -22,6 +26,8 @@ import utils.TravelClubUtils;
 import utils.dtos.AirRulesDto;
 import utils.dtos.CountryDto;
 import utils.dtos.PromotionDto;
+
+import static utils.ApiFlightsSdk.v1.AirlinesSearch.process;
 
 public class PaymentFlowController extends Controller {
 
@@ -66,11 +72,12 @@ public class PaymentFlowController extends Controller {
         	onlyPassport = (boolean) cityMap.get("onlyPassport");
         }
 
-        List<String> airlineIataCodes = Alliance.getFFPWhiteList(JsonUtils.getStringFromJson(pricingJsonObject,"validatingCarrier"));
-        
+        Object[] airlineIataCodes =  Alliance.getFFPWhiteList(JsonUtils.getStringFromJson(pricingJsonObject,"validatingCarrier")).toArray();
+        JsonArray whiteListAirlines = AirlinesSearch.process(Arrays.toString(airlineIataCodes).replace("[","").replace("]","")).getAsJsonArray();
+
         List<CountryDto> countriesList = Country.process();
         
-        render(agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate, airRulesResultList, promotionDto, countriesList, onlyPassport,airlineIataCodes);
+        render(agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate, airRulesResultList, promotionDto, countriesList, onlyPassport,whiteListAirlines);
     }
 
     public static void processPayment(){
