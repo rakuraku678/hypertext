@@ -48,16 +48,18 @@
 			         	case "INF": passType="Infante"; break;
 			         	default: passType="Pasajero";
 			      	 }
+			      	 
 			      	 def basefareByQuantity = pricingDetail.basefare.getAsFloat() * pricingDetail.quantity?.getAsInt();
 			      	 def totalTaxByQuantity = pricingDetail.totalTax?.getAsFloat() * pricingDetail.quantity?.getAsInt();
 			      	 def subTotal = totalTaxByQuantity + basefareByQuantity;
+			      	
 			    	}%
 	        <tr>
 	            <td></td>
 	            <td class="txt-payment-table-mark">${pricingDetail.quantity?.getAsString()} ${passType}${pricingDetail.quantity?.getAsInt().pluralize()}</td>
-	            <td><span class="simbolCurrency">US$</span><span class="clppriceCon">${basefareByQuantity}</span></td>
-	            <td><span class="simbolCurrency">US$</span><span class="clppriceCon">${totalTaxByQuantity ?: "0"}</span></td>
-	            <td class="txt-payment-table-mark"><span class="simbolCurrency">US$</span><span class="clppriceCon">${subTotal}</span></td>
+	            <td><span class="simbolCurrency">US$</span><span class="clppriceCon" >${basefareByQuantity.round(2).toString().replaceAll('\\.',',')}</span></td>
+	            <td><span class="simbolCurrency">US$</span><span class="clppriceCon" >${totalTaxByQuantity.round(2).toString().replaceAll('\\.',',') ?: "0"}</span></td>
+	            <td class="txt-payment-table-mark"><span class="simbolCurrency">US$</span><span class="clppriceCon">${subTotal.round(2).toString().replaceAll('\\.',',')}</span></td>
 	        </tr>
 	        #{/list}
         #{/else}
