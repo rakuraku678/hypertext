@@ -25,7 +25,12 @@
 			         	default: passType="Pasajero";
 			      	 }
 			      	 def basefareByQuantity = pricingDetail.basefare.getAsInt() * pricingDetail.quantity?.getAsInt();
-			      	 def totalTaxByQuantity = pricingDetail.totalTax?.getAsInt() * pricingDetail.quantity?.getAsInt();
+			      	 
+			      	 def totalTaxByQuantity = 0;
+			      	 if (pricingDetail.totalTax!=null) {
+			      	 	totalTaxByQuantity = pricingDetail.totalTax?.getAsInt() * pricingDetail.quantity?.getAsInt();
+			      	 }
+			      	 
 			      	 def subTotal = basefareByQuantity + totalTaxByQuantity;
 			    	}%
 	        <tr>
@@ -50,7 +55,10 @@
 			      	 }
 			      	 
 			      	 def basefareByQuantity = pricingDetail.basefare.getAsFloat() * pricingDetail.quantity?.getAsInt();
-			      	 def totalTaxByQuantity = pricingDetail.totalTax?.getAsFloat() * pricingDetail.quantity?.getAsInt();
+			      	 def totalTaxByQuantity = 0;
+			      	 if (pricingDetail.totalTax!=null) {
+			      	 	totalTaxByQuantity = pricingDetail.totalTax?.getAsFloat() * pricingDetail.quantity?.getAsInt();
+			      	 }
 			      	 def subTotal = totalTaxByQuantity + basefareByQuantity;
 			      	
 			    	}%
@@ -58,7 +66,7 @@
 	            <td></td>
 	            <td class="txt-payment-table-mark">${pricingDetail.quantity?.getAsString()} ${passType}${pricingDetail.quantity?.getAsInt().pluralize()}</td>
 	            <td><span class="simbolCurrency">US$</span><span class="clppriceCon" >${basefareByQuantity.round(2).format('00.00').toString().replaceAll('\\.',',')}</span></td>
-	            <td><span class="simbolCurrency">US$</span><span class="clppriceCon" >${totalTaxByQuantity.round(2).format('00.00').toString().replaceAll('\\.',',') ?: "0"}</span></td>
+	            <td><span class="simbolCurrency">US$</span><span class="clppriceCon" >${totalTaxByQuantity>0? totalTaxByQuantity.round(2).format('00.00').toString().replaceAll('\\.',',') : "00,00"}</span></td>
 	            <td class="txt-payment-table-mark"><span class="simbolCurrency">US$</span><span class="clppriceCon">${subTotal.round(2).format('00.00').toString().replaceAll('\\.',',')}</span></td>
 	        </tr>
 	        #{/list}
