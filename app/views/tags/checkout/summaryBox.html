@@ -25,7 +25,12 @@
 			         	default: passType="Pasajero";
 			      	 }
 			      	 def basefareByQuantity = pricingDetail.basefare.getAsInt() * pricingDetail.quantity?.getAsInt();
-			      	 def totalTaxByQuantity = pricingDetail.totalTax?.getAsInt() * pricingDetail.quantity?.getAsInt();
+			      	 
+			      	 def totalTaxByQuantity = 0;
+			      	 if (pricingDetail.totalTax!=null) {
+			      	 	totalTaxByQuantity = pricingDetail.totalTax?.getAsInt() * pricingDetail.quantity?.getAsInt();
+			      	 }
+			      	 
 			      	 def subTotal = basefareByQuantity + totalTaxByQuantity;
 			    	}%
 	        <tr>
@@ -50,7 +55,10 @@
 			      	 }
 			      	 
 			      	 def basefareByQuantity = pricingDetail.basefare.getAsFloat() * pricingDetail.quantity?.getAsInt();
-			      	 def totalTaxByQuantity = pricingDetail.totalTax?.getAsFloat() * pricingDetail.quantity?.getAsInt();
+			      	 def totalTaxByQuantity = 0;
+			      	 if (pricingDetail.totalTax!=null) {
+			      	 	totalTaxByQuantity = pricingDetail.totalTax?.getAsFloat() * pricingDetail.quantity?.getAsInt();
+			      	 }
 			      	 def subTotal = totalTaxByQuantity + basefareByQuantity;
 			      	
 			    	}%
