@@ -125,38 +125,3 @@
         </div>            
     </div>
 </div>
-<script type="text/javascript" src="@{'/public/javascripts/jquery-3.0.0.min.js'}"></script>
-<script>
-
-$(document).ready(function () {
-    var availableAirlines = [#{list items:_whiteListAirlines, as:'whiteListAirlines'}${whiteListAirlines.iataCode.raw()}${whiteListAirlines_isLast ? '' : ','}#{/list}];
-    $('#rutNum${_key}').keypress(function (e) {
-        if ($(this).val().length > 8){
-            if (e.which == 13) {
-                e.preventDefault();
-                $.ajax({
-                    type: "GET",
-                    url: "@{BookingController.getFFPNumberByRut}" +"?rut="+ $('#rutNum${_key}').val(),
-                    dataType: "json",
-                    success:function(result) {
-                        if(result.code != 400){
-                            for (var ffp in result.client.regularPassengers){
-                                for (var aa in availableAirlines) {
-                                    if(availableAirlines[aa] == result.client.regularPassengers[ffp].alliance){
-                                        $('#FFPNumber${_key}').val(result.client.regularPassengers[ffp].number);
-                                        $('#FFPAirlineIataCode').val(availableAirlines[aa]);
-                                    }
-                                }
-                            }
-                        }else{
-                            $('#FFPNumber${_key}').val("");
-                        }
-                    }
-                });
-
-            return false;
-            }
-        }
-    });
-});
-</script>
