@@ -18,6 +18,7 @@ GET     /checkout/error/{type}                  PaymentFlowController.processErr
 POST    /checkout/booking                       BookingController.startBooking
 POST    /checkout/booking/status                BookingController.statusBooking
 
+
 GET     /payment/new                            PaymentFlowController.newPayment
 POST    /payment/new                            PaymentFlowController.processNewPayment
 

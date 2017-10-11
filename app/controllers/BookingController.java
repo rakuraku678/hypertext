@@ -8,9 +8,11 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import play.libs.WS;
 import play.mvc.Controller;
 import utils.DateUtils;
 import utils.ApiFlightsSdk.v1.Booking;
+import utils.JsonUtils;
 
 public class BookingController extends Controller {
 
@@ -36,6 +38,9 @@ public class BookingController extends Controller {
 	    	jsonEl.addProperty("givenName", givenName);
 	    	jsonEl.addProperty("surname", surname);
 	    	jsonEl.addProperty("foidType", passengersArray.get(i).getAsJsonObject().get("foidType").getAsString());
+			jsonEl.addProperty("FFPAirlineIataCode", passengersArray.get(i).getAsJsonObject().get("FFPAirlineIataCode").getAsString());
+			jsonEl.addProperty("FFPNumber", passengersArray.get(i).getAsJsonObject().get("FFPNumber").getAsString());
+
 	    	
 	    	if (passengersArray.get(i).getAsJsonObject().get("foidType").getAsString().equals("PAS")){
 	    		jsonEl.addProperty("nacionalityPassport", passengersArray.get(i).getAsJsonObject().get("nacionalityPassport").getAsString());
@@ -59,7 +64,7 @@ public class BookingController extends Controller {
 	//    params.put("id", "_ID_");
 	
 	//    bodyJsonElement.getAsJsonObject().addProperty("redirect", Router.getFullUrl("PaymentFlowController.processPayment", params));
-	    String redirectRouter = bodyJsonElement.getAsJsonObject().get("origin").getAsString() + "/checkout/_ID_/process";
+	    String redirectRouter = bodyJsonElement.getAsJsonObject().get("origin").getAsString() + "/chckout/_ID_/process";
 	    bodyJsonElement.getAsJsonObject().addProperty("redirect", redirectRouter);
 	
 	    renderJSON(booking.process(bodyJsonElement));	
@@ -129,4 +134,42 @@ public class BookingController extends Controller {
 			return false;
 		}
     }
+	private static JsonObject getTokenByRut(String rut){
+		String url = "https://kdu.cl/apipax/passenger/v1/rut/" + rut;
+		System.out.println(url);
+		WS.WSRequest request = WS.url(url);
+		request.setHeader("Authorization","Basic a2R1OmtkdQ==");
+		WS.HttpResponse response = request.get();
+		JsonElement jsonResponse = response.getJson();
+		return(jsonResponse.getAsJsonObject());
+	}
+	public static void getPaxByToken(String body){
+		String token = params.get("token");
+		String url = "https://kdu.cl/apipax/passenger/v1/"+ token;
+		System.out.println(url);
+		WS.WSRequest request = WS.url(url);
+		request.setHeader("Authorization","Basic a2R1OmtkdQ==");
+		WS.HttpResponse response = request.get();
+		JsonElement jsonResponse = response.getJson();
+		renderJSON(jsonResponse.getAsJsonObject());
+	}
+
+	public static void getFFPNumberByRut(){
+		String rut = params.get("rut");
+		JsonObject tokenResponce = getTokenByRut(rut);
+
+		if (JsonUtils.getStringFromJson(tokenResponce, "error") != null){
+			renderJSON(tokenResponce);
+		}
+
+		String token = JsonUtils.getStringFromJson(tokenResponce, "token");
+		String url = "https://kdu.cl/apipax/passenger/v1/"+ token;
+		System.out.println(url);
+		WS.WSRequest request = WS.url(url);
+		request.setHeader("Authorization","Basic a2R1OmtkdQ==");
+		WS.HttpResponse response = request.get();
+		JsonElement jsonResponse = response.getJson();
+		renderJSON(jsonResponse.getAsJsonObject());
+	}
+
 }
