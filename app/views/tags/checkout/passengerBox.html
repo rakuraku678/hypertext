@@ -133,42 +133,33 @@ $(document).ready(function () {
     var currentFFPResponse;
     var validatingCarrier = "${_validatingCarrier}";
     #{if !_onlyPassport}
-    $('#rutNum${_key}').keypress(function (e) {
+    $('#rutNum${_key}').focusout(function(){
         if ($(this).val().length > 8){
-            if (e.which == 13) {
-                e.preventDefault();
-                $.ajax({
-                    type: "GET",
-                    url: "@{BookingController.getFFPNumberByRut}" +"?rut="+ $('#rutNum${_key}').val(),
-                    dataType: "json",
-                    success:function(result) {
-                        if(result.status != 0){
-                            autocompleteFFP(result);
-                        }
+            $.ajax({
+                type: "GET",
+                url: "@{BookingController.getFFPNumberByRut}" +"?rut="+ $('#rutNum${_key}').val(),
+                dataType: "json",
+                success:function(result) {
+                    if(result.status != 0){
+                        autocompleteFFP(result);
                     }
-                });                
-            return false;
-            }
+                }
+            });
         }
     });
     #{/if}
-    $('#pasNum${_key}').keypress(function (e) {
+    $('#pasNum${_key}').focusout(function(){
         if ($(this).val().length > 8){
-            if (e.which == 13) {
-                e.preventDefault();
-                $.ajax({
-                    type: "GET",
-                    url: "@{BookingController.getFFPNumberByRut}" +"?rut="+ $('#rutNum${_key}').val(),
-                    dataType: "json",
-                    success:function(result) {
-                        if(result.status != 0){
-                            autocompleteFFP(result);
-                        }
+            $.ajax({
+                type: "GET",
+                url: "@{BookingController.getFFPNumberByRut}" +"?rut="+ $('#rutNum${_key}').val(),
+                dataType: "json",
+                success:function(result) {
+                    if(result.status != 0){
+                        autocompleteFFP(result);
                     }
-                });
-                
-            return false;
-            }
+                }
+            });
         }
     });
 
