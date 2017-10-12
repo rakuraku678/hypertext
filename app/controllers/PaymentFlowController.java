@@ -12,6 +12,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import play.cache.Cache;
 import play.mvc.Controller;
 import utils.AgencyConfigurationDto;
 import utils.CacheUtils;
@@ -72,14 +73,14 @@ public class PaymentFlowController extends Controller {
         
         List<CountryDto> countriesList = Country.process();
         
-        CacheUtils.setSelectionFlight(bfmResultItem);
+       // CacheUtils.setSelectionFlight(bfmResultItem);
         String transactionId = bfmResultItem.getAsJsonObject().get("transactionId").getAsString();
-        
-        render(agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate, airRulesResultList, promotionDto, countriesList, onlyPassport, transactionId);
+        String token = Cache.get(transactionId, String.class);
+        render(agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate, airRulesResultList, promotionDto, countriesList, onlyPassport, transactionId, token);
     }
     
     
-    public static void reloadWithTransaction(String transactionId, String promoSlug, String selectedCurrency) {
+    public static void reloadWithTransaction(String token) {
         render("PaymentFlowController/successfulLogin.html");
     }
     
