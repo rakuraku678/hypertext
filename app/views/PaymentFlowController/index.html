@@ -58,8 +58,14 @@
             </div>
         </article>
     </form>
-                    <a class="btn btn-search" id="btnLogin">Loguearse</a>
+    #{if token!=null && token !=''}
+    		---->>>${token}
+    #{/if}
+    #{else}
+                        <a class="btn btn-search" id="btnLogin">Loguearse</a>
                 <div id="loginDiv"></div>
+    #{/else}
+
 </section>
 
 #{spinnerModal/}
