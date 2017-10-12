@@ -153,23 +153,24 @@ public class BookingController extends Controller {
 		JsonElement jsonResponse = response.getJson();
 		renderJSON(jsonResponse.getAsJsonObject());
 	}
-
+	
 	public static void getFFPNumberByRut(){
 		String rut = params.get("rut");
-		JsonObject tokenResponce = getTokenByRut(rut);
-
-		if (JsonUtils.getStringFromJson(tokenResponce, "error") != null){
-			renderJSON(tokenResponce);
-		}
-
-		String token = JsonUtils.getStringFromJson(tokenResponce, "token");
-		String url = "https://kdu.cl/apipax/passenger/v1/"+ token;
+		String url = "http://dev.mockup.cl/cashback/public/api/"+ rut;
 		System.out.println(url);
 		WS.WSRequest request = WS.url(url);
-		request.setHeader("Authorization","Basic a2R1OmtkdQ==");
 		WS.HttpResponse response = request.get();
-		JsonElement jsonResponse = response.getJson();
-		renderJSON(jsonResponse.getAsJsonObject());
+		String valueToEscape = response.getString();
+
+		int startIndex = valueToEscape.indexOf(",\"mensaje\":\"Estimado");
+		String searchString = "}";
+		int endIndex = startIndex + valueToEscape.substring(startIndex).indexOf(searchString);
+		String toBeReplaced = valueToEscape.substring(startIndex, endIndex);
+		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+		valueToEscape  = valueToEscape.replace(toBeReplaced, "");
+		JsonParser parser = new JsonParser();
+		JsonObject jsonObject = parser.parse(valueToEscape).getAsJsonObject();
+		renderJSON(jsonObject);
 	}
 
 }

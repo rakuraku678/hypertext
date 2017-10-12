@@ -71,13 +71,14 @@ public class PaymentFlowController extends Controller {
         if (cityMap!=null){
         	onlyPassport = (boolean) cityMap.get("onlyPassport");
         }
-
-        Object[] airlineIataCodes =  Alliance.getFFPWhiteList(JsonUtils.getStringFromJson(pricingJsonObject,"validatingCarrier")).toArray();
+        String validatingCarrier = JsonUtils.getStringFromJson(pricingJsonObject,"validatingCarrier");
+        Object[] airlineIataCodes =  Alliance.getFFPWhiteList(validatingCarrier).toArray();
         JsonArray whiteListAirlines = AirlinesSearch.process(Arrays.toString(airlineIataCodes).replace("[","").replace("]","")).getAsJsonArray();
 
         List<CountryDto> countriesList = Country.process();
+        System.out.println("????????????????????????"+JsonUtils.getStringFromJson(pricingJsonObject,"validatingCarrier")+" ?????????????????????????????????");
         
-        render(agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate, airRulesResultList, promotionDto, countriesList, onlyPassport,whiteListAirlines);
+        render(agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate, airRulesResultList, promotionDto, countriesList, onlyPassport,whiteListAirlines, validatingCarrier);
     }
 
     public static void processPayment(){
