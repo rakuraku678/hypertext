@@ -110,11 +110,12 @@
 // 		}
 
         $( "#btnLogin" ).click(function( event ) {
-            var agency ="55195834e4b0f0cd8b323427";// "${promotionDto.agency.id}";
+            var agencyId ="${promotionDto.agency.externalId}";
             var transactionId = "${transactionId}";
             var promoSlug = "${promotionDto.slug}";
+            var agencySlug = "${promotionDto.agency.slug}";
             var selectedCurrency = "${selectedCurrency}";
-            $('<iframe src="/auth/'+transactionId+'/'+promoSlug+'/'+selectedCurrency+'/'+agency+'" frameborder="0" style="padding-left: 50px; position: relative; top: -100px;" width="500" height="500" scrolling="no" id="myFrame"></iframe>').appendTo('#loginModalBody');
+            $('<iframe src="/auth/'+transactionId+'/'+promoSlug+'/'+selectedCurrency+'/'+agencyId+'/'+agencySlug" frameborder="0" style="padding-left: 50px; position: relative; top: -100px;" width="500" height="500" scrolling="no" id="myFrame"></iframe>').appendTo('#loginModalBody');
             $('#modalLogin').modal('show');
 //          $.ajax({
 //              type: "GET",
