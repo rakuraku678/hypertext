@@ -19,7 +19,7 @@ public class FlightsController extends Controller {
 
 
     public static void d() {
-    	String token = CrossLoginUtils.getTransactionToken("56253033e4b0c01cd8c07852","test","state");
+    	String token = CrossLoginUtils.getTransactionToken("56253033e4b0c01cd8c07852","test");
     	renderJSON(CrossLoginUtils.getState(token));
     }
     public static void index(String slugAgency) {
@@ -54,7 +54,7 @@ public class FlightsController extends Controller {
         render(agencyConfigurationDto,cabinConfigurationDto);
     }
     public static void testapitoken(){
-    	String token = CrossLoginUtils.getTransactionToken("56253033e4b0c01cd8c07852", "test", "state");
+    	String token = CrossLoginUtils.getTransactionToken("56253033e4b0c01cd8c07852", "test");
     	StateDto stateDto = CrossLoginUtils.getState(token);
 
     	renderJSON(stateDto);
