@@ -18,14 +18,13 @@ public class CrossLoginUtils {
     private static final String ENDPOINT = Play.configuration.getProperty("crossLoginApi.url");
     private static final String APPNAME = "vuelos";
 
-    public static String getTransactionToken(String agencyId, String password, String state) {
+    public static String getTransactionToken(String agencyId, String password) {
         WSRequest req = WS.url(ENDPOINT+"/transaction/v1/generateToken");
         req.setHeader("Content-Type", "application/json");
         Map<String,String> dataMap = Maps.newHashMap();
         dataMap.put("agencyId", agencyId);
         dataMap.put("appName", APPNAME);
         dataMap.put("password", password);
-        dataMap.put("state", state);
         String json = new Gson().toJson(dataMap);
         req.body(json);
         

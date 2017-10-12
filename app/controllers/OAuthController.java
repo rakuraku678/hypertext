@@ -20,15 +20,16 @@ public class OAuthController extends Controller {
     public static void renderBancoChileLogin(String transactionId, String promoSlug, String selectedCurrency, String agencyId) {
         try {
         	
-        	String token = CrossLoginUtils.getTransactionToken(agencyId,"test","state");
+        	String token = CrossLoginUtils.getTransactionToken(agencyId,"test");
 
             Logger.info("Token obtenido de API CROSSLOGIN: " + token);
             //valor1;valor2;valor3;valorN;tokenDeAplicación;agencia
             
             String state = transactionId+";"+promoSlug+";"+selectedCurrency+";"+token+";travel_club";
-
+            System.out.println("state que se enviara: "+state);
+            
             state = AESEncryptorUtil.encrypt(state, AES_KEY);
-
+            
             String clientId = "travel_club";
 
             String callbackUrl = "";
