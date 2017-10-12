@@ -74,10 +74,9 @@ public class PaymentFlowController extends Controller {
         
         CacheUtils.setSelectionFlight(bfmResultItem);
         String transactionId = bfmResultItem.getAsJsonObject().get("transactionId").getAsString();
-        boolean mustReload = false;
-        render(agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate, airRulesResultList, promotionDto, countriesList, onlyPassport, transactionId, mustReload);
+        
+        render(agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate, airRulesResultList, promotionDto, countriesList, onlyPassport, transactionId);
     }
-    
     
     
     public static void reloadWithTransaction(String transactionId, String promoSlug, String selectedCurrency) {
