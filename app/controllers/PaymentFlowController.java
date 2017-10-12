@@ -74,7 +74,8 @@ public class PaymentFlowController extends Controller {
         
         CacheUtils.setSelectionFlight(bfmResultItem);
         String transactionId = bfmResultItem.getAsJsonObject().get("transactionId").getAsString();
-        render(agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate, airRulesResultList, promotionDto, countriesList, onlyPassport, transactionId);
+        boolean mustReload = false;
+        render(agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate, airRulesResultList, promotionDto, countriesList, onlyPassport, transactionId, mustReload);
     }
     
     
@@ -124,8 +125,8 @@ public class PaymentFlowController extends Controller {
         }
         
         List<CountryDto> countriesList = Country.process();
-        
-        render("PaymentFlowController/index.html",agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate, airRulesResultList, promotionDto, countriesList, onlyPassport, transactionId);
+        boolean mustReload = true;
+        render("PaymentFlowController/index.html",agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate, airRulesResultList, promotionDto, countriesList, onlyPassport, transactionId,mustReload);
     }
     
     

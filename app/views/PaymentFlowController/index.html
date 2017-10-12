@@ -91,6 +91,9 @@
 	}
 
 	$(function () {
+		#{if mustReload}
+			window.parent.location.reload();
+		#{/if}
 		var selectedCurrency = "${selectedCurrency}";
 		$( ".clppriceCon" ).each(function( index ) {
 				$(this).html(numberWithCommas($(this).html()));
