@@ -80,7 +80,7 @@ public class PaymentFlowController extends Controller {
     }
     
     
-    public static void reloadWithTransaction(String token) {
+    public static void reloadWithTransaction() {
         render("PaymentFlowController/successfulLogin.html");
     }
     

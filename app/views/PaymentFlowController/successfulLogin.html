@@ -2,6 +2,11 @@ Login succesful!
 
 
 <script type="text/javascript">
-window.parent.location.reload();
+var selfUrl = unescape(parent.window.location.pathname);
+parent.location.reload(true);
+
+parent.window.location.replace(selfUrl);
+
+parent.window.location.href = selfUrl;
 </script>
 

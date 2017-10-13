@@ -86,8 +86,7 @@
 
 #{set 'scriptFiles'}
 #{get 'scriptFiles' /}
-<script type="text/javascript" src="@{PaymentFlowController.javascript}"></script>
-
+#{checkout/checkoutScript token:token,transactionId:transactionId, promotionDto:promotionDto, selectedCurrency:selectedCurrency /}
 
 
 

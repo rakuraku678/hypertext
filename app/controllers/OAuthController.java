@@ -52,7 +52,7 @@ public class OAuthController extends Controller {
       String transactionId = stateDecrypted.split(";")[0];
       String token = stateDecrypted.split(";")[1];
       Cache.set(transactionId, token, "1d");
-      PaymentFlowController.reloadWithTransaction(token);
+      PaymentFlowController.reloadWithTransaction();
       
     }
 
