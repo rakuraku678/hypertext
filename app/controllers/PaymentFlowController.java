@@ -78,9 +78,13 @@ public class PaymentFlowController extends Controller {
         String transactionId = bfmResultItem.getAsJsonObject().get("transactionId").getAsString();
         String token = Cache.get(transactionId, String.class);
         
-        StateDto state = CrossLoginUtils.getState(token);
-        System.out.println("state name: "+state.appToken);
-        System.out.println("state name: "+state.clientName);
+        StateDto state = null;
+        if (!Strings.isNullOrEmpty(token)){
+            state = CrossLoginUtils.getState(token);
+            System.out.println("state name: "+state.appToken);
+            System.out.println("state name: "+state.clientName);
+        }
+
         
         render(agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate, airRulesResultList, promotionDto, 
         		countriesList, onlyPassport, transactionId, token, state);
