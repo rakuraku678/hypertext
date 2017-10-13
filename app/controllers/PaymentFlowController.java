@@ -12,11 +12,12 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import dto.StateDto;
 import play.cache.Cache;
 import play.mvc.Controller;
 import utils.AgencyConfigurationDto;
-import utils.CacheUtils;
 import utils.ConfigurationDto;
+import utils.CrossLoginUtils;
 import utils.FlightsUtils;
 import utils.JsonUtils;
 import utils.TravelClubUtils;
@@ -76,7 +77,13 @@ public class PaymentFlowController extends Controller {
        // CacheUtils.setSelectionFlight(bfmResultItem);
         String transactionId = bfmResultItem.getAsJsonObject().get("transactionId").getAsString();
         String token = Cache.get(transactionId, String.class);
-        render(agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate, airRulesResultList, promotionDto, countriesList, onlyPassport, transactionId, token);
+        
+        StateDto state = CrossLoginUtils.getState(token);
+        System.out.println("state name: "+state.appToken);
+        System.out.println("state name: "+state.clientName);
+        
+        render(agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate, airRulesResultList, promotionDto, 
+        		countriesList, onlyPassport, transactionId, token, state);
     }
     
     

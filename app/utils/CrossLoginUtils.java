@@ -94,6 +94,9 @@ public class CrossLoginUtils {
         try {
             HttpResponse response = req.post();
             JsonElement responseJson = response.getJson();
+            System.out.println("// jsonResponse: " + responseJson.toString() );
+            System.out.println("//****************************************//");
+            
             StateDto stateDto = StateDto.parseStateDto(responseJson);
             
             if (!response.success()) {
@@ -102,8 +105,7 @@ public class CrossLoginUtils {
                 System.out.println("//****************************************//");
                 throw new RuntimeException("CrossLogin service ERROR");
             }
-            System.out.println("// jsonResponse: " + responseJson.toString() );
-            System.out.println("//****************************************//");
+           
 
             return stateDto;
         } catch (RuntimeException e) {
