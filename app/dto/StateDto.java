@@ -16,6 +16,7 @@ public class StateDto {
     public String   clientRut;
     public String	clientName;
     public String	stateBch;
+    public String	clientDp;
 
 	public static StateDto parseStateDto(JsonElement responseJson) {
 		JsonObject jsonObject = responseJson.getAsJsonObject();
@@ -29,7 +30,7 @@ public class StateDto {
 		stateDto.clientRut = JsonUtils.getStringFromJson(jsonObject, "clientRut");
 		stateDto.clientName = JsonUtils.getStringFromJson(jsonObject, "clientName");
 		stateDto.stateBch = JsonUtils.getStringFromJson(jsonObject, "stateBch");
-		
+		stateDto.clientDp = JsonUtils.getStringFromJson(jsonObject, "clientDp");
 		return stateDto;
 	}
 }
