@@ -109,7 +109,7 @@
                         <label >Información Pasajero Frecuente:</label>
                     </div>
                     <div class="col-md-4 form-group">
-                        <select name="passengers[${_key}][FFPAirlineIataCode]" class="form-control icon-arrow-from" id="FFPAirlineIataCode">
+                        <select name="passengers[${_key}][FFPAirlineIataCode]" class="form-control icon-arrow-from" id="FFPAirlineIataCode${_key}">
                             #{list items:_whiteListAirlines, as:'whiteListAirlines'}
                             <option value=${whiteListAirlines.iataCode.raw()}>
                                 ${whiteListAirlines.name.getAsString()}
@@ -125,3 +125,73 @@
         </div>            
     </div>
 </div>
+<script type="text/javascript" src="@{'/public/javascripts/jquery-3.0.0.min.js'}"></script>
+<script>
+
+$(document).ready(function () {
+    var availableAirlines = [#{list items:_whiteListAirlines, as:'whiteListAirlines'}${whiteListAirlines.iataCode.raw()}${whiteListAirlines_isLast ? '' : ','}#{/list}];
+    var currentFFPResponse;
+    var validatingCarrier = "${_validatingCarrier}";
+    #{if !_onlyPassport}
+    $('#rutNum${_key}').focusout(function(){
+        if ($(this).val().length > 8){
+            $.ajax({
+                type: "GET",
+                url: "@{BookingController.getFFPNumberByRut}" +"?rut="+ $('#rutNum${_key}').val(),
+                dataType: "json",
+                success:function(result) {
+                    if(result.status != 0){
+                        autocompleteFFP(result);
+                    }
+                }
+            });
+        }
+    });
+    #{/if}
+    $('#pasNum${_key}').focusout(function(){
+        if ($(this).val().length > 8){
+            $.ajax({
+                type: "GET",
+                url: "@{BookingController.getFFPNumberByRut}" +"?rut="+ $('#rutNum${_key}').val(),
+                dataType: "json",
+                success:function(result) {
+                    if(result.status != 0){
+                        autocompleteFFP(result);
+                    }
+                }
+            });
+        }
+    });
+
+    function autocompleteFFP(result) {
+    var prefered = false
+        for (var ffp in result.alianza){
+            for (var aa in availableAirlines) {
+                if (validatingCarrier == validateIataCode(result.alianza[ffp].nombre) && availableAirlines[aa] == validatingCarrier){
+                    $('#FFPNumber${_key}').val(result.alianza[ffp].id);
+                    $('#FFPAirlineIataCode${_key}').val(availableAirlines[aa]);
+                    prefered = true;
+                }
+                if(!prefered && availableAirlines[aa] == validateIataCode(result.alianza[ffp].nombre)){
+                    $('#FFPNumber${_key}').val(result.alianza[ffp].id);
+                    $('#FFPAirlineIataCode${_key}').val(availableAirlines[aa]);
+                }
+            }
+        }
+    };
+    function validateIataCode(airlineName){
+        switch(airlineName){
+            case "Delta":
+                return "DL";
+            case "Iberia":
+                return "IB";
+            case "British":
+                return "BA";
+            case "Gol":
+                return "G3"
+            default :
+                return ""
+        }
+    };
+});
+</script>
