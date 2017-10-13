@@ -3,6 +3,13 @@
 
 #{set isAgencyHeader: true /}
 
+
+<style>
+.info-card{
+    display: inline-block;
+    vertical-align: middle;
+}
+</style>
 <section class="bg-path">
     <article class="container-fluid">
         <div class="row">
@@ -24,6 +31,21 @@
     </article>
 </section>
 
+#{if state!=null}
+                        <div class="alert alert-info" style="display: inline-block; width: 100%;">
+                            <div class="info-card">
+                                <img src="../public/images/icon-card.svg" alt="imagen tarjeta" />
+                            </div>
+                            <div class="info-card" id="panelazul" style="max-width: 90%;">
+								<b> ${state.clientName} Tu saldo de dólares Dólares-Premio disponible a la fecha es de <span class="light-blue">1233</span> </b>
+                            </div>
+                            
+                       </div>
+#{/if}
+                       
+                       
+                       
+                       
 <section class="search-arrive payment-path">
     <form id="checkoutForm" action="javascript:void(0);" method="post">
         <article class="container-fluid">
