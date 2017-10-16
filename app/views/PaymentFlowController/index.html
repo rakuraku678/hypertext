@@ -31,6 +31,7 @@
                 <h2>¿Quién Viaja?</h2>
                 <p class="info-help">En caso de necesitar ayuda comunicarse al correo <strong>ventaonline@travelclub.cl</strong></p>
                 <div class="col-md-8">
+                    #{checkout.contactBox/}
                     %{ int passengersCount = 0; }%
                     %{ int passengersNumber = 1; }%
                     #{list bfmResultItem.pricing.detail, as:'pricingDetails'}
@@ -40,7 +41,6 @@
                             %{ passengersNumber++; }%
                         #{/list}
                     #{/list}
-                    #{checkout.contactBox/}
                     *{#{checkout.paymentBox/}}*
                     #{checkout.termsConditionBox/}
                     #{checkout.hiddenInputBox bfmResultItem: bfmResultItem, promotion: promotionDto/}

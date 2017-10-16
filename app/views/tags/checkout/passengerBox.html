@@ -110,6 +110,9 @@
                     </div>
                     <div class="col-md-4 form-group">
                         <select name="passengers[${_key}][FFPAirlineIataCode]" class="form-control icon-arrow-from" id="FFPAirlineIataCode${_key}">
+                            <option value="">
+                                Seleccione
+                            </option>
                             #{list items:_whiteListAirlines, as:'whiteListAirlines'}
                             <option value=${whiteListAirlines.iataCode.raw()}>
                                 ${whiteListAirlines.name.getAsString()}
