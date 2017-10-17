@@ -1,10 +1,10 @@
 Login succesful!
 
-
+<script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
 <script type="text/javascript">
 var formSerializeJson = $('#parentPrice', window.parent.document).serializeJSON({useIntKeysAsArrayIndex: true, checkboxUncheckedValue: false});
 formSerializeJson.bfmResultItem = $.parseJSON(formSerializeJson.bfmResultItem);
-formSerializeJson.origin = window.location.origin;
+formSerializeJson.origin = window.parent.location.origin;
 var data = JSON.stringify(formSerializeJson);
 alert(data);
 
