@@ -66,7 +66,7 @@ public class FlightsDataController extends Controller {
 
         //renderTemplate("FlightsDataController/flightsData.html", flightsResults, flightsResultsFilters, dollarExchangeRate, airlineArray);
 
-        Template template = TemplateLoader.load(template("FlightsDataController/flightsData.html"));
+       
 
 
 
@@ -81,6 +81,7 @@ public class FlightsDataController extends Controller {
             System.out.println("state name: "+state.clientName);
         }
         
+        Template template = TemplateLoader.load(template("FlightsDataController/flightsData.html"));
         Map m = Maps.newHashMap();
         m.put("flightsResults", flightsResults);
         m.put("flightsResultsFilters", flightsResultsFilters);
