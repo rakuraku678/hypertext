@@ -25,7 +25,7 @@ public class OAuthController extends Controller {
         	apiCrossToken = token;
             System.out.println("Token obtenido de API CROSSLOGIN: " + token);
             //valor1;valor2;valor3;valorN;tokenDeAplicación;agencia
-            
+            step = "index";
             String state = transactionId+";"+step+";"+token+";"+agencySlug;
             System.out.println("state que se enviara: "+state);
             
@@ -45,14 +45,14 @@ public class OAuthController extends Controller {
     }
     
     
-    public static void renderBancoChileLoginToTravelpay(String transactionId, String selectedCurrency, String agencyId, String agencySlug, String step) {
+    public static void renderBancoChileLoginToTravelpay(String transactionId, String selectedCurrency, String agencyId, String agencySlug) {
         try {
         	System.out.println("agencyId: "+agencyId);
         	String token = CrossLoginUtils.getTransactionToken(agencyId,"test");
         	apiCrossToken = token;
             System.out.println("Token obtenido de API CROSSLOGIN: " + token);
             //valor1;valor2;valor3;valorN;tokenDeAplicación;agencia
-            
+            String step = "checkout";
             String state = transactionId+";"+step+";"+token+";"+agencySlug;
             System.out.println("state que se enviara: "+state);
             
@@ -79,10 +79,12 @@ public class OAuthController extends Controller {
       String transactionId = stateDecrypted.split(";")[0];
       String step = stateDecrypted.split(";")[1];
       String token = stateDecrypted.split(";")[2];
-      String agencySlug = stateDecrypted.split(";")[3];
       System.out.println("se guarda para transactionId: "+transactionId+", token: "+token);
       Cache.set(transactionId, token, "1d");
-      FlightsController.reloadWithTransaction(transactionId);
+      if (step.equals("index"))
+    	  FlightsController.reloadWithTransaction(transactionId);
+      else
+    	  PaymentFlowController.processPayment();
       
     }
 
