@@ -280,7 +280,7 @@ function startBooking() {
 	    var promoSlug = "${_promotionDto.slug}";
 	    var agencySlug = "${_promotionDto.agency.slug}";
 	    var selectedCurrency = "${_selectedCurrency}";
-	    $('<iframe src="/auth/'+transactionId+'/'+promoSlug+'/'+selectedCurrency+'/'+agencyId+'/'+agencySlug+'" frameborder="0" style="padding-left: 50px; position: relative; top: -100px;" width="500" height="500" scrolling="no" id="myFrame"></iframe>').appendTo('#loginModalBody');
+	    $('<iframe src="/authtotravelpay/'+transactionId+'/'+selectedCurrency+'/'+agencyId+'/'+agencySlug+'" frameborder="0" style="padding-left: 50px; position: relative; top: -100px;" width="500" height="500" scrolling="no" id="myFrame"></iframe>').appendTo('#loginModalBody');
 	    $('#modalLogin').modal('show');
 	    return false;
 		

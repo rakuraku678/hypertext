@@ -128,7 +128,7 @@
 // 				$(this).html(numberWithCommas($(this).html()));
 // 			});	
 // 		}
-#{if state!=null}
+#{if state==null}
         $( "#btnLogin" ).click(function( event ) {
             var agencyId ="${promotionDto.agency.externalId}";
             var transactionId = "${transactionId}";
