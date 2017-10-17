@@ -2,8 +2,11 @@ package controllers;
 
 import com.google.common.base.Strings;
 
+import dto.StateDto;
+import play.cache.Cache;
 import play.mvc.Controller;
 import utils.AgencyConfigurationDto;
+import utils.CrossLoginUtils;
 import utils.TravelClubUtils;
 import utils.ApiFlightsSdk.v1.Agency;
 import utils.ApiFlightsSdk.v1.Airport;
@@ -51,6 +54,17 @@ public class FlightsController extends Controller {
         if (promotionDto==null){
         	System.out.println("es nulo");
         }
+        
+        String transactionId = "0";
+        String token = Cache.get(transactionId, String.class);
+        
+        StateDto state = null;
+        if (!Strings.isNullOrEmpty(token)){
+            state = CrossLoginUtils.getState(token);
+            System.out.println("state name: "+state.appToken);
+            System.out.println("state name: "+state.clientName);
+        }
+
         render(agencyConfigurationDto, cabinConfigurationDto, promotionDto);
     }
     public static void reloadWithTransaction() {
