@@ -353,7 +353,7 @@
             #{/if}
             
             
-            #{if state!=null}
+            #{if state==null}
 	            $( "#btnLoginTrUser" ).click(function( event ) {
 
 		            var agencyId ="${promotionDto.agency.externalId}";
