@@ -66,9 +66,10 @@ public class FlightsDataController extends Controller {
 
         //renderTemplate("FlightsDataController/flightsData.html", flightsResults, flightsResultsFilters, dollarExchangeRate, airlineArray);
 
-       
-
         String transactionId = params.get("hdnTransactionId");
+        if (Strings.isNullOrEmpty(transactionId)){
+        	transactionId = flightsResults.getAsJsonArray().get(0).getAsJsonObject().get("transactionId").getAsString();
+        }
         
         String token = Cache.get(transactionId, String.class);
         System.out.println("transactionId: "+transactionId+", token: "+token);
