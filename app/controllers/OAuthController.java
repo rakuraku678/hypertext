@@ -18,9 +18,8 @@ public class OAuthController extends Controller {
     private static final String AES_KEY = "Bar12345Bar12345";
     public static String apiCrossToken = ""; 
     
-    public static void renderBancoChileLogin(String transactionId, String promoSlug, String selectedCurrency, String agencyId, String agencySlug, String step) {
+    public static void renderBancoChileLogin(String transactionId, String selectedCurrency, String agencyId, String agencySlug, String step) {
         try {
-        	System.out.println("promoSlug: "+promoSlug);
         	System.out.println("agencyId: "+agencyId);
         	String token = CrossLoginUtils.getTransactionToken(agencyId,"test");
         	apiCrossToken = token;

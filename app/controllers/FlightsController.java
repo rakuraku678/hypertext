@@ -34,6 +34,8 @@ public class FlightsController extends Controller {
         	AgencyDto agencyDto = new Agency().getBySlug(slugAgency);
         	externalId = agencyDto.externalId;
             cabinConfigurationDto = CabinConfiguration.getByAgency(slugAgency);
+            promotionDto = new PromotionDto();
+            promotionDto.agency = agencyDto;
         }
 
         AgencyConfigurationDto agencyConfigurationDto = TravelClubUtils.getAgencyConfiguration(externalId);
