@@ -88,6 +88,7 @@ public class FlightsDataController extends Controller {
         m.put("params", request.params);
         m.put("transactionId", transactionId);
         m.put("state", state);
+        m.put("promotionDto", promotionDto);
         
         renderHtml(template.render(m).replaceAll("\\s{2,}"," "));
     }
