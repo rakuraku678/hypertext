@@ -69,8 +69,9 @@ public class FlightsDataController extends Controller {
        
 
         String transactionId = flightsResults.getAsJsonArray().get(0).getAsJsonObject().get("transactionId").getAsString();
-        System.out.println("transactionId: "+transactionId);
+        
         String token = Cache.get(transactionId, String.class);
+        System.out.println("transactionId: "+transactionId+", token: "+token);
         
         StateDto state = null;
         if (!Strings.isNullOrEmpty(token)){

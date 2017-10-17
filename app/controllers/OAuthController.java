@@ -53,6 +53,7 @@ public class OAuthController extends Controller {
       String step = stateDecrypted.split(";")[1];
       String token = stateDecrypted.split(";")[2];
       String agencySlug = stateDecrypted.split(";")[3];
+      System.out.println("se guarda para transactionId: "+transactionId+", token: "+token);
       Cache.set(transactionId, token, "1d");
       PaymentFlowController.reloadWithTransaction();
       
