@@ -19,7 +19,7 @@ import utils.dtos.PromotionDto;
 public class FlightsController extends Controller {
 
 
-    public static void index(String slugAgency) {
+    public static void index(String slugAgency, String transactionId) {
         PromotionDto promotionDto = null;
         String externalId = "";
         CabinConfigurationDto cabinConfigurationDto;
@@ -55,7 +55,7 @@ public class FlightsController extends Controller {
         	System.out.println("es nulo");
         }
         
-        render(agencyConfigurationDto, cabinConfigurationDto, promotionDto);
+        render(agencyConfigurationDto, cabinConfigurationDto, promotionDto, transactionId);
     }
     public static void reloadWithTransaction() {
         render("PaymentFlowController/successfulLogin.html");
