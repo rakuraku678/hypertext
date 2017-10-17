@@ -66,7 +66,7 @@ public class FlightsDataController extends Controller {
 
         //renderTemplate("FlightsDataController/flightsData.html", flightsResults, flightsResultsFilters, dollarExchangeRate, airlineArray);
 
-        String transactionId = params.get("hdnTransactionId");
+        String transactionId = params.get("transactionId");
         System.out.println("la transaccion del param: "+transactionId);
         
         if (Strings.isNullOrEmpty(transactionId)){
