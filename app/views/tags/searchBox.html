@@ -353,38 +353,7 @@
             #{/if}
             
             
-            #{if state==null}
-            	$('#loginDiv').show();
-	            $( "#btnLoginTrUser" ).click(function( event ) {
-		            var agencyId ="${promotionDto.agency.externalId}";
-		            var transactionId = "0";
-		            var agencySlug = "${promotionDto.agency.slug}";
-		            var selectedCurrency = "clp";
-		            var step = 'index';
-		            alert('/auth/'+transactionId+'/'+selectedCurrency+'/'+agencyId+'/'+agencySlug+'/'+step);
-		            $('<iframe src="/auth/'+transactionId+'/'+selectedCurrency+'/'+agencyId+'/'+agencySlug+'/'+step+'" frameborder="0" style="padding-left: 50px; position: relative; top: -100px;" width="500" height="500" scrolling="no" id="myFrame"></iframe>').appendTo('#loginModalBody');
-		            $('#modalLogin').modal('show');
-
-	        	});
-	        #{/if}
-	        #{else}
-	        	    $("#loginDiv").hide();
-	        	    $('#loggedDiv').show();
-	        	    $('#loggedDiv').html("${state.clientName}");
-	        #{/else}
-            
-            
-            
         });
-
-
-
-
-
- 
-                
-     
-               
 
 			  //var dateFormat = "dd/mm/yy";
               var dateFormat = "dd-mm-yy";

@@ -55,17 +55,7 @@ public class FlightsController extends Controller {
         	System.out.println("es nulo");
         }
         
-        String transactionId = "0";
-        String token = Cache.get(transactionId, String.class);
-        
-        StateDto state = null;
-        if (!Strings.isNullOrEmpty(token)){
-            state = CrossLoginUtils.getState(token);
-            System.out.println("state name: "+state.appToken);
-            System.out.println("state name: "+state.clientName);
-        }
-
-        render(agencyConfigurationDto, cabinConfigurationDto, promotionDto, state);
+        render(agencyConfigurationDto, cabinConfigurationDto, promotionDto);
     }
     public static void reloadWithTransaction() {
         render("PaymentFlowController/successfulLogin.html");

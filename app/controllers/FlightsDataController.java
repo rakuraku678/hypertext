@@ -7,11 +7,13 @@ import java.util.Map;
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import models.FlightsResultsFilters;
+import play.cache.Cache;
 import play.mvc.Controller;
 import play.mvc.Util;
 import play.templates.Template;
 import play.templates.TemplateLoader;
 import utils.ApiFlightsSdk.v1.*;
+import utils.CrossLoginUtils;
 import utils.DateUtils;
 import utils.TravelClubUtils;
 import utils.dtos.AirportDto;
@@ -22,6 +24,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
+import dto.StateDto;
 
 public class FlightsDataController extends Controller {
 
@@ -64,13 +68,28 @@ public class FlightsDataController extends Controller {
 
         Template template = TemplateLoader.load(template("FlightsDataController/flightsData.html"));
 
+
+
+        String transactionId = flightsResults.getAsJsonObject().get("transactionId").getAsString();
+        System.out.println("transactionId: "+transactionId);
+        String token = Cache.get(transactionId, String.class);
+        
+        StateDto state = null;
+        if (!Strings.isNullOrEmpty(token)){
+            state = CrossLoginUtils.getState(token);
+            System.out.println("state name: "+state.appToken);
+            System.out.println("state name: "+state.clientName);
+        }
+        
         Map m = Maps.newHashMap();
         m.put("flightsResults", flightsResults);
         m.put("flightsResultsFilters", flightsResultsFilters);
         m.put("dollarExchangeRate", dollarExchangeRate);
         m.put("airlineArray", airlineArray);
         m.put("params", request.params);
-
+        m.put("transactionId", transactionId);
+        m.put("state", state);
+        
         renderHtml(template.render(m).replaceAll("\\s{2,}"," "));
     }
 
