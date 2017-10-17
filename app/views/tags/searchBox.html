@@ -351,6 +351,27 @@
             #{if params.destination && params.origin}
                 loadFlightData();
             #{/if}
+            
+            
+            
+            $( "#btnLoginTrUser" ).click(function( event ) {
+            
+	            var agencyId ="${promotionDto.agency.externalId}";
+	            var transactionId = "0";
+	            var promoSlug = "${promotionDto.slug}";
+	            var agencySlug = "${promotionDto.agency.slug}";
+	            var selectedCurrency = "clp";
+	            var step = 'index';
+	            alert('/auth/'+transactionId+'/'+promoSlug+'/'+selectedCurrency+'/'+agencyId+'/'+agencySlug+'/'+step);
+	            $('<iframe src="/auth/'+transactionId+'/'+promoSlug+'/'+selectedCurrency+'/'+agencyId+'/'+agencySlug+'/'+step+'" frameborder="0" style="padding-left: 50px; position: relative; top: -100px;" width="500" height="500" scrolling="no" id="myFrame"></iframe>').appendTo('#loginModalBody');
+	            $('#modalLogin').modal('show');
+
+        	});
+            
+            
+            
+            
+            
         });
 
 
@@ -492,6 +513,23 @@
     </div>
 
 </div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body" id="loginModalBody" style="height:400px; overflow: hidden;">
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
 
 #{set 'moreScripts'}
     #{get 'moreScripts' /}

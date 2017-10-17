@@ -18,15 +18,16 @@ public class OAuthController extends Controller {
     private static final String AES_KEY = "Bar12345Bar12345";
     public static String apiCrossToken = ""; 
     
-    public static void renderBancoChileLogin(String transactionId, String promoSlug, String selectedCurrency, String agencyId,String agencySlug) {
+    public static void renderBancoChileLogin(String transactionId, String promoSlug, String selectedCurrency, String agencyId, String agencySlug, String step) {
         try {
-        	
+        	System.out.println("promoSlug: "+promoSlug);
+        	System.out.println("agencyId: "+agencyId);
         	String token = CrossLoginUtils.getTransactionToken(agencyId,"test");
         	apiCrossToken = token;
-            Logger.info("Token obtenido de API CROSSLOGIN: " + token);
+            System.out.println("Token obtenido de API CROSSLOGIN: " + token);
             //valor1;valor2;valor3;valorN;tokenDeAplicación;agencia
             
-            String state = transactionId+";"+token+";"+agencySlug;
+            String state = transactionId+";"+step+";"+token+";"+agencySlug;
             System.out.println("state que se enviara: "+state);
             
             state = AESEncryptorUtil.encrypt(state, AES_KEY);
@@ -50,9 +51,16 @@ public class OAuthController extends Controller {
       String stateDecrypted = AESEncryptorUtil.decrypt(state, AES_KEY);
       System.out.println("State decrypted: "+stateDecrypted);
       String transactionId = stateDecrypted.split(";")[0];
-      String token = stateDecrypted.split(";")[1];
+      String step = stateDecrypted.split(";")[1];
+      String token = stateDecrypted.split(";")[2];
+      String agencySlug = stateDecrypted.split(";")[3];
       Cache.set(transactionId, token, "1d");
-      PaymentFlowController.reloadWithTransaction();
+      if (step.equals("index")){
+    	  FlightsController.index(agencySlug);
+      }
+      else if (step.equals("checkout")){
+    	  PaymentFlowController.reloadWithTransaction();
+      }
       
     }
 

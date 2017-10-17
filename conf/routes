@@ -46,8 +46,8 @@ GET     /vuelos/compra/{origin}/{destination}/{departureDate}/{returnDate}/{adul
 GET     /promociones/{promotion}                                                                                                                                FlightsController.index
 GET     /promociones/{promotion}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}                                              FlightsController.index
 
-GET		/auth/{transactionId}/{promoSlug}/{selectedCurrency}/{agencyId}/{agencySlug}		OAuthController.renderBancoChileLogin
-GET		/loginresponse																		OAuthController.bancoChileEndPoint
+GET		/auth/{transactionId}/{promoSlug}/{selectedCurrency}/{agencyId}/{agencySlug}/{step}		OAuthController.renderBancoChileLogin
+GET		/loginresponse																			OAuthController.bancoChileEndPoint
 
 # Catch all
 *       /vol3/{controller}/{action}             {controller}.{action}

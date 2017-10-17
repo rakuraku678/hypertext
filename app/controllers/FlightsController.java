@@ -2,10 +2,8 @@ package controllers;
 
 import com.google.common.base.Strings;
 
-import dto.StateDto;
 import play.mvc.Controller;
 import utils.AgencyConfigurationDto;
-import utils.CrossLoginUtils;
 import utils.TravelClubUtils;
 import utils.ApiFlightsSdk.v1.Agency;
 import utils.ApiFlightsSdk.v1.Airport;
@@ -18,12 +16,8 @@ import utils.dtos.PromotionDto;
 public class FlightsController extends Controller {
 
 
-    public static void d() {
-    	String token = CrossLoginUtils.getTransactionToken("56253033e4b0c01cd8c07852","test");
-    	renderJSON(CrossLoginUtils.getState(token));
-    }
     public static void index(String slugAgency) {
-        PromotionDto promotionDto;
+        PromotionDto promotionDto = null;
         String externalId = "";
         CabinConfigurationDto cabinConfigurationDto;
         if (Strings.isNullOrEmpty(slugAgency)){
@@ -51,12 +45,11 @@ public class FlightsController extends Controller {
         if (!Strings.isNullOrEmpty(params.get("destination"))){
             renderArgs.put("destinationCity", new Airport().getByIataCode(params.get("destination")).city);
         }
-        render(agencyConfigurationDto,cabinConfigurationDto);
+        
+        if (promotionDto==null){
+        	System.out.println("es nulo");
+        }
+        render(agencyConfigurationDto, cabinConfigurationDto, promotionDto);
     }
-    public static void testapitoken(){
-    	String token = CrossLoginUtils.getTransactionToken("56253033e4b0c01cd8c07852", "test");
-    	StateDto stateDto = CrossLoginUtils.getState(token);
 
-    	renderJSON(stateDto);
-    }
 }
