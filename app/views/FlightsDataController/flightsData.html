@@ -174,7 +174,7 @@ var changedCLP=false;
 	    	$('#loginDiv').show();
 	        $( "#btnLoginTrUser" ).click(function( event ) {
 	            var agencyId ="${promotionDto.agency.externalId}";
-	            var transactionId = "0";
+	            var transactionId = "${transactionId}";
 	            var agencySlug = "${promotionDto.agency.slug}";
 	            var selectedCurrency = "clp";
 	            var step = 'index';

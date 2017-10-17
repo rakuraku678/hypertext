@@ -68,9 +68,7 @@ public class FlightsDataController extends Controller {
 
        
 
-
-
-        String transactionId = flightsResults.getAsJsonObject().get("transactionId").getAsString();
+        String transactionId = flightsResults.getAsJsonArray().get(0).getAsJsonObject().get("transactionId").getAsString();
         System.out.println("transactionId: "+transactionId);
         String token = Cache.get(transactionId, String.class);
         
