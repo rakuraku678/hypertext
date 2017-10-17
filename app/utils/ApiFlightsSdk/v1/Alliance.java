@@ -10,13 +10,12 @@ import java.util.List;
 
 public class Alliance extends ApiFlightsSDKBase {
 
-    private static final String ENDPOINT = "/v1/getFFPWhiteList";
+    private static final String ENDPOINT = "/v1/alliance/";
 
     public static List<String> getFFPWhiteList(String AirlineIataCode){
-        WS.WSRequest request = prepareRequest(ENDPOINT + "/" + AirlineIataCode );
+        WS.WSRequest request = prepareRequest(ENDPOINT + "getFFPWhiteList/" + AirlineIataCode );
         List<String> FFPwhiteList= new ArrayList();
         JsonElement jsonElement = processResponse(request);
-        System.out.println(jsonElement.toString());
         if (!jsonElement.isJsonNull()) {
             JsonArray jsonArray = jsonElement.getAsJsonArray();
             for (int i = 0; i < jsonArray.size(); i++) {
@@ -25,4 +24,9 @@ public class Alliance extends ApiFlightsSDKBase {
         }
         return FFPwhiteList;
     }
+    public static String getAllianceMessage(String AirlineIataCode){
+        WS.WSRequest request = prepareRequest(ENDPOINT + "getAllianceMessage/" + AirlineIataCode );
+        return request.get().getString();
+    }
+
 }

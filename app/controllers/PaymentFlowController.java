@@ -73,12 +73,17 @@ public class PaymentFlowController extends Controller {
         }
         String validatingCarrier = JsonUtils.getStringFromJson(pricingJsonObject,"validatingCarrier");
         Object[] airlineIataCodes =  Alliance.getFFPWhiteList(validatingCarrier).toArray();
-        JsonArray whiteListAirlines = AirlinesSearch.process(Arrays.toString(airlineIataCodes).replace("[","").replace("]","")).getAsJsonArray();
+
+        String AllianceMessage =  Alliance.getAllianceMessage(validatingCarrier);
+
+        JsonArray whiteListAirlines = AirlinesSearch.process(Arrays.toString(airlineIataCodes)
+                .replace("[","").replace("]","")).getAsJsonArray();
 
         List<CountryDto> countriesList = Country.process();
-        System.out.println("????????????????????????"+JsonUtils.getStringFromJson(pricingJsonObject,"validatingCarrier")+" ?????????????????????????????????");
         
-        render(agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate, airRulesResultList, promotionDto, countriesList, onlyPassport,whiteListAirlines, validatingCarrier);
+        render(agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate,
+                airRulesResultList, promotionDto, countriesList, onlyPassport,whiteListAirlines,
+                validatingCarrier, AllianceMessage);
     }
 
     public static void processPayment(){
