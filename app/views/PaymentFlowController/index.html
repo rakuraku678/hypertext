@@ -128,16 +128,18 @@
 // 				$(this).html(numberWithCommas($(this).html()));
 // 			});	
 // 		}
-
+#{if state!=null}
         $( "#btnLogin" ).click(function( event ) {
             var agencyId ="${promotionDto.agency.externalId}";
             var transactionId = "${transactionId}";
             var agencySlug = "${promotionDto.agency.slug}";
             var selectedCurrency = "${selectedCurrency}";
             var step = 'checkout';
-            $('<iframe src="/auth/'+transactionId+'/'+selectedCurrency+'/'+agencyId+'/'+agencySlug+'/'+step+'" frameborder="0" style="padding-left: 50px; position: relative; top: -100px;" width="500" height="500" scrolling="no" id="myFrame"></iframe>').appendTo('#loginModalBody');
+            alert('/authtotravelpay/'+transactionId+'/'+selectedCurrency+'/'+agencyId+'/'+agencySlug+'/'+step');
+            $('<iframe src="/authtotravelpay/'+transactionId+'/'+selectedCurrency+'/'+agencyId+'/'+agencySlug+'/'+step+'" frameborder="0" style="padding-left: 50px; position: relative; top: -100px;" width="500" height="500" scrolling="no" id="myFrame"></iframe>').appendTo('#loginModalBody');
             $('#modalLogin').modal('show');
         });
+#{/if}
 	});
 
 </script>

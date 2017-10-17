@@ -190,6 +190,7 @@ var changedCLP=false;
 	    	    $("#loginDiv").hide();
 	    	    $('#loggedDiv').show();
 	    	    $('#loggedDiv').html("${state.clientName}");
+	    	    document.cookie = "tokenVuelos=${state.appToken}";
 	    #{/else}
     
     });

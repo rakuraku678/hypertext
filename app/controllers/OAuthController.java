@@ -44,6 +44,33 @@ public class OAuthController extends Controller {
         }
     }
     
+    
+    public static void renderBancoChileLoginToTravelpay(String transactionId, String selectedCurrency, String agencyId, String agencySlug, String step) {
+        try {
+        	System.out.println("agencyId: "+agencyId);
+        	String token = CrossLoginUtils.getTransactionToken(agencyId,"test");
+        	apiCrossToken = token;
+            System.out.println("Token obtenido de API CROSSLOGIN: " + token);
+            //valor1;valor2;valor3;valorN;tokenDeAplicación;agencia
+            
+            String state = transactionId+";"+step+";"+token+";"+agencySlug;
+            System.out.println("state que se enviara: "+state);
+            
+            state = AESEncryptorUtil.encrypt(state, AES_KEY);
+            
+            String clientId = "travel_club";
+
+            String callbackUrl = "";
+            String travelClubLoginUrl = OAUTH_SERVER_URL + "?response_type=code&state=" + state + "&client_id=" + clientId + "&scope=read+write+delete";
+
+            Logger.info("Url de login a banco: " + travelClubLoginUrl);
+            render("/PaymentFlowController/redirectToLogin.html", travelClubLoginUrl, callbackUrl);
+
+        } catch (Exception ex){
+        	ex.printStackTrace();
+        }
+    }
+    
     public static void bancoChileEndPoint(String state) throws GeneralSecurityException, IOException {
       Logger.info("Datos recibidos de bch luego del login:");
       Logger.info("state: " + state);
