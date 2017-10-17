@@ -55,7 +55,7 @@ public class OAuthController extends Controller {
       String agencySlug = stateDecrypted.split(";")[3];
       System.out.println("se guarda para transactionId: "+transactionId+", token: "+token);
       Cache.set(transactionId, token, "1d");
-      PaymentFlowController.reloadWithTransaction();
+      FlightsController.reloadWithTransaction(transactionId);
       
     }
 

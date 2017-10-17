@@ -57,8 +57,8 @@ public class FlightsController extends Controller {
         
         render(agencyConfigurationDto, cabinConfigurationDto, promotionDto, transactionId);
     }
-    public static void reloadWithTransaction() {
-        render("PaymentFlowController/successfulLogin.html");
+    public static void reloadWithTransaction(String transactionId) {
+        render("PaymentFlowController/successfulLogin.html",transactionId);
     }
     
 }
