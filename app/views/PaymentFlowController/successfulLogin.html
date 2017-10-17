@@ -7,9 +7,6 @@ var formSerializeJson = $('#checkoutForm', window.parent.document).serializeJSON
 formSerializeJson.bfmResultItem = $.parseJSON(formSerializeJson.bfmResultItem);
 formSerializeJson.origin = window.parent.location.origin;
 var data = JSON.stringify(formSerializeJson);
-alert(data);
-
-
 
 $.ajax({
     type: "POST",
