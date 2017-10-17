@@ -38,6 +38,7 @@ public class FlightsDataController extends Controller {
             promotionDto = new Promotion().getDefault();
         }
         String dollarExchangeRate = TravelClubUtils.getDollarExchangeRate(promotionDto.agency.externalId);
+        String transactionId = params.get("transactionId");
 
         BFMSearch bfmSearch  = new BFMSearch();
         bfmSearch.setOrigin(params.get("origin"));
@@ -57,7 +58,9 @@ public class FlightsDataController extends Controller {
         bfmSearch.setPromotion(promotionDto.slug);
         bfmSearch.setExternalId(promotionDto.agency.externalId);
         bfmSearch.setDollarExchangeRate(dollarExchangeRate);
-        
+        if (!Strings.isNullOrEmpty(transactionId)){
+        	bfmSearch.setTransactionId(transactionId);
+        }
         JsonElement flightsResults = bfmSearch.process();
         FlightsResultsFilters flightsResultsFilters = FlightsResultsFilters.processFlightsResults(flightsResults);
 
@@ -66,8 +69,7 @@ public class FlightsDataController extends Controller {
 
         //renderTemplate("FlightsDataController/flightsData.html", flightsResults, flightsResultsFilters, dollarExchangeRate, airlineArray);
 
-        String transactionId = params.get("transactionId");
-        System.out.println("la transaccion del param: "+transactionId);
+        
         
         if (Strings.isNullOrEmpty(transactionId)){
         	transactionId = flightsResults.getAsJsonArray().get(0).getAsJsonObject().get("transactionId").getAsString();
