@@ -54,12 +54,7 @@ public class OAuthController extends Controller {
       String token = stateDecrypted.split(";")[2];
       String agencySlug = stateDecrypted.split(";")[3];
       Cache.set(transactionId, token, "1d");
-      if (step.equals("index")){
-    	  FlightsController.index(agencySlug);
-      }
-      else if (step.equals("checkout")){
-    	  PaymentFlowController.reloadWithTransaction();
-      }
+      PaymentFlowController.reloadWithTransaction();
       
     }
 
