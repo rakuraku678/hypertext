@@ -65,7 +65,7 @@ public class FlightsController extends Controller {
             System.out.println("state name: "+state.clientName);
         }
 
-        render(agencyConfigurationDto, cabinConfigurationDto, promotionDto);
+        render(agencyConfigurationDto, cabinConfigurationDto, promotionDto, state);
     }
     public static void reloadWithTransaction() {
         render("PaymentFlowController/successfulLogin.html");
