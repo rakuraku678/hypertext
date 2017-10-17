@@ -179,7 +179,7 @@ var changedCLP=false;
 	            var selectedCurrency = "clp";
 	            var step = 'index';
 	            var url = getCurrentSearchURL();
-				window.location.href = url+'#'+transactionId;
+				window.location.href = url+'/'+transactionId;
 	            alert('/auth/'+transactionId+'/'+selectedCurrency+'/'+agencyId+'/'+agencySlug+'/'+step);
 	            $('<iframe src="/auth/'+transactionId+'/'+selectedCurrency+'/'+agencyId+'/'+agencySlug+'/'+step+'" frameborder="0" style="padding-left: 50px; position: relative; top: -100px;" width="500" height="500" scrolling="no" id="myFrame"></iframe>').appendTo('#loginModalBody');
 	            $('#modalLogin').modal('show');
