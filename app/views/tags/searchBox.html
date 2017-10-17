@@ -355,7 +355,7 @@
             
             #{if state==null}
 	            $( "#btnLoginTrUser" ).click(function( event ) {
-
+					$('#loginDiv').show();
 		            var agencyId ="${promotionDto.agency.externalId}";
 		            var transactionId = "0";
 		            var agencySlug = "${promotionDto.agency.slug}";
