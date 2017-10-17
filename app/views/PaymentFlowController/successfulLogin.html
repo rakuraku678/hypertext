@@ -1,7 +1,7 @@
 Login succesful!
 
 <script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
-<script src="https://raw.githubusercontent.com/marioizquierdo/jquery.serializeJSON/master/jquery.serializejson.js"></script>
+<script type="text/javascript" src="@{'/public/javascripts/jquery.serializejson.min.js'}"></script>
 <script type="text/javascript">
 var formSerializeJson = $('#checkoutForm', window.parent.document).serializeJSON({useIntKeysAsArrayIndex: true, checkboxUncheckedValue: false});
 formSerializeJson.bfmResultItem = $.parseJSON(formSerializeJson.bfmResultItem);
