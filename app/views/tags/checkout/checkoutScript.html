@@ -272,21 +272,6 @@ function checkAllDates() {
 function startBooking() {
 	var error = false;
 
-	
-	
-    #{if _token==null || _token ==''}
-	    var agencyId ="${_promotionDto.agency.externalId}";
-	    var transactionId = "${_transactionId}";
-	    var promoSlug = "${_promotionDto.slug}";
-	    var agencySlug = "${_promotionDto.agency.slug}";
-	    var selectedCurrency = "${_selectedCurrency}";
-	    $('<iframe src="/authtotravelpay/'+transactionId+'/'+selectedCurrency+'/'+agencyId+'/'+agencySlug+'" frameborder="0" style="padding-left: 50px; position: relative; top: -100px;" width="500" height="500" scrolling="no" id="myFrame"></iframe>').appendTo('#loginModalBody');
-	    $('#modalLogin').modal('show');
-	    return false;
-		
-	#{/if}
-
-		
 	$( ".validatedocumentnum" ).each(function( index ) {
 		if (!checkRut(this) && $("#selectDoc").val()=="RUT"){
 	    	$(this).css("border-color","#a94442 !important");
@@ -326,6 +311,18 @@ function startBooking() {
     formSerializeJson.bfmResultItem = $.parseJSON(formSerializeJson.bfmResultItem);
     formSerializeJson.origin = window.location.origin;
     var data = JSON.stringify(formSerializeJson);
+
+    #{if _token==null || _token ==''}
+	    var agencyId ="${_promotionDto.agency.externalId}";
+	    var transactionId = "${_transactionId}";
+	    var promoSlug = "${_promotionDto.slug}";
+	    var agencySlug = "${_promotionDto.agency.slug}";
+	    var selectedCurrency = "${_selectedCurrency}";
+	    $('<iframe src="/authtotravelpay/'+transactionId+'/'+selectedCurrency+'/'+agencyId+'/'+agencySlug+'" frameborder="0" style="padding-left: 50px; position: relative; top: -100px;" width="500" height="500" scrolling="no" id="myFrame"></iframe>').appendTo('#loginModalBody');
+	    $('#modalLogin').modal('show');
+	    return false;
+	#{/if}
+
     $.ajax({
         type: "POST",
         url: "@{BookingController.startBooking}",

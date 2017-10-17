@@ -2,6 +2,32 @@ Login succesful!
 
 
 <script type="text/javascript">
-window.parent.location.reload();
+var formSerializeJson = $('#parentPrice', window.parent.document).serializeJSON({useIntKeysAsArrayIndex: true, checkboxUncheckedValue: false});
+formSerializeJson.bfmResultItem = $.parseJSON(formSerializeJson.bfmResultItem);
+formSerializeJson.origin = window.location.origin;
+var data = JSON.stringify(formSerializeJson);
+alert(data);
+
+
+
+$.ajax({
+    type: "POST",
+    url: "@{BookingController.startBooking}",
+    data: data,
+    dataType: "json",
+    success:function(result) {
+        if(result.status){
+            window.parent.location=result.data.location;
+        } else {
+            var error_location ="@{PaymentFlowController.processError(type: '_error_id_')}";
+            window.parent.location=error_location.replace("_error_id_", result.error);
+        }
+    },
+    error: function (request, status, error) {
+        window.parent.location="@{PaymentFlowController.processError(type: 'internal')}";
+    }
+});
+
+
 </script>
 

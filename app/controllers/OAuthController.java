@@ -84,7 +84,7 @@ public class OAuthController extends Controller {
       if (step.equals("index"))
     	  FlightsController.reloadWithTransaction(transactionId);
       else
-    	  PaymentFlowController.processPayment();
+    	  PaymentFlowController.reloadWithTransaction();
       
     }
 
