@@ -172,6 +172,7 @@ var changedCLP=false;
 	$(document).ready(function () {
 	    #{if state==null}
 	    	$('#loginDiv').show();
+	    	$('#logoutDiv').hide();
 	        $( "#btnLoginTrUser" ).click(function( event ) {
 	            var agencyId ="${promotionDto.agency.externalId}";
 	            var transactionId = "${transactionId}";
@@ -188,6 +189,7 @@ var changedCLP=false;
 	    #{else}
 	    	    $("#loginDiv").hide();
 	    	    $('#loggedDiv').show();
+	    	    $('#logoutDiv').show();
 	    	    $('#loggedDiv').html("${state.clientName}");
 	    	    document.cookie = "tokenVuelos=${state.appToken}";
 	    #{/else}
