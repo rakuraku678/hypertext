@@ -89,7 +89,20 @@
 <div class="modal fade" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-body" id="loginModalBody" style="height:400px; overflow: hidden;">
+      <div class="modal-body loginModalBody" style="height:400px; overflow: hidden;">
+      </div>
+	  <div class="modal-footer">
+       		 <button type="button" class="btn btn-search" style="width: initial;" data-dismiss="modal">Saltar Este Paso >></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Continuar-->
+<div class="modal fade" id="modalLoginContinuar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body loginModalBody" style="height:400px; overflow: hidden;">
       </div>
 	  <div class="modal-footer">
        		 <button type="button" id="btnSaltearPaso" class="btn btn-search" style="width: initial;" data-dismiss="modal">Saltar Este Paso >></button>
@@ -142,7 +155,7 @@
 	            var step = 'index';
 	           // window.history.pushState("", "", window.location.href+transactionId);
 
-	            $('<iframe src="/auth/'+transactionId+'/'+selectedCurrency+'/'+agencyId+'/'+agencySlug+'/'+step+'" frameborder="0" style="padding-left: 50px; position: relative; top: -100px;" width="500" height="500" scrolling="no" id="myFrame"></iframe>').appendTo('#loginModalBody');
+	            $('<iframe src="/auth/'+transactionId+'/'+selectedCurrency+'/'+agencyId+'/'+agencySlug+'/'+step+'" frameborder="0" style="padding-left: 50px; position: relative; top: -100px;" width="500" height="500" scrolling="no" id="myFrame"></iframe>').appendTo('.loginModalBody');
 	            $('#modalLogin').modal('show');
 	        });
 		#{/if}

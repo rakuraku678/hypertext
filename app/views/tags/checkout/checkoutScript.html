@@ -305,8 +305,8 @@ function startBooking(showModal) {
 		    var promoSlug = "${_promotionDto.slug}";
 		    var agencySlug = "${_promotionDto.agency.slug}";
 		    var selectedCurrency = "${_selectedCurrency}";
-		    $('<iframe src="/authtotravelpay/'+transactionId+'/'+selectedCurrency+'/'+agencyId+'/'+agencySlug+'" frameborder="0" style="padding-left: 50px; position: relative; top: -100px;" width="500" height="500" scrolling="no" id="myFrame"></iframe>').appendTo('#loginModalBody');
-		    $('#modalLogin').modal('show');
+		    $('<iframe src="/authtotravelpay/'+transactionId+'/'+selectedCurrency+'/'+agencyId+'/'+agencySlug+'" frameborder="0" style="padding-left: 50px; position: relative; top: -100px;" width="500" height="500" scrolling="no" id="myFrame"></iframe>').appendTo('.loginModalBody');
+		    $('#modalLoginContinuar').modal('show');
 		    return false;
 		#{/if}
     }
