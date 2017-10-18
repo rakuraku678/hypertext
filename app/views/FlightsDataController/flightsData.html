@@ -200,10 +200,10 @@ var changedCLP=false;
 	    	            data: {"transactionId": "${state.transactionId}"},
 	    	            url: "@{OAuthController.logout}",
 	    	            success:function(result) {
+	    	            	alert(result);
 	    	            		var newpath = window.location.href.split('/');
 	    	            		newpath.pop();
 	    	            		window.location.href = newpath.join('/');
-	    	            		window.location.reload();
 	    	            },
 	    	            error: function (request, status, error) {
 	    	            	 	alert(error);
