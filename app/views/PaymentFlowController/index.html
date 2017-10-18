@@ -161,9 +161,28 @@
 		#{/if}
 		#{else}
     	    $("#loginDiv").hide();
+    	    $('#logoutDiv').show();
     	    $('#loggedDiv').show();
     	    $('#loggedDiv').html("${state.clientName}");
     	    document.cookie = "tokenVuelos=${state.appToken}";
+    	    
+    	    $( "#btnLogoutTrUser" ).click(function( event ) {
+   	    	 $.ajax({
+	    	        type: "GET",
+   	            data: {"transactionId": "${transactionId}"},
+   	            url: "@{OAuthController.logout}",
+   	            success:function(result) {
+   	            		window.location.reload();
+   	            },
+   	            error: function (request, status, error) {
+   	            	 	alert(error);
+   	            }
+   	        });
+   	    });
+    	    
+    	    
+    	    
+    	    
     	#{/else}
 	});
 
