@@ -91,11 +91,8 @@ public class OAuthController extends Controller {
       
     }
     
-    public static void logout(String body) {
-    	System.out.println("body logout: "+body);
-    	JsonElement bodyJsonElement = new JsonParser().parse(body);
-    	
-    	String transactionId = bodyJsonElement.getAsJsonObject().get("transactionId").getAsString();
+    public static void logout(String transactionId) {
+    	System.out.println("transactionId logout: "+transactionId);
     	Cache.delete(transactionId);
     	renderText("ok");
     	
