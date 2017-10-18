@@ -194,9 +194,10 @@ var changedCLP=false;
 	    	    document.cookie = "tokenVuelos=${state.appToken}";
 	    	    
 	    	    $( "#btnLogoutTrUser" ).click(function( event ) {
-	    	        $.ajax({
-	    	            type: "GET",
-	    	            data: {transactionId: "${state.transactionId}"},
+	    	    	alert("${state.transactionId}");
+	    	    	 $.ajax({
+    	    	        type: "GET",
+	    	            data: {"transactionId": "${state.transactionId}"},
 	    	            dataType: "json",
 	    	            url: "@{OAuthController.logout}",
 	    	            success:function(result) {
