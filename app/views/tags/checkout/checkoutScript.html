@@ -292,20 +292,7 @@ function startBooking() {
 		return false;
 	}
 	
-	
-    $('#spinner-modal').modal({
-        backdrop: 'static',
-        keyboard: false,
-        options: 'show'
-    });
 
-    var i = 1;
-    window.setInterval(
-            function(){
-                i=i+5;
-                $('.progress-bar').css({ width : i + "%" });
-            },
-        200);
 
     var formSerializeJson = $("#checkoutForm").serializeJSON({useIntKeysAsArrayIndex: true, checkboxUncheckedValue: false});
     formSerializeJson.bfmResultItem = $.parseJSON(formSerializeJson.bfmResultItem);
@@ -322,7 +309,22 @@ function startBooking() {
 	    $('#modalLogin').modal('show');
 	    return false;
 	#{/if}
+		
+    $('#spinner-modal').modal({
+        backdrop: 'static',
+        keyboard: false,
+        options: 'show'
+    });
 
+    var i = 1;
+    window.setInterval(
+            function(){
+                i=i+5;
+                $('.progress-bar').css({ width : i + "%" });
+            },
+        200);
+    
+    
     $.ajax({
         type: "POST",
         url: "@{BookingController.startBooking}",
