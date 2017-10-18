@@ -31,16 +31,19 @@
                 <h2>¿Quién Viaja?</h2>
                 <p class="info-help">En caso de necesitar ayuda comunicarse al correo <strong>ventaonline@travelclub.cl</strong></p>
                 <div class="col-md-8">
+                    #{checkout.contactBox/}
                     %{ int passengersCount = 0; }%
                     %{ int passengersNumber = 1; }%
                     #{list bfmResultItem.pricing.detail, as:'pricingDetails'}
                         #{list items:1..pricingDetails.quantity.getAsInt(), as:'i'}
-                            #{checkout.passengerBox key: passengersCount, passengerNumber: passengersNumber+".1", passengerType: pricingDetails.code.getAsString(), countriesList:countriesList, onlyPassport:onlyPassport, whiteListAirlines:whiteListAirlines, validatingCarrier:validatingCarrier /}
+                            #{checkout.passengerBox key: passengersCount, passengerNumber: passengersNumber+".1",
+                    passengerType: pricingDetails.code.getAsString(), countriesList:countriesList,
+                    onlyPassport:onlyPassport, whiteListAirlines:whiteListAirlines,
+                    validatingCarrier:validatingCarrier, AllianceMessage:AllianceMessage /}
                             %{ passengersCount++; }%
                             %{ passengersNumber++; }%
                         #{/list}
                     #{/list}
-                    #{checkout.contactBox/}
                     *{#{checkout.paymentBox/}}*
                     #{checkout.termsConditionBox/}
                     #{checkout.hiddenInputBox bfmResultItem: bfmResultItem, promotion: promotionDto/}
