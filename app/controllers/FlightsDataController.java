@@ -81,6 +81,7 @@ public class FlightsDataController extends Controller {
         StateDto state = null;
         if (!Strings.isNullOrEmpty(token)){
             state = CrossLoginUtils.getState(token);
+            state.transactionId = transactionId;
             System.out.println("state name: "+state.appToken);
             System.out.println("state name: "+state.clientName);
         }

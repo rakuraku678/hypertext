@@ -192,6 +192,21 @@ var changedCLP=false;
 	    	    $('#logoutDiv').show();
 	    	    $('#loggedDiv').html("${state.clientName}");
 	    	    document.cookie = "tokenVuelos=${state.appToken}";
+	    	    
+	    	    $( "#btnLogoutTrUser" ).click(function( event ) {
+	    	        $.ajax({
+	    	            type: "GET",
+	    	            data: {transactionId: "${state.transactionId}"},
+	    	            dataType: "json",
+	    	            url: "@{OAuthController.logout}",
+	    	            success:function(result) {
+	    	            		window.location.reload();
+	    	            },
+	    	            error: function (request, status, error) {
+	    	            	 	alert("error desconocido");
+	    	            }
+	    	        });
+	    	    });
 	    #{/else}
     
     });

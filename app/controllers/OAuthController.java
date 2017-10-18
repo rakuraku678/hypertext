@@ -3,6 +3,9 @@ package controllers;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+
 import play.Logger;
 import play.cache.Cache;
 import play.mvc.Controller;
@@ -87,5 +90,14 @@ public class OAuthController extends Controller {
     	  PaymentFlowController.reloadWithTransaction();
       
     }
-
+    
+    public static void logout(String body) {
+    	System.out.println("body logout: "+body);
+    	JsonElement bodyJsonElement = new JsonParser().parse(body);
+    	
+    	String transactionId = bodyJsonElement.getAsJsonObject().get("transactionId").getAsString();
+    	Cache.delete(transactionId);
+    	renderText("ok");
+    	
+    }
 }

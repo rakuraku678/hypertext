@@ -17,6 +17,7 @@ public class StateDto {
     public String	clientName;
     public String	stateBch;
     public String	clientDp;
+    public String 	transactionId;
 
 	public static StateDto parseStateDto(JsonElement responseJson) {
 		JsonObject jsonObject = responseJson.getAsJsonObject();
