@@ -144,7 +144,7 @@ $(document).ready(function () {
             }
         },
         submitHandler: function(validator, form, submitButton) {
-       		startBooking();	
+       		startBooking(true);	
         }
     });
 
@@ -198,6 +198,12 @@ $(document).ready(function () {
 			$(this).css("border-color","#3c763d");
 		}
 	});
+	
+	
+	$("#btnSaltearPaso").click(function( event ) {
+		startBooking(false);
+	})
+    
 });
 
 function checkFNacDates(obj) {
@@ -269,7 +275,7 @@ function checkAllDates() {
 }
 
 
-function startBooking() {
+function startBooking(showModal) {
 	var error = false;
 
 	$( ".validatedocumentnum" ).each(function( index ) {
@@ -292,24 +298,19 @@ function startBooking() {
 		return false;
 	}
 	
-
-
-    var formSerializeJson = $("#checkoutForm").serializeJSON({useIntKeysAsArrayIndex: true, checkboxUncheckedValue: false});
-    formSerializeJson.bfmResultItem = $.parseJSON(formSerializeJson.bfmResultItem);
-    formSerializeJson.origin = window.location.origin;
-    var data = JSON.stringify(formSerializeJson);
-
-    #{if _token==null || _token ==''}
-	    var agencyId ="${_promotionDto.agency.externalId}";
-	    var transactionId = "${_transactionId}";
-	    var promoSlug = "${_promotionDto.slug}";
-	    var agencySlug = "${_promotionDto.agency.slug}";
-	    var selectedCurrency = "${_selectedCurrency}";
-	    $('<iframe src="/authtotravelpay/'+transactionId+'/'+selectedCurrency+'/'+agencyId+'/'+agencySlug+'" frameborder="0" style="padding-left: 50px; position: relative; top: -100px;" width="500" height="500" scrolling="no" id="myFrame"></iframe>').appendTo('#loginModalBody');
-	    $('#modalLogin').modal('show');
-	    return false;
-	#{/if}
-		
+    if (showModal){
+	    #{if _token==null || _token ==''}
+		    var agencyId ="${_promotionDto.agency.externalId}";
+		    var transactionId = "${_transactionId}";
+		    var promoSlug = "${_promotionDto.slug}";
+		    var agencySlug = "${_promotionDto.agency.slug}";
+		    var selectedCurrency = "${_selectedCurrency}";
+		    $('<iframe src="/authtotravelpay/'+transactionId+'/'+selectedCurrency+'/'+agencyId+'/'+agencySlug+'" frameborder="0" style="padding-left: 50px; position: relative; top: -100px;" width="500" height="500" scrolling="no" id="myFrame"></iframe>').appendTo('#loginModalBody');
+		    $('#modalLogin').modal('show');
+		    return false;
+		#{/if}
+    }
+    
     $('#spinner-modal').modal({
         backdrop: 'static',
         keyboard: false,
@@ -324,6 +325,11 @@ function startBooking() {
             },
         200);
     
+    
+    var formSerializeJson = $("#checkoutForm").serializeJSON({useIntKeysAsArrayIndex: true, checkboxUncheckedValue: false});
+    formSerializeJson.bfmResultItem = $.parseJSON(formSerializeJson.bfmResultItem);
+    formSerializeJson.origin = window.location.origin;
+    var data = JSON.stringify(formSerializeJson);
     
     $.ajax({
         type: "POST",
