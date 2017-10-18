@@ -187,6 +187,7 @@ var changedCLP=false;
 	    	
 	    	#{if promotionDto.agency.showLoginOnSelection}
 		    	$( ".btnSelFlight" ).click(function( event ) {
+		    		event.preventDefault();
 		    		showLoginModal();
 		    	});
 	    	#{/if}
