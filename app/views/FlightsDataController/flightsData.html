@@ -198,7 +198,6 @@ var changedCLP=false;
 	    	    	 $.ajax({
     	    	        type: "GET",
 	    	            data: {"transactionId": "${state.transactionId}"},
-	    	            dataType: "json",
 	    	            url: "@{OAuthController.logout}",
 	    	            success:function(result) {
 	    	            		window.location.reload();
