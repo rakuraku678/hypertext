@@ -94,6 +94,7 @@ public class OAuthController extends Controller {
     public static void logout(String transactionId) {
     	System.out.println("transactionId logout: "+transactionId);
     	Cache.delete(transactionId);
+    	session.clear();
     	renderText("ok");
     	
     }
