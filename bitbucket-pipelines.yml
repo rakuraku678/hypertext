@@ -1,0 +1,27 @@
+image: maven:3.3.9
+
+pipelines:
+  branches:
+    master:
+      - step:
+          script:
+            - git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME_MASTER.git HEAD
+    staging:
+      - step:
+          script:
+            - git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME_STAGING.git staging:master
+    development:
+      - step:
+          script:
+            - wget https://sonarsource.bintray.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.0.3.778-linux.zip
+            - apt-get install unzip
+            - unzip sonar-scanner-cli-3.0.3.778-linux.zip -d ./
+            - rm sonar-scanner-cli-3.0.3.778-linux.zip
+            - echo 'sonar.projectKey='$SONAR_PROJECT_KEY > sonar-scanner-3.0.3.778-linux/conf/sonar-scanner.properties
+            - echo 'sonar.host.url='$SONAR_URL >> sonar-scanner-3.0.3.778-linux/conf/sonar-scanner.properties
+            - echo 'sonar.organization='$SONAR_ORGANIZATION >> sonar-scanner-3.0.3.778-linux/conf/sonar-scanner.properties
+            - echo 'sonar.login='$SONAR_LOGIN >> sonar-scanner-3.0.3.778-linux/conf/sonar-scanner.properties
+            - echo 'sonar.sources=./app ' >> sonar-scanner-3.0.3.778-linux/conf/sonar-scanner.properties
+            - echo 'sonar.java.binaries=./' >> sonar-scanner-3.0.3.778-linux/conf/sonar-scanner.properties
+            - ./sonar-scanner-3.0.3.778-linux/bin/sonar-scanner
+            - git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME_DEVELOPMENT.git development:master
