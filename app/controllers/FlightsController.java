@@ -57,7 +57,7 @@ public class FlightsController extends Controller {
         System.out.println("tknumber: "+tknumber);
         render(agencyConfigurationDto, cabinConfigurationDto, promotionDto, transactionId, tknumber);
     }
-    public static void reloadWithTransaction(String transactionId) {
-        render("FlightsController/successfulLogin.html",transactionId);
+    public static void reloadWithTransaction(String transactionId,String tknumber) {
+        render("FlightsController/successfulLogin.html",transactionId, tknumber);
     }
 }

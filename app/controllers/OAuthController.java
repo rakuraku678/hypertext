@@ -95,12 +95,12 @@ public class OAuthController extends Controller {
       
       if (Strings.isNullOrEmpty(tknumber)){
 	      if (step.equals("index"))
-	    	  FlightsController.reloadWithTransaction(transactionId);
+	    	  FlightsController.reloadWithTransaction(transactionId,null);
 	      else
 	    	  PaymentFlowController.reloadWithTransaction();
       }
       else {
-    	  FlightsController.reloadWithTransaction(transactionId);
+    	  FlightsController.reloadWithTransaction(transactionId,tknumber);
       }
       
     }
