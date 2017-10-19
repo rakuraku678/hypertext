@@ -95,6 +95,9 @@ public class PaymentFlowController extends Controller {
         render("PaymentFlowController/successfulLogin.html");
     }
     
+    public static void reloadAfterLogin() {
+        render("PaymentFlowController/successfulLogin.html");
+    }
     
     public static void processPayment(){
 

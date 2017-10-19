@@ -104,7 +104,7 @@ public class OAuthController extends Controller {
     		  FlightsController.reloadWithTransaction(transactionId,tknumber);
     	  }
     	  else {
-    		  PaymentFlowController.reloadWithTransaction();
+    		  FlightsController.reloadWithTransaction(transactionId,null);
     	  }
       }
       
