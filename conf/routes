@@ -42,6 +42,7 @@ GET     /flights/{promotion}/{origin}/{destination}/{departureDate}/{returnDate}
 #reps
 GET     /{origin}/{destination}/{origin2}/{destination2}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}               													FlightsController.index
 GET     /{origin}/{destination}/{origin2}/{destination2}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}/{transactionId}               									FlightsController.index
+GET     /{origin}/{destination}/{origin2}/{destination2}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}/{transactionId}/{tknumber}     									FlightsController.index
 
 GET     /vuelos/{promotion}/{origin}/{destination}/{origin2}/{destination2}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}             									FlightsController.index
 GET     /vuelos/{promotion}/{origin}/{destination}/{origin2}/{destination2}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}/{transactionId}               				FlightsController.index
