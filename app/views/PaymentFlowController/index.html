@@ -152,7 +152,7 @@
 	            var transactionId = "${transactionId}";
 	            var agencySlug = "${promotionDto.agency.slug}";
 	            var selectedCurrency = "clp";
-	            var step = 'index';
+	            var step = 'checkout';
 	           // window.history.pushState("", "", window.location.href+transactionId);
 
 	            $('<iframe src="/auth/'+transactionId+'/'+selectedCurrency+'/'+agencyId+'/'+agencySlug+'/'+step+'" frameborder="0" style="padding-left: 50px; position: relative; top: -100px;" width="500" height="500" scrolling="no" id="myFrame"></iframe>').appendTo('.loginModalBody');
