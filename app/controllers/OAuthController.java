@@ -62,7 +62,7 @@ public class OAuthController extends Controller {
             System.out.println("Token obtenido de API CROSSLOGIN: " + token);
             //valor1;valor2;valor3;valorN;tokenDeAplicación;agencia
             String step = "checkout";
-            String state = "notk"+transactionId+";"+step+";"+token+";"+agencySlug;
+            String state = "notk;"+transactionId+";"+step+";"+token+";"+agencySlug;
             System.out.println("state que se enviara a crossLogin: "+state);
             
             state = AESEncryptorUtil.encrypt(state, AES_KEY);
