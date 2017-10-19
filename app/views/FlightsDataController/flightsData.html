@@ -31,11 +31,6 @@ function numberWithCommas(x) {
 var jsonPricesAirlines = new Array();
 $(function () {
 	
-	#{if tknumber!=null && !tknumber.equals('')}
-		$('.ticketBaxer').hide();
-		$('*[data-tknumber="${tknumber}"]').submit();
-	#{/if}	
-	
 	$(".collapse").on('hide.bs.collapse', function () {
 		$("#"+this.id+"Button").html("Ver detalle");
 	});
