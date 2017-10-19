@@ -93,10 +93,11 @@ public class OAuthController extends Controller {
       Cache.set(transactionId, token, "1d");
       
       if (Strings.isNullOrEmpty(tknumber) || tknumber.equals("notk")){
-	      if (step.equals("index"))
+	      if (step.equals("index") || step.equals("checkoutReload"))
 	    	  FlightsController.reloadWithTransaction(transactionId,null);
-	      else
+	      else if (step.equals("checkout")) {
 	    	  PaymentFlowController.reloadWithTransaction();
+	      }
       }
       else {
     	  if (step.equals("index")){
