@@ -196,11 +196,10 @@ var changedCLP=false;
 	    	$('#loginDiv').show();
 	    	$('#logoutDiv').hide();
 	    	
-	    	$("#btnSaltearPaso").click(function( event ) {
-	    		$('*[data-tknumber="'+ticketNumber+'"]').submit();
-	    	})
-	        
 	    	#{if promotionDto.agency.showLoginOnSelection}
+		    	$("#btnSaltearPaso").click(function( event ) {
+		    		$('*[data-tknumber="'+ticketNumber+'"]').submit();
+		    	});
 		    	$( ".btnSelFlight" ).click(function( event ) {
 		    		event.preventDefault();
 		    		var tknumber = $(this).closest( "form" ).data("tknumber");
