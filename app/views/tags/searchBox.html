@@ -99,6 +99,8 @@
                     </select>
                 </div>
                 <input type="hidden" name="hdnTransactionId" value ="${transactionId}"/>
+                <input type="hidden" name="hdntknumber" value ="${tknumber}"/>
+                
                  <div class="col-md-12 text-center">
                     <input type="submit" value="Buscar Vuelos" class="btn btn-search">
                 </div>
@@ -557,6 +559,7 @@ function getSearchParams() {
         infantcount: searchForm.find('select[name="infantcount"]').val(),
         cabin: searchForm.find('select[name="cabin"]').val(),
         transactionId: searchForm.find('input[name="hdnTransactionId"]').val()
+        tknumber: searchForm.find('input[name="hdntknumber"]').val()
     });
 }
 

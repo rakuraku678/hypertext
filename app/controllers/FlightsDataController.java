@@ -39,7 +39,7 @@ public class FlightsDataController extends Controller {
         }
         String dollarExchangeRate = TravelClubUtils.getDollarExchangeRate(promotionDto.agency.externalId);
         String transactionId = params.get("transactionId");
-
+        
         BFMSearch bfmSearch  = new BFMSearch();
         bfmSearch.setOrigin(params.get("origin"));
         bfmSearch.setDestination(params.get("destination"));
@@ -74,7 +74,8 @@ public class FlightsDataController extends Controller {
         if (Strings.isNullOrEmpty(transactionId)){
         	transactionId = flightsResults.getAsJsonArray().get(0).getAsJsonObject().get("transactionId").getAsString();
         }
-        
+        String tknumber = params.get("tknumber");
+        System.out.println("TKNUMBER: "+tknumber);
         String token = Cache.get(transactionId, String.class);
         System.out.println("transactionId: "+transactionId+", token: "+token);
         
@@ -96,6 +97,7 @@ public class FlightsDataController extends Controller {
         m.put("transactionId", transactionId);
         m.put("state", state);
         m.put("promotionDto", promotionDto);
+        m.put("tknumber", tknumber);
         
         renderHtml(template.render(m).replaceAll("\\s{2,}"," "));
     }
