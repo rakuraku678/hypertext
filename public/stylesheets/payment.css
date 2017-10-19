@@ -277,6 +277,19 @@ h2 {
 	padding: 0 15px 30px 15px;
 	margin: 0;
 }
+.warning-info-payment{
+    border-bottom: 1px solid #eee;
+	padding: 20px 30px;
+    border-radius: 5px;
+    background-color: #FFFFB2;
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+.warning-info-payment p{
+    color: #666;
+    font-weight: bold;
+    text-transform: uppercase;
+}
 
 .box-info-payment {
 	border-radius: 5px;
