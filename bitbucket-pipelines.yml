@@ -20,7 +20,7 @@ pipelines:
             - rm sonar-scanner-cli-3.0.3.778-linux.zip
             - ls
             - ls sonar-scanner-3.0.3.778-linux
-            - echo 'sonar.projectKey=cross-hypertext' > sonar-scanner-3.0.3.778-linux/conf/sonar-scanner.properties
+            - echo 'sonar.projectKey='$SONAR_PROJECT_KEY > sonar-scanner-3.0.3.778-linux/conf/sonar-scanner.properties
             - echo 'sonar.host.url='$SONAR_URL >> sonar-scanner-3.0.3.778-linux/conf/sonar-scanner.properties
             - echo 'sonar.organization='$SONAR_ORGANIZATION >> sonar-scanner-3.0.3.778-linux/conf/sonar-scanner.properties
             - echo 'sonar.login='$SONAR_LOGIN >> sonar-scanner-3.0.3.778-linux/conf/sonar-scanner.properties
