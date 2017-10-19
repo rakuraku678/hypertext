@@ -1,6 +1,6 @@
 #{include "FlightsDataController/airlinesMatrix.html" /}
 <input type="hidden" id="dlx" value="${dollarExchangeRate}" />
-tknumberrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr: ${tknumber}
+
 #{list items:flightsResults, as:'flight'}
     #{flightsItem promotion: params.promotion, flight:flight, flightsResultsFilters:flightsResultsFilters, tknumber:flight_index/}
 #{/list}
@@ -32,6 +32,7 @@ var jsonPricesAirlines = new Array();
 $(function () {
 	
 	#{if tknumber!=null && !tknumber.equals('')}
+		$('.ticketBaxer').hide();
 		$('*[data-tknumber="${tknumber}"]').submit();
 	#{/if}	
 	
