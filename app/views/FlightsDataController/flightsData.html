@@ -179,6 +179,7 @@ var changedCLP=false;
         
 		if (step=='sel'){
 			window.history.pushState("", "", window.location.href+transactionId+"/"+tknumber);
+			step='index';
 			$('<iframe src="/auth/'+transactionId+'/'+selectedCurrency+'/'+agencyId+'/'+agencySlug+'/'+step+'/'+tknumber+'" frameborder="0" style="padding-left: 50px; position: relative; top: -100px;" width="500" height="500" scrolling="no" id="myFrame"></iframe>').appendTo('#loginModalBody');
 			
 		}
@@ -222,7 +223,7 @@ var changedCLP=false;
 	    	    $( "#btnLogoutTrUser" ).click(function( event ) {
 	    	    	 $.ajax({
     	    	        type: "GET",
-	    	            data: {"transactionId": "${state.transactionId}"},
+	    	            data: {"transactionId": "${state.transactionId}","step":"index"},
 	    	            url: "@{OAuthController.logout}",
 	    	            success:function(result) {
 	    	            		var newpath = window.location.href.split('/');

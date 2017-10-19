@@ -29,7 +29,6 @@ public class OAuthController extends Controller {
         	apiCrossToken = token;
             System.out.println("Token obtenido de API CROSSLOGIN: " + token);
             //valor1;valor2;valor3;valorN;tokenDeAplicación;agencia
-            step = "index";
             String state = "";
             if (Strings.isNullOrEmpty(tknumber)){
             	state = "notk"+";"+transactionId+";"+step+";"+token+";"+agencySlug;            	
