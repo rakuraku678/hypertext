@@ -1,7 +1,7 @@
 #{include "FlightsDataController/airlinesMatrix.html" /}
 <input type="hidden" id="dlx" value="${dollarExchangeRate}" />
 #{list items:flightsResults, as:'flight'}
-    #{flightsItem promotion: params.promotion, flight:flight, flightsResultsFilters:flightsResultsFilters/}
+    #{flightsItem promotion: params.promotion, flight:flight, flightsResultsFilters:flightsResultsFilters, tknumber:flight_index/}
 #{/list}
 <script type="text/javascript">
 	$(function () {
@@ -168,15 +168,22 @@ var changedCLP=false;
         
 	#{/if}
 	
-	function showLoginModal() {
+	function showLoginModal(step,tknumber) {
         var agencyId ="${promotionDto.agency.externalId}";
         var transactionId = "${transactionId}";
         var agencySlug = "${promotionDto.agency.slug}";
         var selectedCurrency = "clp";
-        var step = 'index';
-        window.history.pushState("", "", window.location.href+transactionId);
-
-        $('<iframe src="/auth/'+transactionId+'/'+selectedCurrency+'/'+agencyId+'/'+agencySlug+'/'+step+'" frameborder="0" style="padding-left: 50px; position: relative; top: -100px;" width="500" height="500" scrolling="no" id="myFrame"></iframe>').appendTo('#loginModalBody');
+        
+        
+		if (step=='sel'){
+			window.history.pushState("", "", window.location.href+transactionId+"/"+tknumber);
+			$('<iframe src="/auth/'+transactionId+'/'+selectedCurrency+'/'+agencyId+'/'+agencySlug+'/'+step+'/'+tknumber+'" frameborder="0" style="padding-left: 50px; position: relative; top: -100px;" width="500" height="500" scrolling="no" id="myFrame"></iframe>').appendTo('#loginModalBody');
+			
+		}
+		else {
+			window.history.pushState("", "", window.location.href+transactionId);
+        	$('<iframe src="/auth/'+transactionId+'/'+selectedCurrency+'/'+agencyId+'/'+agencySlug+'/'+step+'" frameborder="0" style="padding-left: 50px; position: relative; top: -100px;" width="500" height="500" scrolling="no" id="myFrame"></iframe>').appendTo('#loginModalBody');
+		}
         $('#modalLogin').modal('show');
 
 	}
@@ -188,12 +195,14 @@ var changedCLP=false;
 	    	#{if promotionDto.agency.showLoginOnSelection}
 		    	$( ".btnSelFlight" ).click(function( event ) {
 		    		event.preventDefault();
-		    		showLoginModal();
+		    		var tknumber = $(this).closest( "form" ).data("tknumber");
+		    		alert(tknumber);
+		    		showLoginModal('sel',tknumber);
 		    	});
 	    	#{/if}
 	    	
 	        $( "#btnLoginTrUser" ).click(function( event ) {
-	        	showLoginModal();
+	        	showLoginModal('index',0);
 	    	});
 	    #{/if}
 	    #{else}

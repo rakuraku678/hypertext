@@ -3,6 +3,7 @@ package controllers;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
+import com.google.common.base.Strings;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
@@ -21,7 +22,7 @@ public class OAuthController extends Controller {
     private static final String AES_KEY = "Bar12345Bar12345";
     public static String apiCrossToken = ""; 
     
-    public static void renderBancoChileLogin(String transactionId, String selectedCurrency, String agencyId, String agencySlug, String step) {
+    public static void renderBancoChileLogin(String transactionId, String selectedCurrency, String agencyId, String agencySlug, String step, String tknumber) {
         try {
         	System.out.println("agencyId: "+agencyId);
         	String token = CrossLoginUtils.getTransactionToken(agencyId,"test");
@@ -29,8 +30,14 @@ public class OAuthController extends Controller {
             System.out.println("Token obtenido de API CROSSLOGIN: " + token);
             //valor1;valor2;valor3;valorN;tokenDeAplicación;agencia
             step = "index";
-            String state = transactionId+";"+step+";"+token+";"+agencySlug;
-            System.out.println("state que se enviara: "+state);
+            String state = "";
+            if (Strings.isNullOrEmpty(tknumber)){
+            	state = "notk"+";"+transactionId+";"+step+";"+token+";"+agencySlug;            	
+            }
+            else {
+            	state = tknumber+";"+transactionId+";"+step+";"+token+";"+agencySlug;
+            }
+            System.out.println("state que se enviara a crossLogin: "+state);
             
             state = AESEncryptorUtil.encrypt(state, AES_KEY);
             
@@ -56,8 +63,8 @@ public class OAuthController extends Controller {
             System.out.println("Token obtenido de API CROSSLOGIN: " + token);
             //valor1;valor2;valor3;valorN;tokenDeAplicación;agencia
             String step = "checkout";
-            String state = transactionId+";"+step+";"+token+";"+agencySlug;
-            System.out.println("state que se enviara: "+state);
+            String state = "notk"+transactionId+";"+step+";"+token+";"+agencySlug;
+            System.out.println("state que se enviara a crossLogin: "+state);
             
             state = AESEncryptorUtil.encrypt(state, AES_KEY);
             
@@ -79,15 +86,22 @@ public class OAuthController extends Controller {
       Logger.info("state: " + state);
       String stateDecrypted = AESEncryptorUtil.decrypt(state, AES_KEY);
       System.out.println("State decrypted: "+stateDecrypted);
-      String transactionId = stateDecrypted.split(";")[0];
-      String step = stateDecrypted.split(";")[1];
-      String token = stateDecrypted.split(";")[2];
+      String tknumber = stateDecrypted.split(";")[0];
+      String transactionId = stateDecrypted.split(";")[1];
+      String step = stateDecrypted.split(";")[2];
+      String token = stateDecrypted.split(";")[3];
       System.out.println("se guarda para transactionId: "+transactionId+", token: "+token);
       Cache.set(transactionId, token, "1d");
-      if (step.equals("index"))
+      
+      if (Strings.isNullOrEmpty(tknumber)){
+	      if (step.equals("index"))
+	    	  FlightsController.reloadWithTransaction(transactionId);
+	      else
+	    	  PaymentFlowController.reloadWithTransaction();
+      }
+      else {
     	  FlightsController.reloadWithTransaction(transactionId);
-      else
-    	  PaymentFlowController.reloadWithTransaction();
+      }
       
     }
     
