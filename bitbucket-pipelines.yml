@@ -14,7 +14,7 @@ pipelines:
     development:
       - step:
           script:
-           - wget https://sonarsource.bintray.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.0.3.778-linux.zip
+            - wget https://sonarsource.bintray.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.0.3.778-linux.zip
             - apt-get install unzip
             - unzip sonar-scanner-cli-3.0.3.778-linux.zip -d ./
             - rm sonar-scanner-cli-3.0.3.778-linux.zip
