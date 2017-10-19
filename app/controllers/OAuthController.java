@@ -92,7 +92,7 @@ public class OAuthController extends Controller {
       System.out.println("se guarda para transactionId: "+transactionId+", token: "+token);
       Cache.set(transactionId, token, "1d");
       
-      if (Strings.isNullOrEmpty(tknumber)){
+      if (Strings.isNullOrEmpty(tknumber) || tknumber.equals("notk")){
 	      if (step.equals("index"))
 	    	  FlightsController.reloadWithTransaction(transactionId,null);
 	      else
