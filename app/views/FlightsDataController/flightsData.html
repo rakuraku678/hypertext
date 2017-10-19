@@ -30,6 +30,11 @@ function numberWithCommas(x) {
 
 var jsonPricesAirlines = new Array();
 $(function () {
+	
+	#{if tknumber!=null && !tknumber.equals('')}
+		$('*[data-tknumber="${tknumber}"]').submit();
+	#{/if}	
+	
 	$(".collapse").on('hide.bs.collapse', function () {
 		$("#"+this.id+"Button").html("Ver detalle");
 	});
@@ -197,7 +202,6 @@ var changedCLP=false;
 		    	$( ".btnSelFlight" ).click(function( event ) {
 		    		event.preventDefault();
 		    		var tknumber = $(this).closest( "form" ).data("tknumber");
-		    		alert(tknumber);
 		    		showLoginModal('sel',tknumber);
 		    	});
 	    	#{/if}
