@@ -136,7 +136,7 @@
 
 $(document).ready(function () {
     var availableAirlines = [#{list items:_whiteListAirlines, as:'whiteListAirlines'}${whiteListAirlines.iataCode.raw()}${whiteListAirlines_isLast ? '' : ','}#{/list}];
-    var currentFFPResponse;
+    var currentFFPResponse${_key};
     var validatingCarrier = "${_validatingCarrier}";
     #{if !_onlyPassport}
     $('#rutNum${_key}').focusout(function(){
@@ -146,6 +146,7 @@ $(document).ready(function () {
                 url: "@{BookingController.getFFPNumberByRut}" +"?rut="+ $('#rutNum${_key}').val(),
                 dataType: "json",
                 success:function(result) {
+                currentFFPResponse${_key} = result;
                     if(result.status != 0){
                         autocompleteFFP(result);
                     }
@@ -161,6 +162,7 @@ $(document).ready(function () {
                 url: "@{BookingController.getFFPNumberByRut}" +"?rut="+ $('#rutNum${_key}').val(),
                 dataType: "json",
                 success:function(result) {
+                currentFFPResponse${_key} = result;
                     if(result.status != 0){
                         autocompleteFFP(result);
                     }
@@ -169,11 +171,20 @@ $(document).ready(function () {
         }
     });
 
+    function getFFPNumByAlliance(allianceName){
+        for (var alliance in currentFFPResponse${_key}.alianza){
+            if (validateIataCode(currentFFPResponse${_key}.alianza[alliance].nombre) == allianceName){
+            return currentFFPResponse${_key}.alianza[alliance].id;
+            }
+        }
+        return "";
+    }
+
     function autocompleteFFP(result) {
     var prefered = false
         for (var ffp in result.alianza){
             for (var aa in availableAirlines) {
-                if (validatingCarrier == validateIataCode(result.alianza[ffp].nombre) && availableAirlines[aa] == validatingCarrier){
+                if (availableAirlines[aa] == validatingCarrier && validatingCarrier == validateIataCode(result.alianza[ffp].nombre)){
                     $('#FFPNumber${_key}').val(result.alianza[ffp].id);
                     $('#FFPAirlineIataCode${_key}').val(availableAirlines[aa]);
                     prefered = true;
@@ -199,5 +210,11 @@ $(document).ready(function () {
                 return ""
         }
     };
+
+    $('#FFPAirlineIataCode${_key}').change(function() {
+        if (currentFFPResponse${_key} != null){
+            $('#FFPNumber${_key}').val(getFFPNumByAlliance($(this).val()));
+        }
+    });
 });
 </script>

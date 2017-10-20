@@ -43,7 +43,7 @@
                 #{if allianceWaningMessages != null}
                 <div class="warning-info-payment">
                     #{list items:allianceWaningMessages, as:"warning"}
-                    <p>${warning.getAsString()}</p>
+                    <p>${warning.raw()}</p>
                     #{/list}
                 </div>
                 #{/if}

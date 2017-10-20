@@ -164,9 +164,6 @@ public class BookingController extends Controller {
 		if (valueToEscape!= "" && valueToEscape != null) {
 			int startIndex = valueToEscape.indexOf(",\"mensaje\":\"Estimado");
 			String searchString = "}";
-			JsonObject jsonObject;
-
-			JsonParser parser = new JsonParser();
 			try {
 				int endIndex = startIndex + valueToEscape.substring(startIndex).indexOf(searchString);
 				String toBeReplaced = valueToEscape.substring(startIndex, endIndex);
@@ -176,7 +173,7 @@ public class BookingController extends Controller {
 				valueToEscape = "{\"status\":\"0\"}";
 			}
 
-			jsonObject = parser.parse(valueToEscape).getAsJsonObject();
+			JsonObject jsonObject = new JsonParser().parse(valueToEscape).getAsJsonObject();
 
 			renderJSON(jsonObject);
 		}
