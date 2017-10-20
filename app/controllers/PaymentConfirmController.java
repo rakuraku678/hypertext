@@ -12,11 +12,14 @@ import utils.JsonUtils;
 import utils.TravelClubUtils;
 import utils.dtos.PromotionDto;
 
+import java.util.ArrayList;
+
 public class PaymentConfirmController extends Controller {
 
     public static void index() {
         String promotionSlug = null;
         PromotionDto promotionDto;
+
 
         try {
             promotionSlug = new Booking().promotion(params.get("id"));
@@ -35,35 +38,31 @@ public class PaymentConfirmController extends Controller {
         Booking booking = new Booking();
         JsonElement bookingConfirmationResult = booking.confirmation(params.get("id"));
 
-
-        JsonArray allianceWaningMessages = new JsonArray();
-        JsonArray warnings =  JsonUtils.getJsonArrayFromJson(bookingConfirmationResult.getAsJsonObject(), "warnings");
-
-
         JsonObject order = (JsonObject) JsonUtils.getJsonObjectFromJson(bookingConfirmationResult.getAsJsonObject(), "order");
-        JsonArray flights = JsonUtils.getJsonArrayFromJson(bookingConfirmationResult.getAsJsonObject(), "flights");
+        String orderStatus = JsonUtils.getStringFromJson(order,"status");
+        if(!orderStatus.equals("success")){
+            PaymentFlowController.processError("order-" + orderStatus);
+        }
 
+        JsonArray flights = JsonUtils.getJsonArrayFromJson(bookingConfirmationResult.getAsJsonObject(), "flights");
         String airlineCode = "";
         for (JsonElement jsonElement : flights) {
             airlineCode = JsonUtils.getStringFromJson(jsonElement.getAsJsonObject(), "airlineCode");
         }
 
+        JsonArray warnings =  JsonUtils.getJsonArrayFromJson(bookingConfirmationResult.getAsJsonObject(), "warnings");
         if (warnings != null) {
+            ArrayList<String> allianceWaningMessages = new ArrayList<String>();
             for (JsonElement warning : warnings) {
-                JsonElement allianceErrorResponse = Alliance.getAllianceWarningMessage(airlineCode,
-                        JsonUtils.getStringFromJson(
-                                warning.getAsJsonObject(), "content"));
-                if (!allianceErrorResponse.getAsString().equals("NOT_FFP_WARNING")) {
-                    allianceWaningMessages.add(allianceErrorResponse);
+                String content = JsonUtils.getStringFromJson(warning.getAsJsonObject(), "content");
+                String allianceWarning = Alliance.getAllianceWarningMessage(airlineCode,content);
+                if (!allianceWarning.equals("NOT_FFP_WARNING") && !allianceWarning.equals("WARNING_NOT_DEFINED_IN_ALLIANCE")) {
+                    allianceWaningMessages.add(allianceWarning);
                 }
             }
-        }
-        String orderStatus = JsonUtils.getStringFromJson(order,"status");
-        if(!orderStatus.equals("success")){
-            PaymentFlowController.processError("order-" + orderStatus);
-        }
-        if (allianceWaningMessages.size() != 0 ) {
-            render(agencyConfigurationDto, bookingConfirmationResult, allianceWaningMessages);
+            if (!allianceWaningMessages.isEmpty()) {
+                render(agencyConfigurationDto, bookingConfirmationResult, allianceWaningMessages);
+            }
         }
         render(agencyConfigurationDto, bookingConfirmationResult);
     }

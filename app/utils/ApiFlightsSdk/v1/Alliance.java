@@ -31,16 +31,13 @@ public class Alliance extends ApiFlightsSDKBase {
         WS.WSRequest request = prepareRequest(ENDPOINT + "getAllianceMessage/" + airlineIataCode );
         return request.get().getString();
     }
-
-    public static JsonElement getAllianceWarningMessage(String airlineIataCode, String errorCode){
+    public static String getAllianceWarningMessage(String airlineIataCode, String errorCode){
         Map dataMap = Maps.newHashMap();
         dataMap.put("errorCode", errorCode);
         dataMap.put("airlineIataCode", airlineIataCode);
         WS.WSRequest request = prepareRequest(ENDPOINT + "getAllianceWarningMessage");
         String jsonBody = new Gson().toJson(dataMap);
         request.body(jsonBody);
-        return processResponsePost(request);
+        return request.post().getString();
     }
-
-
 }
