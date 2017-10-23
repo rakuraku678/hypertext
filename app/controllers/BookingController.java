@@ -153,7 +153,6 @@ public class BookingController extends Controller {
 		JsonElement jsonResponse = response.getJson();
 		renderJSON(jsonResponse.getAsJsonObject());
 	}
-
 	public static void getFFPNumberByRut(){
 		String rut = params.get("rut");
 		String url = "http://dev.mockup.cl/cashback/public/api/"+ rut;
@@ -161,23 +160,22 @@ public class BookingController extends Controller {
 		WS.WSRequest request = WS.url(url);
 		WS.HttpResponse response = request.get();
 		String valueToEscape = response.getString();
-		if (valueToEscape!= "" && valueToEscape != null) {
-			int startIndex = valueToEscape.indexOf(",\"mensaje\":\"Estimado");
-			String searchString = "}";
+		if (valueToEscape != null && !valueToEscape.isEmpty()) {
 			JsonObject jsonObject;
-
 			JsonParser parser = new JsonParser();
 			try {
+				int startIndex = valueToEscape.indexOf(",\"mensaje\":\"Estimado");
+				String searchString = "}";
 				int endIndex = startIndex + valueToEscape.substring(startIndex).indexOf(searchString);
 				String toBeReplaced = valueToEscape.substring(startIndex, endIndex);
-				valueToEscape = valueToEscape.replace(toBeReplaced, "");
+
 
 			}catch (StringIndexOutOfBoundsException e){
 				valueToEscape = "{\"status\":\"0\"}";
 			}
-
+			System.out.println(valueToEscape);
 			jsonObject = parser.parse(valueToEscape).getAsJsonObject();
-
+			System.out.println(jsonObject);
 			renderJSON(jsonObject);
 		}
 	}
