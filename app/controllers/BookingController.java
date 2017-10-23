@@ -154,30 +154,27 @@ public class BookingController extends Controller {
 		renderJSON(jsonResponse.getAsJsonObject());
 	}
 	public static void getFFPNumberByRut(){
-		String rut = params.get("rut");
-		String url = "http://dev.mockup.cl/cashback/public/api/"+ rut;
-		System.out.println(url);
-		WS.WSRequest request = WS.url(url);
-		WS.HttpResponse response = request.get();
-		String valueToEscape = response.getString();
-		if (valueToEscape != null && !valueToEscape.isEmpty()) {
-			JsonObject jsonObject;
-			JsonParser parser = new JsonParser();
-			try {
-				int startIndex = valueToEscape.indexOf(",\"mensaje\":\"Estimado");
-				String searchString = "}";
-				int endIndex = startIndex + valueToEscape.substring(startIndex).indexOf(searchString);
-				String toBeReplaced = valueToEscape.substring(startIndex, endIndex);
+        String rut = params.get("rut");
+        String url = "http://dev.mockup.cl/cashback/public/api/"+ rut;
+        System.out.println(url);
+        WS.WSRequest request = WS.url(url);
+        WS.HttpResponse response = request.get();
+        String valueToEscape = response.getString();
+        if (valueToEscape!= "" && valueToEscape != null) {
+            int startIndex = valueToEscape.indexOf(",\"mensaje\":\"Estimado");
+            String searchString = "}";
+            try {
+                int endIndex = startIndex + valueToEscape.substring(startIndex).indexOf(searchString);
+                String toBeReplaced = valueToEscape.substring(startIndex, endIndex);
+                valueToEscape = valueToEscape.replace(toBeReplaced, "");
 
+            }catch (StringIndexOutOfBoundsException e){
+                valueToEscape = "{\"status\":\"0\"}";
+            }
 
-			}catch (StringIndexOutOfBoundsException e){
-				valueToEscape = "{\"status\":\"0\"}";
-			}
-			System.out.println(valueToEscape);
-			jsonObject = parser.parse(valueToEscape).getAsJsonObject();
-			System.out.println(jsonObject);
-			renderJSON(jsonObject);
-		}
-	}
+            JsonObject jsonObject = new JsonParser().parse(valueToEscape).getAsJsonObject();
 
+            renderJSON(jsonObject);
+        }
+    }
 }
