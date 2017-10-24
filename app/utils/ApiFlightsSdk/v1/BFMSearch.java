@@ -62,7 +62,6 @@ public class BFMSearch extends ApiFlightsSDKBase {
         	mapValues.put("transactionId",transactionId);
         }
         String jsonBody = new Gson().toJson(mapValues);
-
         request.body(jsonBody);
 
         JsonElement responseJsonObject = processResponse(request);

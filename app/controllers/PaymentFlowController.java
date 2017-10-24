@@ -1,6 +1,8 @@
 package controllers;
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -8,26 +10,27 @@ import java.util.Map;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import dto.StateDto;
 import play.cache.Cache;
+import org.hibernate.mapping.Collection;
 import play.mvc.Controller;
 import utils.AgencyConfigurationDto;
 import utils.ConfigurationDto;
 import utils.CrossLoginUtils;
 import utils.FlightsUtils;
+import utils.ApiFlightsSdk.v1.*;
 import utils.JsonUtils;
 import utils.TravelClubUtils;
-import utils.ApiFlightsSdk.v1.AirRules;
-import utils.ApiFlightsSdk.v1.Booking;
-import utils.ApiFlightsSdk.v1.Country;
-import utils.ApiFlightsSdk.v1.Promotion;
 import utils.dtos.AirRulesDto;
 import utils.dtos.CountryDto;
 import utils.dtos.PromotionDto;
+
+import static utils.ApiFlightsSdk.v1.AirlinesSearch.process;
 
 public class PaymentFlowController extends Controller {
 
@@ -71,10 +74,16 @@ public class PaymentFlowController extends Controller {
         if (cityMap!=null){
         	onlyPassport = (boolean) cityMap.get("onlyPassport");
         }
-        
+        String validatingCarrier = JsonUtils.getStringFromJson(pricingJsonObject,"validatingCarrier");
+        Object[] airlineIataCodes =  Alliance.getFFPWhiteList(validatingCarrier).toArray();
+
+        String AllianceMessage =  Alliance.getAllianceMessage(validatingCarrier);
+
+        JsonArray whiteListAirlines = AirlinesSearch.process(Arrays.toString(airlineIataCodes)
+                .replace("[","").replace("]","")).getAsJsonArray();
+
         List<CountryDto> countriesList = Country.process();
         
-       // CacheUtils.setSelectionFlight(bfmResultItem);
         String transactionId = bfmResultItem.getAsJsonObject().get("transactionId").getAsString();
         String token = Cache.get(transactionId, String.class);
         
@@ -84,10 +93,10 @@ public class PaymentFlowController extends Controller {
             System.out.println("state name: "+state.appToken);
             System.out.println("state name: "+state.clientName);
         }
-
         
         render(agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate, airRulesResultList, promotionDto, 
-        		countriesList, onlyPassport, transactionId, token, state);
+        		countriesList, onlyPassport, whiteListAirlines, validatingCarrier, AllianceMessage, transactionId, token, state);
+	
     }
     
     

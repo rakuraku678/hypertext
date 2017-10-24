@@ -37,6 +37,10 @@ $(document).ready(function () {
                     notEmpty: {
                         message: 'El campo Nombre esta vacio.'
                     },
+                    stringLength : {
+                        min: 2,
+                        message: "Minimo 2 caracteres"
+                    },
                     regexp: {
                         regexp: /^[a-zA-Z_áéíóúñ\s]*$/i,
                         message: 'Campo no válido'
@@ -49,6 +53,10 @@ $(document).ready(function () {
                     validMessage: 'Campo correcto',
                     notEmpty: {
                         message: 'El campo Apellido esta vacio.'
+                    },
+                    stringLength : {
+                        min: 2,
+                        message: "Minimo 2 caracteres"
                     },
                     regexp: {
                         regexp: /^[a-zA-Z_áéíóúñ\s]*$/i,

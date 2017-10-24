@@ -53,16 +53,19 @@
                 <h2>¿Quién Viaja?</h2>
                 <p class="info-help">En caso de necesitar ayuda comunicarse al correo <strong>ventaonline@travelclub.cl</strong></p>
                 <div class="col-md-8">
+                    #{checkout.contactBox/}
                     %{ int passengersCount = 0; }%
                     %{ int passengersNumber = 1; }%
                     #{list bfmResultItem.pricing.detail, as:'pricingDetails'}
                         #{list items:1..pricingDetails.quantity.getAsInt(), as:'i'}
-                            #{checkout.passengerBox key: passengersCount, passengerNumber: passengersNumber+".1", passengerType: pricingDetails.code.getAsString(), countriesList:countriesList, onlyPassport:onlyPassport /}
+                            #{checkout.passengerBox key: passengersCount, passengerNumber: passengersNumber+".1",
+                    passengerType: pricingDetails.code.getAsString(), countriesList:countriesList,
+                    onlyPassport:onlyPassport, whiteListAirlines:whiteListAirlines,
+                    validatingCarrier:validatingCarrier, AllianceMessage:AllianceMessage /}
                             %{ passengersCount++; }%
                             %{ passengersNumber++; }%
                         #{/list}
                     #{/list}
-                    #{checkout.contactBox/}
                     *{#{checkout.paymentBox/}}*
                     #{checkout.termsConditionBox/}
                     #{checkout.hiddenInputBox bfmResultItem: bfmResultItem, promotion: promotionDto/}
@@ -72,6 +75,11 @@
                     #{checkout.summaryBox pricing:bfmResultItem.pricing, pricingCLP:bfmResultItem.pricingCLP, selectedCurrency:selectedCurrency/}
                     #{checkout.airRules airRulesResultList:airRulesResultList/}
                 </div>
+                #{if params.promotion == "traveldelta"}
+                <div class="col-md-4" id="banner_checkout_delta" >
+                    <img src="http://res.cloudinary.com/hyvrprjak/image/upload/v1507124198/BancoChile-MiniSites/banner_checkout_500x500.png"/>
+                </div>
+                #{/if}
             </div>
             <div class="row">
                 <div class="col-md-8 text-right">
