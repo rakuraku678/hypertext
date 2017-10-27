@@ -52,6 +52,7 @@
                     #{checkout.flightBox bfmResultItem:bfmResultItem/}
                     #{checkout.summaryBox pricing:bfmResultItem.pricing, pricingCLP:bfmResultItem.pricingCLP, selectedCurrency:selectedCurrency/}
                     #{checkout.airRules airRulesResultList:airRulesResultList/}
+                    #{checkout.seatsMap /}
                 </div>
                 #{if params.promotion == "traveldelta"}
                 <div class="col-md-4" id="banner_checkout_delta" >

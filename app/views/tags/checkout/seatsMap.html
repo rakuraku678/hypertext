@@ -1,0 +1,63 @@
+<br><a class="modalAirRulesLink" href="#" id="seatMapBtn" style="font-weight: bold; font-size: initial;">Elegir Asientos</a>
+
+<!-- Modal -->
+<div class="modal fade modal-air-rules" id="modalSeatsMap" tabindex="-1" role="dialog" aria-labelledby="modalAirRulesLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content info-flight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="icon-close-modal"></i></button>
+                <h4 class="modal-title" id="modalAirRulesLabel">Elija sus asientos</h4>
+            </div>
+            <div class="modal-body" id="modalSeatsBody">
+				Buscando grilla de asientos...
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+var chupala;
+	$(function () {
+		
+
+		$("#seatMapBtn").click(function( event ) {
+			$('#modalSeatsMap').modal('show');
+			var data = $("[name='bfmResultItem']").val();
+			$.ajax({
+			    'url': '@{SeatsMapController.getSeats}',
+			    'type': 'POST',
+			    'data': data,
+			    'success': function(result){
+		        	$('#modalSeatsBody').html(result);
+			    }
+			});
+		});
+		
+		
+		
+		
+// 		$("#seatMapBtn").click(function( event ) {
+// 			$('#modalSeatsMap').modal('show');
+// 			var data = $("[name='bfmResultItem']").val();
+// 		    $.ajax({
+// 		        type: "POST",
+// 		        url: "@{SeatsMapController.getSeats}",
+// 		        data: data,
+// 		        dataType: "json",
+// 		        success:function(data) {
+// 		        	console.log("llego succ: "+data);
+// 		        	chupala = data;
+// 		        	alert(chupala);
+// 		        	$('#modalSeatsBody').html(chupala);
+	            	
+// 		        }
+// 		    }).done(function(data) {
+// 		    	console.log("llego done: "+data);
+// 		    	alert("done: "+chupala);
+// 	        	$('#modalSeatsBody').html(chupala);
+// 			});
+// 		})
+	    
+		
+	});
+</script>
