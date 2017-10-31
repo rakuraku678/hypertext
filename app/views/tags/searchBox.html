@@ -495,13 +495,26 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade modal-header-travel-login" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
+
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Inicia sesión y pagá con tus dólares premio</h5>
+        <div class="box-logos">
+            <div class="logo-banco-chile">
+                 <img src="@{'/public/images/logo-banco-chile-modal.jpg'}" />
+            </div>
+            <div class="logo-banco-edwars">
+                <img src="@{'/public/images/logo-edwars-modal.jpg'}" />
+            </div>
+        </div>
+      </div>
+
       <div class="modal-body" id="loginModalBody" style="height:400px; overflow: hidden;">
       </div>
 	  <div class="modal-footer">
-       		 <button type="button" id="btnSaltearPaso" class="btn btn-search" style="width: initial;" data-dismiss="modal">Saltar Este Paso >></button>
+       		 <button type="button" id="btnSaltearPaso" class="btn btn-search" style="width: initial;" data-dismiss="modal">Saltar Este Paso ></button>
       </div>
     </div>
   </div>
