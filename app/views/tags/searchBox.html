@@ -98,7 +98,10 @@
                         #{/list}
                     </select>
                 </div>
-                <div class="col-md-12 text-center">
+                <input type="hidden" name="hdnTransactionId" value ="${transactionId}"/>
+                <input type="hidden" name="hdntknumber" value ="${tknumber}"/>
+                
+                 <div class="col-md-12 text-center">
                     <input type="submit" value="Buscar Vuelos" class="btn btn-search">
                 </div>
             #{set 'moreScripts'}
@@ -177,6 +180,7 @@
                     var childrencount = searchForm.find('select[name="childrencount"]').val();
                     var infantcount = searchForm.find('select[name="infantcount"]').val();
                     var cabin = searchForm.find('select[name="cabin"]').val();
+                    var transactionId = searchForm.find('input[name="hdnTransactionId"]').val();
                     *{if(promotion){}*
                         *{searchURL += "/promociones/" + promotion;}*
                     *{}}*
@@ -185,7 +189,7 @@
                     searchURL += "/" + originPathArr[1];
                     searchURL += "/" + originPathArr[2];
 
-                    return searchURL + "/"+origin+"/"+destination+"/"+departuredate+"/"+returndate+"/"+adultcount+"-"+childrencount+"-"+infantcount+"/" + cabin;
+                    return searchURL + "/"+origin+"/"+destination+"/"+departuredate+"/"+returndate+"/"+adultcount+"-"+childrencount+"-"+infantcount+"/" + cabin+"/"+transactionId;
                 };
 
                 var showError = function(msg){
@@ -352,16 +356,9 @@
             #{if params.destination && params.origin}
                 loadFlightData();
             #{/if}
+            
+            
         });
-
-
-
-
-
- 
-                
-     
-               
 
 			  //var dateFormat = "dd/mm/yy";
               var dateFormat = "dd-mm-yy";
@@ -494,6 +491,38 @@
 
 </div>
 
+
+
+
+<!-- Modal -->
+<div class="modal fade modal-header-travel-login" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Inicia sesión y pagá con tus dólares premio</h5>
+        <div class="box-logos">
+            <div class="logo-banco-chile">
+                 <img src="@{'/public/images/logo-banco-chile-modal.jpg'}" />
+            </div>
+            <div class="logo-banco-edwars">
+                <img src="@{'/public/images/logo-edwars-modal.jpg'}" />
+            </div>
+        </div>
+      </div>
+
+      <div class="modal-body" id="loginModalBody" style="height:400px; overflow: hidden;">
+      </div>
+	  <div class="modal-footer">
+       		 <button type="button" id="btnSaltearPaso" class="btn btn-search" style="width: initial;" data-dismiss="modal">Saltar Este Paso ></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
 #{set 'moreScripts'}
     #{get 'moreScripts' /}
  
@@ -542,7 +571,9 @@ function getSearchParams() {
         adultcount: searchForm.find('select[name="adultcount"]').val(),
         childrencount: searchForm.find('select[name="childrencount"]').val(),
         infantcount: searchForm.find('select[name="infantcount"]').val(),
-        cabin: searchForm.find('select[name="cabin"]').val()
+        cabin: searchForm.find('select[name="cabin"]').val(),
+        transactionId: searchForm.find('input[name="hdnTransactionId"]').val(),
+        tknumber: searchForm.find('input[name="hdntknumber"]').val()
     });
 }
 

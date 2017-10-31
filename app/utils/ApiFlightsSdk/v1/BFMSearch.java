@@ -8,6 +8,7 @@ import org.joda.time.Hours;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.gson.Gson;
@@ -36,6 +37,8 @@ public class BFMSearch extends ApiFlightsSDKBase {
     public List<Map<String,String>> passengerTypeList = Lists.newArrayList();
     public String cabin;
 
+	public String transactionId;
+
     public JsonElement process(){
 
         WS.WSRequest request = prepareRequest(ENDPOINT);
@@ -54,10 +57,11 @@ public class BFMSearch extends ApiFlightsSDKBase {
         mapValues.put("departureCity",departureCity);
         mapValues.put("externalId",externalId);
         mapValues.put("dollarExchangeRate",dollarExchangeRate);
-		mapValues.put("cabin",cabin);
-		
-		String jsonBody = new Gson().toJson(mapValues);
-
+        mapValues.put("cabin",cabin);
+        if (!Strings.isNullOrEmpty(transactionId)){
+        	mapValues.put("transactionId",transactionId);
+        }
+        String jsonBody = new Gson().toJson(mapValues);
         request.body(jsonBody);
 
         JsonElement responseJsonObject = processResponse(request);
@@ -150,6 +154,9 @@ public class BFMSearch extends ApiFlightsSDKBase {
     
     public void setDollarExchangeRate(String rate) {
         this.dollarExchangeRate = rate;
+    }
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
     }
     public void setExternalId(String externalId) {
         this.externalId = externalId;

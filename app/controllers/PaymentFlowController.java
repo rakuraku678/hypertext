@@ -15,10 +15,13 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import dto.StateDto;
+import play.cache.Cache;
 import org.hibernate.mapping.Collection;
 import play.mvc.Controller;
 import utils.AgencyConfigurationDto;
 import utils.ConfigurationDto;
+import utils.CrossLoginUtils;
 import utils.FlightsUtils;
 import utils.ApiFlightsSdk.v1.*;
 import utils.JsonUtils;
@@ -81,11 +84,30 @@ public class PaymentFlowController extends Controller {
 
         List<CountryDto> countriesList = Country.process();
         
-        render(agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate,
-                airRulesResultList, promotionDto, countriesList, onlyPassport,whiteListAirlines,
-                validatingCarrier, AllianceMessage);
+        String transactionId = bfmResultItem.getAsJsonObject().get("transactionId").getAsString();
+        String token = Cache.get(transactionId, String.class);
+        
+        StateDto state = null;
+        if (!Strings.isNullOrEmpty(token)){
+            state = CrossLoginUtils.getState(token);
+            System.out.println("state name: "+state.appToken);
+            System.out.println("state name: "+state.clientName);
+        }
+        
+        render(agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate, airRulesResultList, promotionDto, 
+        		countriesList, onlyPassport, whiteListAirlines, validatingCarrier, AllianceMessage, transactionId, token, state);
+	
     }
-
+    
+    
+    public static void reloadWithTransaction() {
+        render("PaymentFlowController/successfulLogin.html");
+    }
+    
+    public static void reloadAfterLogin() {
+        render("PaymentFlowController/successfulLogin.html");
+    }
+    
     public static void processPayment(){
 
         String promotionSlug = new Booking().promotion(params.get("id"));

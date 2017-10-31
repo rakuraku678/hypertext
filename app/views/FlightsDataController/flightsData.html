@@ -1,7 +1,8 @@
 #{include "FlightsDataController/airlinesMatrix.html" /}
 <input type="hidden" id="dlx" value="${dollarExchangeRate}" />
+
 #{list items:flightsResults, as:'flight'}
-    #{flightsItem promotion: params.promotion, flight:flight, flightsResultsFilters:flightsResultsFilters/}
+    #{flightsItem promotion: params.promotion, flight:flight, flightsResultsFilters:flightsResultsFilters, tknumber:flight_index/}
 #{/list}
 <script type="text/javascript">
 	$(function () {
@@ -29,6 +30,7 @@ function numberWithCommas(x) {
 
 var jsonPricesAirlines = new Array();
 $(function () {
+	
 	$(".collapse").on('hide.bs.collapse', function () {
 		$("#"+this.id+"Button").html("Ver detalle");
 	});
@@ -168,6 +170,78 @@ var changedCLP=false;
         
 	#{/if}
 	
+	function showLoginModal(step,tknumber) {
+        var agencyId ="${promotionDto.agency.externalId}";
+        var transactionId = "${transactionId}";
+        var agencySlug = "${promotionDto.agency.slug}";
+        var selectedCurrency = "clp";
+        
+        
+		if (step=='sel'){
+			window.history.pushState("", "", window.location.href+transactionId+"/"+tknumber);
+			step='index';
+			$('<iframe src="/auth/'+transactionId+'/'+selectedCurrency+'/'+agencyId+'/'+agencySlug+'/'+step+'/'+tknumber+'" frameborder="0" style="padding-left: 50px; position: relative; top: -100px;" width="500" height="500" scrolling="no" id="myFrame"></iframe>').appendTo('#loginModalBody');
+			
+		}
+		else {
+			window.history.pushState("", "", window.location.href+transactionId);
+        	$('<iframe src="/auth/'+transactionId+'/'+selectedCurrency+'/'+agencyId+'/'+agencySlug+'/'+step+'" frameborder="0" style="padding-left: 50px; position: relative; top: -100px;" width="500" height="500" scrolling="no" id="myFrame"></iframe>').appendTo('#loginModalBody');
+		}
+        $('#modalLogin').modal('show');
+
+	}
+	
+	var ticketNumber = 0;
+	$(document).ready(function () {
+	    #{if state==null}
+	    	$('#loginDiv').show();
+	    	$('#logoutDiv').hide();
+	    	
+	    	#{if promotionDto.agency.showLoginOnSelection}
+		    	$("#btnSaltearPaso").click(function( event ) {
+		    		$('*[data-tknumber="'+ticketNumber+'"]').submit();
+		    	});
+		    	$( ".btnSelFlight" ).click(function( event ) {
+		    		event.preventDefault();
+		    		var tknumber = $(this).closest( "form" ).data("tknumber");
+		    		ticketNumber = tknumber;
+		    		showLoginModal('sel',tknumber);
+		    	});
+	    	#{/if}
+	    	
+	        $( "#btnLoginTrUser" ).click(function( event ) {
+	        	showLoginModal('index',0);
+	    	});
+	    #{/if}
+	    #{else}
+	    	    $("#loginDiv").hide();
+	    	    $('#loggedDiv').show();
+	    	    $('#logoutDiv').show();
+	    	    $('#loggedDiv').html("${state.clientName}");
+	    	    document.cookie = "tokenVuelos=${state.appToken}";
+	    	    
+	    	    $( "#btnLogoutTrUser" ).click(function( event ) {
+	    	    	 $.ajax({
+    	    	        type: "GET",
+	    	            data: {"transactionId": "${state.transactionId}","step":"index"},
+	    	            url: "@{OAuthController.logout}",
+	    	            success:function(result) {
+	    	            		var newpath = window.location.href.split('/');
+	    	            		newpath.pop();
+	    	            		window.location.href = newpath.join('/');
+	    	            },
+	    	            error: function (request, status, error) {
+	    	            	 	alert(error);
+	    	            }
+	    	        });
+	    	    });
+	    #{/else}
+    
+    });
+    
+        
+        
+        
 });
 </script>
 	

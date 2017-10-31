@@ -3,6 +3,13 @@
 
 #{set isAgencyHeader: true /}
 
+
+<style>
+.info-card{
+    display: inline-block;
+    vertical-align: middle;
+}
+</style>
 <section class="bg-path">
     <article class="container-fluid">
         <div class="row">
@@ -24,6 +31,21 @@
     </article>
 </section>
 
+#{if state!=null}
+                        <div class="alert alert-info" style="display: inline-block; width: 100%;">
+                            <div class="info-card">
+                                <img src="../public/images/icon-card.svg" alt="imagen tarjeta" />
+                            </div>
+                            <div class="info-card" id="panelazul" style="max-width: 90%;">
+								<b> ${state.clientName}, tu saldo de dólares Dólares-Premio disponible a la fecha es de <span class="light-blue">${state.clientDp}</span> </b>
+                            </div>
+                            
+                       </div>
+#{/if}
+
+                       
+                       
+                       
 <section class="search-arrive payment-path">
     <form id="checkoutForm" action="javascript:void(0);" method="post">
         <article class="container-fluid">
@@ -70,10 +92,62 @@
 
 #{spinnerModal/}
 
+
+<!-- Modal -->
+<div class="modal fade modal-header-travel-login" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Inicia sesión y pagá con tus dólares premio</h5>
+        <div class="box-logos">
+            <div class="logo-banco-chile">
+                 <img src="@{'/public/images/logo-banco-chile-modal.jpg'}" />
+            </div>
+            <div class="logo-banco-edwars">
+                <img src="@{'/public/images/logo-edwars-modal.jpg'}" />
+            </div>
+        </div>
+      </div>
+
+      <div class="modal-body loginModalBody" style="height:400px; overflow: hidden;">
+      </div>
+	  <div class="modal-footer">
+       		 <button type="button" class="btn btn-search" style="width: initial;" data-dismiss="modal">Saltar Este Paso ></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Continuar-->
+<div class="modal fade modal-header-travel-login" id="modalLoginContinuar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Inicia sesión y pagá con tus dólares premio</h5>
+        <div class="box-logos">
+            <div class="logo-banco-chile">
+                 <img src="@{'/public/images/logo-banco-chile-modal.jpg'}" />
+            </div>
+            <div class="logo-banco-edwars">
+                <img src="@{'/public/images/logo-edwars-modal.jpg'}" />
+            </div>
+        </div>
+      </div>
+      <div class="modal-body loginModalBody" style="height:400px; overflow: hidden;">
+      </div>
+	  <div class="modal-footer">
+       		 <button type="button" id="btnSaltearPaso" class="btn btn-search" style="width: initial;" data-dismiss="modal">Saltar Este Paso>></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 #{set 'scriptFiles'}
 #{get 'scriptFiles' /}
-<script type="text/javascript" src="@{PaymentFlowController.javascript}"></script>
-
+#{checkout/checkoutScript token:token,transactionId:transactionId, promotionDto:promotionDto, selectedCurrency:selectedCurrency /}
 
 
 
@@ -83,6 +157,7 @@
 	}
 
 	$(function () {
+
 		var selectedCurrency = "${selectedCurrency}";
 		$( ".clppriceCon" ).each(function( index ) {
 				$(this).html(numberWithCommas($(this).html()));
@@ -100,6 +175,47 @@
 // 				$(this).html(numberWithCommas($(this).html()));
 // 			});	
 // 		}
+
+
+	    #{if state==null}
+	    	$('#loginDiv').show();
+	        $( "#btnLoginTrUser" ).click(function( event ) {
+	            var agencyId ="${promotionDto.agency.externalId}";
+	            var transactionId = "${transactionId}";
+	            var agencySlug = "${promotionDto.agency.slug}";
+	            var selectedCurrency = "clp";
+	            var step = 'checkoutReload';
+	           // window.history.pushState("", "", window.location.href+transactionId);
+
+	            $('<iframe src="/auth/'+transactionId+'/'+selectedCurrency+'/'+agencyId+'/'+agencySlug+'/'+step+'" frameborder="0" style="padding-left: 50px; position: relative; top: -100px;" width="500" height="500" scrolling="no" id="myFrame"></iframe>').appendTo('.loginModalBody');
+	            $('#modalLogin').modal('show');
+	        });
+		#{/if}
+		#{else}
+    	    $("#loginDiv").hide();
+    	    $('#logoutDiv').show();
+    	    $('#loggedDiv').show();
+    	    $('#loggedDiv').html("${state.clientName}");
+    	    document.cookie = "tokenVuelos=${state.appToken}";
+    	    
+    	    $( "#btnLogoutTrUser" ).click(function( event ) {
+   	    	 $.ajax({
+	    	        type: "GET",
+   	            data: {"transactionId": "${transactionId}"},
+   	            url: "@{OAuthController.logout}",
+   	            success:function(result) {
+   	            		window.location.reload();
+   	            },
+   	            error: function (request, status, error) {
+   	            	 	alert(error);
+   	            }
+   	        });
+   	    });
+    	    
+    	    
+    	    
+    	    
+    	#{/else}
 	});
 
 </script>

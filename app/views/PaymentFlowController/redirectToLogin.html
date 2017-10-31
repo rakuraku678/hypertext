@@ -1,0 +1,14 @@
+<html>
+<head>
+</head>
+<body onload="document.redirectLogin.submit()">
+	<form method="post" name="redirectLogin" action="${travelClubLoginUrl}">
+		#{if play.Play.mode.isProd()}
+		<input type="hidden" name="contexto" value="${callbackUrl?.replaceAll("http:","https:")}">
+		#{/if}
+		#{else}
+		<input type="hidden" name="contexto" value="${callbackUrl}">
+		#{/else}
+	</form>
+</body>
+</html>

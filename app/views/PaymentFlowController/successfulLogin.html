@@ -1,0 +1,31 @@
+Login succesful!
+
+<script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="@{'/public/javascripts/jquery.serializejson.min.js'}"></script>
+<script type="text/javascript">
+var formSerializeJson = $('#checkoutForm', window.parent.document).serializeJSON({useIntKeysAsArrayIndex: true, checkboxUncheckedValue: false});
+formSerializeJson.bfmResultItem = $.parseJSON(formSerializeJson.bfmResultItem);
+formSerializeJson.origin = window.parent.location.origin;
+var data = JSON.stringify(formSerializeJson);
+
+$.ajax({
+    type: "POST",
+    url: "@{BookingController.startBooking}",
+    data: data,
+    dataType: "json",
+    success:function(result) {
+        if(result.status){
+            window.parent.location=result.data.location;
+        } else {
+            var error_location ="@{PaymentFlowController.processError(type: '_error_id_')}";
+            window.parent.location=error_location.replace("_error_id_", result.error);
+        }
+    },
+    error: function (request, status, error) {
+        window.parent.location="@{PaymentFlowController.processError(type: 'internal')}";
+    }
+});
+
+
+</script>
+
