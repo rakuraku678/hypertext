@@ -51,6 +51,13 @@
                 <div class="col-md-4">
                     #{checkout.flightBox bfmResultItem:bfmResultItem/}
                     #{checkout.summaryBox pricing:bfmResultItem.pricing, pricingCLP:bfmResultItem.pricingCLP, selectedCurrency:selectedCurrency/}
+
+                    #{list items:bfmResultItem.refoundRuleTexts, as:'refoundRuleText'}
+                    <li class="title-payment" style="list-style: none;">
+                        * ${refoundRuleText.getAsString()}
+                    </li>
+                    #{/list}
+
                     #{checkout.airRules airRulesResultList:airRulesResultList/}
                 </div>
                 #{if params.promotion == "traveldelta"}
