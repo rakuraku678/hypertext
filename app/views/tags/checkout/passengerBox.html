@@ -103,7 +103,8 @@
                         <small class="help-block" id="invfnac${_key}" style="display: none;">Campo no válido</small>
                         <small class="help-block" id="emptyfnac${_key}" style="display: none;">El campo esta vacio.</small>
                     </div>
-                </div>                
+                </div>
+                #{if !_agencySlug.equals('travelclub')}
                 <div class="col-md-6 form-group">
                     <div class="" style="margin-bottom: -15px;">
                         <label >Información Pasajero Frecuente:</label>
@@ -126,11 +127,13 @@
                     <div class="col-md-8 form-group" style="padding-right: 0;">
                         <input id="FFPNumber${_key}" type="text" class="form-control" name="passengers[${_key}][FFPNumber]" placeholder="ej. 123456789" maxlength="20">
                     </div>
-                </div>  
+                </div>
+                #{/if}
             </div>
         </div>            
     </div>
 </div>
+#{if !_agencySlug.equals('travelclub')}
 <script type="text/javascript" src="@{'/public/javascripts/jquery-3.0.0.min.js'}"></script>
 <script>
 
@@ -218,3 +221,4 @@ $(document).ready(function () {
     });
 });
 </script>
+#{/if}
