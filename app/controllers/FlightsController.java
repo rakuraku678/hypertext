@@ -48,6 +48,7 @@ public class FlightsController extends Controller {
         }
 
         if (!Strings.isNullOrEmpty(params.get("destination"))){
+        	System.out.println("evalua destination: "+params.get("destination"));
             renderArgs.put("destinationCity", new Airport().getByIataCode(params.get("destination")).city);
         }
         

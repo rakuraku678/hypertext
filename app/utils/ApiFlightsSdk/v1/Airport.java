@@ -12,6 +12,7 @@ public class Airport extends ApiFlightsSDKBase {
         final String cacheKey = "airport_" + iatacode;
         AirportDto airport = Cache.get(cacheKey, AirportDto.class);
         if (airport == null) {
+        	System.out.println("airport nulo, iatacode: "+iatacode);
             WS.WSRequest request = prepareRequest(ENDPOINT + "/" + iatacode );
             airport = AirportDto.parseAiportDto(processResponse(request));
             Cache.set(cacheKey, airport, "1d");
