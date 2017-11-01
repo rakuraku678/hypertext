@@ -44,12 +44,10 @@ public class FlightsController extends Controller {
         AgencyConfigurationDto agencyConfigurationDto = TravelClubUtils.getAgencyConfiguration(externalId);
         
         if (!Strings.isNullOrEmpty(params.get("origin"))){
-        	System.out.println("evalua origin: "+params.get("origin"));
         	renderArgs.put("originCity", new Airport().getByIataCode(params.get("origin")).city);
         }
 
         if (!Strings.isNullOrEmpty(params.get("destination"))){
-        	System.out.println("evalua destination: "+params.get("destination"));
             renderArgs.put("destinationCity", new Airport().getByIataCode(params.get("destination")).city);
         }
         
