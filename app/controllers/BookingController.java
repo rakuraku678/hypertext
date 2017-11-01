@@ -173,6 +173,7 @@ public class BookingController extends Controller {
             }
 
             JsonObject jsonObject = new JsonParser().parse(valueToEscape).getAsJsonObject();
+            jsonObject.addProperty("status","1");
 
             renderJSON(jsonObject);
         }
