@@ -57,11 +57,11 @@
             <div class="row">
                 <div class="col-md-6 form-group">
                     <label>Nombre(s):</label>
-                    <input type="text" class="form-control validatefirstname" name="passengers[${_key}][givenName]" placeholder="ej. Roberto">
+                    <input id="pasName${_key}" type="text" class="form-control validatefirstname" name="passengers[${_key}][givenName]" placeholder="ej. Roberto">
                 </div>
                 <div class="col-md-6 form-group">
                     <label>Apellido(s):</label>
-                    <input type="text" class="form-control validatelastname" name="passengers[${_key}][surname]" placeholder="ej. Salamanca">
+                    <input id="pasLastName${_key}" type="text" class="form-control validatelastname" name="passengers[${_key}][surname]" placeholder="ej. Salamanca">
                 </div>
             </div>
         </div>
@@ -103,7 +103,8 @@
                         <small class="help-block" id="invfnac${_key}" style="display: none;">Campo no válido</small>
                         <small class="help-block" id="emptyfnac${_key}" style="display: none;">El campo esta vacio.</small>
                     </div>
-                </div>                
+                </div>
+                #{if !_agencySlug.equals('travelclub')}
                 <div class="col-md-6 form-group">
                     <div class="" style="margin-bottom: -15px;">
                         <label >Información Pasajero Frecuente:</label>
@@ -126,11 +127,13 @@
                     <div class="col-md-8 form-group" style="padding-right: 0;">
                         <input id="FFPNumber${_key}" type="text" class="form-control" name="passengers[${_key}][FFPNumber]" placeholder="ej. 123456789" maxlength="20">
                     </div>
-                </div>  
+                </div>
+                #{/if}
             </div>
         </div>            
     </div>
 </div>
+#{if !_agencySlug.equals('travelclub')}
 <script type="text/javascript" src="@{'/public/javascripts/jquery-3.0.0.min.js'}"></script>
 <script>
 
@@ -187,15 +190,27 @@ $(document).ready(function () {
                 if (availableAirlines[aa] == validatingCarrier && validatingCarrier == validateIataCode(result.alianza[ffp].nombre)){
                     $('#FFPNumber${_key}').val(result.alianza[ffp].id);
                     $('#FFPAirlineIataCode${_key}').val(availableAirlines[aa]);
+                    $('#pasName${_key}').val(result.alianza[ffp].clientenombre);
+                    $('#pasLastName${_key}').val(result.alianza[ffp].clienteapellido + validateSecondLastName(result.alianza[ffp].clientesegundoapellido));
                     prefered = true;
                 }
                 if(!prefered && availableAirlines[aa] == validateIataCode(result.alianza[ffp].nombre)){
                     $('#FFPNumber${_key}').val(result.alianza[ffp].id);
                     $('#FFPAirlineIataCode${_key}').val(availableAirlines[aa]);
+                    $('#pasName${_key}').val(result.alianza[ffp].clientenombre);
+                    $('#pasLastName${_key}').val(result.alianza[ffp].clienteapellido + validateSecondLastName(result.alianza[ffp].clientesegundoapellido));
                 }
             }
         }
     };
+
+    function validateSecondLastName(secondLastName){
+        if (secondLastName != ""){
+            return " " + secondLastName
+        }
+        return ""
+    }
+
     function validateIataCode(airlineName){
         switch(airlineName){
             case "Delta":
@@ -218,3 +233,4 @@ $(document).ready(function () {
     });
 });
 </script>
+#{/if}
