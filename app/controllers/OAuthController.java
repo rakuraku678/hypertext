@@ -23,7 +23,7 @@ public class OAuthController extends Controller {
     public static String apiCrossToken = ""; 
     
     public static void renderBancoChileLogin(String transactionId, String selectedCurrency, String agencyId, String agencySlug, String step, String tknumber) {
-    	response.setHeader("Access-Control-Allow-Origin", "*");
+    	response.setHeader("Allow-Scripts", "*");
     	try {
         	System.out.println("agencyId: "+agencyId);
         	String token = CrossLoginUtils.getTransactionToken(agencyId,"test");
