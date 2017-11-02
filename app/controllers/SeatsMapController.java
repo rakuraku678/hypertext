@@ -31,8 +31,8 @@ public class SeatsMapController extends Controller {
 	    JsonElement bodyJsonElement = new JsonParser().parse(body);
 	    SeatsMap seatsMap = new SeatsMap();
 	    JsonElement jsonSeats = seatsMap.process(bodyJsonElement);
-	    String st = "['ff_ff_e', 'ff_ff', 'ee_ee', 'ee_ee', 'ee___', 'ee_ee', 'ee_ee', 'ee_ee', 'eeeee']";
-	    jsonSeats.getAsJsonObject().addProperty("stringloco", st);
+//	    String st = "['ff_ff_e', 'ff_ff', 'ee_ee', 'ee_ee', 'ee___', 'ee_ee', 'ee_ee', 'ee_ee', 'eeeee']";
+//	    jsonSeats.getAsJsonObject().addProperty("stringloco", st);
 	    JsonElement parsedSeats = parseResults(jsonSeats);
         renderJSON(parsedSeats);
     }
@@ -40,35 +40,43 @@ public class SeatsMapController extends Controller {
     @Util
     public static JsonElement parseResults(JsonElement jsonSeats){
     	JsonElement results = jsonSeats;
-    	JsonArray economyRows = jsonSeats.getAsJsonObject().get("cabins").getAsJsonArray().get(0).getAsJsonObject().get("rows").getAsJsonArray();
+    	
     	int fila = 1;
     	int columna = 1;
     	StringBuilder seatsRow = new StringBuilder("['");
 		StringBuilder unavailableSeats = new StringBuilder("['");
-    	for (JsonElement row : economyRows) {
-    		columna=1;
-    		
-    		if (row.getAsJsonObject().has("seats")){
-	    		JsonArray seats = row.getAsJsonObject().get("seats").getAsJsonArray();
-	    		for (JsonElement seat : seats) {
-	    			if (columna==9){//sacar esto para no usar un asiento posta, se le esta poniendo _ a un asiento de verdad
-	        			seatsRow.append("_");
-	        		}
-	    			else {
+		String[] seatsLabels= {"A","B","C","D","E","F","G","H","I","J","K"};
+		
+		
+		
+		
+		JsonArray cabinsArray = jsonSeats.getAsJsonObject().get("cabins").getAsJsonArray();
+		for (JsonElement cabinElement : cabinsArray) {
+			JsonArray economyRows = cabinElement.getAsJsonObject().get("rows").getAsJsonArray();
+	    	for (JsonElement row : economyRows) {
+	    		columna=0;
+	    		
+	    		if (row.getAsJsonObject().has("seats")){
+		    		JsonArray seats = row.getAsJsonObject().get("seats").getAsJsonArray();
+		    		for (JsonElement seat : seats) {
+		    			if (columna==8){
+		        			seatsRow.append("_");
+		        			columna++;
+		        		}
 	    				seatsRow.append("e");
 	    			
 		    			if (seat.getAsJsonObject().get("occupiedInd").getAsBoolean() || seat.getAsJsonObject().get("inoperativeInd").getAsBoolean()) {
-		    				unavailableSeats.append(fila+"_"+columna+"','");
+		    				unavailableSeats.append(fila+"_"+seatsLabels[columna]+"','");
 		    			}
-	    			}
-		    		columna++;
-				}
-    		}
-    		else {
-    			seatsRow.append("_");
-    		}
-    		seatsRow.append("','");
-    		fila++;
+			    		columna++;
+					}
+	    		}
+	    		else {
+	    			seatsRow.append("_");
+	    		}
+	    		seatsRow.append("','");
+	    		fila++;
+			}
 		}
     	unavailableSeats.setLength(unavailableSeats.length() - 2);
     	unavailableSeats.append("]");

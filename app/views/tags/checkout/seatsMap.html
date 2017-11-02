@@ -29,7 +29,6 @@
 <style>
 
 .front-indicator {
-	width: 145px;
 	margin: 5px 32px 15px 32px;
 	background-color: #f6f6f6;	
 	color: #adadad;
@@ -127,7 +126,10 @@ span.seatCharts-legendDescription {
 
 		
 <script>
-var firstSeatLabel = 1;
+var seatsCounter = 0;
+var arraySeatsLabel = ["A", "B", "C", "D", "E", "F", "G", "H",  "J", "K"];
+var lastRow = 1;
+var sc=null;
 
 function charter(result) {
 
@@ -153,9 +155,16 @@ function charter(result) {
 		naming : {
 			top : false,
 			getLabel : function (character, row, column) {
-				return firstSeatLabel++;
+				if (seatsCounter==arraySeatsLabel.length) {
+					seatsCounter=0;
+				}
+				if (lastRow!=row){
+					seatsCounter=0;
+				}
+				lastRow=row;
+				return arraySeatsLabel[seatsCounter++];
 			},
-// 			columns: ['A', 'B', 'C', 'D', 'E','F','G','H','I','J','K'],
+ 			columns: ['A', 'B', 'C', 'D', 'E','F','G','H','I','J','K'],
 // 			rows: ['I','II','III','IV','V'],
 		},
 		legend : {
