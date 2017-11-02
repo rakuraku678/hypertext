@@ -10,8 +10,8 @@ Login succesful!
 	});
 #{/if}
 #{else}
-	window.history.pushState("", "", window.location.href+'?transactionId=${transactionId}');
-	window.location.href = window.location.href+'?transactionId=${transactionId}';
+	window.parent.history.pushState("", "", window.location.href+'?transactionId=${transactionId}');
+	window.parent.location.reload();
 #{/else}
 </script>
 
