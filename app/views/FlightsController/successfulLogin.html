@@ -11,7 +11,7 @@ Login succesful!
 #{/if}
 #{else}
 	window.history.pushState("", "", window.location.href+'?transactionId=${transactionId}');
-	window.parent.location.reload();
+	window.location.href = window.location.href+'?transactionId=${transactionId}';
 #{/else}
 </script>
 
