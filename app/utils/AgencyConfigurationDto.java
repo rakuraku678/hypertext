@@ -25,7 +25,7 @@ public class AgencyConfigurationDto implements Dto {
 		agencyConfigurationDto.customCss = JsonUtils.getStringFromJson(jsonObject, "customCSS");
 		agencyConfigurationDto.gtmHead = JsonUtils.getStringFromJson(jsonObject, "gtmHead");
 		agencyConfigurationDto.gtmBody = JsonUtils.getStringFromJson(jsonObject, "gtmBody");
-		agencyConfigurationDto.styleTag = JsonUtils.getStringFromJson(jsonObject, "styleTag");
+		agencyConfigurationDto.styleTag = JsonUtils.getBooleanFromJson(jsonObject, "styleTag");
 
 		return agencyConfigurationDto;
 	}
