@@ -181,7 +181,7 @@
                     var infantcount = searchForm.find('select[name="infantcount"]').val();
                     var cabin = searchForm.find('select[name="cabin"]').val();
                     var transactionId = "";
-                    if (searchForm.find('input[name="hdnTransactionId"]').val()==''){
+                    if (searchForm.find('input[name="hdnTransactionId"]').val()!=''){
                     	transactionId = "/"+searchForm.find('input[name="hdnTransactionId"]').val();
                     }
                     *{if(promotion){}*
