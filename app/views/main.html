@@ -25,26 +25,23 @@
 
         <link href="@{'/public/stylesheets/bootstrapValidator.css'}?v=0.1" rel="stylesheet">
 
-
-
-        <style>${agencyConfigurationDto.customCss}</style>
-	#{if !isAgencyHeader}
-	<!-- Google Tag Manager -->
-	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-	})(window,document,'script','dataLayer','GTM-MW2DPB');</script>
-	<!-- End Google Tag Manager -->
-	#{/if}
+        #{if !agencyConfigurationDto.styleTag}
+            <style>
+                ${agencyConfigurationDto.customCss.raw()}
+            </style>
+        #{/if}
+        #{else}
+            ${agencyConfigurationDto.customCss.raw()}
+        #{/else}
+        
+	#{if agencyConfigurationDto.gtmHead}
+	   ${agencyConfigurationDto.gtmHead.raw()}  
+ 	#{/if}
     </head>
     <body>
-	#{if !isAgencyHeader}
-	<!-- Google Tag Manager (noscript) -->
-	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MW2DPB"
-	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-	<!-- End Google Tag Manager (noscript) -->
-	#{/if}
+	#{if agencyConfigurationDto.gtmBody}
+	   ${agencyConfigurationDto.gtmBody.raw()}  
+ 	#{/if}
         <main class="search-and-payment-travel">
         #{if isAgencyHeader}
             <header>
