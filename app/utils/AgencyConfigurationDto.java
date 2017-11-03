@@ -11,6 +11,9 @@ public class AgencyConfigurationDto implements Dto {
 	public String headerHtml;
 	public String footerHtml;
 	public String customCss;
+        public String gtmHead;
+	public String gtmBody;
+	public boolean styleTag;
 
 	public static AgencyConfigurationDto parseAgencyConfigurationDto(JsonElement responseJson) {
 		JsonObject jsonObject = responseJson.getAsJsonObject();
@@ -20,6 +23,9 @@ public class AgencyConfigurationDto implements Dto {
 		agencyConfigurationDto.headerHtml = JsonUtils.getStringFromJson(jsonObject, "cssHeader");
 		agencyConfigurationDto.footerHtml = JsonUtils.getStringFromJson(jsonObject, "cssFooter");
 		agencyConfigurationDto.customCss = JsonUtils.getStringFromJson(jsonObject, "customCSS");
+                agencyConfigurationDto.gtmHead = JsonUtils.getStringFromJson(jsonObject, "gtmHead");
+ 		agencyConfigurationDto.gtmBody = JsonUtils.getStringFromJson(jsonObject, "gtmBody");
+		agencyConfigurationDto.styleTag = JsonUtils.getBooleanFromJson(jsonObject, "styleTag");
 
 		return agencyConfigurationDto;
 	}
