@@ -144,7 +144,14 @@ $(document).ready(function () {
             }
         },
         submitHandler: function(validator, form, submitButton) {
-       		startBooking(true);	
+        	
+        	#{if _promotionDto.agency.showLoginOnSelection}
+        	startBooking(true);
+        	#{/if}
+        	#{else}
+        	startBooking(false);
+        	#{/else}
+       			
         }
     });
 
