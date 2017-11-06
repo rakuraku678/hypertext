@@ -3,16 +3,16 @@
                               connectionsReturnCount = _flight.returnSegment.flightsCount.getAsInt() - 1;
                               returnElapsedTimeEX = _flight.returnSegment.elapsedTime.getAsInt();
                               departureElapsedTimeEX = _flight.departureSegment.elapsedTime.getAsInt();
-                              baxterHeight = _flight.pricing.shareNumber!=null? '350px':'320px';
+                              baxerHeight = _flight.pricing.shareNumber!=null? '350px':'320px';
                             }%
-			#{if baxterHeight == "350px" && _flight.pricing.accountCode}
+			#{if baxerHeight == "350px" && _flight.pricing.accountCode}
 			%{
-				baxterHeight = "390px";
+				baxerHeight = "390px";
 			}%
 			#{/if}
-			#{if baxterHeight == "320px" && _flight.pricing.accountCode}
+			#{if baxerHeight == "320px" && _flight.pricing.accountCode}
 			%{
-				baxterHeight = "350px";
+				baxerHeight = "350px";
 			}%
 			#{/if}
 
@@ -27,8 +27,8 @@
 		data-airline="${_flight.departureSegment.detail.get(0).operatingAirlineCode.getAsString()}"
         	data-marketingAirline="${_flight.departureSegment.detail.get(0).marketingAirline.getAsString()}"
 		data-escala="${connectionsDepartureCount}"
-		data-returnEscala="${connectionsReturnCount}" style="min-height: ${baxterHeight}">
-    <form class="form-ticket" action="@{PaymentFlowController.index}" method="post">
+		data-returnEscala="${connectionsReturnCount}" style="min-height: ${baxerHeight}">
+    <form class="form-ticket" action="@{PaymentFlowController.index}" method="post" data-tknumber="${_tknumber}">
     	<input type="hidden" name="selectedCurrency" class="selCurrency" value="usd" id="hdnSelectedCurrency"/>
     	
         <div class="col-md-9 info-flight">
@@ -37,7 +37,7 @@
                     <ul>
                         <li>
                             <i class="icon-fly"></i>
-                            <span class="leaving">ida</span>
+                            <span class="leaving">ida </span>
                             <span class="fly-day">${utils.DateUtils.reformateDate(_flight.departureDate.getAsString(),"yyyy-MM-dd","dd-MM-yyyy")}</span>
                         </li>
                         <li>
@@ -264,11 +264,11 @@
                 <span class="private-fare-space-saver" id="private-fare-img">&nbsp;</span>
             #{/else}
             <span class="title">Precio por Adulto</span>
-            #{if _flight.pricingCLP.adtTotalPriceWithAllTaxes.getAsInt() > _flight.pricingCLP.adtTotalPrice.getAsInt() && _flight.pricing.adtTotalPriceBeforeDiscount && _flight.pricing.adtTotalPriceBeforeDiscount != _flight.pricing.adtTotalPrice}
+            #{if _flight.pricingCLP.adtTotalPriceWithAllTaxes.getAsDouble() > _flight.pricingCLP.adtTotalPrice.getAsDouble() && _flight.pricing.adtTotalPriceBeforeDiscount && _flight.pricing.adtTotalPriceBeforeDiscount != _flight.pricing.adtTotalPrice}
             <span class="price before-discount"><span class="usdpriceCon"><span class="simbolCurrency">US$</span>${_flight.pricing.adtTotalPriceWithAllTaxes?.getAsString()}</span><span class="clppriceCon hidden">${_flight.pricingCLP.adtTotalPriceWithAllTaxes?.getAsString()}</span></span>
             <span class="price"><span class="usdpriceCon"><span class="simbolCurrency">US$</span>${_flight.pricing.adtTotalPrice?.getAsString()}</span><span class="clppriceCon hidden">${_flight.pricingCLP.adtTotalPrice?.getAsString()}</span></span>
             #{/if}
-            #{elseif _flight.pricingCLP.adtTotalPriceWithAllTaxes.getAsInt() <= _flight.pricingCLP.adtTotalPrice.getAsInt() && _flight.pricing.adtTotalPriceBeforeDiscount && _flight.pricing.adtTotalPriceBeforeDiscount != _flight.pricing.adtTotalPrice}
+            #{elseif _flight.pricingCLP.adtTotalPriceWithAllTaxes.getAsDouble() <= _flight.pricingCLP.adtTotalPrice.getAsDouble() && _flight.pricing.adtTotalPriceBeforeDiscount && _flight.pricing.adtTotalPriceBeforeDiscount != _flight.pricing.adtTotalPrice}
             <span class="price"><span class="usdpriceCon"><span class="simbolCurrency">US$</span>${_flight.pricing.adtTotalPrice?.getAsString()}</span><span class="clppriceCon hidden">${_flight.pricingCLP.adtTotalPrice?.getAsString()}</span></span>
             #{/elseif}
             #{else}
@@ -317,7 +317,7 @@
             <div class="text-center box-ticket-submit">
                 <input type="hidden" name="promotion" value="${_promotion}">
                 <input type="hidden" name="bfmResultItem" value="${_flight.toString()}">
-                <input type="submit" style="margin-top:20px;" class="btn btn-ticket" value="Seleccionar">
+                <input type="submit" style="margin-top:20px;" class="btn btn-ticket btnSelFlight" value="Seleccionar">
                 *{<a class="btn btn-ticket" href="@{PaymentFlowController.index}">Comprar</a>}*
 
             </div>

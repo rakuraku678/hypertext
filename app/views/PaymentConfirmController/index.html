@@ -40,6 +40,13 @@
                     *{#{confirmation.asisstCardBox /}}*
                     *{#{confirmation.rentCarBox /}}*
                 *{</div>}*
+                #{if allianceWaningMessages != null}
+                <div class="warning-info-payment">
+                    #{list items:allianceWaningMessages, as:"warning"}
+                    <p>${warning.raw()}</p>
+                    #{/list}
+                </div>
+                #{/if}
             </div>
             <div class="col-md-4">
                 #{confirmation.paymentDetailBox order: bookingConfirmationResult.order /}
@@ -48,9 +55,9 @@
                 <button class="btn btn-secondary-travel btn-border-color-travel">continuar</button>
             </div>
         </div>
-    </article>    
-</section>
 
+    </article>
+</section>
 #{modalNeadHelp /}
 
 #{set isAgencyFooter: true /}

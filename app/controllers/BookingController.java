@@ -8,9 +8,11 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import play.libs.WS;
 import play.mvc.Controller;
 import utils.DateUtils;
 import utils.ApiFlightsSdk.v1.Booking;
+import utils.JsonUtils;
 
 public class BookingController extends Controller {
 
@@ -36,6 +38,9 @@ public class BookingController extends Controller {
 	    	jsonEl.addProperty("givenName", givenName);
 	    	jsonEl.addProperty("surname", surname);
 	    	jsonEl.addProperty("foidType", passengersArray.get(i).getAsJsonObject().get("foidType").getAsString());
+			jsonEl.addProperty("FFPAirlineIataCode", passengersArray.get(i).getAsJsonObject().get("FFPAirlineIataCode").getAsString());
+			jsonEl.addProperty("FFPNumber", passengersArray.get(i).getAsJsonObject().get("FFPNumber").getAsString());
+
 	    	
 	    	if (passengersArray.get(i).getAsJsonObject().get("foidType").getAsString().equals("PAS")){
 	    		jsonEl.addProperty("nacionalityPassport", passengersArray.get(i).getAsJsonObject().get("nacionalityPassport").getAsString());
@@ -128,5 +133,49 @@ public class BookingController extends Controller {
 			e.printStackTrace();
 			return false;
 		}
+    }
+	private static JsonObject getTokenByRut(String rut){
+		String url = "https://kdu.cl/apipax/passenger/v1/rut/" + rut;
+		System.out.println(url);
+		WS.WSRequest request = WS.url(url);
+		request.setHeader("Authorization","Basic a2R1OmtkdQ==");
+		WS.HttpResponse response = request.get();
+		JsonElement jsonResponse = response.getJson();
+		return(jsonResponse.getAsJsonObject());
+	}
+	public static void getPaxByToken(String body){
+		String token = params.get("token");
+		String url = "https://kdu.cl/apipax/passenger/v1/"+ token;
+		System.out.println(url);
+		WS.WSRequest request = WS.url(url);
+		request.setHeader("Authorization","Basic a2R1OmtkdQ==");
+		WS.HttpResponse response = request.get();
+		JsonElement jsonResponse = response.getJson();
+		renderJSON(jsonResponse.getAsJsonObject());
+	}
+	public static void getFFPNumberByRut(){
+        String rut = params.get("rut");
+        String url = "http://dev.mockup.cl/cashback/public/api/"+ rut;
+        System.out.println(url);
+        WS.WSRequest request = WS.url(url);
+        WS.HttpResponse response = request.get();
+        String valueToEscape = response.getString();
+        if (valueToEscape!= "" && valueToEscape != null) {
+            int startIndex = valueToEscape.indexOf(",\"mensaje\":\"Estimado");
+            String searchString = "}";
+            try {
+                int endIndex = startIndex + valueToEscape.substring(startIndex).indexOf(searchString);
+                String toBeReplaced = valueToEscape.substring(startIndex, endIndex);
+                valueToEscape = valueToEscape.replace(toBeReplaced, "");
+
+            }catch (StringIndexOutOfBoundsException e){
+                valueToEscape = "{\"status\":\"0\"}";
+            }
+
+            JsonObject jsonObject = new JsonParser().parse(valueToEscape).getAsJsonObject();
+            jsonObject.addProperty("status","1");
+
+            renderJSON(jsonObject);
+        }
     }
 }

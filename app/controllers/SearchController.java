@@ -75,7 +75,6 @@ public class SearchController extends Controller {
         
 
         JsonObject jsonObj = request.get().getJson().getAsJsonObject();
-        System.out.println("===========================>>>>>>>>>>>>>>>>>>>>>>>>>>>"+jsonObj.toString());
         Map map = Maps.newHashMap();
         map.put("id", JsonUtils.getStringFromJson(jsonObj,"id"));
         map.put("name", JsonUtils.getStringFromJson(jsonObj,"name"));

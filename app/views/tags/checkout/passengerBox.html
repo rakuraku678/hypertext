@@ -14,35 +14,20 @@
         <input type="hidden" name="passengers[${_key}][passengerType]" value="${_passengerType}">
     </div>
     <div class="body-payment">
-            <div class="alert alert-info-payment">
-                <p><i class="icon-glasses"></i>Comprueba que la información ingresada coincida con la de tu documento de viaje, sea pasaporte u otro.</p>
-            </div>
+        <div class="alert alert-info-payment">
+            <p><i class="icon-glasses"></i>Comprueba que la información ingresada coincida con la de tu documento de viaje, sea pasaporte u otro.</p>
+        </div>
 
-            <div class="form-group col-md-12">
-                <label class="checkbox-inline">
-                    <input type="radio" class="validatesex" name="passengers[${_key}][gender]" value="M"> Hombre
-                </label>
-                <label class="checkbox-inline">
-                    <input type="radio" class="validatesex" name="passengers[${_key}][gender]" value="F"> Mujer
-                </label>
-            </div>
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-6 form-group">
-                        <label>Nombres:</label>
-                        <input type="text" class="form-control validatefirstname" name="passengers[${_key}][givenName]" placeholder="ej. Roberto">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <div style="margin-bottom: -15px;">
+                        <div style="min-height:34px;">
+                            <label class="sub-label" style="color: #3c0b9a;font-weight: bold;">*Para viajes a USA, Europa, Caribe y destinos lejanos, es necesario seleccionar e ingresar información de pasaporte.</label>
+                        </div>
+                        <label>Tipo y número de documento:</label>
                     </div>
-                    <div class="col-md-6 form-group">
-                        <label>Apellidos:</label>
-                        <input type="text" class="form-control validatelastname" name="passengers[${_key}][surname]" placeholder="ej. Salamanca">
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 form-group">
-                <label>Tipo y número de documento:</label>
-                <label class="sub-label" style="color: #3c0b9a;font-weight: bold;">*Para viajes a USA, Europa, Caribe y destinos lejanos, es necesario seleccionar e ingresar información de pasaporte.</label>
-                <div class="row">
-                    <div class="col-xs-4">
+                    <div class="col-md-3 form-group">
                         <select id="selectDoc" class="form-control icon-arrow-from validatedocument" name="passengers[${_key}][foidType]" data-pnum="${_key}">
                             #{if !_onlyPassport}
                             <option value="RUT">RUT</option>
@@ -50,47 +35,202 @@
                             <option value="PAS">Pasaporte</option>
                         </select>
                     </div>
-
-                    <div class="col-xs-8">
-                    	#{if !_onlyPassport}
-                        <input id="rutNum${_key}" type="text" class="form-control validatedocumentnum" name="passengers[${_key}][foidRut]" placeholder="ej. 190006441">
+                    <div class="col-md-9 form-group"  style="padding-right: 0;">
+                        #{if !_onlyPassport}
+                        <input id="rutNum${_key}" type="text" class="form-control validatedocumentnum" autocomplete="off" name="passengers[${_key}][foidRut]" placeholder="ej. 190006441">
                         #{/if}
-                        <input id="pasNum${_key}" #{if !_onlyPassport}style="display: none;"#{/if} type="text" class="form-control validatepassport" name="passengers[${_key}][foid]" placeholder="ej. 190006441">
+                        <input id="pasNum${_key}" #{if !_onlyPassport}style="display: none;"#{/if} type="text" class="form-control validatepassport" autocomplete="off" name="passengers[${_key}][foid]" placeholder="ej. 190006441">
+                    </div>
+                </div>
+                <div class="col-md-6 form-group" style="padding-top: 35px;">
+                    <label>Sexo:</label>
+                    <select name="passengers[${_key}][gender]" class="form-control icon-arrow-from">
+                        <option value="M">Masculino</option>
+                        <option value="F">Femenino</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <label>Nombre(s):</label>
+                    <input id="pasName${_key}" type="text" class="form-control validatefirstname" name="passengers[${_key}][givenName]" placeholder="ej. Roberto">
+                </div>
+                <div class="col-md-6 form-group">
+                    <label>Apellido(s):</label>
+                    <input id="pasLastName${_key}" type="text" class="form-control validatelastname" name="passengers[${_key}][surname]" placeholder="ej. Salamanca">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 form-group" id="pasaporteBox${_key}" #{if !_onlyPassport}style="display: none;"#{/if}>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-6 form-group">
+                            <label>Nacionalidad del pasajero:</label>
+                            %{nameNacionality = 'passengers['+ _key +'][nacionalityPassport]'}%
+                            #{countriesCombo countriesList:_countriesList, name:nameNacionality /}
+                    </div>
+                    <div class="col-md-6 form-group" style="padding-right: 0;">
+                            <label>Fecha de vencimiento de documento:</label>
+                            <input type="text" class="form-control validatedatePas" name="passengers[${_key}][expirationPassport]" placeholder="ej. 01/01/1990" data-pnum="${_key}">
+                            <small class="help-block" id="invfpas${_key}" style="display: none;">Campo no válido</small>
+                            <small class="help-block" id="emptyfpas${_key}" style="display: none;">El campo esta vacio.</small>
+                    </div>
+                </div> 
+            </div>                          
+            <div class="row">
+                <div class="col-md-12"> 
+                    <div class="col-md-6 form-group" style="float: inherit !important;">
+                        <label>Nacionalidad donde fue emitido el documento:</label>
+                        %{nameIssuedCountry = 'passengers['+ _key +'][countryPassport]'}%
+                        #{countriesCombo countriesList:_countriesList, name:nameIssuedCountry /}
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="col-md-6 form-group box-date-birth">
-                <div class="modify-position-box">
-                    <label>Fecha de nacimiento:</label>
-                    <label class="sub-label" style="color: #3c0b9a;font-weight: bold;"> </label>
-                    <input type="text" class="form-control validatedate" name="passengers[${_key}][dateOfBirth]" placeholder="01/01/1990"  data-pnum="${_key}" >
-                    <small class="help-block" id="invfnac${_key}" style="display: none;">Campo no válido</small>
-                    <small class="help-block" id="emptyfnac${_key}" style="display: none;">El campo esta vacio.</small>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <div class="modify-position-box">
+                        <label>Fecha de nacimiento:</label>
+                        <label class="sub-label" style="color: #3c0b9a;font-weight: bold;"> </label>
+                        <input type="text" class="form-control validatedate" name="passengers[${_key}][dateOfBirth]" placeholder="01/01/1990"  data-pnum="${_key}" >
+                        <small class="help-block" id="invfnac${_key}" style="display: none;">Campo no válido</small>
+                        <small class="help-block" id="emptyfnac${_key}" style="display: none;">El campo esta vacio.</small>
+                    </div>
                 </div>
+                #{if !_agencySlug.equals('travelclub')}
+                <div class="col-md-6 form-group">
+                    <div class="" style="margin-bottom: -15px;">
+                        <label >Información Pasajero Frecuente:</label>
+                        <div class="tooltip-td">!
+                            <span class="tooltiptext">${_AllianceMessage.raw()}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <select name="passengers[${_key}][FFPAirlineIataCode]" class="form-control icon-arrow-from" id="FFPAirlineIataCode${_key}">
+                            <option value="">
+                                Seleccionar
+                            </option>
+                            #{list items:_whiteListAirlines, as:'whiteListAirlines'}
+                            <option value=${whiteListAirlines.iataCode.raw()}>
+                                ${whiteListAirlines.name.getAsString()}
+                            </option>
+                            #{/list}
+                        </select>
+                    </div>
+                    <div class="col-md-8 form-group" style="padding-right: 0;">
+                        <input id="FFPNumber${_key}" type="text" class="form-control" name="passengers[${_key}][FFPNumber]" placeholder="ej. 123456789" maxlength="20">
+                    </div>
+                </div>
+                #{/if}
             </div>
-           	<div class="col-md-12 form-group" id="pasaporteBox${_key}" #{if !_onlyPassport}style="display: none;"#{/if}>
-           		<div class="row">
-	                  <div class="col-md-6 form-group">
-	                      <label>Nacionalidad del pasajero:</label>
-	                      %{nameNacionality = 'passengers['+ _key +'][nacionalityPassport]'}%
-	                      #{countriesCombo countriesList:_countriesList, name:nameNacionality /}
-	                  </div>
-	                  <div class="col-md-6 form-group">
-	                      <label>Fecha de vencimiento de documento:</label>
-	                      <input type="text" class="form-control validatedatePas" name="passengers[${_key}][expirationPassport]" placeholder="ej. 01/01/1990" data-pnum="${_key}">
-	                      <small class="help-block" id="invfpas${_key}" style="display: none;">Campo no válido</small>
-                		  <small class="help-block" id="emptyfpas${_key}" style="display: none;">El campo esta vacio.</small>
-	                  </div>
-	           </div>
-	                  <div class="row">
-		                  <div class="col-md-6 form-group" style="float: inherit !important;">
-		                      <label>Nacionalidad donde fue emitido el documento:</label>
-		                       %{nameIssuedCountry = 'passengers['+ _key +'][countryPassport]'}%
-		                      #{countriesCombo countriesList:_countriesList, name:nameIssuedCountry /}
-		                  </div>
-	                  </div>
-           	</div>
-            
+        </div>            
     </div>
 </div>
+#{if !_agencySlug.equals('travelclub')}
+<script type="text/javascript" src="@{'/public/javascripts/jquery-3.0.0.min.js'}"></script>
+<script>
+
+$(document).ready(function () {
+    var availableAirlines = [#{list items:_whiteListAirlines, as:'whiteListAirlines'}${whiteListAirlines.iataCode.raw()}${whiteListAirlines_isLast ? '' : ','}#{/list}];
+    var currentFFPResponse${_key};
+    var validatingCarrier = "${_validatingCarrier}";
+    #{if !_onlyPassport}
+    $('#rutNum${_key}').focusout(function(){
+        if ($(this).val().length > 8){
+            $.ajax({
+                type: "GET",
+                url: "@{BookingController.getFFPNumberByRut}" +"?rut="+ $('#rutNum${_key}').val(),
+                dataType: "json",
+                success:function(result) {
+                currentFFPResponse${_key} = result;
+                    if(result.status != 0){
+                        autocompleteFFP(result);
+                    }
+                }
+            });
+        }
+    });
+    #{/if}
+    $('#pasNum${_key}').focusout(function(){
+        if ($(this).val().length > 8){
+            $.ajax({
+                type: "GET",
+                url: "@{BookingController.getFFPNumberByRut}" +"?rut="+ $('#rutNum${_key}').val(),
+                dataType: "json",
+                success:function(result) {
+                currentFFPResponse${_key} = result;
+                    if(result.status != 0){
+                        autocompleteFFP(result);
+                    }
+                }
+            });
+        }
+    });
+
+    function getFFPNumByAlliance(allianceName){
+        for (var alliance in currentFFPResponse${_key}.alianza){
+            if (validateIataCode(currentFFPResponse${_key}.alianza[alliance].nombre) == allianceName){
+            return currentFFPResponse${_key}.alianza[alliance].id;
+            }
+        }
+        return "";
+    }
+
+    function autocompleteFFP(result) {
+    var prefered = false
+        for (var ffp in result.alianza){
+            for (var aa in availableAirlines) {
+                if (availableAirlines[aa] == validatingCarrier && validatingCarrier == validateIataCode(result.alianza[ffp].nombre)){
+                    $('#FFPNumber${_key}').val(result.alianza[ffp].id);
+                    $('#FFPAirlineIataCode${_key}').val(availableAirlines[aa]);
+                    $('#pasName${_key}').val(result.alianza[ffp].clientenombre);
+                    $('#pasLastName${_key}').val(result.alianza[ffp].clienteapellido + validateSecondLastName(result.alianza[ffp].clientesegundoapellido));
+                    prefered = true;
+                }
+                if(!prefered && availableAirlines[aa] == validateIataCode(result.alianza[ffp].nombre)){
+                    $('#FFPNumber${_key}').val(result.alianza[ffp].id);
+                    $('#FFPAirlineIataCode${_key}').val(availableAirlines[aa]);
+                    $('#pasName${_key}').val(result.alianza[ffp].clientenombre);
+                    $('#pasLastName${_key}').val(result.alianza[ffp].clienteapellido + validateSecondLastName(result.alianza[ffp].clientesegundoapellido));
+                }
+            }
+        }
+    };
+
+    function validateSecondLastName(secondLastName){
+        if (secondLastName != ""){
+            return " " + secondLastName
+        }
+        return ""
+    }
+
+    function validateIataCode(airlineName){
+        switch(airlineName){
+            case "Delta":
+                return "DL";
+            case "Iberia":
+                return "IB";
+            case "British":
+                return "BA";
+            case "Gol":
+                return "G3"
+            default :
+                return ""
+        }
+    };
+
+    $('#FFPAirlineIataCode${_key}').change(function() {
+        if (currentFFPResponse${_key} != null){
+            $('#FFPNumber${_key}').val(getFFPNumByAlliance($(this).val()));
+        }
+    });
+});
+</script>
+#{/if}
