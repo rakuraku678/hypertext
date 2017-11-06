@@ -12,17 +12,18 @@ public class AgencyDto implements Dto {
     public String externalId;
     public boolean active;
     public boolean defaultAgency;
-
+    public boolean showLoginOnSelection;
+    
     public static AgencyDto parseAgencyDto(JsonElement responseJson){
-        AgencyDto promotionDto = new AgencyDto();
+        AgencyDto agencyDto = new AgencyDto();
         JsonObject jsonObject = responseJson.getAsJsonObject();
-        promotionDto.id = JsonUtils.getStringFromJson(jsonObject, "_id");
-        promotionDto.slug = JsonUtils.getStringFromJson(jsonObject, "slug");
-        promotionDto.name = JsonUtils.getStringFromJson(jsonObject, "name");
-        promotionDto.externalId = JsonUtils.getStringFromJson(jsonObject, "externalId");
-        promotionDto.active = JsonUtils.getBooleanFromJson(jsonObject, "active");
-        promotionDto.defaultAgency = JsonUtils.getBooleanFromJson(jsonObject, "defaultAgency");
-
-        return promotionDto;
+        agencyDto.id = JsonUtils.getStringFromJson(jsonObject, "_id");
+        agencyDto.slug = JsonUtils.getStringFromJson(jsonObject, "slug");
+        agencyDto.name = JsonUtils.getStringFromJson(jsonObject, "name");
+        agencyDto.externalId = JsonUtils.getStringFromJson(jsonObject, "externalId");
+        agencyDto.active = JsonUtils.getBooleanFromJson(jsonObject, "active");
+        agencyDto.defaultAgency = JsonUtils.getBooleanFromJson(jsonObject, "defaultAgency");
+        agencyDto.showLoginOnSelection = JsonUtils.getBooleanFromJson(jsonObject, "showLoginOnSelection");
+        return agencyDto;
     }
 }

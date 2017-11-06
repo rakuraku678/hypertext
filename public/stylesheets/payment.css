@@ -71,7 +71,7 @@
 .icon-arrow-from {
 	background-image: url("../img/icon-arrow-from.svg");
     background-repeat: no-repeat;
-    background-position: 75px 20px;
+    background-position: 95% 20px;
     -moz-appearance: none;
     -webkit-appearance: none;
     appearance: none;
@@ -277,6 +277,19 @@ h2 {
 	padding: 0 15px 30px 15px;
 	margin: 0;
 }
+.warning-info-payment{
+    border-bottom: 1px solid #eee;
+	padding: 20px 30px;
+    border-radius: 5px;
+    background-color: #FFFFB2;
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+.warning-info-payment p{
+    color: #666;
+    font-weight: bold;
+    text-transform: uppercase;
+}
 
 .box-info-payment {
 	border-radius: 5px;
@@ -360,7 +373,7 @@ h2 {
 }
 
 
-.box-date-birth {
+/* .box-date-birth {
 	position: relative;
 	min-height: 121px;
 }
@@ -368,10 +381,10 @@ h2 {
 	position: absolute;
 	bottom: 0;
 	width: 100%;
-}
-.modify-position-box .validatedate {
+} */
+/* .modify-position-box .validatedate {
 	width: 100%;
-}
+} */
 /* detail-fly-payment
 ==================== */
 .detail-fly-payment {

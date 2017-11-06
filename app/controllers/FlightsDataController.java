@@ -7,11 +7,13 @@ import java.util.Map;
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import models.FlightsResultsFilters;
+import play.cache.Cache;
 import play.mvc.Controller;
 import play.mvc.Util;
 import play.templates.Template;
 import play.templates.TemplateLoader;
 import utils.ApiFlightsSdk.v1.*;
+import utils.CrossLoginUtils;
 import utils.DateUtils;
 import utils.TravelClubUtils;
 import utils.dtos.AirportDto;
@@ -22,6 +24,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
+import dto.StateDto;
 
 public class FlightsDataController extends Controller {
 
@@ -34,7 +38,8 @@ public class FlightsDataController extends Controller {
             promotionDto = new Promotion().getDefault();
         }
         String dollarExchangeRate = TravelClubUtils.getDollarExchangeRate(promotionDto.agency.externalId);
-
+        String transactionId = params.get("transactionId");
+        
         BFMSearch bfmSearch  = new BFMSearch();
         bfmSearch.setOrigin(params.get("origin"));
         bfmSearch.setDestination(params.get("destination"));
@@ -53,7 +58,9 @@ public class FlightsDataController extends Controller {
         bfmSearch.setPromotion(promotionDto.slug);
         bfmSearch.setExternalId(promotionDto.agency.externalId);
         bfmSearch.setDollarExchangeRate(dollarExchangeRate);
-        
+        if (!Strings.isNullOrEmpty(transactionId)){
+        	bfmSearch.setTransactionId(transactionId);
+        }
         JsonElement flightsResults = bfmSearch.process();
         FlightsResultsFilters flightsResultsFilters = FlightsResultsFilters.processFlightsResults(flightsResults);
 
@@ -62,15 +69,36 @@ public class FlightsDataController extends Controller {
 
         //renderTemplate("FlightsDataController/flightsData.html", flightsResults, flightsResultsFilters, dollarExchangeRate, airlineArray);
 
+        
+        
+        if (Strings.isNullOrEmpty(transactionId)){
+        	transactionId = flightsResults.getAsJsonArray().get(0).getAsJsonObject().get("transactionId").getAsString();
+        }
+        String tknumber = params.get("tknumber");
+        System.out.println("TKNUMBER: "+tknumber);
+        String token = Cache.get(transactionId, String.class);
+        System.out.println("transactionId: "+transactionId+", token: "+token);
+        
+        StateDto state = null;
+        if (!Strings.isNullOrEmpty(token)){
+            state = CrossLoginUtils.getState(token);
+            state.transactionId = transactionId;
+            System.out.println("state name: "+state.appToken);
+            System.out.println("state name: "+state.clientName);
+        }
+        
         Template template = TemplateLoader.load(template("FlightsDataController/flightsData.html"));
-
         Map m = Maps.newHashMap();
         m.put("flightsResults", flightsResults);
         m.put("flightsResultsFilters", flightsResultsFilters);
         m.put("dollarExchangeRate", dollarExchangeRate);
         m.put("airlineArray", airlineArray);
         m.put("params", request.params);
-
+        m.put("transactionId", transactionId);
+        m.put("state", state);
+        m.put("promotionDto", promotionDto);
+        m.put("tknumber", tknumber);
+        
         renderHtml(template.render(m).replaceAll("\\s{2,}"," "));
     }
 

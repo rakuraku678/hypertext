@@ -18,6 +18,7 @@ GET     /checkout/error/{type}                  PaymentFlowController.processErr
 POST    /checkout/booking                       BookingController.startBooking
 POST    /checkout/booking/status                BookingController.statusBooking
 
+
 GET     /payment/new                            PaymentFlowController.newPayment
 POST    /payment/new                            PaymentFlowController.processNewPayment
 
@@ -30,16 +31,35 @@ GET     /public-vol3/                                staticDir:public
 GET     /public/                                staticDir:public
 
 #SEARCH /EZE/SCL/06-01-2017/10-01-2017/2-1-0
+
 GET		/vuelos																			FlightsController.index
 GET		/vuelos/{promotion}																FlightsController.index
 GET		/flights																		FlightsController.index
 GET		/flights/{promotion}															FlightsController.index
+
 GET     /{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}               								FlightsController.index
 GET     /{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}              										FlightsController.index
 GET     /vuelos/{promotion}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}             						FlightsController.index
 GET     /vuelos/{promotion}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}             				FlightsController.index
 GET     /flights/{promotion}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}		             				FlightsController.index
 GET     /flights/{promotion}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}             				FlightsController.index
+
+GET     /flights/{promotion}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}/{transactionId}							             				FlightsController.index
+GET     /flights/{promotion}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}/{transactionId}/{tknumber}				             				FlightsController.index
+
+#reps
+GET     /{origin}/{destination}/{origin2}/{destination2}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}               													FlightsController.index
+GET     /{origin}/{destination}/{origin2}/{destination2}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}/{transactionId}               									FlightsController.index
+GET     /{origin}/{destination}/{origin2}/{destination2}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}/{transactionId}/{tknumber}     									FlightsController.index
+
+GET     /vuelos/{promotion}/{origin}/{destination}/{origin2}/{destination2}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}             									FlightsController.index
+GET     /vuelos/{promotion}/{origin}/{destination}/{origin2}/{destination2}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}/{transactionId}               				FlightsController.index
+GET     /vuelos/{promotion}/{origin}/{destination}/{origin2}/{destination2}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}/{transactionId}/{tknumber}     				FlightsController.index
+
+GET     /flights/{promotion}/{origin}/{destination}/{origin2}/{destination2}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}             														FlightsController.index
+GET     /flights/{promotion}/{origin}/{destination}/{origin2}/{destination2}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}/{transactionId}							             				FlightsController.index
+GET     /flights/{promotion}/{origin}/{destination}/{origin2}/{destination2}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}/{transactionId}/{tknumber}				             				FlightsController.index
+
 
 #opcion de busqueda antigua /EZE/SCL/06-01-2017/10-01-2017/2-1-0
 GET     /vuelos/compra                                                                                                                                          FlightsController.index
@@ -53,7 +73,10 @@ GET     /promociones/{promotion}                                                
 GET     /promociones/{promotion}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}                                              FlightsController.index
 
 
-
+GET		/auth/{transactionId}/{selectedCurrency}/{agencyId}/{agencySlug}/{step}					OAuthController.renderBancoChileLogin
+GET		/auth/{transactionId}/{selectedCurrency}/{agencyId}/{agencySlug}/{step}/{tknumber}		OAuthController.renderBancoChileLogin
+GET		/authtotravelpay/{transactionId}/{selectedCurrency}/{agencyId}/{agencySlug}				OAuthController.renderBancoChileLoginToTravelpay
+GET		/loginresponse																			OAuthController.bancoChileEndPoint
 
 # Catch all
 *       /vol3/{controller}/{action}             {controller}.{action}
