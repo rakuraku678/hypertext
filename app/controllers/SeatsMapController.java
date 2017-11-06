@@ -2,6 +2,7 @@ package controllers;
 
 import java.util.Map;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -48,27 +49,32 @@ public class SeatsMapController extends Controller {
 		String[] seatsLabels= {"A","B","C","D","E","F","G","H","I","J","K"};
 		
 		
-		
-		
 		JsonArray cabinsArray = jsonSeats.getAsJsonObject().get("cabins").getAsJsonArray();
 		for (JsonElement cabinElement : cabinsArray) {
 			JsonArray economyRows = cabinElement.getAsJsonObject().get("rows").getAsJsonArray();
+			JsonArray columnsDataArray = cabinElement.getAsJsonObject().get("columns").getAsJsonArray();
 	    	for (JsonElement row : economyRows) {
 	    		columna=0;
-	    		
+	    		int seatNumber = 0;
 	    		if (row.getAsJsonObject().has("seats")){
 		    		JsonArray seats = row.getAsJsonObject().get("seats").getAsJsonArray();
 		    		for (JsonElement seat : seats) {
-		    			if (columna==8){
-		        			seatsRow.append("_");
-		        			columna++;
-		        		}
-	    				seatsRow.append("e");
-	    			
-		    			if (seat.getAsJsonObject().get("occupiedInd").getAsBoolean() || seat.getAsJsonObject().get("inoperativeInd").getAsBoolean()) {
-		    				unavailableSeats.append(fila+"_"+seatsLabels[columna]+"','");
+		    			while (columnsDataArray.size()>columna && columnsDataArray.get(columna).getAsJsonObject().get("type").getAsString().equals("Aisle")) {
+		    				seatsRow.append("_");
+		    				columna++;
 		    			}
-			    		columna++;
+		    			seatsRow.append("e");
+		    			columna++;
+		    			seatNumber++;
+//		    			if (columna==8){//
+//		        			seatsRow.append("_");
+//		        			columna++;
+//		        		}
+
+		    			if (seat.getAsJsonObject().get("occupiedInd").getAsBoolean() || seat.getAsJsonObject().get("inoperativeInd").getAsBoolean()) {
+		    				unavailableSeats.append(fila+"_"+seatsLabels[seatNumber]+"','");
+		    			}
+			    		
 					}
 	    		}
 	    		else {
