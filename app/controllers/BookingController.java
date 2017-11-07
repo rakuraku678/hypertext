@@ -10,11 +10,15 @@ import com.google.gson.JsonParser;
 
 import play.libs.WS;
 import play.mvc.Controller;
+import play.Play;
 import utils.DateUtils;
+import play.mvc.Util;
 import utils.ApiFlightsSdk.v1.Booking;
 import utils.JsonUtils;
 
 public class BookingController extends Controller {
+    private static final String APIPAX = Play.configuration.getProperty("apiPax.url");
+    private static final String APIALIANZA = Play.configuration.getProperty("apiAlianza.url");
 
     public static void startBooking(String body) throws IOException {
 
@@ -135,7 +139,7 @@ public class BookingController extends Controller {
 		}
     }
 	private static JsonObject getTokenByRut(String rut){
-		String url = "https://kdu.cl/apipax/passenger/v1/rut/" + rut;
+		String url = APIPAX + rut;
 		System.out.println(url);
 		WS.WSRequest request = WS.url(url);
 		request.setHeader("Authorization","Basic a2R1OmtkdQ==");
@@ -145,7 +149,7 @@ public class BookingController extends Controller {
 	}
 	public static void getPaxByToken(String body){
 		String token = params.get("token");
-		String url = "https://kdu.cl/apipax/passenger/v1/"+ token;
+		String url = APIALIANZA+ token;
 		System.out.println(url);
 		WS.WSRequest request = WS.url(url);
 		request.setHeader("Authorization","Basic a2R1OmtkdQ==");
