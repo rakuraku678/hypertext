@@ -50,10 +50,7 @@ public class FlightsController extends Controller {
         if (!Strings.isNullOrEmpty(params.get("destination"))){
             renderArgs.put("destinationCity", new Airport().getByIataCode(params.get("destination")).city);
         }
-        
-        if (promotionDto==null){
-        	System.out.println("es nulo");
-        }
+
         System.out.println("tknumber: "+tknumber);
         render(agencyConfigurationDto, cabinConfigurationDto, promotionDto, transactionId, tknumber);
     }
