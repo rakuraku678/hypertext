@@ -180,7 +180,10 @@
                     var childrencount = searchForm.find('select[name="childrencount"]').val();
                     var infantcount = searchForm.find('select[name="infantcount"]').val();
                     var cabin = searchForm.find('select[name="cabin"]').val();
-                    var transactionId = searchForm.find('input[name="hdnTransactionId"]').val();
+                    var transactionId = "";
+                    if (searchForm.find('input[name="hdnTransactionId"]').val()!=''){
+                    	transactionId = "/"+searchForm.find('input[name="hdnTransactionId"]').val();
+                    }
                     *{if(promotion){}*
                         *{searchURL += "/promociones/" + promotion;}*
                     *{}}*
@@ -189,7 +192,7 @@
                     searchURL += "/" + originPathArr[1];
                     searchURL += "/" + originPathArr[2];
 
-                    return searchURL + "/"+origin+"/"+destination+"/"+departuredate+"/"+returndate+"/"+adultcount+"-"+childrencount+"-"+infantcount+"/" + cabin+"/"+transactionId;
+                    return searchURL + "/"+origin+"/"+destination+"/"+departuredate+"/"+returndate+"/"+adultcount+"-"+childrencount+"-"+infantcount+"/" + cabin + transactionId;
                 };
 
                 var showError = function(msg){

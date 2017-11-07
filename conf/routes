@@ -44,6 +44,9 @@ GET     /vuelos/{promotion}/{origin}/{destination}/{departureDate}/{returnDate}/
 GET     /flights/{promotion}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}		             				FlightsController.index
 GET     /flights/{promotion}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}             				FlightsController.index
 
+GET     /flights/{promotion}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}/{transactionId}							             				FlightsController.index
+GET     /flights/{promotion}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}/{transactionId}/{tknumber}				             				FlightsController.index
+
 #reps
 GET     /{origin}/{destination}/{origin2}/{destination2}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}               													FlightsController.index
 GET     /{origin}/{destination}/{origin2}/{destination2}/{departureDate}/{returnDate}/{adults}-{children}-{infants}/{cabin}/{transactionId}               									FlightsController.index
@@ -68,6 +71,7 @@ GET     /flights/compra/{origin}/{destination}/{departureDate}/{returnDate}/{adu
 
 GET     /promociones/{promotion}                                                                                                                                FlightsController.index
 GET     /promociones/{promotion}/{origin}/{destination}/{departureDate}/{returnDate}/{adults}-{children}-{infants}                                              FlightsController.index
+
 
 GET		/auth/{transactionId}/{selectedCurrency}/{agencyId}/{agencySlug}/{step}					OAuthController.renderBancoChileLogin
 GET		/auth/{transactionId}/{selectedCurrency}/{agencyId}/{agencySlug}/{step}/{tknumber}		OAuthController.renderBancoChileLogin
