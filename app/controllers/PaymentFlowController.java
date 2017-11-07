@@ -71,7 +71,7 @@ public class PaymentFlowController extends Controller {
         
         Map cityMap = SearchController.getCity(JsonUtils.getStringFromJson(bfmResultJsonObject,"returnCity"));
         boolean onlyPassport = false;
-        if (cityMap!=null){
+        if (cityMap!=null && cityMap.get("onlyPassport")!=null){
         	onlyPassport = (boolean) cityMap.get("onlyPassport");
         }
         String validatingCarrier = JsonUtils.getStringFromJson(pricingJsonObject,"validatingCarrier");
