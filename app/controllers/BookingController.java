@@ -159,7 +159,7 @@ public class BookingController extends Controller {
 	}
 	public static void getFFPNumberByRut(){
         String rut = params.get("rut");
-        String url = "http://dev.mockup.cl/cashback/public/api/"+ rut;
+        String url = APIALIANZA+ rut;
         System.out.println(url);
         WS.WSRequest request = WS.url(url);
         WS.HttpResponse response = request.get();
