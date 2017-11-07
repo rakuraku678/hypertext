@@ -10,6 +10,8 @@ import com.google.gson.JsonParser;
 import play.Logger;
 import play.cache.Cache;
 import play.mvc.Controller;
+import play.Play;
+import play.mvc.Util;
 import utils.AESEncryptorUtil;
 import utils.CacheUtils;
 import utils.CrossLoginUtils;
@@ -17,8 +19,7 @@ import utils.CrossLoginUtils;
 public class OAuthController extends Controller {
 
 	
-	private static final String OAUTH_SERVER_URL = "http://190.98.204.155:7001/AuthServer/oauth/authorize";//";//https://200.14.140.84:4443/AuthServer/oauth/authorize"; //http://190.98.204.155:7001/AuthServer/oauth/authorize";//
-	private static final String OAUTH_SERVER_URL_PROD = "https://servicios.bancochile.cl/AuthServer/authorization";
+    private static final String OAUTH_SERVER_URL = Play.configuration.getProperty("oauth.server.url");
     private static final String AES_KEY = "Bar12345Bar12345";
     public static String apiCrossToken = ""; 
     
