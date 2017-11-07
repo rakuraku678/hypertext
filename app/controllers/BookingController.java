@@ -158,27 +158,24 @@ public class BookingController extends Controller {
 		renderJSON(jsonResponse.getAsJsonObject());
 	}
 	public static void getFFPNumberByRut(){
+		JsonObject jsonObject;
+
         String rut = params.get("rut");
         String url = APIALIANZA+ rut;
         System.out.println(url);
         WS.WSRequest request = WS.url(url);
         WS.HttpResponse response = request.get();
-        String valueToEscape = response.getString();
-        if (valueToEscape!= "" && valueToEscape != null) {
-            int startIndex = valueToEscape.indexOf(",\"mensaje\":\"Estimado");
-            String searchString = "}";
+		String valueToEscape = response.getString();
+        if (valueToEscape != null && !valueToEscape.equals("") ) {
             try {
-                int endIndex = startIndex + valueToEscape.substring(startIndex).indexOf(searchString);
-                String toBeReplaced = valueToEscape.substring(startIndex, endIndex);
-                valueToEscape = valueToEscape.replace(toBeReplaced, "");
+				jsonObject= new JsonParser().parse(valueToEscape).getAsJsonObject();				
+				jsonObject.addProperty("status","1");
 
             }catch (StringIndexOutOfBoundsException e){
-                valueToEscape = "{\"status\":\"0\"}";
+				valueToEscape = "{}";
+				jsonObject= new JsonParser().parse(valueToEscape).getAsJsonObject();
+				jsonObject.addProperty("status","0");
             }
-
-            JsonObject jsonObject = new JsonParser().parse(valueToEscape).getAsJsonObject();
-            jsonObject.addProperty("status","1");
-
             renderJSON(jsonObject);
         }
     }
