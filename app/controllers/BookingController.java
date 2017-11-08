@@ -42,9 +42,11 @@ public class BookingController extends Controller {
 	    	jsonEl.addProperty("givenName", givenName);
 	    	jsonEl.addProperty("surname", surname);
 	    	jsonEl.addProperty("foidType", passengersArray.get(i).getAsJsonObject().get("foidType").getAsString());
-			jsonEl.addProperty("FFPAirlineIataCode", passengersArray.get(i).getAsJsonObject().get("FFPAirlineIataCode").getAsString());
-			jsonEl.addProperty("FFPNumber", passengersArray.get(i).getAsJsonObject().get("FFPNumber").getAsString());
-
+	    	if (passengersArray.get(i).getAsJsonObject().has("FFPAirlineIataCode")){
+	    		jsonEl.addProperty("FFPAirlineIataCode", passengersArray.get(i).getAsJsonObject().get("FFPAirlineIataCode").getAsString());
+				jsonEl.addProperty("FFPNumber", passengersArray.get(i).getAsJsonObject().get("FFPNumber").getAsString());
+	    	}
+	
 	    	
 	    	if (passengersArray.get(i).getAsJsonObject().get("foidType").getAsString().equals("PAS")){
 	    		jsonEl.addProperty("nacionalityPassport", passengersArray.get(i).getAsJsonObject().get("nacionalityPassport").getAsString());
