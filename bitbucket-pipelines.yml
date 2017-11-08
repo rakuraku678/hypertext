@@ -5,7 +5,6 @@ pipelines:
     master:
       - step:
           script:
-            - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar -Dsonar.host.url=$SONAR_URL -Dsonar.organization=$SONAR_ORGANIZATION -Dsonar.login=$SONAR_LOGIN
             - git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME_MASTER.git HEAD
     staging:
       - step:
