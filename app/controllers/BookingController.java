@@ -8,11 +8,17 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import play.libs.WS;
 import play.mvc.Controller;
+import play.Play;
 import utils.DateUtils;
+import play.mvc.Util;
 import utils.ApiFlightsSdk.v1.Booking;
+import utils.JsonUtils;
 
 public class BookingController extends Controller {
+    private static final String APIPAX = Play.configuration.getProperty("apiPax.url");
+    private static final String APIALIANZA = Play.configuration.getProperty("apiAlianza.url");
 
     public static void startBooking(String body) throws IOException {
 
@@ -36,6 +42,9 @@ public class BookingController extends Controller {
 	    	jsonEl.addProperty("givenName", givenName);
 	    	jsonEl.addProperty("surname", surname);
 	    	jsonEl.addProperty("foidType", passengersArray.get(i).getAsJsonObject().get("foidType").getAsString());
+			jsonEl.addProperty("FFPAirlineIataCode", passengersArray.get(i).getAsJsonObject().get("FFPAirlineIataCode").getAsString());
+			jsonEl.addProperty("FFPNumber", passengersArray.get(i).getAsJsonObject().get("FFPNumber").getAsString());
+
 	    	
 	    	if (passengersArray.get(i).getAsJsonObject().get("foidType").getAsString().equals("PAS")){
 	    		jsonEl.addProperty("nacionalityPassport", passengersArray.get(i).getAsJsonObject().get("nacionalityPassport").getAsString());
@@ -128,5 +137,46 @@ public class BookingController extends Controller {
 			e.printStackTrace();
 			return false;
 		}
+    }
+	private static JsonObject getTokenByRut(String rut){
+		String url = APIPAX + rut;
+		System.out.println(url);
+		WS.WSRequest request = WS.url(url);
+		request.setHeader("Authorization","Basic a2R1OmtkdQ==");
+		WS.HttpResponse response = request.get();
+		JsonElement jsonResponse = response.getJson();
+		return(jsonResponse.getAsJsonObject());
+	}
+	public static void getPaxByToken(String body){
+		String token = params.get("token");
+		String url = APIALIANZA+ token;
+		System.out.println(url);
+		WS.WSRequest request = WS.url(url);
+		request.setHeader("Authorization","Basic a2R1OmtkdQ==");
+		WS.HttpResponse response = request.get();
+		JsonElement jsonResponse = response.getJson();
+		renderJSON(jsonResponse.getAsJsonObject());
+	}
+	public static void getFFPNumberByRut(){
+		JsonObject jsonObject;
+
+        String rut = params.get("rut");
+        String url = APIALIANZA+ rut;
+        System.out.println(url);
+        WS.WSRequest request = WS.url(url);
+        WS.HttpResponse response = request.get();
+		String valueToEscape = response.getString();
+        if (valueToEscape != null && !valueToEscape.equals("") ) {
+            try {
+				jsonObject= new JsonParser().parse(valueToEscape).getAsJsonObject();				
+				jsonObject.addProperty("status","1");
+
+            }catch (StringIndexOutOfBoundsException e){
+				valueToEscape = "{}";
+				jsonObject= new JsonParser().parse(valueToEscape).getAsJsonObject();
+				jsonObject.addProperty("status","0");
+            }
+            renderJSON(jsonObject);
+        }
     }
 }

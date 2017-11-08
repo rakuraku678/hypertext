@@ -2,10 +2,11 @@ package controllers;
 
 import com.google.common.base.Strings;
 
+import dto.StateDto;
+import play.cache.Cache;
 import play.mvc.Controller;
 import utils.AgencyConfigurationDto;
-import utils.ConfigurationDto;
-import utils.FlightsUtils;
+import utils.CrossLoginUtils;
 import utils.TravelClubUtils;
 import utils.ApiFlightsSdk.v1.Agency;
 import utils.ApiFlightsSdk.v1.Airport;
@@ -17,8 +18,9 @@ import utils.dtos.PromotionDto;
 
 public class FlightsController extends Controller {
 
-    public static void index(String slugAgency) {
-        PromotionDto promotionDto;
+
+    public static void index(String slugAgency, String transactionId, String tknumber) {
+        PromotionDto promotionDto = null;
         String externalId = "";
         CabinConfigurationDto cabinConfigurationDto;
         if (Strings.isNullOrEmpty(slugAgency)){
@@ -35,17 +37,24 @@ public class FlightsController extends Controller {
         	AgencyDto agencyDto = new Agency().getBySlug(slugAgency);
         	externalId = agencyDto.externalId;
             cabinConfigurationDto = CabinConfiguration.getByAgency(slugAgency);
+            promotionDto = new PromotionDto();
+            promotionDto.agency = agencyDto; 
         }
 
         AgencyConfigurationDto agencyConfigurationDto = TravelClubUtils.getAgencyConfiguration(externalId);
         
         if (!Strings.isNullOrEmpty(params.get("origin"))){
-            renderArgs.put("originCity", new Airport().getByIataCode(params.get("origin")).city);
+        	renderArgs.put("originCity", new Airport().getByIataCode(params.get("origin")).city);
         }
 
         if (!Strings.isNullOrEmpty(params.get("destination"))){
             renderArgs.put("destinationCity", new Airport().getByIataCode(params.get("destination")).city);
         }
-        render(agencyConfigurationDto,cabinConfigurationDto);
+
+        System.out.println("tknumber: "+tknumber);
+        render(agencyConfigurationDto, cabinConfigurationDto, promotionDto, transactionId, tknumber);
+    }
+    public static void reloadWithTransaction(String transactionId,String tknumber) {
+        render("FlightsController/successfulLogin.html",transactionId, tknumber);
     }
 }

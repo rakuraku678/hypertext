@@ -11,6 +11,47 @@
 	background-color: #EBEDF2;
 	min-height: 600px;
 }
+.modal-header-travel-login .modal-header{
+	color: #fff;
+	background-color: #2e313a;
+	text-align: center;
+	padding: 0;
+}
+.modal-header-travel-login .modal-header .box-logos {
+	background-color: #fff;
+	position: relative;
+	height: 70px;
+}
+.modal-header-travel-login .modal-header .box-logos .logo-banco-chile{
+	position: absolute;
+	left: 10px;
+}
+.modal-header-travel-login .modal-header .box-logos .logo-banco-edwars{
+	position: absolute;
+	right: 10px;
+}
+.modal-header-travel-login .modal-header .modal-title {
+	font-size: 19px;
+	padding: 15px
+}
+.modal-header-travel-login .modal-body {
+	padding: 0;
+}
+.modal-header-travel-login .modal-body iframe {
+	width: 100%;
+	padding-left: 0!important;
+}
+.modal-header-travel-login .modal-footer{
+	text-align: center;
+}
+.modal-header-travel-login .modal-footer .btn-search{
+	background-color: transparent;
+	box-shadow: none;
+	color: #1c98e6;
+	font-size: 18px;
+	text-transform: uppercase;
+	margin-top: 0;
+}
 /* ANIMATE PRELOAD
 ================ */
 
