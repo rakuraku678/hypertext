@@ -61,10 +61,10 @@ public class PaymentConfirmController extends Controller {
                 }
             }
             if (!allianceWaningMessages.isEmpty()) {
-                render(agencyConfigurationDto, bookingConfirmationResult, allianceWaningMessages);
+                render(agencyConfigurationDto, bookingConfirmationResult, allianceWaningMessages, promotionDto);
             }
         }
-        render(agencyConfigurationDto, bookingConfirmationResult);
+        render(agencyConfigurationDto, bookingConfirmationResult, promotionDto);
     }
 
 }
