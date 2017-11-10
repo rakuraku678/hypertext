@@ -121,28 +121,23 @@ public class PaymentFlowController extends Controller {
         render(agencyConfigurationDto,processData);
     }
 
-    public static void processError(String type){
+    public static void processError(String type, String pnr){
+    	System.out.println("llega pnr: "+pnr);
         PromotionDto promotionDto = new Promotion().getDefault();
         AgencyConfigurationDto agencyConfigurationDto = TravelClubUtils.getAgencyConfiguration(promotionDto.agency.externalId);
         ConfigurationDto configurationDto = FlightsUtils.getConfiguration();
-        render(agencyConfigurationDto, type, configurationDto);
+        render(agencyConfigurationDto, type, configurationDto,pnr);
     }
 
     public static void javascript() {
         render("app/views/PaymentFlowController/checkout.js");
     }
 
-    public static void newPayment(){
-        PromotionDto promotionDto;
-        if (!Strings.isNullOrEmpty(params.get("promotion"))) {
-            promotionDto = new Promotion().getBySlug(params.get("promotion"));
-        } else {
-            promotionDto = new Promotion().getDefault();
-        }
-
+    public static void newPayment(String pnr){
+    	PromotionDto promotionDto = new Promotion().getDefault();
         AgencyConfigurationDto agencyConfigurationDto = TravelClubUtils.getAgencyConfiguration(promotionDto.agency.externalId);
-
-        render(agencyConfigurationDto);
+        ConfigurationDto configurationDto = FlightsUtils.getConfiguration();
+        render(configurationDto, agencyConfigurationDto, pnr);
     }
 
     public static void processNewPayment(){
