@@ -41,7 +41,7 @@ public class PaymentConfirmController extends Controller {
         JsonObject order = (JsonObject) JsonUtils.getJsonObjectFromJson(bookingConfirmationResult.getAsJsonObject(), "order");
         String orderStatus = JsonUtils.getStringFromJson(order,"status");
         if(!orderStatus.equals("success")){
-            PaymentFlowController.processError("order-" + orderStatus);
+            PaymentFlowController.processError("order-" + orderStatus,"");
         }
 
         JsonArray flights = JsonUtils.getJsonArrayFromJson(bookingConfirmationResult.getAsJsonObject(), "flights");
