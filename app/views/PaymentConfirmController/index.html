@@ -26,7 +26,22 @@
     <article class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <div class="alert alert-success" role="alert"><i class="icon-confirm-path"></i>Felicitaciones <strong>${bookingConfirmationResult.order.name?.getAsString()}</strong>, tu vuelo ha sido confirmado!! </div>
+                <div class="alert alert-success" role="alert">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <i class="icon-confirm-path">
+                            </i>Felicitaciones <strong>${bookingConfirmationResult.order.name?.getAsString()}</strong>, tu vuelo ha sido confirmado!!
+                        </div>
+                    </div>
+                    #{if promotionDto.agency.slug.equals('traveldelta')}
+                    <br>
+                    <div class="row">
+                        <div class="col-md-12">
+                            Para reservar sus asientos ingrese <a href="https://es.delta.com/mytrips/findPnr.action">aquí</a>
+                        </div>
+                    </div>
+                    #{/if}
+                </div>
             </div>
             <div class="col-md-8">
                 <div class="box-info-payment">
