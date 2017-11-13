@@ -75,13 +75,14 @@ public class PaymentFlowController extends Controller {
         	onlyPassport = (boolean) cityMap.get("onlyPassport");
         }
         String validatingCarrier = JsonUtils.getStringFromJson(pricingJsonObject,"validatingCarrier");
-        Object[] airlineIataCodes =  Alliance.getFFPWhiteList(validatingCarrier).toArray();
-
         String AllianceMessage =  Alliance.getAllianceMessage(validatingCarrier);
-
-        JsonArray whiteListAirlines = AirlinesSearch.process(Arrays.toString(airlineIataCodes)
-                .replace("[","").replace("]","")).getAsJsonArray();
-
+        
+        Object[] airlineIataCodes =  Alliance.getFFPWhiteList(validatingCarrier).toArray();
+        JsonArray whiteListAirlines = new JsonArray();
+        if (airlineIataCodes.length>0){
+        	whiteListAirlines = AirlinesSearch.process(Arrays.toString(airlineIataCodes).replace("[","").replace("]","")).getAsJsonArray();
+        }
+        
         List<CountryDto> countriesList = Country.process();
         
         String transactionId = bfmResultItem.getAsJsonObject().get("transactionId").getAsString();
