@@ -67,18 +67,22 @@ public class SeatsMapController extends Controller {
 	    		if (row.getAsJsonObject().has("seats")){
 		    		JsonArray seats = row.getAsJsonObject().get("seats").getAsJsonArray();
 		    		for (JsonElement seat : seats) {
-		    			int colChecker=columna;
-		    			while (columnsDataArray.size()>colChecker && columnsDataArray.get(colChecker).getAsJsonObject().get("type").getAsString().equals("Aisle")) {
+//		    			int colChecker=columna;
+//		    			while (columnsDataArray.size()>colChecker && columnsDataArray.get(colChecker).getAsJsonObject().get("type").getAsString().equals("Aisle")) {
+//		    				seatsRow.append("_");
+//		    				colChecker++;
+//		    			}
+//		    			
+		    			if (columnsDataArray.get(columna).getAsJsonObject().get("type").getAsString().equals("Aisle")){
 		    				seatsRow.append("_");
-		    				colChecker++;
 		    			}
-		    			seatsRow.append("e");
+		    			else {
+		    				seatsRow.append("e");	
+		    			}
+		    			
+		    			
 		    			columna++;
 		    			seatNumber++;
-//		    			if (columna==8){//
-//		        			seatsRow.append("_");
-//		        			columna++;
-//		        		}
 
 		    			if (seat.getAsJsonObject().get("occupiedInd").getAsBoolean() || seat.getAsJsonObject().get("inoperativeInd").getAsBoolean()) {
 		    				unavailableSeats.append(fila+"_"+seatsLabels[seatNumber]+"','");
