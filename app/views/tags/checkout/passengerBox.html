@@ -153,10 +153,10 @@ $(document).ready(function () {
     var validatingCarrier = "${_validatingCarrier}";
     #{if !_onlyPassport}
     $('#rutNum${_key}').focusout(function(){
-        if ($(this).val().length > 8){
+        if ($(this).val().length >= 8){
             $.ajax({
                 type: "GET",
-                url: "/getFFPNumberByRut" +"?rut="+ $('#rutNum${_key}').val(),
+                url: "${_urlServer}/getFFPNumberByRut" +"?rut="+ $('#rutNum${_key}').val(),
                 dataType: "json",
                 success:function(result) {
                 currentFFPResponse${_key} = result;
@@ -169,10 +169,10 @@ $(document).ready(function () {
     });
     #{/if}
     $('#pasNum${_key}').focusout(function(){
-        if ($(this).val().length > 8){
+        if ($(this).val().length >= 8){
             $.ajax({
                 type: "GET",
-                url: "/getFFPNumberByRut" +"?rut="+ $('#rutNum${_key}').val(),
+                url: "${_urlServer}/getFFPNumberByRut" +"?rut="+ $('#rutNum${_key}').val(),
                 dataType: "json",
                 success:function(result) {
                 currentFFPResponse${_key} = result;
