@@ -160,6 +160,7 @@ public class BookingController extends Controller {
 		renderJSON(jsonResponse.getAsJsonObject());
 	}
 	public static void getFFPNumberByRut(){
+		response.setHeader("Access-Control-Allow-Origin", "*");
 		JsonObject jsonObject;
 
         String rut = params.get("rut");
