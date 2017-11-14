@@ -17,7 +17,7 @@ GET     /checkout/{id}/confirmation             PaymentConfirmController.index
 GET     /checkout/error/{type}                  PaymentFlowController.processError
 POST    /checkout/booking                       BookingController.startBooking
 POST    /checkout/booking/status                BookingController.statusBooking
-
+GET		/getFFPNumberByRut						BookingController.getFFPNumberByRut
 
 GET     /payment/new                            PaymentFlowController.newPayment
 POST    /payment/new                            PaymentFlowController.processNewPayment

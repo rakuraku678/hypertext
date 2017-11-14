@@ -130,9 +130,19 @@
                 </div>
                 #{/if}
             </div>
+       		#{if _agencySlug.equals('traveldelta')}
+			<div class="alert alert-info fade in alert-dismissable">
+				<p>* Los nombres y apellidos  deben coincidir con la información ingresada en SKYMILES.</p>
+			</div>
+			#{/if}
         </div>            
+
     </div>
+
 </div>
+
+
+
 #{if !_agencySlug.equals('travelclub')}
 <script type="text/javascript" src="@{'/public/javascripts/jquery-3.0.0.min.js'}"></script>
 <script>
@@ -146,7 +156,7 @@ $(document).ready(function () {
         if ($(this).val().length > 8){
             $.ajax({
                 type: "GET",
-                url: "@{BookingController.getFFPNumberByRut}" +"?rut="+ $('#rutNum${_key}').val(),
+                url: "/getFFPNumberByRut" +"?rut="+ $('#rutNum${_key}').val(),
                 dataType: "json",
                 success:function(result) {
                 currentFFPResponse${_key} = result;
@@ -162,7 +172,7 @@ $(document).ready(function () {
         if ($(this).val().length > 8){
             $.ajax({
                 type: "GET",
-                url: "@{BookingController.getFFPNumberByRut}" +"?rut="+ $('#rutNum${_key}').val(),
+                url: "/getFFPNumberByRut" +"?rut="+ $('#rutNum${_key}').val(),
                 dataType: "json",
                 success:function(result) {
                 currentFFPResponse${_key} = result;
