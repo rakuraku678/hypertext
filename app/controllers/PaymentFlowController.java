@@ -1,6 +1,5 @@
 package controllers;
 
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -16,21 +15,24 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import dto.StateDto;
+import play.Play;
 import play.cache.Cache;
-import org.hibernate.mapping.Collection;
 import play.mvc.Controller;
 import utils.AgencyConfigurationDto;
 import utils.ConfigurationDto;
 import utils.CrossLoginUtils;
 import utils.FlightsUtils;
-import utils.ApiFlightsSdk.v1.*;
 import utils.JsonUtils;
 import utils.TravelClubUtils;
+import utils.ApiFlightsSdk.v1.AirRules;
+import utils.ApiFlightsSdk.v1.AirlinesSearch;
+import utils.ApiFlightsSdk.v1.Alliance;
+import utils.ApiFlightsSdk.v1.Booking;
+import utils.ApiFlightsSdk.v1.Country;
+import utils.ApiFlightsSdk.v1.Promotion;
 import utils.dtos.AirRulesDto;
 import utils.dtos.CountryDto;
 import utils.dtos.PromotionDto;
-
-import static utils.ApiFlightsSdk.v1.AirlinesSearch.process;
 
 public class PaymentFlowController extends Controller {
 
@@ -95,8 +97,9 @@ public class PaymentFlowController extends Controller {
             System.out.println("state name: "+state.clientName);
         }
         
+        String urlServer = Play.configuration.getProperty("url.server");
         render(agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate, airRulesResultList, promotionDto, 
-        		countriesList, onlyPassport, whiteListAirlines, validatingCarrier, AllianceMessage, transactionId, token, state);
+        		countriesList, onlyPassport, whiteListAirlines, validatingCarrier, AllianceMessage, transactionId, token, state, urlServer);
 	
     }
     
