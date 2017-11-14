@@ -50,6 +50,14 @@ public class SeatsMapController extends Controller {
 		
 		
 		JsonArray cabinsArray = jsonSeats.getAsJsonObject().get("cabins").getAsJsonArray();
+//		int columnNumber = 0;
+//		for (JsonElement cabinElement : cabinsArray) {
+//			
+//			
+//			JsonArray columnsDataArray = cabinElement.getAsJsonObject().get("columns").getAsJsonArray();
+//			columnsDataArray.get(columnNumber).getAsJsonObject().get("type").getAsString().equals("Aisle");
+//		}
+		
 		for (JsonElement cabinElement : cabinsArray) {
 			JsonArray economyRows = cabinElement.getAsJsonObject().get("rows").getAsJsonArray();
 			JsonArray columnsDataArray = cabinElement.getAsJsonObject().get("columns").getAsJsonArray();
@@ -59,9 +67,10 @@ public class SeatsMapController extends Controller {
 	    		if (row.getAsJsonObject().has("seats")){
 		    		JsonArray seats = row.getAsJsonObject().get("seats").getAsJsonArray();
 		    		for (JsonElement seat : seats) {
-		    			while (columnsDataArray.size()>columna && columnsDataArray.get(columna).getAsJsonObject().get("type").getAsString().equals("Aisle")) {
+		    			int colChecker=columna;
+		    			while (columnsDataArray.size()>colChecker && columnsDataArray.get(colChecker).getAsJsonObject().get("type").getAsString().equals("Aisle")) {
 		    				seatsRow.append("_");
-		    				columna++;
+		    				colChecker++;
 		    			}
 		    			seatsRow.append("e");
 		    			columna++;
