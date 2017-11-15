@@ -34,8 +34,14 @@ public class SeatsMapController extends Controller {
 	    JsonElement jsonSeats = seatsMap.process(bodyJsonElement);
 //	    String st = "['ff_ff_e', 'ff_ff', 'ee_ee', 'ee_ee', 'ee___', 'ee_ee', 'ee_ee', 'ee_ee', 'eeeee']";
 //	    jsonSeats.getAsJsonObject().addProperty("stringloco", st);
-	    JsonElement parsedSeats = parseResults(jsonSeats);
-        renderJSON(parsedSeats);
+	    //JsonElement parsedSeats = parseResults(jsonSeats);
+	    
+	    Template template = TemplateLoader.load(template("tags/checkout/seatsMapChart.html"));
+	    Map m = Maps.newHashMap();
+	    m.put("seatsMap", jsonSeats);
+	    renderHtml(template.render(m).replaceAll("\\s{2,}"," "));
+	    
+        //renderJSON(parsedSeats);
     }
     
     @Util
@@ -46,7 +52,7 @@ public class SeatsMapController extends Controller {
     	int columna = 1;
     	StringBuilder seatsRow = new StringBuilder("['");
 		StringBuilder unavailableSeats = new StringBuilder("['");
-		String[] seatsLabels= {"A","B","C","D","E","F","G","H","I","J","K"};
+		String[] seatsLabels= {"A","B","C","D","E","F","G","H","J","K","L"};
 		
 		
 		JsonArray cabinsArray = jsonSeats.getAsJsonObject().get("cabins").getAsJsonArray();
@@ -64,29 +70,38 @@ public class SeatsMapController extends Controller {
 	    	for (JsonElement row : economyRows) {
 	    		columna=0;
 	    		int seatNumber = 0;
+	    		System.out.println("dibujando row number: "+row.getAsJsonObject().get("rowNumber").getAsString());
 	    		if (row.getAsJsonObject().has("seats")){
 		    		JsonArray seats = row.getAsJsonObject().get("seats").getAsJsonArray();
-		    		for (JsonElement seat : seats) {
-//		    			int colChecker=columna;
-//		    			while (columnsDataArray.size()>colChecker && columnsDataArray.get(colChecker).getAsJsonObject().get("type").getAsString().equals("Aisle")) {
-//		    				seatsRow.append("_");
-//		    				colChecker++;
-//		    			}
-//		    			
-		    			if (columnsDataArray.get(columna).getAsJsonObject().get("type").getAsString().equals("Aisle")){
-		    				seatsRow.append("_");
-		    			}
-		    			else {
-		    				seatsRow.append("e");	
-		    			}
-		    			
-		    			
-		    			columna++;
-		    			seatNumber++;
+		    		for (int i=0; i<columnsDataArray.size(); i++) {
+		    			try {
+		    				columna = i;
+		    				JsonElement seat = seats.get(i);
 
-		    			if (seat.getAsJsonObject().get("occupiedInd").getAsBoolean() || seat.getAsJsonObject().get("inoperativeInd").getAsBoolean()) {
-		    				unavailableSeats.append(fila+"_"+seatsLabels[seatNumber]+"','");
-		    			}
+			    			System.out.println("comparando columna: "+columnsDataArray.get(columna).getAsJsonObject().get("name").getAsString()+", con asiento: "+seat.getAsJsonObject().get("number").getAsString());
+			    			if (columnsDataArray.get(columna).getAsJsonObject().get("type").getAsString().equals("Aisle") || 
+			    					!columnsDataArray.get(columna).getAsJsonObject().get("name").getAsString().equals(seat.getAsJsonObject().get("number").getAsString()) ||
+			    					seat.getAsJsonObject().get("inoperativeInd").getAsBoolean()){
+			    				System.out.println("se pone '_'");
+			    				seatsRow.append("_");
+			    			}
+			    			else {
+			    				System.out.println("se pone 'e'");
+			    				seatsRow.append("e");	
+			    			}
+			    			System.out.println("=============");
+			    			
+			    			//columna++;
+			    			seatNumber++;
+
+			    			if (seat.getAsJsonObject().get("occupiedInd").getAsBoolean() ) {
+			    				unavailableSeats.append(fila+"_"+seatsLabels[i]+"','");
+			    			}
+						} catch (Exception e) {
+							seatsRow.append("_");
+						}
+		    			
+
 			    		
 					}
 	    		}
@@ -97,6 +112,8 @@ public class SeatsMapController extends Controller {
 	    		fila++;
 			}
 		}
+		StringBuilder allSeatsRow = seatsRow;
+		results.getAsJsonObject().addProperty("allSeats", allSeatsRow.substring(1, allSeatsRow.length()).toString());
     	unavailableSeats.setLength(unavailableSeats.length() - 2);
     	unavailableSeats.append("]");
     	
@@ -109,6 +126,7 @@ public class SeatsMapController extends Controller {
     	System.out.println("totalSeats: "+totalSeats);
     	results.getAsJsonObject().addProperty("totalSeats", totalSeats);
     	results.getAsJsonObject().addProperty("unavailableSeats", unavailable);
+    	
     	return results;
     }
     

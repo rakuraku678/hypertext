@@ -1,33 +1,27 @@
-<table>
+<div class="container">
+<div id="seat-map" class="seatCharts-container" tabindex="0" aria-activedescendant="6_B">
+
 
 #{list seatsMap.cabins, as: 'cabin' }
-	Cabin class: ${cabin.cabinClass}<br><br>
 	#{list cabin.rows, as: 'row' }
-		${row.rowNumber}<br>
-	
-	#{/list}	
+		<div class="seatCharts-row">
+			#{list row.seats, as: 'seat' }
+				<div id="${seat.rowNumber}_${seat.number}" role="checkbox" aria-checked="false" focusable="true" tabindex="-1" class="seatCharts-seat seatCharts-cell economy-class available">${seat.number.getAsString()}</div>
+			#{/list}
+		</div>
+	#{/list}
 	
 #{/list}
-	<tr>
-		<td>${seatsMap.status.getAsString()}</td>
-		<td>2</td>
-		<td>3</td>
-		<td>4</td>
-		<td>5</td>
-		<td>6</td>
-	</tr>
 	
-	<tr>
-		<td>1</td>
-		<td>2</td>
-		<td>3</td>
-		<td>4</td>
-		<td>5</td>
-		<td>6</td>
-	</tr>
-</table>
-
-
+	
+</div>
+	
+	
+</div>
+	
+	
+	
+	
 
 
 

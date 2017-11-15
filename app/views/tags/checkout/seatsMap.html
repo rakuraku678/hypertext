@@ -14,7 +14,7 @@
 				<div class="wrapper" style="display: none;" id="chartWrapper">
 					<div class="container">
 						<div id="seat-map">
-							<div class="front-indicator">Frente</div>
+							
 							
 						</div>
 					</div>
@@ -127,7 +127,7 @@ span.seatCharts-legendDescription {
 		
 <script>
 var seatsCounter = 0;
-var arraySeatsLabel = ["A", "B", "C", "D", "E", "F", "G", "H",  "J", "K"];
+var arraySeatsLabel = ["A", "B", "C", "D", "E", "F", "G", "H",  "J", "K", "L"];
 var lastRow = 1;
 var sc=null;
 
@@ -155,6 +155,7 @@ function charter(result) {
 		naming : {
 			top : false,
 			getLabel : function (character, row, column) {
+				console.log("character: "+character);
 				if (seatsCounter==arraySeatsLabel.length) {
 					seatsCounter=0;
 				}
@@ -235,6 +236,29 @@ function recalculateTotal(sc) {
 	return total;
 }
 
+
+
+
+function charter2(result){
+	var seatsArray = result.allSeats.split(',');
+	$('#seat-map').append('<div class="front-indicator">Frente</div>');
+
+	for(i=0; i < seatsArray.length; i++){
+		var seats = seatsArray[i];
+		$('#seat-map').html($('#seat-map').html()+'<div class="seatCharts-row">');
+		for(j=0; j < seats.length; j++){
+			if (seats[j]=='e'){
+				$('#seat-map').append('<div id="1_'+arraySeatsLabel[j]+'" role="checkbox" aria-checked="false" focusable="true" tabindex="-1" class="seatCharts-seat seatCharts-cell economy-class available">'+arraySeatsLabel[j]+'</div>');
+			}
+			else {
+				$('#seat-map').append('<div class="seatCharts-cell seatCharts-space"></div>');
+			}
+		}
+		$('#seat-map').html($('#seat-map').html()+'</div>');
+	}
+}
+
+
 var jsonloco;
 	$(function () {
 
@@ -247,8 +271,8 @@ var jsonloco;
 			    'data': data,
 			    'success': function(result){
 			    	jsonloco=result;
-		        	//$('#modalSeatsBody').html(result);
-		        	charter(result);
+		        	$('#modalSeatsBody').append(result);
+		        	//charter(result);
 		        	$('#cargandoDiv').hide();
 		        	$('#chartWrapper').show();
 			    }
