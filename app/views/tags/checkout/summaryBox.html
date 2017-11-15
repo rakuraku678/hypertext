@@ -31,14 +31,23 @@
 			      	 	totalTaxByQuantity = pricingDetail.totalTax?.getAsInt() * pricingDetail.quantity?.getAsInt();
 			      	 }
 			      	 
+			      	 def subTotalAdt = _pricingCLP.totalAdt.getAsInt() + totalTaxByQuantity;
 			      	 def subTotal = basefareByQuantity + totalTaxByQuantity;
 			    	}%
 	        <tr>
 	            <td></td>
 	            <td class="txt-payment-table-mark">${pricingDetail.quantity?.getAsString()} ${passType}${pricingDetail.quantity?.getAsInt().pluralize()}</td>
+	            #{if passType=="Adulto"}
+	            <td><span class="simbolCurrency">$</span><span class="clppriceCon">${_pricingCLP.totalAdt.getAsString()}</span></td>
+	            <td><span class="simbolCurrency">$</span><span class="clppriceCon">${totalTaxByQuantity ?: "0"}</span></td>
+	            <td class="txt-payment-table-mark"><span class="simbolCurrency">$</span><span class="clppriceCon">${subTotalAdt}</span></td>
+	            #{/if}
+	            #{else}
 	            <td><span class="simbolCurrency">$</span><span class="clppriceCon">${basefareByQuantity}</span></td>
 	            <td><span class="simbolCurrency">$</span><span class="clppriceCon">${totalTaxByQuantity ?: "0"}</span></td>
 	            <td class="txt-payment-table-mark"><span class="simbolCurrency">$</span><span class="clppriceCon">${subTotal}</span></td>
+	            #{/else}
+	            
 	        </tr>
 	        #{/list}
         #{/if}
