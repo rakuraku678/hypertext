@@ -34,7 +34,7 @@ public class SeatsMapController extends Controller {
 	    JsonElement jsonSeats = seatsMap.process(bodyJsonElement);
 //	    String st = "['ff_ff_e', 'ff_ff', 'ee_ee', 'ee_ee', 'ee___', 'ee_ee', 'ee_ee', 'ee_ee', 'eeeee']";
 //	    jsonSeats.getAsJsonObject().addProperty("stringloco", st);
-	    //JsonElement parsedSeats = parseResults(jsonSeats);
+//	    JsonElement parsedSeats = parseResults(jsonSeats);
 	    
 	    Template template = TemplateLoader.load(template("tags/checkout/seatsMapChart.html"));
 	    Map m = Maps.newHashMap();

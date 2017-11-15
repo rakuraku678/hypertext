@@ -3,10 +3,23 @@
 
 
 #{list seatsMap.cabins, as: 'cabin' }
+%{def columnsDataArray = cabin.getAsJsonObject().get("columns").getAsJsonArray(); }%
 	#{list cabin.rows, as: 'row' }
 		<div class="seatCharts-row">
+		<div class="seatCharts-cell seatCharts-space">${row.rowNumber}</div>
 			#{list row.seats, as: 'seat' }
-				<div id="${seat.rowNumber}_${seat.number}" role="checkbox" aria-checked="false" focusable="true" tabindex="-1" class="seatCharts-seat seatCharts-cell economy-class available">${seat.number.getAsString()}</div>
+				#{if columnsDataArray.get(seat_index-1).getAsJsonObject().get("type").getAsString().equals("Aisle") || 
+				    					!columnsDataArray.get(seat_index-1).getAsJsonObject().get("name").getAsString().equals(seat.getAsJsonObject().get("number").getAsString()) ||
+				    					seat.getAsJsonObject().get("inoperativeInd").getAsBoolean() }
+					
+					<div class="seatCharts-cell seatCharts-space"></div>
+				#{/if}
+				#{elseif seat.getAsJsonObject().get("occupiedInd").getAsBoolean()}
+					<div id="${seat.rowNumber}_${seat.number}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class unavailable">${seat.number.getAsString()}</div>
+				#{/elseif}
+				#{else}
+					<div id="${seat.rowNumber}_${seat.number}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class available">${seat.number.getAsString()}</div>
+				#{/else}
 			#{/list}
 		</div>
 	#{/list}
