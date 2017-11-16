@@ -36,9 +36,11 @@ public class SeatsMapController extends Controller {
 //	    jsonSeats.getAsJsonObject().addProperty("stringloco", st);
 //	    JsonElement parsedSeats = parseResults(jsonSeats);
 	    
+	    
 	    Template template = TemplateLoader.load(template("tags/checkout/seatsMapChart.html"));
 	    Map m = Maps.newHashMap();
 	    m.put("seatsMap", jsonSeats);
+	    m.put("numberOfSeats", bodyJsonElement.getAsJsonObject().get("pricing").getAsJsonObject().get("seats").getAsString());
 	    renderHtml(template.render(m).replaceAll("\\s{2,}"," "));
 	    
         //renderJSON(parsedSeats);

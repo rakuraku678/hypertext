@@ -302,5 +302,11 @@ var jsonloco;
 		});
 		
 		
+		$(".seatCharts-seat").hover(function() {
+			if ($(this).hasClass("available")) {
+				$(this).addClass("focused");
+			}
+		});
+		
 	});
 </script>
