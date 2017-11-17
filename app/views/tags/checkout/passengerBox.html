@@ -142,59 +142,48 @@
 </div>
 
 
-
-#{if !_agencySlug.equals('travelclub')}
 <script type="text/javascript" src="@{'/public/javascripts/jquery-3.0.0.min.js'}"></script>
+#{if !_agencySlug.equals('travelclub')}
 <script>
-
 $(document).ready(function () {
     var availableAirlines = [#{list items:_whiteListAirlines, as:'whiteListAirlines'}${whiteListAirlines.iataCode.raw()}${whiteListAirlines_isLast ? '' : ','}#{/list}];
     var currentFFPResponse${_key};
     var validatingCarrier = "${_validatingCarrier}";
-    #{if !_onlyPassport}
-    $('#rutNum${_key}').focusout(function(){
-        if ($(this).val().length >= 8){
-            $.ajax({
-                type: "GET",
-                url: "${_urlServer}/getFFPNumberByRut" +"?rut="+ $('#rutNum${_key}').val(),
-                dataType: "json",
-                success:function(result) {
-                currentFFPResponse${_key} = result;
-                    if(result.status != 0){
-                        autocompleteFFP(result);
-                    }
-                }
-            });
-        }
-    });
+
+    #{if state!=null}
+        getMockupUser($(state.clientRut);
     #{/if}
-    $('#pasNum${_key}').focusout(function(){
-        if ($(this).val().length >= 8){
-            $.ajax({
-                type: "GET",
-                url: "${_urlServer}/getFFPNumberByRut" +"?rut="+ $('#rutNum${_key}').val(),
-                dataType: "json",
-                success:function(result) {
-                currentFFPResponse${_key} = result;
-                    if(result.status != 0){
-                        autocompleteFFP(result);
-                    }
-                }
-            });
-        }
-    });
-
-    function getFFPNumByAlliance(allianceName){
-        for (var alliance in currentFFPResponse${_key}.alianza){
-            if (validateIataCode(currentFFPResponse${_key}.alianza[alliance].nombre) == allianceName){
-            return currentFFPResponse${_key}.alianza[alliance].id;
+    #{else}
+        #{if !_onlyPassport}
+        $('#rutNum${_key}').focusout(function(){
+            if ($(this).val().length >= 8){
+                getMockupUser($('#rutNum${_key}').val());
             }
-        }
-        return "";
-    }
+        });
+        #{/if}
+        $('#pasNum${_key}').focusout(function(){
+            if ($(this).val().length >= 8){
+                getMockupUser($('#rutNum${_key}').val());
+            }
+        });
+    #{/else}
 
+
+    function getMockupUser(RUT){
+        $.ajax({
+            type: "GET",
+            url: "${_urlServer}/getFFPNumberByRut" +"?rut="+ RUT,
+            dataType: "json",
+            success:function(result) {
+            currentFFPResponse${_key} = result;
+                if(result.status != 0){
+                    autocompleteFFP(result);
+                }
+            }
+        });
+    };
     function autocompleteFFP(result) {
-    var prefered = false
+        var prefered = false
         for (var ffp in result.alianza){
             for (var aa in availableAirlines) {
                 if (availableAirlines[aa] == validatingCarrier && validatingCarrier == validateIataCode(result.alianza[ffp].nombre)){
@@ -220,6 +209,14 @@ $(document).ready(function () {
                 }
             }
         }
+    };
+    function getFFPNumByAlliance(allianceName){
+        for (var alliance in currentFFPResponse${_key}.alianza){
+            if (validateIataCode(currentFFPResponse${_key}.alianza[alliance].nombre) == allianceName){
+            return currentFFPResponse${_key}.alianza[alliance].id;
+            }
+        }
+        return "";
     };
 
     function validateSecondLastName(secondLastName){
