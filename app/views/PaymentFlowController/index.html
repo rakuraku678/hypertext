@@ -164,6 +164,11 @@
 
 
 <script type="text/javascript">
+    var passengers = null;
+    var currentApiPaxResponse = null;
+    var availableAirlines = [#{list items:whiteListAirlines, as:'whiteListAirlines'}${whiteListAirlines.iataCode.raw()}${whiteListAirlines_isLast ? '' : ','}#{/list}];
+    var validatingCarrier = "${validatingCarrier}";
+
 	function numberWithCommas(x) {
 		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 	}
@@ -204,6 +209,117 @@
 	        });
 		#{/if}
 		#{else}
+		    getApiPaxUser(${state.clientRut},function(result) {
+                if(result.status != "BAD_REQUEST"){
+                   currentApiPaxResponse =result;
+                   passengers = listPassengers(result);
+                   fillInRutSelect();
+                }else {
+                    getMockupUser(${state.clientRut},function(result) {
+                        if(result.status != 0 && result.alianza[0].nombre != ""){
+                            saveMockupToApiPax(result);
+                        }
+                    });
+                }
+            });
+
+		    function getApiPaxUser(RUT,todo){
+                $.ajax({
+                    type: "GET",
+                    url: "${_urlServer}/getApiPaxClientByRut" +"?rut="+ RUT,
+                    dataType: "json",
+                    success:todo
+                });
+            }
+            function getMockupUser(RUT,todo){
+                $.ajax({
+                    type: "GET",
+                    url: "${_urlServer}/getMockupClientByRut" +"?rut="+ RUT,
+                    dataType: "json",
+                    success: todo
+                });
+            };
+		    function saveMockupToApiPax(mockupUser){
+                var data = JSON.stringify({
+                    name: mockupUser.alianza[0].clientenombre,
+                    lastname: mockupUser.alianza[0].clienteapellido + " " + mockupUser.alianza[0].clientesegundoapellido,
+                    documents: [
+                        {
+                            documentType: 'RUT',
+                            value: '${state.clientRut}'
+                        }
+                    ]
+                });
+                $.ajax({
+                    type: "POST",
+                    url: "${_urlServer}/createApiPaxClient",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: data,
+                    success:function(result) {
+                        if(result.document == ${state.clientRut}){
+                            getApiPaxUser(${state.clientRut},function(result) {
+                                if(result.status != "BAD_REQUEST"){
+                                   currentApiPaxResponse = result;
+                                   passengers = listPassengers(result);
+                                   fillInRutSelect();
+                                }else {
+                                    console.log('ApiPax Get error on passenger :${state.clientRut}');
+                                }
+                            });
+                        }else {
+                            console.log("Error trying to save passenger");
+                        }
+                    }
+                });
+            };
+            function autocompleteApiPax(user,key) {
+                for (var doc in user.documents){
+                    if (user.documents[doc].documentType == "RUT"){
+                        $('#rutNum'+key).val(user.documents[doc].value);
+                    }
+                }
+                $('#pasName'+key).val(user.name);
+                $('#pasLastName'+key).val(user.lastname);
+                var prefered = false
+                for (var ffp in user.regularPassengers){
+                    for (var aa in availableAirlines) {
+                        if (availableAirlines[aa] == validatingCarrier && validatingCarrier == user.regularPassengers[ffp].alliance){
+                            $('#FFPNumber'+key).val(user.regularPassengers[ffp].number);
+                            $('#FFPAirlineIataCode'+key).val(availableAirlines[aa]);
+                            prefered = true;
+                        }
+                        if(!prefered && availableAirlines[aa] ==  user.regularPassengers[ffp].alliance){
+                            $('#FFPNumber'+key).val(user.regularPassengers[ffp].number);
+                            $('#FFPAirlineIataCode'+key).val(availableAirlines[aa]);
+                        }
+                    }
+                }
+            };
+            function listPassengers(result){
+                var list = [];
+                for (var user in result.passengers){
+                    list.push(result.passengers[user]);
+                }
+                list.push(result.client);
+                return list;
+            }
+            function fillInRutSelect(){
+                for(var i = 0; i < ${passengersCount}; i++) {
+                   var select = document.getElementById("savedRutNum"+i);
+                    for (var passenger in passengers){
+                        //Corregir solo para RUT
+                        var opt = passengers[passenger].documents[0].value;
+                        var el = document.createElement("option");
+                        el.textContent = opt;
+                        el.value = opt;
+                        select.appendChild(el);
+                    }
+                }
+            }
+
+
+
     	    $("#loginDiv").hide();
     	    $('#logoutDiv').show();
     	    $('#loggedDiv').show();

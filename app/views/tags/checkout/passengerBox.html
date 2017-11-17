@@ -18,6 +18,19 @@
             <p><i class="icon-glasses"></i>Comprueba que la información ingresada coincida con la de tu documento de viaje, sea pasaporte u otro.</p>
         </div>
 
+        #{if _state != null}
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <select id="savedRutNum${_key}" class="form-control">
+                        <option value="0">pasajeros Guardados</option>
+                    </select>
+                    <button id="deletePassenger${_key}" class="form-control" >Remove selected passenger</button>
+                </div>
+            </div>
+        </div>
+        #{/if}
+
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-6 form-group">
@@ -37,14 +50,14 @@
                     </div>
                     <div class="col-md-9 form-group"  style="padding-right: 0;">
                         #{if !_onlyPassport}
-                        <input id="rutNum${_key}" type="text" class="form-control validatedocumentnum" autocomplete="off" name="passengers[${_key}][foidRut]" placeholder="ej. 190006441">
+                        <input id="rutNum${_key}" type="text" class="form-control validatedocumentnum" name="passengers[${_key}][foidRut]" placeholder="ej. 190006441">
                         #{/if}
                         <input id="pasNum${_key}" #{if !_onlyPassport}style="display: none;"#{/if} type="text" class="form-control validatepassport" autocomplete="off" name="passengers[${_key}][foid]" placeholder="ej. 190006441">
                     </div>
                 </div>
                 <div class="col-md-6 form-group" style="padding-top: 35px;">
                     <label>Sexo:</label>
-                    <select name="passengers[${_key}][gender]" class="form-control icon-arrow-from">
+                    <select name="passengers[${_key}][gender]" class="form-control ">
                         <option value="M">Masculino</option>
                         <option value="F">Femenino</option>
                     </select>
@@ -76,7 +89,7 @@
                     </div>
                     <div class="col-md-6 form-group" style="padding-right: 0;">
                             <label>Fecha de vencimiento de documento:</label>
-                            <input type="text" class="form-control validatedatePas" name="passengers[${_key}][expirationPassport]" placeholder="ej. 01/01/1990" data-pnum="${_key}">
+                            <input id="birthDate${_key}" type="text" class="form-control validatedatePas" name="passengers[${_key}][expirationPassport]" placeholder="ej. 01/01/1990" data-pnum="${_key}">
                             <small class="help-block" id="invfpas${_key}" style="display: none;">Campo no válido</small>
                             <small class="help-block" id="emptyfpas${_key}" style="display: none;">El campo esta vacio.</small>
                     </div>
@@ -96,8 +109,7 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-6 form-group">
-                    <div class="modify-position-box">
-                        <label>Fecha de nacimiento:</label>
+                    <div class="modify-posT
                         <label class="sub-label" style="color: #3c0b9a;font-weight: bold;"> </label>
                         <input type="text" class="form-control validatedate" name="passengers[${_key}][dateOfBirth]" placeholder="01/01/1990"  data-pnum="${_key}" >
                         <small class="help-block" id="invfnac${_key}" style="display: none;">Campo no válido</small>
@@ -113,7 +125,7 @@
                         </div>
                     </div>
                     <div class="col-md-4 form-group">
-                        <select name="passengers[${_key}][FFPAirlineIataCode]" class="form-control icon-arrow-from" id="FFPAirlineIataCode${_key}">
+                        <select id="FFPAirlineIataCode${_key}" name="passengers[${_key}][FFPAirlineIataCode]" class="form-control icon-arrow-from" >
                             <option value="">
                                 Seleccionar
                             </option>
@@ -140,112 +152,142 @@
     </div>
 
 </div>
-
-
 <script type="text/javascript" src="@{'/public/javascripts/jquery-3.0.0.min.js'}"></script>
 #{if !_agencySlug.equals('travelclub')}
 <script>
-$(document).ready(function () {
-    var availableAirlines = [#{list items:_whiteListAirlines, as:'whiteListAirlines'}${whiteListAirlines.iataCode.raw()}${whiteListAirlines_isLast ? '' : ','}#{/list}];
-    var currentFFPResponse${_key};
-    var validatingCarrier = "${_validatingCarrier}";
 
-    #{if state!=null}
-        getMockupUser($(state.clientRut);
-    #{/if}
-    #{else}
-        #{if !_onlyPassport}
-        $('#rutNum${_key}').focusout(function(){
-            if ($(this).val().length >= 8){
-                getMockupUser($('#rutNum${_key}').val());
+#{if _state!=null}
+    $('#deletePassenger${_key}').click(function(){
+        var savedRutNum = document.getElementById("savedRutNum${_key}");
+        var passengerRut = savedRutNum.options[savedRutNum.selectedIndex].text;
+        deleteApiPaxPassenger(passengerRut,${_state.clientRut},function(result){
+            if(result.code == 200){
+                savedRutNum.remove(savedRutNum.selectedIndex);
+                alert("eliminado "+passengerRut);
+                $('#checkoutForm').bootstrapValidator("resetForm",true);
+            }else if (result.code == 400){
+                alert("No se puede eliminar al cliente");
             }
         });
-        #{/if}
-        $('#pasNum${_key}').focusout(function(){
-            if ($(this).val().length >= 8){
-                getMockupUser($('#rutNum${_key}').val());
-            }
-        });
-    #{/else}
+    });
 
 
-    function getMockupUser(RUT){
+    function deleteApiPaxPassenger(passengerRut,clientRut,todo){
         $.ajax({
-            type: "GET",
-            url: "${_urlServer}/getFFPNumberByRut" +"?rut="+ RUT,
-            dataType: "json",
-            success:function(result) {
-            currentFFPResponse${_key} = result;
-                if(result.status != 0){
-                    autocompleteFFP(result);
-                }
-            }
-        });
-    };
-    function autocompleteFFP(result) {
-        var prefered = false
-        for (var ffp in result.alianza){
-            for (var aa in availableAirlines) {
-                if (availableAirlines[aa] == validatingCarrier && validatingCarrier == validateIataCode(result.alianza[ffp].nombre)){
-                    $('#FFPNumber${_key}').val(result.alianza[ffp].id);
-                    $('#FFPAirlineIataCode${_key}').val(availableAirlines[aa]);
-                    var correctNameSpecialChars = $('<textarea />').html(result.alianza[ffp].clientenombre).text();
-                    $('#pasName${_key}').val(correctNameSpecialChars);
-                    var correctLastNameSpecialChars = $('<textarea />').html(result.alianza[ffp].clienteapellido + validateSecondLastName(result.alianza[ffp].clientesegundoapellido)).text();
-                    $('#pasLastName${_key}').val(correctLastNameSpecialChars);
-                    checkPassNameLastN($('#pasName${_key}'));
-                    checkPassNameLastN($('#pasLastName${_key}'));
-                    prefered = true;
-                }
-                if(!prefered && availableAirlines[aa] == validateIataCode(result.alianza[ffp].nombre)){
-                    $('#FFPNumber${_key}').val(result.alianza[ffp].id);
-                    $('#FFPAirlineIataCode${_key}').val(availableAirlines[aa]);
-                    var correctNameSpecialChars = $('<textarea />').html(result.alianza[ffp].clientenombre).text();
-                    $('#pasName${_key}').val(correctNameSpecialChars);
-                    var correctLastNameSpecialChars = $('<textarea />').html(result.alianza[ffp].clienteapellido + validateSecondLastName(result.alianza[ffp].clientesegundoapellido)).text();
-                    $('#pasLastName${_key}').val(correctLastNameSpecialChars);
-                    checkPassNameLastN($('#pasName${_key}'));
-                    checkPassNameLastN($('#pasLastName${_key}'));
-                }
-            }
-        }
-    };
-    function getFFPNumByAlliance(allianceName){
-        for (var alliance in currentFFPResponse${_key}.alianza){
-            if (validateIataCode(currentFFPResponse${_key}.alianza[alliance].nombre) == allianceName){
-            return currentFFPResponse${_key}.alianza[alliance].id;
-            }
-        }
-        return "";
+                type: "DELETE",
+                url: "${_urlServer}/deleteApiPaxPassenger" + "?ClientRut=" + clientRut + "&PassengerRut=" + passengerRut,
+                dataType: "json",
+                success: todo
+            });
     };
 
-    function validateSecondLastName(secondLastName){
-        if (secondLastName != ""){
-            return " " + secondLastName
+    $('#savedRutNum${_key}').change(function() {
+        if($(this).val() != "0"){
+            autocompleteApiPax(getUserByRUT($(this).val()),${_key});
         }
-        return ""
-    }
+    });
 
-    function validateIataCode(airlineName){
-        switch(airlineName){
-            case "Delta":
-                return "DL";
-            case "Iberia":
-                return "IB";
-            case "British":
-                return "BA";
-            case "Gol":
-                return "G3"
-            default :
-                return ""
+
+    function getUserByRUT(rut){
+        for (var p in passengers){
+            var passenger = passengers[p];
+            for (var d in passenger.documents){
+                var doc = passenger.documents[d];
+                if (doc.documentType == "RUT" && doc.value == rut){
+                    return passenger;
+
+                }
+            }
+            return "";
         }
     };
 
     $('#FFPAirlineIataCode${_key}').change(function() {
-        if (currentFFPResponse${_key} != null){
-            $('#FFPNumber${_key}').val(getFFPNumByAlliance($(this).val()));
+        if (currentApiPaxResponse != null){
+            $('#FFPNumber${_key}').val(getApiPaxFFPNumByAlliance($('#rutNum${_key}').val(),$(this).val()));
         }
     });
-});
+
+    function getApiPaxFFPNumByAlliance(rut, allianceName){
+        if (rut != ""){
+        var passenger = getUserByRUT(rut);
+            for (var rp in passenger.regularPassengers){
+                var regularPassenger = passenger.regularPassengers[rp];
+                if (regularPassenger.alliance == allianceName){
+                    return regularPassenger.number;
+                }
+            }
+            return "";
+        }
+    };
+
+    function getApiPaxUser(RUT,todo){
+        $.ajax({
+            type: "GET",
+            url: "${_urlServer}/getApiPaxClientByRut" +"?rut="+ RUT,
+            dataType: "json",
+            success:todo
+        });
+    }
+    function getMockupUser(RUT,todo){
+        $.ajax({
+            type: "GET",
+            url: "${_urlServer}/getMockupClientByRut" +"?rut="+ RUT,
+            dataType: "json",
+            success: todo
+        });
+    };
+    function saveMockupToApiPax(mockupUser){
+        var rut = mockupUser.rut +''+ mockupUser.dv;
+        var data = JSON.stringify({
+            name: mockupUser.alianza[0].clientenombre,
+            lastname: mockupUser.alianza[0].clienteapellido + " " + mockupUser.alianza[0].clientesegundoapellido,
+            documents: [
+                {
+                    documentType: 'RUT',
+                    value: rut
+                }
+            ]
+        });
+        $.ajax({
+            type: "POST",
+            url: "${_urlServer}/createApiPaxClient",
+            contentType: "application/json",
+            dataType: "json",
+            data: data,
+            success:function(result) {
+                if(result.document == rut){
+                    getApiPaxUser(rut,function(result) {
+                        if(result.status != "BAD_REQUEST"){
+                           currentApiPaxResponse = result;
+                           autocompleteApiPax(currentApiPaxResponse,0);
+                        }else {
+                            console.log("no se completo nada");
+                        }
+                    });
+                }else {
+                    console.log("error al salvar usuario");
+                }
+            }
+        });
+    }
+    #{/if}
+	#{else}
+
+     *{$('#pasNum${_key}').focusout(function(){
+        if ($(this).val().length >= 8){
+        //implementar autocomplet con mockups
+        }
+    });}*
+
+    #{if !_onlyPassport}
+    $('#rutNum${_key}').focusout(function(){
+        if ($(this).val().length >= 8){
+            //implementar autocomplet con mockups
+        }
+    });
+    #{/if}
+
+    #{/else}
 </script>
 #{/if}
