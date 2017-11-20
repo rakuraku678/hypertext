@@ -68,15 +68,22 @@
 			      	 if (pricingDetail.totalTax!=null) {
 			      	 	totalTaxByQuantity = pricingDetail.totalTax?.getAsFloat() * pricingDetail.quantity?.getAsInt();
 			      	 }
+					 def subTotalAdt = _pricing.totalAdt.getAsFloat() + totalTaxByQuantity;
 			      	 def subTotal = totalTaxByQuantity + basefareByQuantity;
-			      	
 			    	}%
 	        <tr>
 	            <td></td>
 	            <td class="txt-payment-table-mark">${pricingDetail.quantity?.getAsString()} ${passType}${pricingDetail.quantity?.getAsInt().pluralize()}</td>
-	            <td><span class="simbolCurrency">US$</span><span class="clppriceCon" >${basefareByQuantity.round(2).format('00.00').toString().replaceAll('\\.',',')}</span></td>
-	            <td><span class="simbolCurrency">US$</span><span class="clppriceCon" >${totalTaxByQuantity>0? totalTaxByQuantity.round(2).format('00.00').toString().replaceAll('\\.',',') : "00,00"}</span></td>
-	            <td class="txt-payment-table-mark"><span class="simbolCurrency">US$</span><span class="clppriceCon">${subTotal.round(2).format('00.00').toString().replaceAll('\\.',',')}</span></td>
+				#{if passType=="Adulto"}
+				<td><span class="simbolCurrency">US$</span><span class="clppriceCon" >${_pricing.totalAdt.getAsString()}</span></td>
+				<td><span class="simbolCurrency">US$</span><span class="clppriceCon" >${totalTaxByQuantity ? totalTaxByQuantity.round(2).format('00.00').toString().replaceAll('\\.',','): "0"}</span></td>
+				<td class="txt-payment-table-mark"><span class="simbolCurrency">US$</span><span class="clppriceCon">${subTotalAdt.round(2).format('00.00').toString().replaceAll('\\.',',')}</span></td>
+				#{/if}
+				#{else}
+                <td><span class="simbolCurrency">US$</span><span class="clppriceCon" >${basefareByQuantity.round(2).format('00.00').toString().replaceAll('\\.',',')}</span></td>
+                <td><span class="simbolCurrency">US$</span><span class="clppriceCon" >${totalTaxByQuantity>0? totalTaxByQuantity.round(2).format('00.00').toString().replaceAll('\\.',',') : "00,00"}</span></td>
+				<td class="txt-payment-table-mark"><span class="simbolCurrency">US$</span><span class="clppriceCon">${subTotal.round(2).format('00.00').toString().replaceAll('\\.',',')}</span></td>
+				#{/else}
 	        </tr>
 	        #{/list}
         #{/else}
