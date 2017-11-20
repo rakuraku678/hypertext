@@ -76,8 +76,8 @@
 	            <td class="txt-payment-table-mark">${pricingDetail.quantity?.getAsString()} ${passType}${pricingDetail.quantity?.getAsInt().pluralize()}</td>
 				#{if passType=="Adulto"}
 				<td><span class="simbolCurrency">US$</span><span class="clppriceCon" >${_pricing.totalAdt.getAsString()}</span></td>
-				<td><span class="simbolCurrency">US$</span><span class="clppriceCon" >${totalTaxByQuantity ?: "0"}</span></td>
-				<td class="txt-payment-table-mark"><span class="simbolCurrency">US$</span><span class="clppriceCon">${subTotalAdt}</span></td>
+				<td><span class="simbolCurrency">US$</span><span class="clppriceCon" >${totalTaxByQuantity ? totalTaxByQuantity.round(2).format('00.00').toString().replaceAll('\\.',','): "0"}</span></td>
+				<td class="txt-payment-table-mark"><span class="simbolCurrency">US$</span><span class="clppriceCon">${subTotalAdt.round(2).format('00.00').toString().replaceAll('\\.',',')}</span></td>
 				#{/if}
 				#{else}
                 <td><span class="simbolCurrency">US$</span><span class="clppriceCon" >${basefareByQuantity.round(2).format('00.00').toString().replaceAll('\\.',',')}</span></td>
