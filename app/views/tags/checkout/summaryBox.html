@@ -105,7 +105,7 @@
         </tbody>
     </table>
     <div class="total-payment">
-        #{if _pricingCLP.adtTotalPriceWithAllTaxes.getAsInt() > _pricingCLP.adtTotalPrice.getAsInt()}
+        #{if _pricingCLP.adtTotalPriceWithAllTaxes.getAsDouble() > _pricingCLP.adtTotalPrice.getAsDouble()}
         <ul>
             <li>&nbsp;</li>
             #{if _selectedCurrency=='clp'}
