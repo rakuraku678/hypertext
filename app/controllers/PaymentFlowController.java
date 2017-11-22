@@ -126,11 +126,21 @@ public class PaymentFlowController extends Controller {
     }
 
     public static void processError(String type, String pnr){
-    	System.out.println("llega pnr: "+pnr);
-        PromotionDto promotionDto = new Promotion().getDefault();
-        AgencyConfigurationDto agencyConfigurationDto = TravelClubUtils.getAgencyConfiguration(promotionDto.agency.externalId);
-        ConfigurationDto configurationDto = FlightsUtils.getConfiguration();
-        render(agencyConfigurationDto, type, configurationDto,pnr);
+    	if (Strings.isNullOrEmpty(pnr)){
+    		PromotionDto promotionDto = new Promotion().getDefault();
+
+            AgencyConfigurationDto agencyConfigurationDto = TravelClubUtils.getAgencyConfiguration(promotionDto.agency.externalId);
+
+            render(agencyConfigurationDto, type);
+    	}
+    	else {
+        	System.out.println("llega pnr: "+pnr);
+            PromotionDto promotionDto = new Promotion().getDefault();
+            AgencyConfigurationDto agencyConfigurationDto = TravelClubUtils.getAgencyConfiguration(promotionDto.agency.externalId);
+            ConfigurationDto configurationDto = FlightsUtils.getConfiguration();
+            render(agencyConfigurationDto, type, configurationDto,pnr);
+    	}
+
     }
 
     public static void javascript() {
