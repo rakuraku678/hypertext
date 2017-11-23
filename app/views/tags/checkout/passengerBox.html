@@ -202,6 +202,8 @@ $(document).ready(function () {
                     $('#FFPAirlineIataCode${_key}').val(availableAirlines[aa]);
                     $('#pasName${_key}').val(result.alianza[ffp].clientenombre);
                     $('#pasLastName${_key}').val(result.alianza[ffp].clienteapellido + validateSecondLastName(result.alianza[ffp].clientesegundoapellido));
+                    checkPassNameLastN($('#pasName${_key}'));
+                    checkPassNameLastN($('#pasLastName${_key}'));
                     prefered = true;
                 }
                 if(!prefered && availableAirlines[aa] == validateIataCode(result.alianza[ffp].nombre)){
@@ -209,6 +211,8 @@ $(document).ready(function () {
                     $('#FFPAirlineIataCode${_key}').val(availableAirlines[aa]);
                     $('#pasName${_key}').val(result.alianza[ffp].clientenombre);
                     $('#pasLastName${_key}').val(result.alianza[ffp].clienteapellido + validateSecondLastName(result.alianza[ffp].clientesegundoapellido));
+                    checkPassNameLastN($('#pasName${_key}'));
+                    checkPassNameLastN($('#pasLastName${_key}'));
                 }
             }
         }
