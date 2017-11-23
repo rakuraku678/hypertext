@@ -220,6 +220,19 @@ $(document).ready(function () {
     
 });
 
+function checkPassNameLastN(obj) {
+    var ok = true;
+        
+    if ($(obj).val().trim()==''){
+		$(obj).parent().addClass("has-error");
+		ok=false;
+	}
+    else {
+            $(obj).parent().removeClass("has-error");
+    }
+    return ok;
+}
+
 function checkFNacDates(obj) {
 	var ok = true;
 	var re = new RegExp(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/);
