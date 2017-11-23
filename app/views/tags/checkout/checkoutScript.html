@@ -348,17 +348,18 @@ function startBooking(showModal) {
                 window.location=result.data.location;
             } else {
             	jg=result;
-            	var pnr = result.data.pnr;
-                var error_location ="@{PaymentFlowController.newPayment(pnr: '_pnr_')}";
-                window.location=error_location.replace("_pnr_",pnr);
+            	if (result.data==null) {
+            		var error_location ="@{PaymentFlowController.processError(type: '_error_id_',a: '_agency_')}";
+                    window.location=error_location.replace("_error_id_", result.error).replace("_agency_","${_promotionDto.agency.externalId}");
+            	}
+            	else {
+	            	var pnr = result.data.pnr;
+	                var error_location ="@{PaymentFlowController.newPayment(pnr: '_pnr_')}";
+	                window.location=error_location.replace("_pnr_",pnr);
+            	}
             }
         },
         error: function (request, status, error) {
-        	jg=result;
-        	alert(result);
-        	var jRes = JSON.parse(result);
-        	alert("error: "+jRes.Error);
-        	alert("pnr: "+jRes.Passengers[0].Pnr);
             window.location="@{PaymentFlowController.processError(type: 'internal')}";
         }
     });
