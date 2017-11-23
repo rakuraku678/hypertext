@@ -3,6 +3,13 @@ $(document).ready(function () {
     new Fingerprint2().get(function(result){
         $("#fingerprint").val(result);
     });
+    
+    $(window).keydown(function(event){
+      if(event.keyCode == 13) {
+        event.preventDefault();
+        return false;
+      }
+    });
 
     $('.validatedate').datepicker(
         {
@@ -212,6 +219,19 @@ $(document).ready(function () {
 	})
     
 });
+
+function checkPassNameLastN(obj) {
+    var ok = true;
+        
+    if ($(obj).val().trim()==''){
+		$(obj).parent().addClass("has-error");
+		ok=false;
+	}
+    else {
+            $(obj).parent().removeClass("has-error");
+    }
+    return ok;
+}
 
 function checkFNacDates(obj) {
 	var ok = true;
