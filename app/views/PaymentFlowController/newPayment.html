@@ -43,11 +43,23 @@
                     <div class="body-payment term-and-condition">
                         <div class="form-group col-md-12">
                             <p>Estimado Cliente:</p>
-							<p>Si usted confirmó su reserva de pasajes aéreos Online a través del sitio viajes.travel.cl, tienes un plazo de ${configurationDto.maxMinsForPendingBooking} minutos después de realizada, para poder procesar el pago.</p>
+                            <p>Hemos detectado que usted tiene una reserva activa con los mismos datos.</p>
+                            <p>Recupere su reserva, completando los datos requeridos en el recuadro.</p>
+                            <ul>
+                                <li>Digite el código de reserva informado a continuación, más el apellido de alguno de los pasajeros.</li>
+                                <li>Su código de reserva es: <b>${pnr}</b></li>
+                            </ul>
+                            <p>Para procesar nuevamente el pago, tiene un plazo de ${configurationDto.maxMinsForPendingBooking} minutos. Posterior a este plazo, deberá generar una nueva reserva.</p>
+                            <p>Agradecemos su preferencia.</p>
+                            <p>Atentamente,<br>
+                                Departamento de Ventas Online.<br>
+                                Email: ventaonline@travelclub.cl
+                            </p>
+							<!--<p>Si usted confirmó su reserva de pasajes aéreos Online a través del sitio viajes.travel.cl, tienes un plazo de ${configurationDto.maxMinsForPendingBooking} minutos después de realizada, para poder procesar el pago.</p>
 							<p><li style="font-weight: bold;">Digite el código de reserva informado, más el apellido de alguno de los pasajeros. codigo de reserva ${pnr}.</li></p>
 							<p>Si el problema continua, comuníquese al correo ventaonline@travelclub.cl o llamando al 6003009000.</p>
 							<p>Atentamente,</p>
-							<p>Departamento de Ventas On Line.</p>
+							<p>Departamento de Ventas On Line.</p>-->
                         </div>
                     </div>
                 </div>
@@ -60,7 +72,7 @@
                     </div>
                         <div class="form-group col-md-12">
                             <label>Código de su reserva:</label>
-                            <input class="form-control" type="text" name="pnr">
+                            <input class="form-control" type="text" name="pnr" value="${pnr}">
                         </div>
                         <div class="form-group col-md-12">
                             <label>Apellido del pasajero:</label>
