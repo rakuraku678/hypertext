@@ -200,8 +200,10 @@ $(document).ready(function () {
                 if (availableAirlines[aa] == validatingCarrier && validatingCarrier == validateIataCode(result.alianza[ffp].nombre)){
                     $('#FFPNumber${_key}').val(result.alianza[ffp].id);
                     $('#FFPAirlineIataCode${_key}').val(availableAirlines[aa]);
-                    $('#pasName${_key}').val(result.alianza[ffp].clientenombre);
-                    $('#pasLastName${_key}').val(result.alianza[ffp].clienteapellido + validateSecondLastName(result.alianza[ffp].clientesegundoapellido));
+                    var correctNameSpecialChars = $('<textarea />').html(result.alianza[ffp].clientenombre).text();
+                    $('#pasName${_key}').val(correctNameSpecialChars);
+                    var correctLastNameSpecialChars = $('<textarea />').html(result.alianza[ffp].clienteapellido + validateSecondLastName(result.alianza[ffp].clientesegundoapellido)).text();
+                    $('#pasLastName${_key}').val(correctLastNameSpecialChars);
                     checkPassNameLastN($('#pasName${_key}'));
                     checkPassNameLastN($('#pasLastName${_key}'));
                     prefered = true;
@@ -209,8 +211,10 @@ $(document).ready(function () {
                 if(!prefered && availableAirlines[aa] == validateIataCode(result.alianza[ffp].nombre)){
                     $('#FFPNumber${_key}').val(result.alianza[ffp].id);
                     $('#FFPAirlineIataCode${_key}').val(availableAirlines[aa]);
-                    $('#pasName${_key}').val(result.alianza[ffp].clientenombre);
-                    $('#pasLastName${_key}').val(result.alianza[ffp].clienteapellido + validateSecondLastName(result.alianza[ffp].clientesegundoapellido));
+                    var correctNameSpecialChars = $('<textarea />').html(result.alianza[ffp].clientenombre).text();
+                    $('#pasName${_key}').val(correctNameSpecialChars);
+                    var correctLastNameSpecialChars = $('<textarea />').html(result.alianza[ffp].clienteapellido + validateSecondLastName(result.alianza[ffp].clientesegundoapellido)).text();
+                    $('#pasLastName${_key}').val(correctLastNameSpecialChars);
                     checkPassNameLastN($('#pasName${_key}'));
                     checkPassNameLastN($('#pasLastName${_key}'));
                 }
