@@ -2,30 +2,33 @@
 <div id="seat-map" class="seatCharts-container" >
 <div class="front-indicator">Frente</div>
 
-#{list seatsMap.cabins, as: 'cabin' }
-%{def columnsDataArray = cabin.getAsJsonObject().get("columns").getAsJsonArray(); }%
-	#{list cabin.rows, as: 'row' }
-		<div class="seatCharts-row">
-		<div class="seatCharts-cell seatCharts-space">${row.rowNumber}</div>
-			#{list row.seats, as: 'seat' }
-				#{if columnsDataArray.get(seat_index-1).getAsJsonObject().get("type").getAsString().equals("Aisle") || 
-				    					!columnsDataArray.get(seat_index-1).getAsJsonObject().get("name").getAsString().equals(seat.getAsJsonObject().get("number").getAsString()) }
-					<div class="seatCharts-cell seatCharts-space"></div>
-				#{/if}
-				#{elseif seat.getAsJsonObject().get("occupiedInd").getAsBoolean() || seat.getAsJsonObject().get("inoperativeInd").getAsBoolean() }
-					<div id="${seat.rowNumber}_${seat.number}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class unavailable">${seat.number.getAsString()}</div>
-				#{/elseif}
-				#{else}
-					<div id="${seat.rowNumber}_${seat.number}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class available">${seat.number.getAsString()}</div>
-				#{/else}
-			#{/list}
-		</div>
+%{def seatsMapArray = seatsMap.getAsJsonArray();}%
+#{list seatsMapArray, as: 'seatsMap' }
+	#{list seatsMap.cabins, as: 'cabin' }
+	%{def columnsDataArray = cabin.getAsJsonObject().get("columns").getAsJsonArray(); }%
+		#{list cabin.rows, as: 'row' }
+			<div class="seatCharts-row">
+			<div class="seatCharts-cell seatCharts-space">${row.rowNumber}</div>
+				#{list row.seats, as: 'seat' }
+					#{if columnsDataArray.get(seat_index-1).getAsJsonObject().get("type").getAsString().equals("Aisle") }
+						<div class="seatCharts-cell seatCharts-space"></div>
+					#{/if}
+					#{elseif seat.getAsJsonObject().get("occupiedInd").getAsBoolean() || seat.getAsJsonObject().get("inoperativeInd").getAsBoolean() }
+						<div id="${seat.rowNumber}_${seat.number}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class unavailable">${seat.number.getAsString()}</div>
+					#{/elseif}
+					#{else}
+						<div id="${seat.rowNumber}_${seat.number}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class available">${seat.number.getAsString()}</div>
+					#{/else}
+				#{/list}
+			</div>
+		#{/list}
 	#{/list}
-	
 #{/list}
+
 	
 </div>
 </div>
+	
 <div>
 	<a class="btn btn-search" id="btnContinue">Continuar</a>
 </div>	
@@ -57,9 +60,3 @@
 		});
 	});
 	</script>
-	
-	
-
-
-
-		
