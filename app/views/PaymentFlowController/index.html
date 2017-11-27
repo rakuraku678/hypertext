@@ -80,6 +80,10 @@
                     </li>
                     #{/list}
 
+					#{if bfmResultItem.pricing.urlBannerImageMobile!=null && !bfmResultItem.pricing.urlBannerImageMobile.equals("")}
+	               		<img style="height:200px;" src="${utils.CloudinaryUtils.getUrl(bfmResultItem.pricing.urlBannerImageMobile.getAsString(), 'q_90,c_fill,h_200,w_420', '')}">
+                   	#{/if}
+
                     #{checkout.airRules airRulesResultList:airRulesResultList/}
                 </div>
                 #{if params.promotion == "traveldelta"}
