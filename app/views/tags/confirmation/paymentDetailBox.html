@@ -52,7 +52,7 @@ df = new java.text.DecimalFormat("#,###,###");
 	    <div class="total-payment" style="padding-bottom: 0px;">
 	        <ul>
 	            <li>Subtotal</li>
-	            <li>$ ${df.format(_order.initialAmount?.getAsNumber() + _order.discount.getAsNumber()).replace(',', '.')}</li>
+	            <li>$ ${df.format(_order.initialAmount?.getAsNumber() - _order.discount.getAsNumber()).replace(',', '.')}</li>
 	        </ul>
 	    </div>
 	    <div class="total-payment" style="padding-top: 5px; padding-bottom: 0px;">
