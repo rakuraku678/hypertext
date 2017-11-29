@@ -29,7 +29,7 @@ public class CloudinaryUtils {
 	public static final String SECRET_KEY = "YSpj1WCTmo61E__olPxNoZ2ThGc";
 	public static final String API_KEY = "469785936595817";
 	public static final String CLOUD_NAME = "hyvrprjak";
-	public static final String CLOUDINARY_DOMAIN = "http://res.cloudinary.com/";
+	public static final String CLOUDINARY_DOMAIN = "https://res.cloudinary.com/";
 	public static final String relativeCorsFile = "public/javascripts/cloudinary/cloudinary_cors.html";
 
 	public static final String FETCH = "/image/fetch/";
