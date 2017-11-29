@@ -46,10 +46,35 @@ df = new java.text.DecimalFormat("#,###,###");
             #{/if}
         </ul>
     </div>
-    <div class="total-payment">
-        <ul>
-            <li>Total</li>
-            <li>$ ${df.format(_order.initialAmount?.getAsNumber()).replace(',', '.')}</li>
-        </ul>
-    </div>
+    %{def paddingTotal = ''}%
+    #{if _order.discount!=null && !_order.discount.getAsString().equals("0")}
+    	%{paddingTotal = 'padding-top: 5px;'}%
+	    <div class="total-payment" style="padding-bottom: 0px;">
+	        <ul>
+	            <li>Subtotal</li>
+	            <li>$ ${df.format(_order.initialAmount?.getAsNumber()).replace(',', '.')}</li>
+	        </ul>
+	    </div>
+	    <div class="total-payment" style="padding-top: 5px; padding-bottom: 0px;">
+	        <ul>
+	            <li>Descuento</li>
+	            <li>$ ${df.format(_order.discount?.getAsNumber()).replace(',', '.')}</li>
+	        </ul>
+	    </div>
+	    <div class="total-payment" style="${paddingTotal}">
+	        <ul>
+	            <li>Total</li>
+	            <li>$ ${df.format(_order.initialAmount?.getAsNumber() + _order.discount.getAsNumber() ).replace(',', '.')}</li>
+	        </ul>
+	    </div>
+	#{/if}
+	#{else}
+		<div class="total-payment" style="${paddingTotal}">
+	        <ul>
+	            <li>Total</li>
+	            <li>$ ${df.format(_order.initialAmount?.getAsNumber()).replace(',', '.')}</li>
+	        </ul>
+	    </div>
+	#{/else}
+
 </div>
