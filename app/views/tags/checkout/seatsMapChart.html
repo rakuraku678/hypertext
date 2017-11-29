@@ -1,9 +1,14 @@
-<div class="container">
+%{def seatsMapArray = seatsMap.getAsJsonArray();}%
+#{list seatsMapArray, as: 'seatsMap' }
+
+<div class="container" id="seatsmapBlock_${seatsMap_index}" style="display: none;">
+<div class="from-to-block">${seatsMap.type.getAsString()}</div>
+<div class="from-to-block">${seatsMap.origin.getAsString()} => ${seatsMap.destination.getAsString()}</div>
+
 <div id="seat-map" class="seatCharts-container" >
 <div class="front-indicator">Frente</div>
 
-%{def seatsMapArray = seatsMap.getAsJsonArray();}%
-#{list seatsMapArray, as: 'seatsMap' }
+
 	#{list seatsMap.cabins, as: 'cabin' }
 	%{def columnsDataArray = cabin.getAsJsonObject().get("columns").getAsJsonArray(); }%
 		#{list cabin.rows, as: 'row' }
@@ -13,29 +18,66 @@
 					#{if columnsDataArray.get(seat_index-1).getAsJsonObject().get("type").getAsString().equals("Aisle") }
 						<div class="seatCharts-cell seatCharts-space"></div>
 					#{/if}
+					#{elseif seat.getAsJsonObject().get("chargeableInd").getAsBoolean()}
+						<div id="${row.rowNumber}_${seat.number.getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class chargeable">${seat.number.getAsString()}</div>
+					#{/elseif}
 					#{elseif seat.getAsJsonObject().get("occupiedInd").getAsBoolean() || seat.getAsJsonObject().get("inoperativeInd").getAsBoolean() }
-						<div id="${seat.rowNumber}_${seat.number}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class unavailable">${seat.number.getAsString()}</div>
+						<div id="${row.rowNumber}_${seat.number.getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class unavailable">${seat.number.getAsString()}</div>
 					#{/elseif}
 					#{else}
-						<div id="${seat.rowNumber}_${seat.number}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class available">${seat.number.getAsString()}</div>
+						<div id="${row.rowNumber}_${seat.number.getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class available">${seat.number.getAsString()}</div>
 					#{/else}
 				#{/list}
 			</div>
 		#{/list}
 	#{/list}
-#{/list}
+
 
 	
 </div>
 </div>
-	
+
+
+
+#{/list}
+
+
 <div>
 	<a class="btn btn-search" id="btnContinue">Continuar</a>
+	<a class="btn btn-search" id="btnConfirm" style="display: none;">Confirmar Asientos</a>
 </div>	
 
 	<script>
 	var seatsSelected = 0;
+	var indexSeatMap = 1;
+	var selectionArr = new Array();
+	var finalSelectionArr = new Array();
+	var numberOfMaps = ${seatsMapArray.size()};	
+	
 	$(function () {
+		
+		$("#seatsmapBlock_1").show();
+		
+		$("#btnContinue").click(function() {
+			
+			if (indexSeatMap <= numberOfMaps) {
+				$("#seatsmapBlock_"+indexSeatMap).hide();
+				indexSeatMap++;
+				seatsSelected = 0;
+				finalSelectionArr.push(selectionArr);
+				selectionArr = new Array();
+				$("#seatsmapBlock_"+indexSeatMap).show();
+				if (indexSeatMap>numberOfMaps){
+					indexSeatMap--;
+					$("#seatsmapBlock_"+indexSeatMap).hide();
+					$("#btnContinue").hide();
+					$("#btnConfirm").show();
+					for (var i=0;i<finalSelectionArr.length;i++){alert(finalSelectionArr[i]);}
+				}
+
+			}
+		});
+		
 		$(".seatCharts-seat").mouseenter(function() {
 			if ($(this).hasClass("available")) {
 				$(this).addClass("focused");
@@ -51,10 +93,12 @@
 			if (!$(this).hasClass("unavailable") && !$(this).hasClass("selected") && seatsSelected < ${numberOfSeats}) {
 				$(this).addClass("selected");
 				seatsSelected++;
+				selectionArr.push(this.id);
 				return;
 			}
 			if ($(this).hasClass("selected")  ) {
 				$(this).removeClass("selected");
+				selectionArr.splice(selectionArr.indexOf(this.id),1);
 				seatsSelected--;
 			}
 		});
