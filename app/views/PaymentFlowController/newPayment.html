@@ -46,20 +46,14 @@
                             <p>Hemos detectado que usted tiene una reserva activa con los mismos datos.</p>
                             <p>Recupere su reserva, completando los datos requeridos en el recuadro.</p>
                             <ul>
-                                <li>Digite el código de reserva informado a continuación, más el apellido de alguno de los pasajeros.</li>
-                                <li>Su código de reserva es: <b>${pnr}</b></li>
+                                <li>A continuación del código de reserva, digite el apellido de alguno de los pasajeros.</li>
                             </ul>
-                            <p>Para procesar nuevamente el pago, tiene un plazo de ${configurationDto.maxMinsForPendingBooking} minutos. Posterior a este plazo, deberá generar una nueva reserva.</p>
+                            <p>Para procesar nuevamente el pago, tiene un plazo de ${configurationDto?.maxMinsForPendingBooking} minutos. Posterior a este plazo, deberá generar una nueva reserva.</p>
                             <p>Agradecemos su preferencia.</p>
                             <p>Atentamente,<br>
                                 Departamento de Ventas Online.<br>
                                 Email: ventaonline@travelclub.cl
                             </p>
-							<!--<p>Si usted confirmó su reserva de pasajes aéreos Online a través del sitio viajes.travel.cl, tienes un plazo de ${configurationDto.maxMinsForPendingBooking} minutos después de realizada, para poder procesar el pago.</p>
-							<p><li style="font-weight: bold;">Digite el código de reserva informado, más el apellido de alguno de los pasajeros. codigo de reserva ${pnr}.</li></p>
-							<p>Si el problema continua, comuníquese al correo ventaonline@travelclub.cl o llamando al 6003009000.</p>
-							<p>Atentamente,</p>
-							<p>Departamento de Ventas On Line.</p>-->
                         </div>
                     </div>
                 </div>
@@ -68,7 +62,7 @@
                 <div style="background-color: #2F313A;border-radius: 5px;">
                     <form id="flightSearchForm" class="form-search-travel bv-form" action="" method="POST">
                     <div class="head-search">
-                        <h3 class="title-search">Para comenzar, ingresá la siguiente información:</h3>
+                        <h3 class="title-search">Para comenzar, ingresa la siguiente información:</h3>
                     </div>
                         <div class="form-group col-md-12">
                             <label>Código de su reserva:</label>

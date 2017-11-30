@@ -76,15 +76,19 @@
 
                     #{list items:bfmResultItem.refoundRuleTexts, as:'refoundRuleText'}
                     <li class="title-payment" style="list-style: none;">
-                        * ${refoundRuleText.getAsString()}
+                       ${refoundRuleText.getAsString()}
                     </li>
                     #{/list}
+
+					#{if bfmResultItem.pricing.urlBannerImageMobile!=null && !bfmResultItem.pricing.urlBannerImageMobile.equals("")}
+	               		<img src="${utils.CloudinaryUtils.getUrl(bfmResultItem.pricing.urlBannerImageMobile.getAsString(), 'q_90,c_fill,h_128,w_418', '')}">
+                   	#{/if}
 
                     #{checkout.airRules airRulesResultList:airRulesResultList/}
                 </div>
                 #{if params.promotion == "traveldelta"}
                 <div class="col-md-4" id="banner_checkout_delta" >
-                    <img src="http://res.cloudinary.com/hyvrprjak/image/upload/TravelClubApps/Delta/banner_500x500.png"/>
+                    <img src="https://res.cloudinary.com/hyvrprjak/image/upload/TravelClubApps/Delta/banner_500x500_chk.png"/>
                 </div>
                 #{/if}
             </div>

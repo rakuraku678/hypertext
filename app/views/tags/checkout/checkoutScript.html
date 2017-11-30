@@ -3,6 +3,13 @@ $(document).ready(function () {
     new Fingerprint2().get(function(result){
         $("#fingerprint").val(result);
     });
+    
+    $(window).keydown(function(event){
+      if(event.keyCode == 13) {
+        event.preventDefault();
+        return false;
+      }
+    });
 
     $('.validatedate').datepicker(
         {
@@ -213,6 +220,19 @@ $(document).ready(function () {
     
 });
 
+function checkPassNameLastN(obj) {
+    var ok = true;
+        
+    if ($(obj).val().trim()==''){
+		$(obj).parent().addClass("has-error");
+		ok=false;
+	}
+    else {
+            $(obj).parent().removeClass("has-error");
+    }
+    return ok;
+}
+
 function checkFNacDates(obj) {
 	var ok = true;
 	var re = new RegExp(/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/);
@@ -348,17 +368,18 @@ function startBooking(showModal) {
                 window.location=result.data.location;
             } else {
             	jg=result;
-            	var pnr = result.data.pnr;
-                var error_location ="@{PaymentFlowController.newPayment(pnr: '_pnr_')}";
-                window.location=error_location.replace("_pnr_",pnr);
+            	if (result.data==null) {
+            		var error_location ="@{PaymentFlowController.processError(type: '_error_id_',a: '_agency_')}";
+                    window.location=error_location.replace("_error_id_", result.error).replace("_agency_","${_promotionDto.agency.externalId}");
+            	}
+            	else {
+	            	var pnr = result.data.pnr;
+	                var error_location ="@{PaymentFlowController.newPayment(pnr: '_pnr_')}";
+	                window.location=error_location.replace("_pnr_",pnr);
+            	}
             }
         },
         error: function (request, status, error) {
-        	jg=result;
-        	alert(result);
-        	var jRes = JSON.parse(result);
-        	alert("error: "+jRes.Error);
-        	alert("pnr: "+jRes.Passengers[0].Pnr);
             window.location="@{PaymentFlowController.processError(type: 'internal')}";
         }
     });

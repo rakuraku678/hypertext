@@ -125,12 +125,33 @@ public class PaymentFlowController extends Controller {
         render(agencyConfigurationDto,processData);
     }
 
-    public static void processError(String type, String pnr){
-    	System.out.println("llega pnr: "+pnr);
-        PromotionDto promotionDto = new Promotion().getDefault();
-        AgencyConfigurationDto agencyConfigurationDto = TravelClubUtils.getAgencyConfiguration(promotionDto.agency.externalId);
-        ConfigurationDto configurationDto = FlightsUtils.getConfiguration();
-        render(agencyConfigurationDto, type, configurationDto,pnr);
+    public static void processError(String type, String pnr, String a){
+    	if (Strings.isNullOrEmpty(pnr)){
+    		AgencyConfigurationDto agencyConfigurationDto = null;
+    		if (!Strings.isNullOrEmpty(a)){
+    			agencyConfigurationDto = TravelClubUtils.getAgencyConfiguration(a);
+    		}
+    		else {
+    			PromotionDto promotionDto = new Promotion().getDefault();
+    			agencyConfigurationDto = TravelClubUtils.getAgencyConfiguration(promotionDto.agency.externalId);
+    		}
+
+            render(agencyConfigurationDto, type);
+    	}
+    	else {
+        	System.out.println("llega pnr: "+pnr);
+        	AgencyConfigurationDto agencyConfigurationDto = null;
+    		if (Strings.isNullOrEmpty(a)){
+    			agencyConfigurationDto = TravelClubUtils.getAgencyConfiguration(a);
+    		}
+    		else {
+    			PromotionDto promotionDto = new Promotion().getDefault();
+    			agencyConfigurationDto = TravelClubUtils.getAgencyConfiguration(promotionDto.agency.externalId);
+    		}
+            ConfigurationDto configurationDto = FlightsUtils.getConfiguration();
+            render(agencyConfigurationDto, type, configurationDto,pnr);
+    	}
+
     }
 
     public static void javascript() {
@@ -138,10 +159,24 @@ public class PaymentFlowController extends Controller {
     }
 
     public static void newPayment(String pnr){
-    	PromotionDto promotionDto = new Promotion().getDefault();
-        AgencyConfigurationDto agencyConfigurationDto = TravelClubUtils.getAgencyConfiguration(promotionDto.agency.externalId);
-        ConfigurationDto configurationDto = FlightsUtils.getConfiguration();
-        render(configurationDto, agencyConfigurationDto, pnr);
+    	if (Strings.isNullOrEmpty(pnr)){
+	    	PromotionDto promotionDto;
+	        if (!Strings.isNullOrEmpty(params.get("promotion"))) {
+	            promotionDto = new Promotion().getBySlug(params.get("promotion"));
+	        } else {
+	            promotionDto = new Promotion().getDefault();
+	        }
+	
+	        AgencyConfigurationDto agencyConfigurationDto = TravelClubUtils.getAgencyConfiguration(promotionDto.agency.externalId);
+	
+	        render(agencyConfigurationDto);
+    	}
+    	else {
+	    	PromotionDto promotionDto = new Promotion().getDefault();
+	        AgencyConfigurationDto agencyConfigurationDto = TravelClubUtils.getAgencyConfiguration(promotionDto.agency.externalId);
+	        ConfigurationDto configurationDto = FlightsUtils.getConfiguration();
+	        render(configurationDto, agencyConfigurationDto, pnr);
+    	}
     }
 
     public static void processNewPayment(){
