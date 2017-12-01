@@ -49,4 +49,8 @@ public class Booking extends ApiFlightsSDKBase {
         WS.WSRequest request = prepareRequest(ENDPOINT + "/" + id );
         return processResponsePost(request);
     }
+    public JsonElement getByPnr(String pnr){
+        WS.WSRequest request = prepareRequest(ENDPOINT + "/" + pnr );
+        return processResponse(request);
+    }
 }

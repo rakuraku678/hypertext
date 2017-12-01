@@ -15,6 +15,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import dto.StateDto;
+import org.joda.time.DateTime;
+import org.joda.time.Minutes;
 import play.Play;
 import play.cache.Cache;
 import play.mvc.Controller;
@@ -168,14 +170,28 @@ public class PaymentFlowController extends Controller {
 	        }
 	
 	        AgencyConfigurationDto agencyConfigurationDto = TravelClubUtils.getAgencyConfiguration(promotionDto.agency.externalId);
-	
+
+
+
 	        render(agencyConfigurationDto);
     	}
     	else {
 	    	PromotionDto promotionDto = new Promotion().getDefault();
 	        AgencyConfigurationDto agencyConfigurationDto = TravelClubUtils.getAgencyConfiguration(promotionDto.agency.externalId);
 	        ConfigurationDto configurationDto = FlightsUtils.getConfiguration();
-	        render(configurationDto, agencyConfigurationDto, pnr);
+
+            Booking booking = new Booking();
+            JsonElement checkout = booking.getByPnr(pnr);
+
+            String groupId = JsonUtils.getStringFromJson(checkout.getAsJsonObject(),"groupId");
+            JsonElement flightsBooking = FlightsUtils.getBookingByGroupId(groupId);
+
+            DateTime pendingBookingTime = JsonUtils.getDateTimeFromJson(flightsBooking.getAsJsonObject(),"creationDateTime");
+            pendingBookingTime = pendingBookingTime.plusMinutes(Integer.valueOf(configurationDto.maxMinsForPendingBooking));
+            Minutes diff = Minutes.minutesBetween(DateTime.now(), pendingBookingTime);
+            int mins = diff.getMinutes() >= 0 ? diff.getMinutes(): 0;
+
+            render(configurationDto, agencyConfigurationDto, pnr, mins);
     	}
     }
 
