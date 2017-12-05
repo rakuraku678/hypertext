@@ -194,19 +194,18 @@ public class BookingController extends Controller {
     }
 
     public static void getApiPaxClientByRut() {
-        JsonObject jsonObjectResponce = new JsonObject();
         String rut = params.get("rut");
-        jsonObjectResponce = getClient(rut);
-        renderJSON(jsonObjectResponce);
+        JsonObject response = getClient(rut);
+        renderJSON(response);
     }
 
     public static JsonObject getClient(String rut) {
-        JsonObject jsonObjectResponce = new JsonObject();
-        JsonObject jsonObjectToken = getTokenByRut(rut);
-        if (!jsonObjectToken.has("error")) {
-            jsonObjectResponce = getPaxByToken(JsonUtils.getStringFromJson(jsonObjectToken, "token"));
+        JsonObject tokenResponse = getTokenByRut(rut);
+        if (tokenResponse.has("error")) {
+            return tokenResponse;
         }
-        return jsonObjectResponce;
+        JsonObject paxResponce = getPaxByToken(JsonUtils.getStringFromJson(tokenResponse, "token"));
+        return paxResponce;
     }
 
     private static JsonObject getTokenByRut(String rut) {
@@ -236,10 +235,19 @@ public class BookingController extends Controller {
         String url = APIALIANZA + rut;
         System.out.println(url);
         WS.WSRequest request = WS.url(url);
+
         WS.HttpResponse response = request.get();
+        // fix for non escaped json By Mockup Api
+        String toScape = "";
         try {
-            jsonObject = response.getJson().getAsJsonObject();
-        } catch (JsonParseException e) {
+            toScape = response.getString();
+            while (toScape.indexOf(",\"mensaje") != -1){
+               int start =  toScape.indexOf(",\"mensaje");
+               int end =  start + toScape.substring(start).indexOf('}');
+               toScape = toScape.replace(toScape.substring(start,end),"");
+               jsonObject = new JsonParser().parse(toScape).getAsJsonObject();
+            }
+        } catch (Exception e) {
             jsonObject.addProperty("status", "0");
         }
         renderJSON(jsonObject);

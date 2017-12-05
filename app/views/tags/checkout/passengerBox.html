@@ -18,7 +18,7 @@
             <p><i class="icon-glasses"></i>Comprueba que la información ingresada coincida con la de tu documento de viaje, sea pasaporte u otro.</p>
         </div>
 
-        #{if _state != null}
+
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-6 form-group">
@@ -29,7 +29,7 @@
                 </div>
             </div>
         </div>
-        #{/if}
+
 
         <div class="col-md-12">
             <div class="row">
@@ -109,7 +109,8 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-6 form-group">
-                    <div class="modify-posT
+                    <div class="modify-position-box">
+                        <label>Fecha de nacimiento:</label>
                         <label class="sub-label" style="color: #3c0b9a;font-weight: bold;"> </label>
                         <input type="text" class="form-control validatedate" name="passengers[${_key}][dateOfBirth]" placeholder="01/01/1990"  data-pnum="${_key}" >
                         <small class="help-block" id="invfnac${_key}" style="display: none;">Campo no válido</small>
@@ -156,138 +157,117 @@
 #{if !_agencySlug.equals('travelclub')}
 <script>
 
-#{if _state!=null}
-    $('#deletePassenger${_key}').click(function(){
-        var savedRutNum = document.getElementById("savedRutNum${_key}");
-        var passengerRut = savedRutNum.options[savedRutNum.selectedIndex].text;
-        deleteApiPaxPassenger(passengerRut,${_state.clientRut},function(result){
-            if(result.code == 200){
-                savedRutNum.remove(savedRutNum.selectedIndex);
-                alert("eliminado "+passengerRut);
-                $('#checkoutForm').bootstrapValidator("resetForm",true);
-            }else if (result.code == 400){
-                alert("No se puede eliminar al cliente");
-            }
-        });
-    });
-
-
-    function deleteApiPaxPassenger(passengerRut,clientRut,todo){
-        $.ajax({
-                type: "DELETE",
-                url: "${_urlServer}/deleteApiPaxPassenger" + "?ClientRut=" + clientRut + "&PassengerRut=" + passengerRut,
-                dataType: "json",
-                success: todo
+#{if _state==null}
+    $('#pasNum${_key}').focusout(function(){
+        if ($(this).val().length >= 8){
+        //implementar autocomplet con mockups
+        }
+     });
+    #{if !_onlyPassport}
+    $('#rutNum${_key}').focusout(function(){
+        if ($(this).val().length >= 8){
+        var rut = $(this).val();
+            getApiPaxUser(rut,function(result) {
+                if(result.status != "BAD_REQUEST"){
+                   currentApiPaxResponse =result;
+                   passengers = listPassengers(result);
+                   fillInRutSelect();
+                   autocompleteApiPax${_key}(getPassengerByRUT(rut));
+                }else {
+                    getMockupUser(rut,function(result) {
+                        if(result.status != 0 && result.alianza[0].nombre != ""){
+                            saveMockupToApiPax(result);
+                            autocompleteApiPax${_key}(getPassengerByRUT(rut));
+                        }
+                    });
+                }
             });
-    };
+        }
+    });
+    #{/if}
+#{/if}
 
     $('#savedRutNum${_key}').change(function() {
         if($(this).val() != "0"){
-            autocompleteApiPax(getUserByRUT($(this).val()),${_key});
+            autocompleteApiPax${_key}(getPassengerByRUT($(this).val()));
         }
     });
 
-
-    function getUserByRUT(rut){
-        for (var p in passengers){
-            var passenger = passengers[p];
-            for (var d in passenger.documents){
-                var doc = passenger.documents[d];
-                if (doc.documentType == "RUT" && doc.value == rut){
-                    return passenger;
-
+    $('#deletePassenger${_key}').click(function(){
+        if (currentApiPaxResponse != null){
+            var savedRutNum = document.getElementById("savedRutNum${_key}");
+            var passengerRut = savedRutNum.options[savedRutNum.selectedIndex].text;
+            var clientRut = passengerGetRut(currentApiPaxResponse.client);
+            deleteApiPaxPassenger(passengerRut,clientRut,function(result){
+                if(result.code == 200){
+                    savedRutNum.remove(savedRutNum.selectedIndex);
+                    alert("eliminado "+passengerRut);
+                    $('#checkoutForm').bootstrapValidator("resetForm",true);
+                }else if (result.code == 400){
+                    alert("No se puede eliminar al cliente");
                 }
-            }
-            return "";
+            });
         }
+    });
+    function deleteApiPaxPassenger(passengerRut,clientRut,todo){
+        $.ajax({
+            type: "DELETE",
+            url: "${_urlServer}/deleteApiPaxPassenger" + "?ClientRut=" + clientRut + "&PassengerRut=" + passengerRut,
+            dataType: "json",
+            success: todo
+        });
     };
-
     $('#FFPAirlineIataCode${_key}').change(function() {
         if (currentApiPaxResponse != null){
-            $('#FFPNumber${_key}').val(getApiPaxFFPNumByAlliance($('#rutNum${_key}').val(),$(this).val()));
+            $('#FFPNumber${_key}').val(getApiPaxFFPNum($('#rutNum${_key}').val(),$(this).val()));
         }
     });
-
-    function getApiPaxFFPNumByAlliance(rut, allianceName){
+    function getApiPaxFFPNum(rut, allianceName){
         if (rut != ""){
-        var passenger = getUserByRUT(rut);
+        var passenger = getPassengerByRUT(rut);
             for (var rp in passenger.regularPassengers){
                 var regularPassenger = passenger.regularPassengers[rp];
                 if (regularPassenger.alliance == allianceName){
                     return regularPassenger.number;
                 }
             }
-            return "";
+        return "";
         }
     };
-
-    function getApiPaxUser(RUT,todo){
-        $.ajax({
-            type: "GET",
-            url: "${_urlServer}/getApiPaxClientByRut" +"?rut="+ RUT,
-            dataType: "json",
-            success:todo
-        });
-    }
-    function getMockupUser(RUT,todo){
-        $.ajax({
-            type: "GET",
-            url: "${_urlServer}/getMockupClientByRut" +"?rut="+ RUT,
-            dataType: "json",
-            success: todo
-        });
-    };
-    function saveMockupToApiPax(mockupUser){
-        var rut = mockupUser.rut +''+ mockupUser.dv;
-        var data = JSON.stringify({
-            name: mockupUser.alianza[0].clientenombre,
-            lastname: mockupUser.alianza[0].clienteapellido + " " + mockupUser.alianza[0].clientesegundoapellido,
-            documents: [
-                {
-                    documentType: 'RUT',
-                    value: rut
-                }
-            ]
-        });
-        $.ajax({
-            type: "POST",
-            url: "${_urlServer}/createApiPaxClient",
-            contentType: "application/json",
-            dataType: "json",
-            data: data,
-            success:function(result) {
-                if(result.document == rut){
-                    getApiPaxUser(rut,function(result) {
-                        if(result.status != "BAD_REQUEST"){
-                           currentApiPaxResponse = result;
-                           autocompleteApiPax(currentApiPaxResponse,0);
-                        }else {
-                            console.log("no se completo nada");
-                        }
-                    });
-                }else {
-                    console.log("error al salvar usuario");
+    function getPassengerByRUT(rut){
+        for (var p in passengers){
+            var passenger = passengers[p];
+            for (var d in passenger.documents){
+                var doc = passenger.documents[d];
+                if (doc.documentType == "RUT" && doc.value == rut){
+                    return passenger;
                 }
             }
-        });
-    }
-    #{/if}
-	#{else}
-
-     *{$('#pasNum${_key}').focusout(function(){
-        if ($(this).val().length >= 8){
-        //implementar autocomplet con mockups
         }
-    });}*
-
-    #{if !_onlyPassport}
-    $('#rutNum${_key}').focusout(function(){
-        if ($(this).val().length >= 8){
-            //implementar autocomplet con mockups
+        return "";
+    };
+    function autocompleteApiPax${_key}(user) {
+        for (var doc in user.documents){
+            if (user.documents[doc].documentType == "RUT"){
+                $('#rutNum${_key}').val(user.documents[doc].value);
+            }
         }
-    });
-    #{/if}
-
-    #{/else}
+        $('#pasName${_key}').val(user.name);
+        $('#pasLastName${_key}').val(user.lastname);
+        var prefered = false
+        for (var ffp in user.regularPassengers){
+            for (var aa in availableAirlines) {
+                if (availableAirlines[aa] == validatingCarrier && validatingCarrier == user.regularPassengers[ffp].alliance){
+                    $('#FFPNumber${_key}').val(user.regularPassengers[ffp].number);
+                    $('#FFPAirlineIataCode${_key}').val(availableAirlines[aa]);
+                    prefered = true;
+                }
+                if(!prefered && availableAirlines[aa] ==  user.regularPassengers[ffp].alliance){
+                    $('#FFPNumber${_key}').val(user.regularPassengers[ffp].number);
+                    $('#FFPAirlineIataCode${_key}').val(availableAirlines[aa]);
+                }
+            }
+        }
+    };
 </script>
 #{/if}

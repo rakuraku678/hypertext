@@ -174,11 +174,10 @@
 	}
 
 	$(function () {
-
 		var selectedCurrency = "${selectedCurrency}";
 		$( ".clppriceCon" ).each(function( index ) {
-				$(this).html(numberWithCommas($(this).html()));
-			});	
+            $(this).html(numberWithCommas($(this).html()));
+        });
 // 		if (selectedCurrency=="clp"){
 // 			$( ".usdpriceCon" ).each(function( index ) {
 // 				var exchangeRate = parseFloat("${dollarExchangeRate}");
@@ -193,158 +192,140 @@
 // 			});	
 // 		}
 
+#{if state==null}
+        $('#loginDiv').show();
+        $( "#btnLoginTrUser" ).click(function( event ) {
+            var agencyId ="${promotionDto.agency.externalId}";
+            var transactionId = "${transactionId}";
+            var agencySlug = "${promotionDto.agency.slug}";
+            var selectedCurrency = "clp";
+            var step = 'checkoutReload';
+            // window.history.pushState("", "", window.location.href+transactionId);
 
-	    #{if state==null}
-	    	$('#loginDiv').show();
-	        $( "#btnLoginTrUser" ).click(function( event ) {
-	            var agencyId ="${promotionDto.agency.externalId}";
-	            var transactionId = "${transactionId}";
-	            var agencySlug = "${promotionDto.agency.slug}";
-	            var selectedCurrency = "clp";
-	            var step = 'checkoutReload';
-	           // window.history.pushState("", "", window.location.href+transactionId);
+            $('<iframe src="/auth/'+transactionId+'/'+selectedCurrency+'/'+agencyId+'/'+agencySlug+'/'+step+'" frameborder="0" style="padding-left: 50px; position: relative; top: -100px;" width="500" height="500" scrolling="no" id="myFrame"></iframe>').appendTo('.loginModalBody');
+            $('#modalLogin').modal('show');
+        });
+#{/if}
+#{else}
+        $("#loginDiv").hide();
+        $('#logoutDiv').show();
+        $('#loggedDiv').show();
+        $('#loggedDiv').html("${state.clientName}");
+        document.cookie = "tokenVuelos=${state.appToken}";
 
-	            $('<iframe src="/auth/'+transactionId+'/'+selectedCurrency+'/'+agencyId+'/'+agencySlug+'/'+step+'" frameborder="0" style="padding-left: 50px; position: relative; top: -100px;" width="500" height="500" scrolling="no" id="myFrame"></iframe>').appendTo('.loginModalBody');
-	            $('#modalLogin').modal('show');
-	        });
-		#{/if}
-		#{else}
-		    getApiPaxUser(${state.clientRut},function(result) {
-                if(result.status != "BAD_REQUEST"){
-                   currentApiPaxResponse =result;
-                   passengers = listPassengers(result);
-                   fillInRutSelect();
-                }else {
-                    getMockupUser(${state.clientRut},function(result) {
-                        if(result.status != 0 && result.alianza[0].nombre != ""){
-                            saveMockupToApiPax(result);
-                        }
-                    });
+        $( "#btnLogoutTrUser" ).click(function( event ) {
+            $.ajax({
+                type: "GET",
+                data: {"transactionId": "${transactionId}"},
+                url: "@{OAuthController.logout}",
+                success:function(result) {
+                    window.location.reload();
+                },
+                error: function (request, status, error) {
+                    alert(error);
                 }
             });
+        });
 
-		    function getApiPaxUser(RUT,todo){
-                $.ajax({
-                    type: "GET",
-                    url: "${_urlServer}/getApiPaxClientByRut" +"?rut="+ RUT,
-                    dataType: "json",
-                    success:todo
+        getApiPaxUser(${state.clientRut},function(result) {
+            if(result.status != "BAD_REQUEST"){
+               currentApiPaxResponse =result;
+               passengers = listPassengers(result);
+               fillInRutSelect();
+            }else {
+                getMockupUser(${state.clientRut},function(result) {
+                    if(result.status != 0 && result.alianza[0].nombre != ""){
+                        saveMockupToApiPax(result);
+                    }
                 });
             }
-            function getMockupUser(RUT,todo){
-                $.ajax({
-                    type: "GET",
-                    url: "${_urlServer}/getMockupClientByRut" +"?rut="+ RUT,
-                    dataType: "json",
-                    success: todo
-                });
-            };
-		    function saveMockupToApiPax(mockupUser){
-                var data = JSON.stringify({
-                    name: mockupUser.alianza[0].clientenombre,
-                    lastname: mockupUser.alianza[0].clienteapellido + " " + mockupUser.alianza[0].clientesegundoapellido,
-                    documents: [
-                        {
-                            documentType: 'RUT',
-                            value: '${state.clientRut}'
-                        }
-                    ]
-                });
-                $.ajax({
-                    type: "POST",
-                    url: "${_urlServer}/createApiPaxClient",
-                    contentType: "application/json",
-                    dataType: "json",
-                    data: data,
-                    success:function(result) {
-                        if(result.document == ${state.clientRut}){
-                            getApiPaxUser(${state.clientRut},function(result) {
-                                if(result.status != "BAD_REQUEST"){
-                                   currentApiPaxResponse = result;
-                                   passengers = listPassengers(result);
-                                   fillInRutSelect();
-                                }else {
-                                    console.log('ApiPax Get error on passenger :${state.clientRut}');
-                                }
-                            });
-                        }else {
-                            console.log("Error trying to save passenger");
-                        }
-                    }
-                });
-            };
-            function autocompleteApiPax(user,key) {
-                for (var doc in user.documents){
-                    if (user.documents[doc].documentType == "RUT"){
-                        $('#rutNum'+key).val(user.documents[doc].value);
-                    }
-                }
-                $('#pasName'+key).val(user.name);
-                $('#pasLastName'+key).val(user.lastname);
-                var prefered = false
-                for (var ffp in user.regularPassengers){
-                    for (var aa in availableAirlines) {
-                        if (availableAirlines[aa] == validatingCarrier && validatingCarrier == user.regularPassengers[ffp].alliance){
-                            $('#FFPNumber'+key).val(user.regularPassengers[ffp].number);
-                            $('#FFPAirlineIataCode'+key).val(availableAirlines[aa]);
-                            prefered = true;
-                        }
-                        if(!prefered && availableAirlines[aa] ==  user.regularPassengers[ffp].alliance){
-                            $('#FFPNumber'+key).val(user.regularPassengers[ffp].number);
-                            $('#FFPAirlineIataCode'+key).val(availableAirlines[aa]);
-                        }
-                    }
-                }
-            };
-            function listPassengers(result){
-                var list = [];
-                for (var user in result.passengers){
-                    list.push(result.passengers[user]);
-                }
-                list.push(result.client);
-                return list;
-            }
-            function fillInRutSelect(){
-                for(var i = 0; i < ${passengersCount}; i++) {
-                   var select = document.getElementById("savedRutNum"+i);
-                    for (var passenger in passengers){
-                        //Corregir solo para RUT
-                        var opt = passengers[passenger].documents[0].value;
-                        var el = document.createElement("option");
-                        el.textContent = opt;
-                        el.value = opt;
-                        select.appendChild(el);
-                    }
-                }
-            }
-
-
-
-    	    $("#loginDiv").hide();
-    	    $('#logoutDiv').show();
-    	    $('#loggedDiv').show();
-    	    $('#loggedDiv').html("${state.clientName}");
-    	    document.cookie = "tokenVuelos=${state.appToken}";
-    	    
-    	    $( "#btnLogoutTrUser" ).click(function( event ) {
-   	    	 $.ajax({
-	    	        type: "GET",
-   	            data: {"transactionId": "${transactionId}"},
-   	            url: "@{OAuthController.logout}",
-   	            success:function(result) {
-   	            		window.location.reload();
-   	            },
-   	            error: function (request, status, error) {
-   	            	 	alert(error);
-   	            }
-   	        });
-   	    });
-    	    
-    	    
-    	    
-    	    
-    	#{/else}
+        });
+#{/else}
 	});
+    function getApiPaxUser(RUT,todo){
+        $.ajax({
+            type: "GET",
+            url: "${_urlServer}/getApiPaxClientByRut" +"?rut="+ RUT,
+            dataType: "json",
+            success:todo
+        });
+    }
+    function getMockupUser(RUT,todo){
+        $.ajax({
+            type: "GET",
+            url: "${_urlServer}/getMockupClientByRut" +"?rut="+ RUT,
+            dataType: "json",
+            success: todo
+        });
+    }
+    function saveMockupToApiPax(mockupUser){
+        var mockupRut = "" + mockupUser.rut + mockupUser.dv;
+        var data = JSON.stringify({
+            name: mockupUser.alianza[0].clientenombre,
+            lastname: mockupUser.alianza[0].clienteapellido + " " + mockupUser.alianza[0].clientesegundoapellido,
+            documents: [
+                {
+                    documentType: 'RUT',
+                    value: mockupRut
+                }
+            ]
+        });
+        $.ajax({
+            type: "POST",
+            url: "${_urlServer}/createApiPaxClient",
+            contentType: "application/json",
+            dataType: "json",
+            data: data,
+            success:function(result) {
+                 if(result.status != "BAD_REQUEST"){
+                    getApiPaxUser(mockupRut,function(result) {
+                        if(result.status != "BAD_REQUEST"){
+                           currentApiPaxResponse = result;
+                           passengers = listPassengers(result);
+                           fillInRutSelect();
+                        }else {
+                            console.log('ApiPax Get error on passenger :'+ mockupRut);
+                        }
+                    });
+                }else {
+                    console.log("Error trying to save passenger");
+                }
+            }
+        });
+    }
+
+    function listPassengers(result){
+        var list = [];
+        for (var user in result.passengers){
+            list.push(result.passengers[user]);
+        }
+        list.push(result.client);
+        return list;
+    }
+    function fillInRutSelect(){
+        for(var i = 0; i < ${passengersCount}; i++) {
+            var select = document.getElementById("savedRutNum"+i);
+            select.options.length = 0;
+            var el = document.createElement("option");
+            el.textContent = "pasajeros Guardados";
+            el.value = "0";
+            select.appendChild(el);
+            for (var p in passengers){
+                var opt = passengerGetRut(passengers[p]);
+                el = document.createElement("option");
+                el.textContent = opt;
+                el.value = opt;
+                select.appendChild(el);
+            }
+        }
+    }
+    function passengerGetRut(passenger){
+        for(var d in passenger.documents){
+            if (passenger.documents[d].documentType == "RUT"){
+                return  passenger.documents[d].value;
+            }
+        }
+    }
 
 </script>
 
