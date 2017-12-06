@@ -19,13 +19,13 @@
 						<div class="seatCharts-cell seatCharts-space"></div>
 					#{/if}
 					#{elseif seat.getAsJsonObject().get("chargeableInd").getAsBoolean()}
-						<div id="${row.rowNumber}_${seat.number.getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class chargeable">${seat.number.getAsString()}</div>
+						<div id="${row.rowNumber}${seat.number.getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class chargeable">${seat.number.getAsString()}</div>
 					#{/elseif}
 					#{elseif seat.getAsJsonObject().get("occupiedInd").getAsBoolean() || seat.getAsJsonObject().get("inoperativeInd").getAsBoolean() }
-						<div id="${row.rowNumber}_${seat.number.getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class unavailable">${seat.number.getAsString()}</div>
+						<div id="${row.rowNumber}${seat.number.getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class unavailable">${seat.number.getAsString()}</div>
 					#{/elseif}
 					#{else}
-						<div id="${row.rowNumber}_${seat.number.getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class available">${seat.number.getAsString()}</div>
+						<div id="${row.rowNumber}${seat.number.getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class available">${seat.number.getAsString()}</div>
 					#{/else}
 				#{/list}
 			</div>
@@ -41,6 +41,9 @@
 
 #{/list}
 
+<div class="container" id="selectedSeatsBlock" style="display: none;">
+
+</div>
 
 <div>
 	<a class="btn btn-search" id="btnContinue">Continuar</a>
@@ -57,6 +60,10 @@
 	$(function () {
 		
 		$("#seatsmapBlock_1").show();
+		$("#btnConfirm").click(function() {
+			$('#modalSeatsMap').modal('toggle');
+		});
+		
 		
 		$("#btnContinue").click(function() {
 			
@@ -72,7 +79,10 @@
 					$("#seatsmapBlock_"+indexSeatMap).hide();
 					$("#btnContinue").hide();
 					$("#btnConfirm").show();
-					for (var i=0;i<finalSelectionArr.length;i++){alert(finalSelectionArr[i]);}
+					$("#selectedSeatsBlock").show();
+					for (var i=0;i<finalSelectionArr.length;i++){
+						$("#selectedSeatsBlock").html($("#selectedSeatsBlock").html() + finalSelectionArr[i] +"<br>");
+					}
 				}
 
 			}
