@@ -98,8 +98,6 @@ public class PaymentFlowController extends Controller {
             System.out.println("state name: "+state.appToken);
             System.out.println("state name: "+state.clientName);
         }
-//        state = new StateDto();
-//        state.clientRut = "160894563";
         
         String urlServer = Play.configuration.getProperty("url.server");
         render(agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate, airRulesResultList, promotionDto, 

@@ -164,6 +164,7 @@
 
 
 <script type="text/javascript">
+    var passengerCount = ${passengersCount};
     var passengers = null;
     var currentApiPaxResponse = null;
     var availableAirlines = [#{list items:whiteListAirlines, as:'whiteListAirlines'}${whiteListAirlines.iataCode.raw()}${whiteListAirlines_isLast ? '' : ','}#{/list}];
@@ -232,10 +233,26 @@
                currentApiPaxResponse =result;
                passengers = listPassengers(result);
                fillInRutSelect();
+               autocompleteApiPax0(result.client);
             }else {
                 getMockupUser(${state.clientRut},function(result) {
                     if(result.status != 0 && result.alianza[0].nombre != ""){
-                        saveMockupToApiPax(result);
+                        saveMockupToApiPax(result,function(result) {
+                            if(result.status != "BAD_REQUEST"){
+                                getApiPaxUser(result.document,function(result) {
+                                    if(result.status != "BAD_REQUEST"){
+                                       currentApiPaxResponse = result;
+                                       passengers = listPassengers(result);
+                                       fillInRutSelect();
+                                       autocompleteApiPax0(result.client);
+                                    }else {
+                                        console.log('ApiPax Get error on passenger :'+ mockupRut);
+                                    }
+                                });
+                            }else {
+                                console.log("Error trying to save passenger");
+                            }
+                        });
                     }
                 });
             }
@@ -258,7 +275,7 @@
             success: todo
         });
     }
-    function saveMockupToApiPax(mockupUser){
+    function saveMockupToApiPax(mockupUser,todo){
         var mockupRut = "" + mockupUser.rut + mockupUser.dv;
         var data = JSON.stringify({
             name: mockupUser.alianza[0].clientenombre,
@@ -276,21 +293,34 @@
             contentType: "application/json",
             dataType: "json",
             data: data,
-            success:function(result) {
-                 if(result.status != "BAD_REQUEST"){
-                    getApiPaxUser(mockupRut,function(result) {
-                        if(result.status != "BAD_REQUEST"){
-                           currentApiPaxResponse = result;
-                           passengers = listPassengers(result);
-                           fillInRutSelect();
-                        }else {
-                            console.log('ApiPax Get error on passenger :'+ mockupRut);
-                        }
-                    });
-                }else {
-                    console.log("Error trying to save passenger");
+            success: todo
+        });
+    }
+    function saveApiPaxPassenger(key,clientRut,todo){
+        var data = JSON.stringify([{
+            name: $('#pasName'+ key).val(),
+            lastname: $('#pasLastName' + key).val(),
+            birthdate:  $('#pasBirth' + key).val(),
+            documents: [
+                {
+                    documentType: 'RUT',
+                    value: $('#rutNum' + key).val()
                 }
-            }
+            ],
+            "regularPassengers": [
+				{
+					"number": $('#FFPNumber' + key).val(),
+					"alliance": $('#FFPAirlineIataCode' + key).val()
+				}
+			]
+        }]);
+        $.ajax({
+            type: "POST",
+            url: "${_urlServer}/addApiPaxPassenger" + "?ClientRut=" + clientRut,
+            contentType: "application/json",
+            dataType: "json",
+            data: data,
+            success: todo
         });
     }
 
@@ -325,6 +355,9 @@
                 return  passenger.documents[d].value;
             }
         }
+    }
+    function x(){
+
     }
 
 </script>

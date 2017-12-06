@@ -139,11 +139,16 @@ public class BookingController extends Controller {
             return false;
         }
     }
+    public static void getApiPaxClientByRut() {
+        String rut = params.get("rut");
+        JsonObject response = getClient(rut);
+        renderJSON(response);
+    }
     public static void deleteApiPaxPassenger() {
         response.setHeader("Access-Control-Allow-Origin", "*");
         String passengerRut = params.get("PassengerRut");
         String ClientRut = params.get("ClientRut");
-        JsonObject jsonObjectToken = getTokenByRut(ClientRut);
+        JsonObject jsonObjectToken = getToken(ClientRut);
         if (jsonObjectToken.has("error")) {
             renderJSON(jsonObjectToken);
         }
@@ -170,8 +175,8 @@ public class BookingController extends Controller {
     }
 
     public static void addApiPaxPassenger(String body) {
-        String rut = params.get("rut");
-        JsonObject jsonObjectToken = getTokenByRut(rut);
+        String ClientRut = params.get("ClientRut");
+        JsonObject jsonObjectToken = getToken(ClientRut);
 
         if (jsonObjectToken.has("error")) {
             renderJSON(jsonObjectToken);
@@ -180,8 +185,20 @@ public class BookingController extends Controller {
         JsonObject jsonObjectResponce = savePassenger(token, new JsonParser().parse(body));
         renderJSON(jsonObjectResponce);
     }
+    public static void updateApiPaxPassenger(String body){
+        String passengerRut = params.get("PassengerRut");
+        String ClientRut = params.get("ClientRut");
+        JsonObject jsonObjectToken = getToken(ClientRut);
 
-    public static JsonObject savePassenger(String token, Object body) {
+        if (jsonObjectToken.has("error")) {
+            renderJSON(jsonObjectToken);
+        }
+        String token = JsonUtils.getStringFromJson(jsonObjectToken, "token");
+        JsonObject jsonObjectResponce = updatePassenger(token,new JsonParser().parse(body),passengerRut);
+        renderJSON(jsonObjectResponce);
+    }
+
+    public static JsonObject savePassenger(String token, JsonElement body) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         String url = APIPAX + token;
         System.out.println(url);
@@ -193,22 +210,29 @@ public class BookingController extends Controller {
         return response.getJson().getAsJsonObject();
     }
 
-    public static void getApiPaxClientByRut() {
-        String rut = params.get("rut");
-        JsonObject response = getClient(rut);
-        renderJSON(response);
+    public static JsonObject updatePassenger(String token,JsonElement body, String passegerRut) {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        String url = APIPAX + token + "/rut/" + passegerRut;
+        System.out.println(url);
+        WS.WSRequest request = WS.url(url);
+        request.setHeader("Authorization", "Basic a2R1OmtkdQ==");
+        request.setHeader("Content-Type", "application/json");
+        request.body(body);
+        WS.HttpResponse response = request.put();
+        return response.getJson().getAsJsonObject();
     }
 
+
     public static JsonObject getClient(String rut) {
-        JsonObject tokenResponse = getTokenByRut(rut);
+        JsonObject tokenResponse = getToken(rut);
         if (tokenResponse.has("error")) {
             return tokenResponse;
         }
-        JsonObject paxResponce = getPaxByToken(JsonUtils.getStringFromJson(tokenResponse, "token"));
+        JsonObject paxResponce = exchangeToken(JsonUtils.getStringFromJson(tokenResponse, "token"));
         return paxResponce;
     }
 
-    private static JsonObject getTokenByRut(String rut) {
+    private static JsonObject getToken(String rut) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         String url = APIPAX + "rut/" + rut;
         System.out.println(url);
@@ -218,7 +242,7 @@ public class BookingController extends Controller {
         return response.getJson().getAsJsonObject();
     }
 
-    public static JsonObject getPaxByToken(String token) {
+    public static JsonObject exchangeToken(String token) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         String url = APIPAX + token;
         System.out.println(url);
