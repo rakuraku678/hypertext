@@ -1,7 +1,5 @@
 $(document).ready(function () {
-    new Fingerprint2().get(function(result){
-        $("#fingerprint").val(result);
-    });
+    
 
     $('.validatedate').datepicker(
         {

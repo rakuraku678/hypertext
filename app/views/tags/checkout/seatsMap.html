@@ -29,12 +29,24 @@
 <style>
 
 .front-indicator {
-	margin: 5px 32px 15px 32px;
 	background-color: #f6f6f6;	
 	color: #adadad;
-	text-align: center;
+	text-align: left;
 	padding: 3px;
+
+	/* Rectangle 4: */
+	background: #FFFFFF;
+	box-shadow: 0 1px 2px 0 rgba(0,0,0,0.30);
 	border-radius: 5px;
+    background: #2c4d6f;
+	font-size: 15px;
+	color: #fff;
+}
+.txt-from-to-block {
+	color: #666;
+}
+.info-from-to {
+	font-weight: 700;
 }
 .wrapper {
 	width: 100%;
@@ -87,17 +99,18 @@ div.seatCharts-seat.focused {
 	background-color: #76B474;
 }
 div.seatCharts-seat.selected {
-	background-color: #E6CAC4;
+	background-color: #979797;
 }
 div.seatCharts-seat.unavailable {
-	background-color: #472B34;
+	background-color: #EA7979;
+	border: 1px solid #E53A3A;
 }
 div.seatCharts-seat.chargeable {
 	background-color: #428BCA;
 }
 div.seatCharts-container {
 	width: 500px;
-	padding: 20px;
+	padding: 20px 0;
 	float: left;
 }
 div.seatCharts-legend {
@@ -128,7 +141,41 @@ span.seatCharts-legendDescription {
 
 
 
+.position-seat {
+	position: relative;
+}
+.position-absolute-seat {
+	position: absolute;
+    top: 380px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    text-align: center;
+    max-width: 268px;
+}
+.position-absolute-seat div.seatCharts-cell {
+    height: 17px;
+    width: 15px;
+    line-height: inherit;
+    font-size: 11px;
+}
+.airplane-drawing {
+	background-image: url(/public/images/airplane-drawing.svg);
+	background-repeat: no-repeat;
+	background-position: 50px 60px;
+	display: inline-block;
+	width: 500px!important;
+	height: 1160px;
+	vertical-align: top;
+}
 
+#selectedSeatsBlock {
+	border: 1px solid #ddd;
+    background-color: #f8f8f8;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 18px;
+}
 
 
 
