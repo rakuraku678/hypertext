@@ -275,8 +275,21 @@
             success: todo
         });
     }
+
     function saveMockupToApiPax(mockupUser,todo){
         var mockupRut = "" + mockupUser.rut + mockupUser.dv;
+        var mockupAlianzas = [];
+        for (var a in mockupUser.alianza){
+            var alianza = {number: mockupUser.alianza[a].id, alliance: validateIataCode(mockupUser.alianza[a].nombre) };
+            if (mockupAlianzas.length !== 0){
+                if(!containsObject(alianza,mockupAlianzas)){
+                    mockupAlianzas.push(alianza);
+                }
+            }else {
+                mockupAlianzas.push(alianza);
+            }
+        }
+
         var data = JSON.stringify({
             name: mockupUser.alianza[0].clientenombre,
             lastname: mockupUser.alianza[0].clienteapellido + " " + mockupUser.alianza[0].clientesegundoapellido,
@@ -285,7 +298,8 @@
                     documentType: 'RUT',
                     value: mockupRut
                 }
-            ]
+            ],
+            "regularPassengers": mockupAlianzas
         });
         $.ajax({
             type: "POST",
@@ -356,9 +370,30 @@
             }
         }
     }
-    function x(){
+    function containsObject(obj, list) {
+        var i;
+        for (i = 0; i < list.length; i++) {
+            if (list[i].alliance === obj.alliance) {
+                return true;
+            }
+        }
 
+        return false;
     }
+    function validateIataCode(airlineName){
+        switch(airlineName){
+            case "Delta":
+                return "DL";
+            case "Iberia":
+                return "IB";
+            case "British":
+                return "BA";
+            case "Gol":
+                return "G3"
+            default :
+                return ""
+        }
+    };
 
 </script>
 
