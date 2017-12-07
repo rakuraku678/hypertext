@@ -104,7 +104,7 @@ public class PaymentFlowController extends Controller {
         		countriesList, onlyPassport, whiteListAirlines, validatingCarrier, AllianceMessage, transactionId, token, state, urlServer);
 	
     }
-    
+
     
     public static void reloadWithTransaction() {
         render("PaymentFlowController/successfulLogin.html");
