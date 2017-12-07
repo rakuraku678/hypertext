@@ -12,12 +12,18 @@ GET     /flights/lowpricesmatrix		        FlightsDataController.lowPricesMatrix
 POST    /checkout                               PaymentFlowController.index
 GET     /checkout.js                            PaymentFlowController.javascript
 GET     /checkout/{id}/process                  PaymentFlowController.processPayment
-GET     /checkout/{id}/error                    PaymentFlowController.processError
+GET     /checkout/{isd}/error                    PaymentFlowController.processError
 GET     /checkout/{id}/confirmation             PaymentConfirmController.index
 GET     /checkout/error/{type}                  PaymentFlowController.processError
 POST    /checkout/booking                       BookingController.startBooking
 POST    /checkout/booking/status                BookingController.statusBooking
-GET		/getFFPNumberByRut						BookingController.getFFPNumberByRut
+
+GET		/getMockupClientByRut				    BookingController.getMockupClientByRut
+GET		/getApiPaxClientByRut					BookingController.getApiPaxClientByRut
+DELETE	/deleteApiPaxPassenger					BookingController.deleteApiPaxPassenger
+POST	/addApiPaxPassenger					    BookingController.addApiPaxPassenger
+POST    /updateApiPaxPassenger                  BookingController.updateApiPaxPassenger
+POST    /createApiPaxClient                     BookingController.createApiPaxClient
 
 GET     /payment/new                            PaymentFlowController.newPayment
 POST    /payment/new                            PaymentFlowController.processNewPayment

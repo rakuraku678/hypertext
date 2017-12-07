@@ -151,13 +151,21 @@ $(document).ready(function () {
             }
         },
         submitHandler: function(validator, form, submitButton) {
-        	
-        	#{if _promotionDto.agency.showLoginOnSelection}
-        	startBooking(true);
-        	#{/if}
-        	#{else}
-        	startBooking(false);
-        	#{/else}
+            if (currentApiPaxResponse != null){
+                for(var i = 0; i < passengerCount; i++) {
+                    if ($("#savePax"+ i).is(':checked')){
+                        saveApiPaxPassenger(i,passengerGetRut(currentApiPaxResponse.client),function(result){
+                            console.log(result);
+                        });
+                    }
+                }
+            }
+#{if _promotionDto.agency.showLoginOnSelection}
+        startBooking(true);
+#{/if}
+#{else}
+        startBooking(false);
+#{/else}
        			
         }
     });
