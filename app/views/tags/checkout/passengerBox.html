@@ -150,11 +150,13 @@
                 </div>
             </div>
 			#{/if}
+            #{if _state != null}
             <div class="row">
                 <div>
                     <label>Guardar Informacion de pasajero? <input type="checkbox" id="savePax${_key}"></label>
                 </div>
             </div>
+            #{/if}
         </div>            
 
     </div>
@@ -276,8 +278,12 @@
                 $('#rutNum${_key}').val(user.documents[doc].value);
             }
         }
-        $('#pasName${_key}').val(user.name);
-        $('#pasLastName${_key}').val(user.lastname);
+        var correctNameSpecialChars = $('<textarea />').html(user.name).text();
+        $('#pasName${_key}').val(correctNameSpecialChars);
+        var correctLastNameSpecialChars = $('<textarea />').html(user.lastname).text();
+        $('#pasLastName${_key}').val(correctLastNameSpecialChars);
+        checkPassNameLastN($('#pasName${_key}'));
+        checkPassNameLastN($('#pasLastName${_key}'));
         if(user.hasOwnProperty("birthdate")){
             $('#pasBirth${_key}').val(user.birthdate);
         }
