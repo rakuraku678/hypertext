@@ -241,7 +241,7 @@
     });
     function deleteApiPaxPassenger(passengerRut,clientRut,todo){
         $.ajax({
-            type: "DELETE",
+            type: "GET",
             url: "${_urlServer}/deleteApiPaxPassenger" + "?ClientRut=" + clientRut + "&PassengerRut=" + passengerRut,
             dataType: "json",
             success: todo

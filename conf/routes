@@ -20,7 +20,7 @@ POST    /checkout/booking/status                BookingController.statusBooking
 
 GET		/getMockupClientByRut				    BookingController.getMockupClientByRut
 GET		/getApiPaxClientByRut					BookingController.getApiPaxClientByRut
-DELETE	/deleteApiPaxPassenger					BookingController.deleteApiPaxPassenger
+GET 	/deleteApiPaxPassenger					BookingController.deleteApiPaxPassenger
 POST	/addApiPaxPassenger					    BookingController.addApiPaxPassenger
 POST    /updateApiPaxPassenger                  BookingController.updateApiPaxPassenger
 POST    /createApiPaxClient                     BookingController.createApiPaxClient

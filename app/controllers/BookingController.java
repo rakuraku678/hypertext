@@ -145,7 +145,6 @@ public class BookingController extends Controller {
         renderJSON(response);
     }
     public static void deleteApiPaxPassenger() {
-        response.setHeader("Access-Control-Allow-Origin", "*");
         String passengerRut = params.get("PassengerRut");
         String ClientRut = params.get("ClientRut");
         JsonObject jsonObjectToken = getToken(ClientRut);
@@ -156,6 +155,7 @@ public class BookingController extends Controller {
         String url = APIPAX + token + "/" + "RUT" + "/" + passengerRut;
         System.out.println(url);
         WS.WSRequest request = WS.url(url);
+        response.setHeader("Access-Control-Allow-Origin", "*");
         request.setHeader("Authorization", "Basic a2R1OmtkdQ==");
         request.setHeader("Content-Type", "application/json");
         WS.HttpResponse response = request.delete();
