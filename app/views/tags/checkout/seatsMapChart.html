@@ -11,12 +11,36 @@
 		<div class="position-absolute-seat">
 		#{list seatsMap.cabins, as: 'cabin' }
 		%{def columnsDataArray = cabin.getAsJsonObject().get("columns").getAsJsonArray(); }%
+			<div class="">
+				<div class="">
+				#{list columnsDataArray, as: 'column' }
+					<div class="" style="display:inline-flex;font-size:8px">
+						${column.get("type").getAsString()}
+					</div>
+				#{/list}
+				</div>
+			</div>
 			#{list cabin.rows, as: 'row' }
 
 					<div class="seatCharts-row">
 					<div class="seatCharts-cell seatCharts-space">${row.rowNumber}</div>
 						#{list row.seats, as: 'seat' }
-							#{if columnsDataArray.get(seat_index-1).getAsJsonObject().get("type").getAsString().equals("Aisle") }
+
+							#{if seat_index > 2 && columnsDataArray.get(seat_index-1).getAsJsonObject().get("type").getAsString().equals("Aisle") }
+								#{if columnsDataArray.get(seat_index-2).getAsJsonObject().get("type").getAsString().equals("Aisle") }
+									<div class="seatCharts-cell seatCharts-space"></div>
+								#{/if}
+							#{/if}
+							#{if !columnsDataArray.get(seat_index-1).getAsJsonObject().get("type").getAsString().equals("Empty")}
+							<div id="${row.rowNumber}${seat.number.getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class chargeable">${seat.number.getAsString()}</div>
+							#{/if}
+							#{elseif}
+							<div class="seatCharts-cell seatCharts-space"></div>
+							#{/elseif}
+
+
+
+							*{#{if columnsDataArray.get(seat_index-1).getAsJsonObject().get("type").getAsString().equals("Aisle") }
 								<div class="seatCharts-cell seatCharts-space"></div>
 							#{/if}
 							#{elseif seat.getAsJsonObject().get("chargeableInd").getAsBoolean()}
@@ -27,7 +51,7 @@
 							#{/elseif}
 							#{else}
 								<div id="${row.rowNumber}${seat.number.getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class available">${seat.number.getAsString()}</div>
-							#{/else}
+							#{/else}}*
 						#{/list}
 					</div>
 				
