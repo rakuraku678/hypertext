@@ -6,6 +6,7 @@ import play.Play;
 import play.libs.WS;
 import play.libs.WS.HttpResponse;
 import play.libs.WS.WSRequest;
+import play.Logger;
 
 public class FlightsUtils {
 
@@ -24,7 +25,7 @@ public class FlightsUtils {
                 System.out.println("//****************************************//");
                 throw new RuntimeException("Flights ERROR");
             }
-            System.out.println("// jsonResponse: " + responseJson);
+            Logger.debug("// jsonResponse: " + responseJson);
             System.out.println("//****************************************//");
 
             return configurationDto;
@@ -48,7 +49,7 @@ public class FlightsUtils {
                 System.out.println("//****************************************//");
                 throw new RuntimeException("Flights ERROR");
             }
-            System.out.println("// jsonResponse: " + responseJson);
+            Logger.debug("// jsonResponse: " + responseJson);
             System.out.println("//****************************************//");
             return responseJson;
         } catch (RuntimeException e) {
