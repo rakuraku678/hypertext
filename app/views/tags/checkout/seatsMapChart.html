@@ -1,18 +1,43 @@
 %{def seatsMapArray = seatsMap.getAsJsonArray();}%
+%{
+for(int i =1; i <= numberOfSeats; i++) {
+}%
+<div class="form-group">
+    <div class="row">
+        <div id="passenger_${i}" class="col-md-12" style="display: inline-flex;"> Passenger ${i}:&nbsp</div>
+    </div>
+    %{
+    }
+    }%
+    <div class="seatCharts-row">
+        <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class chargeable">X</div>
+        chargeableInd
+    </div>
+    <div class="seatCharts-row">
+
+        <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class unavailable">X</div>
+        occupiedInd
+    </div>
+    <div class="seatCharts-row">
+        <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class available">X</div>
+        available
+    </div>
+    <div class="seatCharts-row">
+        <div class="seatCharts-cell seatCharts-space economy-class unknown">X</div>
+        unknown
+    </div>
+
+</div>
+</div>
 #{list seatsMapArray, as: 'seatsMap' }
 <div class="container" id="seatsmapBlock_${seatsMap_index}" style="display: none;">
     <div class="from-to-block txt-from-to-block">${seatsMap.type.getAsString()}</div>
-    <div class="from-to-block info-from-to">${seatsMap.origin.getAsString()} => ${seatsMap.destination.getAsString()}</div>
+    <div class="from-to-block info-from-to">${seatsMap.origin.getAsString()} => ${seatsMap.destination.getAsString()}
+    </div>
+
 
     <div id="seat-map" class="seatCharts-container airplane-drawing">
         <div class="front-indicator">Frente</div>
-        <div style="display:grid">
-        <div role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class chargeable">X</div>chargeableInd
-        <div role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class unavailable">X</div>occupiedInd
-        <div role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class available">X</div>available
-        <div class="seatCharts-cell seatCharts-space economy-class unknown">X</div> unknown
-
-        </div>
         <div class="position-relative-seat">
             <div class="position-absolute-seat">
             #{list seatsMap.cabins, as: 'cabin' }
@@ -22,10 +47,8 @@
                     <div class="seatCharts-cell seatCharts-space">${row.rowNumber}</div>
                         #{if row.seats != null}
                             %{def seats = row.getAsJsonObject().get("seats").getAsJsonArray();}%
-
                             %{int count = 0}%
                             #{list columnsDataArray, as: 'column' }
-
                                 %{def seat = count < seats.size() ? seats.get(count).getAsJsonObject(): null;}%
 
                                 #{if columnsDataArray.get(column_index-1).get("type").getAsString().equals("Aisle") && columnsDataArray.get(column_index-1) != null}
@@ -33,7 +56,6 @@
                                         <div class="seatCharts-cell seatCharts-space"></div>
                                     #{/if}
                                 #{/if}
-
                                 #{if seat == null || !column.get("name").getAsString().equals(seat.get("number").getAsString())}
                                     <div class="seatCharts-cell seatCharts-space economy-class unknown">X</div>
                                 #{/if}
@@ -49,6 +71,7 @@
                                     <div id="${row.rowNumber}${seat.number.getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class available">${seat.number.getAsString()}</div>
                                     %{count++;}%
                                 #{/else}
+
                             #{/list}
                         #{/if}
                     </div>
@@ -78,7 +101,7 @@
 	var indexSeatMap = 1;
 	var selectionArr = new Array();
 	var finalSelectionArr = new Array();
-	var numberOfMaps = ${seatsMapArray.size()};	
+	var numberOfMaps = ${seatsMapArray.size()};
 	
 	$(function () {
 		
@@ -89,26 +112,26 @@
 		
 		
 		$("#btnContinue").click(function() {
-			
-			if (indexSeatMap <= numberOfMaps) {
-				$("#seatsmapBlock_"+indexSeatMap).hide();
-				indexSeatMap++;
-				seatsSelected = 0;
-				finalSelectionArr.push(selectionArr);
-				selectionArr = new Array();
-				$("#seatsmapBlock_"+indexSeatMap).show();
-				if (indexSeatMap>numberOfMaps){
-					indexSeatMap--;
-					$("#seatsmapBlock_"+indexSeatMap).hide();
-					$("#btnContinue").hide();
-					$("#btnConfirm").show();
-					$("#selectedSeatsBlock").show();
-					for (var i=0;i<finalSelectionArr.length;i++){
-						$("#selectedSeatsBlock").html($("#selectedSeatsBlock").html() + finalSelectionArr[i] +"<br>");
-					}
-				}
-
-			}
+			if (seatsSelected == ${numberOfSeats}){
+                if (indexSeatMap <= numberOfMaps) {
+                    $("#seatsmapBlock_"+indexSeatMap).hide();
+                    indexSeatMap++;
+                    seatsSelected = 0;
+                    finalSelectionArr.push(selectionArr);
+                    selectionArr = new Array();
+                    $("#seatsmapBlock_"+indexSeatMap).show();
+                    if (indexSeatMap>numberOfMaps){
+                        indexSeatMap--;
+                        $("#seatsmapBlock_"+indexSeatMap).hide();
+                        $("#btnContinue").hide();
+                        $("#btnConfirm").show();
+                        $("#selectedSeatsBlock").show();
+                        for (var i=0;i<finalSelectionArr.length;i++){
+                            $("#selectedSeatsBlock").html($("#selectedSeatsBlock").html() + finalSelectionArr[i] +"<br>");
+                        }
+                    }
+                }
+            }
 		});
 		
 		$(".seatCharts-seat").mouseenter(function() {
@@ -126,11 +149,18 @@
 			if (!$(this).hasClass("unavailable") && !$(this).hasClass("selected") && seatsSelected < ${numberOfSeats}) {
 				$(this).addClass("selected");
 				seatsSelected++;
+				if(indexSeatMap != 1){
+                    $("#passenger_"+seatsSelected).append("<p id="+indexSeatMap + seatsSelected+">-"+this.id+"</p>");
+                }else{
+                    $("#passenger_"+seatsSelected).append("<p id="+indexSeatMap + seatsSelected+">"+this.id+"</p>");
+                }
 				selectionArr.push(this.id);
 				return;
 			}
 			if ($(this).hasClass("selected")  ) {
 				$(this).removeClass("selected");
+				debugger;
+				$("#passenger_"+seatsSelected).children("#"+indexSeatMap + seatsSelected).remove();
 				selectionArr.splice(selectionArr.indexOf(this.id),1);
 				seatsSelected--;
 			}
