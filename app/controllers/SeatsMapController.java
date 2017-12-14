@@ -40,7 +40,8 @@ public class SeatsMapController extends Controller {
 	    Template template = TemplateLoader.load(template("tags/checkout/seatsMapChart.html"));
 	    Map m = Maps.newHashMap();
 	    m.put("seatsMap", jsonSeats);
-	    m.put("numberOfSeats", bodyJsonElement.getAsJsonObject().get("pricing").getAsJsonObject().get("seats").getAsString());
+
+	    m.put("numberOfSeats", bodyJsonElement.getAsJsonObject().get("pricing").getAsJsonObject().get("seats").getAsInt());
 	    renderHtml(template.render(m).replaceAll("\\s{2,}"," "));
 	    
         //renderJSON(parsedSeats);
