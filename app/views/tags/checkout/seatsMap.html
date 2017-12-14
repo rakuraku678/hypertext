@@ -108,6 +108,9 @@ div.seatCharts-seat.unavailable {
 div.seatCharts-seat.chargeable {
 	background-color: #428BCA;
 }
+div.seatCharts-seat.unknown {
+	background-color: #000000;
+}
 div.seatCharts-container {
 	width: 500px;
 	padding: 20px 0;
@@ -145,13 +148,13 @@ span.seatCharts-legendDescription {
 	position: relative;
 }
 .position-absolute-seat {
-	position: absolute;
-    top: 380px;
+	position: relative;
+    top: 20px;
     left: 0;
     right: 0;
     margin: 0 auto;
     text-align: center;
-    <!--max-width: 268px;-->
+    max-width: 268px;
 }
 .position-absolute-seat div.seatCharts-cell {
     height: 17px;
@@ -159,15 +162,15 @@ span.seatCharts-legendDescription {
     line-height: inherit;
     font-size: 11px;
 }
-<!--.airplane-drawing {-->
+.airplane-drawing {
 	<!--background-image: url(/public/images/airplane-drawing.svg);-->
-	<!--background-repeat: no-repeat;-->
-	<!--background-position: 50px 60px;-->
-	<!--display: inline-block;-->
-	<!--width: 500px!important;-->
-	<!--height: 1160px;-->
-	<!--vertical-align: top;-->
-<!--}-->
+	background-repeat: no-repeat;
+	background-position: 50px 60px;
+	display: inline-block;
+	width: 500px!important;
+	height: auto;
+	vertical-align: top;
+}
 
 #selectedSeatsBlock {
 	border: 1px solid #ddd;

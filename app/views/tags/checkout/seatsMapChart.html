@@ -1,66 +1,57 @@
 %{def seatsMapArray = seatsMap.getAsJsonArray();}%
 #{list seatsMapArray, as: 'seatsMap' }
 <div class="container" id="seatsmapBlock_${seatsMap_index}" style="display: none;">
-<div class="from-to-block txt-from-to-block">${seatsMap.type.getAsString()}</div>
-<div class="from-to-block info-from-to">${seatsMap.origin.getAsString()} => ${seatsMap.destination.getAsString()}</div>
+    <div class="from-to-block txt-from-to-block">${seatsMap.type.getAsString()}</div>
+    <div class="from-to-block info-from-to">${seatsMap.origin.getAsString()} => ${seatsMap.destination.getAsString()}</div>
 
-<div id="seat-map" class="seatCharts-container airplane-drawing">
-<div class="front-indicator">Frente</div>
+    <div id="seat-map" class="seatCharts-container airplane-drawing">
+        <div class="front-indicator">Frente</div>
 
-	<div class="position-relative-seat">
-		<div class="position-absolute-seat">
-		#{list seatsMap.cabins, as: 'cabin' }
-		%{def columnsDataArray = cabin.getAsJsonObject().get("columns").getAsJsonArray(); }%
-			<div class="">
-				<div class="">
-				#{list columnsDataArray, as: 'column' }
-					<div class="" style="display:inline-flex;font-size:8px">
-						${column.get("type").getAsString()}
-					</div>
-				#{/list}
-				</div>
-			</div>
-			#{list cabin.rows, as: 'row' }
+        <div class="position-relative-seat">
+            <div class="position-absolute-seat">
+            #{list seatsMap.cabins, as: 'cabin' }
+                %{def columnsDataArray = cabin.getAsJsonObject().get("columns").getAsJsonArray(); }%
+                #{list cabin.rows, as: 'row' }
+                    <div class="seatCharts-row">
+                    <div class="seatCharts-cell seatCharts-space">${row.rowNumber}</div>
+                        #{if row.seats != null}
+                            %{def seats = row.getAsJsonObject().get("seats").getAsJsonArray();}%
 
-					<div class="seatCharts-row">
-					<div class="seatCharts-cell seatCharts-space">${row.rowNumber}</div>
-						#{list row.seats, as: 'seat' }
+                            %{int count = 0}%
+                            #{list columnsDataArray, as: 'column' }
 
-							#{if seat_index > 2 && columnsDataArray.get(seat_index-1).getAsJsonObject().get("type").getAsString().equals("Aisle") }
-								#{if columnsDataArray.get(seat_index-2).getAsJsonObject().get("type").getAsString().equals("Aisle") }
-									<div class="seatCharts-cell seatCharts-space"></div>
-								#{/if}
-							#{/if}
-							#{if !columnsDataArray.get(seat_index-1).getAsJsonObject().get("type").getAsString().equals("Empty")}
-							<div id="${row.rowNumber}${seat.number.getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class chargeable">${seat.number.getAsString()}</div>
-							#{/if}
-							#{elseif}
-							<div class="seatCharts-cell seatCharts-space"></div>
-							#{/elseif}
+                                %{def seat = count < seats.size() ? seats.get(count).getAsJsonObject(): null;}%
 
+                                #{if columnsDataArray.get(column_index-1).get("type").getAsString().equals("Aisle") && columnsDataArray.get(column_index-1) != null}
+                                    #{if columnsDataArray.get(column_index-2).get("type").getAsString().equals("Aisle")}
+                                        <div class="seatCharts-cell seatCharts-space"></div>
+                                    #{/if}
+                                #{/if}
 
+                                #{if seat == null || !column.get("name").getAsString().equals(seat.get("number").getAsString())}
+                                    <div class="seatCharts-cell seatCharts-space economy-class unknown">X</div>
+                                #{/if}
+                                #{elseif seat != null && seat.get("chargeableInd").getAsBoolean()}
+                                    <div id="${row.rowNumber}${seat.number.getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class chargeable">${seat.number.getAsString()}</div>
+                                    %{count++;}%
+                                #{/elseif}
+                                #{elseif  seat != null && (seat.get("occupiedInd").getAsBoolean() || seat.getAsJsonObject().get("inoperativeInd").getAsBoolean()) }
+                                    <div id="${row.rowNumber}${seat.number.getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class unavailable">${seat.number.getAsString()}</div>
+                                    %{count++;}%
+                                #{/elseif}
+                                #{else}
+                                    <div id="${row.rowNumber}${seat.number.getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class available">${seat.number.getAsString()}</div>
+                                    %{count++;}%
+                                #{/else}
+                            #{/list}
+                        #{/if}
+                    </div>
+                #{/list}
+            #{/list}
+            </div>
+        </div>
 
-							*{#{if columnsDataArray.get(seat_index-1).getAsJsonObject().get("type").getAsString().equals("Aisle") }
-								<div class="seatCharts-cell seatCharts-space"></div>
-							#{/if}
-							#{elseif seat.getAsJsonObject().get("chargeableInd").getAsBoolean()}
-								<div id="${row.rowNumber}${seat.number.getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class chargeable">${seat.number.getAsString()}</div>
-							#{/elseif}
-							#{elseif seat.getAsJsonObject().get("occupiedInd").getAsBoolean() || seat.getAsJsonObject().get("inoperativeInd").getAsBoolean() }
-								<div id="${row.rowNumber}${seat.number.getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class unavailable">${seat.number.getAsString()}</div>
-							#{/elseif}
-							#{else}
-								<div id="${row.rowNumber}${seat.number.getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class available">${seat.number.getAsString()}</div>
-							#{/else}}*
-						#{/list}
-					</div>
-				
-			#{/list}
-		#{/list}
-		</div>
-	</div>
-	
-</div>
+    </div>
 </div>
 
 
@@ -74,7 +65,7 @@
 <div class="text-right">
 	<a class="btn btn-search" id="btnContinue">Continuar</a>
 	<a class="btn btn-search" id="btnConfirm" style="display: none;">Confirmar Asientos</a>
-</div>	
+</div>
 
 	<script>
 	var seatsSelected = 0;
