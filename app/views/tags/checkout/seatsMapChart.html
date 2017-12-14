@@ -6,7 +6,13 @@
 
     <div id="seat-map" class="seatCharts-container airplane-drawing">
         <div class="front-indicator">Frente</div>
+        <div style="display:grid">
+        <div role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class chargeable">X</div>chargeableInd
+        <div role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class unavailable">X</div>occupiedInd
+        <div role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class available">X</div>available
+        <div class="seatCharts-cell seatCharts-space economy-class unknown">X</div> unknown
 
+        </div>
         <div class="position-relative-seat">
             <div class="position-absolute-seat">
             #{list seatsMap.cabins, as: 'cabin' }
