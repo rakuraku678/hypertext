@@ -67,18 +67,19 @@
                             <a type="button" data-toggle="collapse" data-target="#departureSegment${_flight.sequenceNumber.getAsString()}" aria-expanded="false" aria-controls="collapseExample" class="link-detail-desktop">
                                 %{
                                     connectionsCount = _flight.departureSegment.flightsCount.getAsInt() - 1;
+                                    stopsQtySignal = (_flight.departureSegment.detail.inject(0, { sum, value -> sum + value.stopQuantity?.getAsInt() }) > 0)?"*":""
                                 }%
                             #{if connectionsCount == 0 }
-                                <span class="stop-txt">Directo</span>
+                                <span class="stop-txt">Directo${stopsQtySignal}</span>
                                 <span class="line-route"></span>
                             #{/if}
                             #{elseif connectionsCount == 1 }
-                                <span class="stop-txt">${connectionsCount} escala</span>
+                                <span class="stop-txt">${connectionsCount} escala${stopsQtySignal}</span>
                                 <span class="circle"></span>
                                 <span class="line-route"></span>
                             #{/elseif}
                             #{elseif connectionsCount >= 2 }
-                                <span class="stop-txt">${connectionsCount}&nbsp;escalas</span>
+                                <span class="stop-txt">${connectionsCount}&nbsp;escalas${stopsQtySignal}</span>
                                 <span class="circle left-circle"></span>
                                 <span class="circle right-circle"></span>
                                 <span class="line-route"></span>
