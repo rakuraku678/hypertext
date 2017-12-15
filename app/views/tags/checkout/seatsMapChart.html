@@ -9,24 +9,18 @@ for(int i =1; i <= numberOfSeats; i++) {
     %{
     }
     }%
-    <div class="seatCharts-row">
-        <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class chargeable">X</div>
-        chargeableInd
+    <div id="seatCharts-legend" class="seatCharts-legend">
+        <ul class="seatCharts-legendList">
+            <div class="seatCharts-row">
+                <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class unavailable"></div>
+                <span class="seatCharts-legendDescription">Ocupado</span>
+            </div>
+            <div class="seatCharts-row">
+                <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class available"></div>
+                <span class="seatCharts-legendDescription">Disponible</span>
+            </div>
+        </ul>
     </div>
-    <div class="seatCharts-row">
-
-        <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class unavailable">X</div>
-        occupiedInd
-    </div>
-    <div class="seatCharts-row">
-        <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class available">X</div>
-        available
-    </div>
-    <div class="seatCharts-row">
-        <div class="seatCharts-cell seatCharts-space economy-class unknown">X</div>
-        unknown
-    </div>
-
 </div>
 </div>
 #{list seatsMapArray, as: 'seatsMap' }
@@ -42,6 +36,19 @@ for(int i =1; i <= numberOfSeats; i++) {
             <div class="position-absolute-seat">
             #{list seatsMap.cabins, as: 'cabin' }
                 %{def columnsDataArray = cabin.getAsJsonObject().get("columns").getAsJsonArray(); }%
+
+                <div class="seatCharts-row">
+                    <div class="seatCharts-cell seatCharts-space"></div>
+                    #{list columnsDataArray, as: 'column' }
+                        #{if columnsDataArray.get(column_index-1) != null && columnsDataArray.get(column_index-1).get("type").getAsString().equals("Aisle")}
+                            #{if columnsDataArray.get(column_index-2).get("type").getAsString().equals("Aisle")}
+                                <div class="seatCharts-cell seatCharts-space"></div>
+                            #{/if}
+                        #{/if}
+                        <div class="seatCharts-cell seatCharts-space economy-class unavailable">${column.get("name").getAsString()}</div>
+                    #{/list}
+                </div>
+
                 #{list cabin.rows, as: 'row' }
                     <div class="seatCharts-row">
                     <div class="seatCharts-cell seatCharts-space">${row.rowNumber}</div>
@@ -51,25 +58,19 @@ for(int i =1; i <= numberOfSeats; i++) {
                             #{list columnsDataArray, as: 'column' }
                                 %{def seat = count < seats.size() ? seats.get(count).getAsJsonObject(): null;}%
 
-                                #{if columnsDataArray.get(column_index-1).get("type").getAsString().equals("Aisle") && columnsDataArray.get(column_index-1) != null}
+                                #{if columnsDataArray.get(column_index-1) != null && columnsDataArray.get(column_index-1).get("type").getAsString().equals("Aisle")}
                                     #{if columnsDataArray.get(column_index-2).get("type").getAsString().equals("Aisle")}
                                         <div class="seatCharts-cell seatCharts-space"></div>
                                     #{/if}
                                 #{/if}
-                                #{if seat == null || !column.get("name").getAsString().equals(seat.get("number").getAsString())}
-                                    <div class="seatCharts-cell seatCharts-space economy-class unknown">X</div>
+
+
+                                #{if seat != null && column.get("name").getAsString().equals(seat.get("number").getAsString())}
+                                    <div id="${row.rowNumber}${column.get("name").getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class available"></div>
+                                    %{count++;}%
                                 #{/if}
-                                #{elseif seat != null && seat.get("chargeableInd").getAsBoolean()}
-                                    <div id="${row.rowNumber}${seat.number.getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class chargeable">${seat.number.getAsString()}</div>
-                                    %{count++;}%
-                                #{/elseif}
-                                #{elseif  seat != null && (seat.get("occupiedInd").getAsBoolean() || seat.getAsJsonObject().get("inoperativeInd").getAsBoolean()) }
-                                    <div id="${row.rowNumber}${seat.number.getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class unavailable">${seat.number.getAsString()}</div>
-                                    %{count++;}%
-                                #{/elseif}
                                 #{else}
-                                    <div id="${row.rowNumber}${seat.number.getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class available">${seat.number.getAsString()}</div>
-                                    %{count++;}%
+                                   <div class="seatCharts-seat seatCharts-cell economy-class unavailable"></div>
                                 #{/else}
 
                             #{/list}
@@ -86,9 +87,6 @@ for(int i =1; i <= numberOfSeats; i++) {
 
 
 #{/list}
-
-<div class="container" id="selectedSeatsBlock" style="display: none;">
-
 </div>
 
 <div class="text-right">
@@ -125,10 +123,7 @@ for(int i =1; i <= numberOfSeats; i++) {
                         $("#seatsmapBlock_"+indexSeatMap).hide();
                         $("#btnContinue").hide();
                         $("#btnConfirm").show();
-                        $("#selectedSeatsBlock").show();
-                        for (var i=0;i<finalSelectionArr.length;i++){
-                            $("#selectedSeatsBlock").html($("#selectedSeatsBlock").html() + finalSelectionArr[i] +"<br>");
-                        }
+                        $("#seatCharts-legend").hide();
                     }
                 }
             }
@@ -159,7 +154,6 @@ for(int i =1; i <= numberOfSeats; i++) {
 			}
 			if ($(this).hasClass("selected")  ) {
 				$(this).removeClass("selected");
-				debugger;
 				$("#passenger_"+seatsSelected).children("#"+indexSeatMap + seatsSelected).remove();
 				selectionArr.splice(selectionArr.indexOf(this.id),1);
 				seatsSelected--;
