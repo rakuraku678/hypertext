@@ -7,6 +7,7 @@ import play.libs.WS;
 import play.libs.WS.HttpResponse;
 import play.libs.WS.WSRequest;
 import utils.ApiFlightsSdk.v1.Promotion;
+import play.Logger;
 
 public class TravelClubUtils {
 
@@ -37,7 +38,7 @@ public class TravelClubUtils {
 				System.out.println("//****************************************//");
 				throw new RuntimeException("Api Flights ERROR");
 			}
-			System.out.println("// jsonResponse: " + responseJson );
+			Logger.debug("// jsonResponse: " + responseJson );
 			System.out.println("//****************************************//");
 
 			return agencyConfigurationDto;

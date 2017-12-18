@@ -1,0 +1,162 @@
+%{def seatsMapArray = seatsMap.getAsJsonArray();}%
+%{
+for(int i =1; i <= numberOfSeats; i++) {
+}%
+<div class="form-group">
+    <div class="row">
+        <div id="passenger_${i}" class="col-md-12" style="display: inline-flex;"> Passenger ${i}:&nbsp</div>
+    </div>
+    %{
+    }
+    }%
+    <div id="seatCharts-legend" class="seatCharts-legend">
+        <ul class="seatCharts-legendList">
+            <div class="seatCharts-row">
+                <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class unavailable"></div>
+                <span class="seatCharts-legendDescription">Ocupado</span>
+            </div>
+            <div class="seatCharts-row">
+                <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class available"></div>
+                <span class="seatCharts-legendDescription">Disponible</span>
+            </div>
+        </ul>
+    </div>
+</div>
+</div>
+#{list seatsMapArray, as: 'seatsMap' }
+<div class="container" id="seatsmapBlock_${seatsMap_index}" style="display: none;">
+    <div class="from-to-block txt-from-to-block">${seatsMap.type.getAsString()}</div>
+    <div class="from-to-block info-from-to">${seatsMap.origin.getAsString()} => ${seatsMap.destination.getAsString()}
+    </div>
+
+
+    <div id="seat-map" class="seatCharts-container airplane-drawing">
+        <div class="front-indicator">Frente</div>
+        <div class="position-relative-seat">
+            <div class="position-absolute-seat">
+            #{list seatsMap.cabins, as: 'cabin' }
+                %{def columnsDataArray = cabin.getAsJsonObject().get("columns").getAsJsonArray(); }%
+
+                <div class="seatCharts-row">
+                    <div class="seatCharts-cell seatCharts-space"></div>
+                    #{list columnsDataArray, as: 'column' }
+                        #{if columnsDataArray.get(column_index-1) != null && columnsDataArray.get(column_index-1).get("type").getAsString().equals("Aisle")}
+                            #{if columnsDataArray.get(column_index-2).get("type").getAsString().equals("Aisle")}
+                                <div class="seatCharts-cell seatCharts-space"></div>
+                            #{/if}
+                        #{/if}
+                        <div class="seatCharts-cell seatCharts-space economy-class unavailable">${column.get("name").getAsString()}</div>
+                    #{/list}
+                </div>
+
+                #{list cabin.rows, as: 'row' }
+                    <div class="seatCharts-row" #{if row.get("isOverWing").getAsBoolean()} style="background:gray;"#{/if}>
+                    <div class="seatCharts-cell seatCharts-space">${row.rowNumber}</div>
+                        #{if row.seats != null}
+                            %{def seats = row.getAsJsonObject().get("seats").getAsJsonArray();}%
+                            %{int count = 0}%
+                            #{list columnsDataArray, as: 'column' }
+                                %{def seat = count < seats.size() ? seats.get(count).getAsJsonObject(): null;}%
+
+                                #{if columnsDataArray.get(column_index-1) != null && columnsDataArray.get(column_index-1).get("type").getAsString().equals("Aisle")}
+                                    #{if columnsDataArray.get(column_index-2).get("type").getAsString().equals("Aisle")}
+                                        <div class="seatCharts-cell seatCharts-space"></div>
+                                    #{/if}
+                                #{/if}
+
+                                #{if seat != null && (seat.get("chargeableInd").getAsBoolean() || seat.get("occupiedInd").getAsBoolean() || seat.getAsJsonObject().get("inoperativeInd").getAsBoolean())}
+                                    <div class="seatCharts-seat seatCharts-cell economy-class unavailable"></div>
+                                    %{count++;}%
+                                #{/if}
+                                #{else}
+                                    <div id="${row.rowNumber}${column.get("name").getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class available"></div>
+                                #{/else}
+
+                            #{/list}
+                        #{/if}
+                    </div>
+                #{/list}
+            #{/list}
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+#{/list}
+</div>
+
+<div class="text-right">
+	<a class="btn btn-search" id="btnContinue">Continuar</a>
+	<a class="btn btn-search" id="btnConfirm" style="display: none;">Confirmar Asientos</a>
+</div>
+
+	<script>
+	var seatsSelected = 0;
+	var indexSeatMap = 1;
+	var selectionArr = new Array();
+	var finalSelectionArr = new Array();
+	var numberOfMaps = ${seatsMapArray.size()};
+	
+	$(function () {
+		
+		$("#seatsmapBlock_1").show();
+		$("#btnConfirm").click(function() {
+			$('#modalSeatsMap').modal('toggle');
+		});
+		
+		
+		$("#btnContinue").click(function() {
+			if (seatsSelected == ${numberOfSeats}){
+                if (indexSeatMap <= numberOfMaps) {
+                    $("#seatsmapBlock_"+indexSeatMap).hide();
+                    indexSeatMap++;
+                    seatsSelected = 0;
+                    finalSelectionArr.push(selectionArr);
+                    selectionArr = new Array();
+                    $("#seatsmapBlock_"+indexSeatMap).show();
+                    if (indexSeatMap>numberOfMaps){
+                        indexSeatMap--;
+                        $("#seatsmapBlock_"+indexSeatMap).hide();
+                        $("#btnContinue").hide();
+                        $("#btnConfirm").show();
+                        $("#seatCharts-legend").hide();
+                    }
+                }
+            }
+		});
+		
+		$(".seatCharts-seat").mouseenter(function() {
+			if ($(this).hasClass("available")) {
+				$(this).addClass("focused");
+			}
+		});
+		$(".seatCharts-seat").mouseout(function() {
+			
+			if ($(this).hasClass("focused")) {
+				$(this).removeClass("focused");
+			}
+		});
+		$(".seatCharts-seat").click(function() {
+			if (!$(this).hasClass("unavailable") && !$(this).hasClass("selected") && seatsSelected < ${numberOfSeats}) {
+				$(this).addClass("selected");
+				seatsSelected++;
+				if(indexSeatMap != 1){
+                    $("#passenger_"+seatsSelected).append("<p id="+indexSeatMap + seatsSelected+">-"+this.id+"</p>");
+                }else{
+                    $("#passenger_"+seatsSelected).append("<p id="+indexSeatMap + seatsSelected+">"+this.id+"</p>");
+                }
+				selectionArr.push(this.id);
+				return;
+			}
+			if ($(this).hasClass("selected")  ) {
+				$(this).removeClass("selected");
+				$("#passenger_"+seatsSelected).children("#"+indexSeatMap + seatsSelected).remove();
+				selectionArr.splice(selectionArr.indexOf(this.id),1);
+				seatsSelected--;
+			}
+		});
+	});
+	</script>
