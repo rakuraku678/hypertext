@@ -170,16 +170,7 @@ $(document).ready(function () {
        			
         }
     });
-function disableOptions(idElement, xElement, attrElement, x, bool)
-{
-for (var y=1; y < xElement; y++)
-	  {
-	  if(y == idElement && attrElement != "savedRutNum"+x)
-	     { $("#savedRutNum"+x+" option:eq("+y+")").attr("disabled",true) }
-	  else if(bool)
-	     { $("#savedRutNum"+x+" option:eq("+y+")").attr("disabled",false) }
-}
-}
+
 function loadPaxDefault() {
         $("#savedRutNum0").ready(function(){
         if($("#savedRutNum0").val()=="0")
@@ -206,7 +197,6 @@ function loadPaxDefault() {
 
         $("[id*=savedRutNum]").on('change', function(){
         if($(this).val()=="0") {
-            debugger;
           $(this).next("button").attr('disabled',true);
           var indexId = $(this).attr("id");
           var indexNum = indexId[indexId.length-1];
@@ -225,14 +215,7 @@ function loadPaxDefault() {
         }
         else
           $(this).next("button").attr('disabled',false)
-	/*for (var x=0; x < passengerCount; x++)
-	{
-	  var idElement = $(this).prop('selectedIndex');
-	  var attrElement = $(this).attr("id");
-	  var xElement = $("#"+attrElement+" option").length;
-	  disableOptions(idElement, xElement, attrElement, x, true);
-	}*/
-debugger;
+
 	for (var z=0; z < passengerCount; z++)
         {
     	  if ($("#savedRutNum"+z).val() == $("#rutNum"+z).val())
