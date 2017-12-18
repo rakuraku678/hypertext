@@ -183,7 +183,14 @@ for (var y=1; y < xElement; y++)
 function loadPaxDefault() {
         $("#savedRutNum0").ready(function(){
         if($("#savedRutNum0").val()=="0")
-          $("#savedRutNum0").val($("#rutNum0").val())
+          {$("#savedRutNum0").val($("#rutNum0").val())}
+      for (var z=0; z < passengerCount; z++)
+        {
+          if ($("#savedRutNum"+z).val() == $("#rutNum"+z).val())
+           { for (var j=0; j < passengerCount; j++)
+              { $("#savedRutNum"+j+" option:eq("+$("#savedRutNum"+z).prop("selectedIndex")+")").attr("disabled",true) }
+            }
+        }
          });
 	$(document).ready(function(){
 	  for (var i=0; i < passengerCount; i++)
@@ -198,24 +205,45 @@ function loadPaxDefault() {
 	setTimeout(loadPaxDefault, 1000);
 
         $("[id*=savedRutNum]").on('change', function(){
-        if($(this).val()=="0")
-          $(this).next("button").attr('disabled',true)
+        if($(this).val()=="0") {
+            debugger;
+          $(this).next("button").attr('disabled',true);
+          var indexId = $(this).attr("id");
+          var indexNum = indexId[indexId.length-1];
+          var lastRut = $('#rutNum'+indexNum).val();
+          $('#rutNum'+indexNum).val("");
+          $('#pasName'+indexNum).val("");
+          $('#pasBirth'+indexNum).val("");
+          $('#pasLastName'+indexNum).val("");
+          $('#FFPNumber'+indexNum).val("");
+          $('#FFPAirlineIataCode'+indexNum).val("");
+
+          for (var z=0; z < passengerCount; z++)
+            {
+                $("#savedRutNum"+z+" option[value='"+lastRut+"'").attr("disabled",false)
+            }
+        }
         else
           $(this).next("button").attr('disabled',false)
-	for (var x=0; x < passengerCount; x++)
+	/*for (var x=0; x < passengerCount; x++)
 	{
 	  var idElement = $(this).prop('selectedIndex');
 	  var attrElement = $(this).attr("id");
 	  var xElement = $("#"+attrElement+" option").length;
 	  disableOptions(idElement, xElement, attrElement, x, true);
-	}
+	}*/
 debugger;
 	for (var z=0; z < passengerCount; z++)
-{
-	  if ($("#savedRutNum"+z).val() == $("#rutNum"+z).val())
-	   { $("#savedRutNum"+z+" option:eq("+$("#savedRutNum"+z).prop("selectedIndex")+")").attr("disabled",true) }
-}
-         });
+        {
+    	  if ($("#savedRutNum"+z).val() == $("#rutNum"+z).val())
+    	   {  
+              for (var j=0; j < passengerCount; j++)
+              {
+                $("#savedRutNum"+j+" option:eq("+$("#savedRutNum"+z).prop("selectedIndex")+")").attr("disabled",true)
+              }
+            }
+        }
+    });
 
     $( ".validatedate" ).change(function() {
     	checkFNacDates(this);
