@@ -224,7 +224,10 @@
             if (confirm("Esta seguro que desea eliminar el passajero: " + passengerRut)){
                 deleteApiPaxPassenger(passengerRut,clientRut,function(result){
                     if(result.code == 200){
-                        savedRutNum.remove(savedRutNum.selectedIndex);
+			for (var a = 0; a < 7; a++)
+			{
+				$("#savedRutNum"+a+" option[value='"+passengerRut+"']").remove();
+			}
                         alert("eliminado "+passengerRut);
                         resetPassengerBox${_key}();
                     }else if (result.code == 400){
