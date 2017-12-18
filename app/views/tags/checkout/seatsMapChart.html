@@ -64,13 +64,12 @@ for(int i =1; i <= numberOfSeats; i++) {
                                     #{/if}
                                 #{/if}
 
-
-                                #{if seat != null && column.get("name").getAsString().equals(seat.get("number").getAsString())}
-                                    <div id="${row.rowNumber}${column.get("name").getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class available"></div>
+                                #{if seat != null && (seat.get("chargeableInd").getAsBoolean() || seat.get("occupiedInd").getAsBoolean() || seat.getAsJsonObject().get("inoperativeInd").getAsBoolean())}
+                                    <div class="seatCharts-seat seatCharts-cell economy-class unavailable"></div>
                                     %{count++;}%
                                 #{/if}
                                 #{else}
-                                   <div class="seatCharts-seat seatCharts-cell economy-class unavailable"></div>
+                                    <div id="${row.rowNumber}${column.get("name").getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class available"></div>
                                 #{/else}
 
                             #{/list}
