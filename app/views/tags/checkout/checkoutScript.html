@@ -11,6 +11,7 @@ $(document).ready(function () {
       }
     });
 
+
     $('.validatedate').datepicker(
         {
             dateFormat: 'dd/mm/yy',
@@ -169,6 +170,52 @@ $(document).ready(function () {
        			
         }
     });
+function disableOptions(idElement, xElement, attrElement, x, bool)
+{
+for (var y=1; y < xElement; y++)
+	  {
+	  if(y == idElement && attrElement != "savedRutNum"+x)
+	     { $("#savedRutNum"+x+" option:eq("+y+")").attr("disabled",true) }
+	  else if(bool)
+	     { $("#savedRutNum"+x+" option:eq("+y+")").attr("disabled",false) }
+}
+}
+function loadPaxDefault() {
+        $("#savedRutNum0").ready(function(){
+        if($("#savedRutNum0").val()=="0")
+          $("#savedRutNum0").val($("#rutNum0").val())
+         });
+	$(document).ready(function(){
+	  for (var i=0; i < passengerCount; i++)
+	   {
+	     if($("#savedRutNum"+i).val()=="0")
+		 $("#savedRutNum"+i).next("button").attr('disabled',true)
+             else
+          	 $("#savedRutNum"+i).next("button").attr('disabled',false)
+	   }
+	});
+	}
+	setTimeout(loadPaxDefault, 1000);
+
+        $("[id*=savedRutNum]").on('change', function(){
+        if($(this).val()=="0")
+          $(this).next("button").attr('disabled',true)
+        else
+          $(this).next("button").attr('disabled',false)
+	for (var x=0; x < passengerCount; x++)
+	{
+	  var idElement = $(this).prop('selectedIndex');
+	  var attrElement = $(this).attr("id");
+	  var xElement = $("#"+attrElement+" option").length;
+	  disableOptions(idElement, xElement, attrElement, x, true);
+	}
+debugger;
+	for (var z=0; z < passengerCount; z++)
+{
+	  if ($("#savedRutNum"+z).val() == $("#rutNum"+z).val())
+	   { $("#savedRutNum"+z+" option:eq("+$("#savedRutNum"+z).prop("selectedIndex")+")").attr("disabled",true) }
+}
+         });
 
     $( ".validatedate" ).change(function() {
     	checkFNacDates(this);
