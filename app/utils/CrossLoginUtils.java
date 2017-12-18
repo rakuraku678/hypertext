@@ -42,7 +42,7 @@ public class CrossLoginUtils {
                 System.out.println("//****************************************//");
                 throw new RuntimeException("Crosslogin service ERROR");
             }
-            System.out.println("// jsonResponse: " + responseJson.toString() );
+            Logger.debug("// jsonResponse: " + responseJson.toString() );
             System.out.println("//****************************************//");
 
             return token;
@@ -72,7 +72,7 @@ public class CrossLoginUtils {
                 System.out.println("//****************************************//");
                 throw new RuntimeException("CrossLogin service ERROR");
             }
-            System.out.println("// jsonResponse: " + responseJson.toString() );
+            Logger.debug("// jsonResponse: " + responseJson.toString() );
             System.out.println("//****************************************//");
 
             return stateDto;
@@ -94,7 +94,7 @@ public class CrossLoginUtils {
         try {
             HttpResponse response = req.post();
             JsonElement responseJson = response.getJson();
-            System.out.println("// jsonResponse: " + responseJson.toString() );
+            Logger.debug("// jsonResponse: " + responseJson.toString() );
             System.out.println("//****************************************//");
             
             StateDto stateDto = StateDto.parseStateDto(responseJson);
@@ -139,7 +139,7 @@ public class CrossLoginUtils {
                 System.out.println("//****************************************//");
                 throw new RuntimeException("CrossLogin service ERROR");
             }
-            System.out.println("// jsonResponse: " + responseJson.toString() );
+            Logger.debug("// jsonResponse: " + responseJson.toString() );
             System.out.println("//****************************************//");
 
             return responseMap;

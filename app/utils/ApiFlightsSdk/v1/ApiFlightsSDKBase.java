@@ -3,6 +3,7 @@ package utils.ApiFlightsSdk.v1;
 import com.google.gson.JsonElement;
 import play.Play;
 import play.libs.WS;
+import play.Logger;
 
 public abstract class ApiFlightsSDKBase {
 
@@ -24,7 +25,7 @@ public abstract class ApiFlightsSDKBase {
         System.out.println("//****************************************//");
         System.out.println("// request_url: " + request.url );
         System.out.println("// request_params: " + request.parameters );
-        System.out.println("// request_body: " + request.body );
+        Logger.debug("// request_body: " + request.body );
 
         try {
             WS.HttpResponse response = request.get();
@@ -36,7 +37,7 @@ public abstract class ApiFlightsSDKBase {
                 System.out.println("//****************************************//");
                 throw new RuntimeException("Api Flights ERROR");
             }
-            System.out.println("// jsonResponse: " + jsonResponse );
+            Logger.debug("// jsonResponse: " + jsonResponse );
             System.out.println("//****************************************//");
 
             return jsonResponse;
