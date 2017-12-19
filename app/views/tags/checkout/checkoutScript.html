@@ -181,6 +181,8 @@ function loadPaxDefault() {
            { for (var j=0; j < passengerCount; j++)
               { $("#savedRutNum"+j+" option:eq("+$("#savedRutNum"+z).prop("selectedIndex")+")").attr("disabled",true) }
             }
+          if($("#savedRutNum"+z).val()=="0")
+           {$(this).next("button").attr('disabled',true)}
         }
          });
 	$(document).ready(function(){
@@ -193,7 +195,7 @@ function loadPaxDefault() {
 	   }
 	});
 	}
-	setTimeout(loadPaxDefault, 1000);
+	setTimeout(loadPaxDefault, 1200);
 
         $("[id*=savedRutNum]").on('change', function(){
         if($(this).val()=="0") {
