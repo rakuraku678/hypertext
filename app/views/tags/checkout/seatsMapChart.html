@@ -12,11 +12,11 @@ for(int i =1; i <= numberOfSeats; i++) {
     <div id="seatCharts-legend" class="seatCharts-legend">
         <ul class="seatCharts-legendList">
             <div class="seatCharts-row">
-                <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class unavailable"></div>
+                <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class unavailable-legend"></div>
                 <span class="seatCharts-legendDescription">Ocupado</span>
             </div>
             <div class="seatCharts-row">
-                <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class available"></div>
+                <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class available-legend"></div>
                 <span class="seatCharts-legendDescription">Disponible</span>
             </div>
         </ul>
@@ -100,13 +100,25 @@ for(int i =1; i <= numberOfSeats; i++) {
 	var finalSelectionArr = new Array();
 	var numberOfMaps = ${seatsMapArray.size()};
 	
+	
+	function resetValues() {
+		seatsSelected = 0;
+		indexSeatMap = 1;
+		selectionArr = new Array();
+		finalSelectionArr = new Array();
+		numberOfMaps = ${seatsMapArray.size()};
+	}
+	
 	$(function () {
-		
 		$("#seatsmapBlock_1").show();
 		$("#btnConfirm").click(function() {
 			$('#modalSeatsMap').modal('toggle');
 		});
 		
+		$("#modalSeatsMap").on("hidden.bs.modal", function () {
+			resetValues();
+			$("#modalSeatsBody").html('<div id="cargandoDiv" >Cargando mapa de asientos...</div>');
+		});
 		
 		$("#btnContinue").click(function() {
 			if (seatsSelected == ${numberOfSeats}){
@@ -126,6 +138,9 @@ for(int i =1; i <= numberOfSeats; i++) {
                     }
                 }
             }
+			else {
+				alert("Debe seleccionar asientos para todos los pasajeros");
+			}
 		});
 		
 		$(".seatCharts-seat").mouseenter(function() {
