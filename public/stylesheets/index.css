@@ -52,7 +52,7 @@
 	border-width: 0px 0px 1px;
 }
 
-#u327-5 {
+.u327-5 {
 	font-family: open-sans, sans-serif;
 	line-height: 19px;
 	z-index: 12;
@@ -73,7 +73,7 @@
 	margin-right: -10000px;
 }
 
-#u329 {
+.u329 {
 	border-radius: 0px 0px 7px 7px;
 	z-index: 21;
 	background-color: #FFFFFF;
@@ -84,7 +84,7 @@
 	border-width: 2px 0px 0px;
 }
 
-#u330-4 {
+.u330-4 {
 	line-height: 22px;
 	z-index: 22;
 	margin-right: -10000px;
@@ -95,7 +95,7 @@
 	text-indent: 30px;
 }
 
-#u1462 {
+.u1462 {
 	border-radius: 7px 7px 0px 0px;
 	z-index: 45;
 	background-color: #FFFFFF;
@@ -153,7 +153,7 @@
 	text-indent: 30px;
 }
 
-#u327-3, #u328-2, #u330-2, #u1463-3, #u1464-2, #u1466-2 {
+.u327-3, .u328-2, .u330-2, .u1463-3, .u1464-2, .u1466-2 {
 	padding-top: 15px;
 }
 
@@ -226,8 +226,6 @@
 	z-index: 42;
 	position: relative;
 	height: 222px;
-	background: transparent url("@{'/public/images/headairplane.png'}")
-		no-repeat center center;
 	background-size: contain;
 }
 
@@ -238,8 +236,6 @@
 	z-index: 43;
 	position: relative;
 	height: 634px;
-	background: transparent url("@{'/public/images/bodyairplane.png'}")
-		no-repeat center center;
 	background-size: contain;
 }
 
@@ -250,8 +246,6 @@
 	z-index: 44;
 	position: relative;
 	height: 79px;  
-	background: transparent url("@{'/public/images/taleairplane.png'}")
-		no-repeat center center;
 	background-size: contain;
 }
 
@@ -317,7 +311,7 @@ body {
 		left: 0%;
 		margin-left: 2.57%;
 	}
-	#u327-5 {
+	.u327-5 {
 		min-height: 61px;
 		margin-top: 150px;
 		width: 23.29%;
@@ -331,26 +325,26 @@ body {
 		left: 148px;
 		margin-left: 15px;
 	}
-	#u329 {
+	.u329 {
 		margin-right: -10000px;
-		margin-top: 216px;
+		/*margin-top: 216px;*/
 		left: 0%;
 		margin-left: 2.57%;
 	}
-	#u330-4 {
+	.u330-4 {
 		min-height: 64px;
-		margin-top: 222px;
+		/*margin-top: 222px;*/
 		width: 96.24%;
 		left: 2.06%;
 		margin-left: 2.57%;
 	}
-	#u1462 {
+	.u1462 {
 		margin-right: -10000px;
 		margin-top: 314px;
 		left: 0%;
 		margin-left: 2.57%;
 	}
-	#u326 .fluid_height_spacer, #u1462 .fluid_height_spacer {
+	#u326 .fluid_height_spacer, .u1462 .fluid_height_spacer {
 		padding-bottom: 12.5%;
 	}
 	#u1463-5 {
@@ -373,7 +367,7 @@ body {
 		left: 0%;
 		margin-left: 2.57%;
 	}
-	#u329 .fluid_height_spacer, #u1465 .fluid_height_spacer {
+	.u329 .fluid_height_spacer, #u1465 .fluid_height_spacer {
 		padding-bottom: 12.67123287671233%;
 	}
 	#u1466-4 {
@@ -489,17 +483,17 @@ body {
 		padding-bottom: 5px;
 		margin-top: 16px;
 	}
-	#u330-4 {
+	.u330-4 {
 		min-height: 49px;
 		margin-top: 5px;
 		width: 76.71%;
 		left: 1.71%;
 	}
-	#u1462 {
+	.u1462 {
 		padding-bottom: 5px;
 		margin-top: 45px;
 	}
-	#u327-5, #u1463-5 {
+	.u327-5, .u1463-5 {
 		width: 129px;
 		min-height: 48px;
 		margin-top: 6px;
@@ -511,7 +505,7 @@ body {
 		left: 152px;
 		width: 52.44%;
 	}
-	#u329, #u1465 {
+	.u329, .u1465 {
 		padding-bottom: 6px;
 		top: -2px;
 		margin-bottom: -2px;

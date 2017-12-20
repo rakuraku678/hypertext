@@ -2,13 +2,13 @@
 
 <!-- Modal -->
 <div class="modal fade modal-air-rules" id="modalSeatsMap" tabindex="-1" role="dialog" aria-labelledby="modalAirRulesLabel">
-    <div class="modal-dialog" role="document" >
+    <div class="modal-dialog" role="document" style="width: 1000px;" >
         <div class="modal-content info-flight">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="icon-close-modal"></i></button>
                 <h4 class="modal-title" id="modalAirRulesLabel">Elija sus asientos</h4>
             </div>
-            <div class="modal-body" id="modalSeatsBody" >
+            <div class="modal-body" id="modalSeatsBody" style="height: 1700px;" >
 				<div id="cargandoDiv" >Cargando mapa de asientos...</div>
 
 				<div class="wrapper" style="display: none;" id="chartWrapper">
@@ -27,6 +27,15 @@
 
 
 <style>
+#u791 {
+	background: transparent url("@{'/public/images/headairplane.png'}") no-repeat center center;
+}
+#u797 {
+	background: transparent url("@{'/public/images/bodyairplane.png'}") no-repeat center center;
+}
+#u800 {
+	background: transparent url("@{'/public/images/taleairplane.png'}") no-repeat center center;
+}
 
 .front-indicator {
 	background-color: #f6f6f6;	
@@ -118,7 +127,7 @@ div.seatCharts-seat.unknown {
 	background-color: #000000;
 }
 div.seatCharts-container {
-	width: 500px;
+	/*width: 500px;*/
 	padding: 20px 0;
 	float: left;
 }
@@ -207,7 +216,6 @@ span.seatCharts-legendDescription {
 		
 <script>
 
-var jsonloco;
 	$(function () {
 
 		$("#seatMapBtn").click(function( event ) {
@@ -218,7 +226,6 @@ var jsonloco;
 			    'type': 'POST',
 			    'data': data,
 			    'success': function(result){
-			    	jsonloco=result;
 		        	$('#modalSeatsBody').append(result);
 		        	$('#cargandoDiv').hide();
 		        	$('#chartWrapper').show();
