@@ -2,14 +2,14 @@
 
 <!-- Modal -->
 <div class="modal fade modal-air-rules" id="modalSeatsMap" tabindex="-1" role="dialog" aria-labelledby="modalAirRulesLabel">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog" role="document" >
         <div class="modal-content info-flight">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="icon-close-modal"></i></button>
                 <h4 class="modal-title" id="modalAirRulesLabel">Elija sus asientos</h4>
             </div>
-            <div class="modal-body" id="modalSeatsBody">
-				<div id="cargandoDiv" >Cargando grilla de asientos...</div>
+            <div class="modal-body" id="modalSeatsBody" >
+				<div id="cargandoDiv" >Cargando mapa de asientos...</div>
 
 				<div class="wrapper" style="display: none;" id="chartWrapper">
 					<div class="container">
@@ -90,6 +90,9 @@ div.seatCharts-row {
 div.seatCharts-seat.available {
 	background-color: #5F98FF;
 }
+div.seatCharts-seat.available-legend {
+	background-color: #5F98FF;
+}
 div.seatCharts-seat.available.first-class {
 /* 	background: url(vip.png); */
 	background-color: #3a78c3;
@@ -101,6 +104,10 @@ div.seatCharts-seat.selected {
 	background-color: #979797;
 }
 div.seatCharts-seat.unavailable {
+	background-color: #EA7979;
+	border: 1px solid #E53A3A;
+}
+div.seatCharts-seat.unavailable-legend {
 	background-color: #EA7979;
 	border: 1px solid #E53A3A;
 }
@@ -197,141 +204,8 @@ span.seatCharts-legendDescription {
 
 </style>
 
-
 		
 <script>
-var seatsCounter = 0;
-var arraySeatsLabel = ["A", "B", "C", "D", "E", "F", "G", "H",  "J", "K", "L"];
-var lastRow = 1;
-var sc=null;
-
-function charter(result) {
-
-	var $cart = $('#selected-seats'),
-	$counter = $('#counter'),
-	$total = $('#total'),
-	sc = $('#seat-map').seatCharts({
-		map: eval(result.totalSeats),
-
-		seats: {
-			f: {
-				price   : 100,
-				classes : 'first-class', //your custom CSS class
-				category: 'First Class'
-			},
-			e: {
-				price   : 40,
-				classes : 'economy-class', //your custom CSS class
-				category: 'Economy Class'
-			}
-		
-		},
-		naming : {
-			top : false,
-			getLabel : function (character, row, column) {
-				console.log("character: "+character);
-				if (seatsCounter==arraySeatsLabel.length) {
-					seatsCounter=0;
-				}
-				if (lastRow!=row){
-					seatsCounter=0;
-				}
-				lastRow=row;
-				return arraySeatsLabel[seatsCounter++];
-			},
- 			columns: ['A', 'B', 'C', 'D', 'E','F','G','H','I','J','K'],
-// 			rows: ['I','II','III','IV','V'],
-		},
-		legend : {
-			node : $('#legend'),
-		    items : [
-				[ 'f', 'available',   'First Class' ],
-				[ 'e', 'available',   'Economy Class'],
-				[ 'f', 'unavailable', 'Already Booked']
-		    ]					
-		},
-		click: function () {
-			if (this.status() == 'available') {
-				//let's create a new <li> which we'll add to the cart items
-				$('<li>'+this.data().category+' Seat # '+this.settings.label+': <b>$'+this.data().price+'</b> <a href="#" class="cancel-cart-item">[cancel]</a></li>')
-					.attr('id', 'cart-item-'+this.settings.id)
-					.data('seatId', this.settings.id)
-					.appendTo($cart);
-				
-				/*
-				 * Lets update the counter and total
-				 *
-				 * .find function will not find the current seat, because it will change its stauts only after return
-				 * 'selected'. This is why we have to add 1 to the length and the current seat price to the total.
-				 */
-				$counter.text(sc.find('selected').length+1);
-				$total.text(recalculateTotal(sc)+this.data().price);
-				
-				return 'selected';
-			} else if (this.status() == 'selected') {
-				//update the counter
-				$counter.text(sc.find('selected').length-1);
-				//and total
-				$total.text(recalculateTotal(sc)-this.data().price);
-			
-				//remove the item from our cart
-				$('#cart-item-'+this.settings.id).remove();
-			
-				//seat has been vacated
-				return 'available';
-			} else if (this.status() == 'unavailable') {
-				//seat has been already booked
-				return 'unavailable';
-			} else {
-				return this.style();
-			}
-		}
-	});
-	
-	//this will handle "[cancel]" link clicks
-	$('#selected-seats').on('click', '.cancel-cart-item', function () {
-		//let's just trigger Click event on the appropriate seat, so we don't have to repeat the logic here
-		sc.get($(this).parents('li:first').data('seatId')).click();
-	});
-	
-	//let's pretend some seats have already been booked
-	sc.get(eval(result.unavailableSeats)).status('unavailable');
-	
-}
-
-function recalculateTotal(sc) {
-	var total = 0;
-
-	//basically find every selected seat and sum its price
-	sc.find('selected').each(function () {
-		total += this.data().price;
-	});
-	
-	return total;
-}
-
-
-
-
-function charter2(result){
-	var seatsArray = result.allSeats.split(',');
-	$('#seat-map').append('<div class="front-indicator">Frente</div>');
-
-	for(i=0; i < seatsArray.length; i++){
-		var seats = seatsArray[i];
-		$('#seat-map').html($('#seat-map').html()+'<div class="seatCharts-row">');
-		for(j=0; j < seats.length; j++){
-			if (seats[j]=='e'){
-				$('#seat-map').append('<div id="1_'+arraySeatsLabel[j]+'" role="checkbox" aria-checked="false" focusable="true" tabindex="-1" class="seatCharts-seat seatCharts-cell economy-class available">'+arraySeatsLabel[j]+'</div>');
-			}
-			else {
-				$('#seat-map').append('<div class="seatCharts-cell seatCharts-space"></div>');
-			}
-		}
-		$('#seat-map').html($('#seat-map').html()+'</div>');
-	}
-}
-
 
 var jsonloco;
 	$(function () {
@@ -346,13 +220,11 @@ var jsonloco;
 			    'success': function(result){
 			    	jsonloco=result;
 		        	$('#modalSeatsBody').append(result);
-		        	//charter(result);
 		        	$('#cargandoDiv').hide();
 		        	$('#chartWrapper').show();
 			    }
 			});
 		});
-		
 		
 		$(".seatCharts-seat").hover(function() {
 			if ($(this).hasClass("available")) {
