@@ -173,7 +173,7 @@ $(document).ready(function () {
 
 function loadPaxDefault() {
         $("#savedRutNum0").ready(function(){
-        if($("#savedRutNum0").val()=="0")
+        if($("#savedRutNum0").val()=="0" && $("#rutNum0").val())
           {$("#savedRutNum0").val($("#rutNum0").val())}
       for (var z=0; z < passengerCount; z++)
         {
