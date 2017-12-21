@@ -8,7 +8,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="icon-close-modal"></i></button>
                 <h4 class="modal-title" id="modalAirRulesLabel">Elija sus asientos</h4>
             </div>
-            <div class="modal-body" id="modalSeatsBody" style="height: 1700px;" >
+            <div class="modal-body" id="modalSeatsBody"  >
 				<div id="cargandoDiv" >Cargando mapa de asientos...</div>
 
 				<div class="wrapper" style="display: none;" id="chartWrapper">
@@ -36,6 +36,29 @@
 #u800 {
 	background: transparent url("@{'/public/images/taleairplane.png'}") no-repeat center center;
 }
+
+
+
+.text-selection {
+	font-family: open-sans, sans-serif;
+	min-height: 81px;
+	z-index: 7;
+	background-color: transparent;
+	font-weight: 300;
+	text-align: justify;
+	color: #656565;
+	position: relative; margin: 0px;
+    padding: 0px;
+    border-width: 0px;
+    border-style: solid;
+    border-color: transparent;
+    -webkit-transform-origin: left top;
+    -ms-transform-origin: left top;
+    -o-transform-origin: left top;
+    transform-origin: left top;
+    background-repeat: no-repeat;
+}
+
 
 .front-indicator {
 	background-color: #f6f6f6;	
@@ -167,7 +190,6 @@ span.seatCharts-legendDescription {
     top: 20px;
     left: 0;
     right: 0;
-    margin: 0 auto;
     text-align: center;
     width: fit-content;
 }
