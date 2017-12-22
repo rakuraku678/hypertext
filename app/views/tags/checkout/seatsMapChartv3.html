@@ -14,7 +14,7 @@ for(int i =1; i <= numberOfSeats; i++) {
 
 		<div class="col-md-12 form-group" >
 			 <p class="form-control" style="color: gray; padding: 20px; display: table;"> Pasajero ${i} </p>
-			 <p class="form-control" id="passenger_${i}" style="color: gray; padding: 20px; display: table;">Número de Asiento</p>
+			 <p class="form-control" id="passenger_${i}" style="color: gray; padding: 20px; display: table;" data-info="blank">Número de Asiento</p>
 		</div>
     %{
     }
@@ -75,7 +75,7 @@ for(int i =1; i <= numberOfSeats; i++) {
 	                                    %{count++;}%
 	                                #{/if}
 	                                #{else}
-	                                    <div id="${row.rowNumber}${column.get("name").getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class available"></div>
+	                                    <div data-passenger="n" id="${row.rowNumber}${column.get("name").getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class available"></div>
 	                                #{/else}
 	
 	                            #{/list}
@@ -104,6 +104,7 @@ for(int i =1; i <= numberOfSeats; i++) {
 
 	<script>
 	var seatsSelected = 0;
+	var insertionValue = 1;
 	var indexSeatMap = 1;
 	var selectionArr = new Array();
 	var finalSelectionArr = new Array();
@@ -112,9 +113,9 @@ for(int i =1; i <= numberOfSeats; i++) {
 	
 	function resetValues() {
 		seatsSelected = 0;
+		insertionValue = 1;
 		indexSeatMap = 1;
 		selectionArr = new Array();
-		finalSelectionArr = new Array();
 		numberOfMaps = ${seatsMapArray.size()};
 	}
 	
@@ -135,6 +136,7 @@ for(int i =1; i <= numberOfSeats; i++) {
                     $("#seatsmapBlock_"+indexSeatMap).hide();
                     indexSeatMap++;
                     seatsSelected = 0;
+                    insertionValue = 1;	
                     finalSelectionArr.push(selectionArr);
                     selectionArr = new Array();
                     $("#seatsmapBlock_"+indexSeatMap).show();
@@ -164,7 +166,9 @@ for(int i =1; i <= numberOfSeats; i++) {
 				$(this).removeClass("focused");
 			}
 		});
-		$(".seatCharts-seat").click(function() {
+		
+		
+		*{$(".seatCharts-seat").click(function() {
 			if (!$(this).hasClass("unavailable") && !$(this).hasClass("selected") && seatsSelected < ${numberOfSeats}) {
 				$(this).addClass("selected");
 				seatsSelected++;
@@ -183,5 +187,35 @@ for(int i =1; i <= numberOfSeats; i++) {
 				seatsSelected--;
 			}
 		});
+		}*
+		
+		
+		$(".seatCharts-seat").click(function() {
+			if (!$(this).hasClass("unavailable") && !$(this).hasClass("selected") && seatsSelected < ${numberOfSeats}) {
+				$(this).addClass("selected");
+				seatsSelected++;
+				$(this).attr('data-passenger', insertionValue);
+				if ($("#passenger_"+insertionValue).data("info")=='blank'){
+					$("#passenger_"+insertionValue).html('<label id="'+this.id+insertionValue+'">'+this.id+'</label>');
+					$("#passenger_"+insertionValue).data("info","filled");
+				}
+				else {
+					$("#passenger_"+insertionValue).append('<label id="'+this.id+insertionValue+'">-'+this.id+'</label>');
+				}
+				insertionValue++;
+				selectionArr.push(this.id);
+				return;
+			}
+			if ($(this).hasClass("selected")  ) {
+				$(this).removeClass("selected");
+				var pass = $(this).attr('data-passenger');
+				$("#passenger_"+pass).children("#"+this.id + pass).remove();
+				selectionArr.splice(selectionArr.indexOf(this.id),1);
+				seatsSelected--;
+				insertionValue = pass;
+			}
+			
+		});
+		
 	});
 	</script>

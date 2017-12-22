@@ -133,7 +133,7 @@ div.seatCharts-seat.focused {
 	background-color: #76B474;
 }
 div.seatCharts-seat.selected {
-	background-color: #979797;
+	background-color: #7aff00;
 }
 div.seatCharts-seat.unavailable {
 	background-color: #EA7979;
@@ -241,6 +241,7 @@ span.seatCharts-legendDescription {
 	$(function () {
 
 		$("#seatMapBtn").click(function( event ) {
+			finalSelectionArr = new Array();
 			$('#modalSeatsMap').modal('show');
 			var data = $("[name='bfmResultItem']").val();
 			$.ajax({
