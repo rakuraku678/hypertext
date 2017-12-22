@@ -1,0 +1,221 @@
+<div class="row" style="background-color: #f6f6f6;">	
+<div class="col-md-6">
+<h3>Seleccionar asiento</h3>
+<p class="text-selection">Si no eliges ningún asiento, nosotros te asignaremos uno en forma aleatoria. Si eres cliente del Banco de Chile, puedes optar por un asiente preferente en el aeropuerto, sólo presentando tus tarjetas Visa Asignature, Mastercard Black o Visa infinite.
+</p>
+
+
+
+<div class="col-md-12" style="margin-top: 50px;"></div>
+
+     %{
+for(int i =1; i <= numberOfSeats; i++) {
+}%
+
+		<div class="col-md-12 form-group" >
+			 <p class="form-control" style="color: gray; padding: 20px; display: table;"> Pasajero ${i} </p>
+			 <p class="form-control" id="passenger_${i}" style="color: gray; padding: 20px; display: table;" data-info="blank">Número de Asiento</p>
+		</div>
+    %{
+    }
+    }%
+
+     
+     
+     
+     
+ </div>    
+<div class="col-md-6">
+	%{def seatsMapArray = seatsMap.getAsJsonArray();}%
+
+	
+	#{list seatsMapArray, as: 'seatsMap' }
+	<div class="container" id="seatsmapBlock_${seatsMap_index}" style="display: none;">
+	    <div class="from-to-block txt-from-to-block">${seatsMap.type.getAsString()}</div>
+	    <div class="from-to-block info-from-to">${seatsMap.origin.getAsString()} => ${seatsMap.destination.getAsString()}
+	    </div>
+	
+	<div class="text-left" ><img src="@{'/public/images/headairplane.png'}" /></div>
+	
+	    <div id="seat-map" class="seatCharts-container airplane-drawing" style="background: url('@{'/public/images/bodyairplane.png'}'); background-repeat: repeat-y;">
+	        <div class="position-relative-seat">
+	            <div class="position-absolute-seat">
+	            #{list seatsMap.cabins, as: 'cabin' }
+	                %{def columnsDataArray = cabin.getAsJsonObject().get("columns").getAsJsonArray(); }%
+	
+	                <div class="seatCharts-row">
+	                    <div class="seatCharts-cell seatCharts-space"></div>
+	                    #{list columnsDataArray, as: 'column' }
+	                        #{if columnsDataArray.get(column_index-1) != null && columnsDataArray.get(column_index-1).get("type").getAsString().equals("Aisle")}
+	                            #{if columnsDataArray.get(column_index-2).get("type").getAsString().equals("Aisle")}
+	                                <div class="seatCharts-cell seatCharts-space"></div>
+	                            #{/if}
+	                        #{/if}
+	                        <div class="seatCharts-cell seatCharts-space economy-class unavailable">${column.get("name").getAsString()}</div>
+	                    #{/list}
+	                </div>
+	
+	                #{list cabin.rows, as: 'row' }
+	                    <div class="seatCharts-row" #{if row.get("isOverWing").getAsBoolean()} style="background:gray;"#{/if}>
+	                    <div class="seatCharts-cell seatCharts-space">${row.rowNumber}</div>
+	                        #{if row.seats != null}
+	                            %{def seats = row.getAsJsonObject().get("seats").getAsJsonArray();}%
+	                            %{int count = 0}%
+	                            #{list columnsDataArray, as: 'column' }
+	                                %{def seat = count < seats.size() ? seats.get(count).getAsJsonObject(): null;}%
+	
+	                                #{if columnsDataArray.get(column_index-1) != null && columnsDataArray.get(column_index-1).get("type").getAsString().equals("Aisle")}
+	                                    #{if columnsDataArray.get(column_index-2).get("type").getAsString().equals("Aisle")}
+	                                        <div class="seatCharts-cell seatCharts-space"></div>
+	                                    #{/if}
+	                                #{/if}
+	
+	                                #{if seat != null && (seat.get("chargeableInd").getAsBoolean() || seat.get("occupiedInd").getAsBoolean() || seat.getAsJsonObject().get("inoperativeInd").getAsBoolean())}
+	                                    <div class="seatCharts-seat seatCharts-cell economy-class unavailable"></div>
+	                                    %{count++;}%
+	                                #{/if}
+	                                #{else}
+	                                    <div data-passenger="n" id="${row.rowNumber}${column.get("name").getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class available"></div>
+	                                #{/else}
+	
+	                            #{/list}
+	                        #{/if}
+	                    </div>
+	                #{/list}
+	            #{/list}
+	            </div>
+	        </div>
+	
+	    </div>
+	</div>
+	
+	
+	
+	#{/list}
+	<div class="text-left" style="margin-left: 14px;"><img src="@{'/public/images/taleairplane.png'}" /></div>
+	</div>
+	
+	<div class="text-center">
+		<a class="btn btn-search" id="btnContinue">Continuar</a>
+		<a class="btn btn-search" id="btnConfirm" style="display: none;">Confirmar Asientos</a>
+	</div>
+</div><!-- col -->
+</div><!-- row -->
+
+	<script>
+	var seatsSelected = 0;
+	var insertionValue = 1;
+	var indexSeatMap = 1;
+	var selectionArr = new Array();
+	var finalSelectionArr = new Array();
+	var numberOfMaps = ${seatsMapArray.size()};
+	
+	
+	function resetValues() {
+		seatsSelected = 0;
+		insertionValue = 1;
+		indexSeatMap = 1;
+		selectionArr = new Array();
+		numberOfMaps = ${seatsMapArray.size()};
+	}
+	
+	$(function () {
+		$("#seatsmapBlock_1").show();
+		$("#btnConfirm").click(function() {
+			$('#modalSeatsMap').modal('toggle');
+		});
+		
+		$("#modalSeatsMap").on("hidden.bs.modal", function () {
+			resetValues();
+			$("#modalSeatsBody").html('<div id="cargandoDiv" >Cargando mapa de asientos...</div>');
+		});
+		
+		$("#btnContinue").click(function() {
+			if (seatsSelected == ${numberOfSeats}){
+                if (indexSeatMap <= numberOfMaps) {
+                    $("#seatsmapBlock_"+indexSeatMap).hide();
+                    indexSeatMap++;
+                    seatsSelected = 0;
+                    insertionValue = 1;	
+                    finalSelectionArr.push(selectionArr);
+                    selectionArr = new Array();
+                    $("#seatsmapBlock_"+indexSeatMap).show();
+                    if (indexSeatMap>numberOfMaps){
+                        indexSeatMap--;
+                        $("#seatsmapBlock_"+indexSeatMap).hide();
+                        $("#btnContinue").hide();
+                        $("#btnConfirm").show();
+                        $("#seatCharts-legend").hide();
+                    }
+                }
+                $('#modalSeatsMap').animate({ scrollTop: 0 }, 'slow');
+            }
+			else {
+				alert("Debe seleccionar asientos para todos los pasajeros");
+			}
+		});
+		
+		$(".seatCharts-seat").mouseenter(function() {
+			if ($(this).hasClass("available")) {
+				$(this).addClass("focused");
+			}
+		});
+		$(".seatCharts-seat").mouseout(function() {
+			
+			if ($(this).hasClass("focused")) {
+				$(this).removeClass("focused");
+			}
+		});
+		
+		
+		*{$(".seatCharts-seat").click(function() {
+			if (!$(this).hasClass("unavailable") && !$(this).hasClass("selected") && seatsSelected < ${numberOfSeats}) {
+				$(this).addClass("selected");
+				seatsSelected++;
+				if(indexSeatMap != 1){
+					$("#passenger_"+seatsSelected).append("-"+this.id);
+                }else{
+                	$("#passenger_"+seatsSelected).html(this.id);
+                }
+				selectionArr.push(this.id);
+				return;
+			}
+			if ($(this).hasClass("selected")  ) {
+				$(this).removeClass("selected");
+				$("#passenger_"+seatsSelected).children("#"+indexSeatMap + seatsSelected).remove();
+				selectionArr.splice(selectionArr.indexOf(this.id),1);
+				seatsSelected--;
+			}
+		});
+		}*
+		
+		
+		$(".seatCharts-seat").click(function() {
+			if (!$(this).hasClass("unavailable") && !$(this).hasClass("selected") && seatsSelected < ${numberOfSeats}) {
+				$(this).addClass("selected");
+				seatsSelected++;
+				$(this).attr('data-passenger', insertionValue);
+				if ($("#passenger_"+insertionValue).data("info")=='blank'){
+					$("#passenger_"+insertionValue).html('<label id="'+this.id+insertionValue+'">'+this.id+'</label>');
+					$("#passenger_"+insertionValue).data("info","filled");
+				}
+				else {
+					$("#passenger_"+insertionValue).append('<label id="'+this.id+insertionValue+'">-'+this.id+'</label>');
+				}
+				insertionValue++;
+				selectionArr.push(this.id);
+				return;
+			}
+			if ($(this).hasClass("selected")  ) {
+				$(this).removeClass("selected");
+				var pass = $(this).attr('data-passenger');
+				$("#passenger_"+pass).children("#"+this.id + pass).remove();
+				selectionArr.splice(selectionArr.indexOf(this.id),1);
+				seatsSelected--;
+				insertionValue = pass;
+			}
+			
+		});
+		
+	});
+	</script>

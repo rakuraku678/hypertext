@@ -37,7 +37,7 @@ public class SeatsMapController extends Controller {
 //	    JsonElement parsedSeats = parseResults(jsonSeats);
 	    
 	    
-	    Template template = TemplateLoader.load(template("tags/checkout/seatsMapChart.html"));
+	    Template template = TemplateLoader.load(template("tags/checkout/seatsMapChartv3.html"));
 	    Map m = Maps.newHashMap();
 	    m.put("seatsMap", jsonSeats);
 

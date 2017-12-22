@@ -1,38 +1,38 @@
-<!DOCTYPE html>
-<html class="nojs html" lang="es-ES">
- <head>
 
-  <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
-  <meta name="generator" content="2018.0.0.379"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  
-  <script type="text/javascript">
-   // Update the 'nojs'/'js' class on the html node
-document.documentElement.className = document.documentElement.className.replace(/\bnojs\b/g, 'js');
 
-// Check that all required assets are uploaded and up-to-date
-if(typeof Muse == "undefined") window.Muse = {}; window.Muse.assets = {"required":["museutils.js", "museconfig.js", "jquery.musepolyfill.bgsize.js", "jquery.museresponsive.js", "require.js", "index.css"], "outOfDate":[]};
-</script>
-  
-  <title>Inicio</title>
-  <!-- CSS -->
-  
+%{def seatsMapArray = seatsMap.getAsJsonArray();}%
+%{
+for(int i =1; i <= numberOfSeats; i++) {
+}%
+<div class="form-group">
+    <div class="row">
+    </div>
+    %{
+    }
+    }%
+    <div id="seatCharts-legend" class="seatCharts-legend">
+        <ul class="seatCharts-legendList">
+            <div class="seatCharts-row">
+                <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class unavailable-legend"></div>
+                <span class="seatCharts-legendDescription">Ocupado</span>
+            </div>
+            <div class="seatCharts-row">
+                <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class available-legend"></div>
+                <span class="seatCharts-legendDescription">Disponible</span>
+            </div>
+        </ul>
+    </div>
+</div>
+</div>
+</div>
+
+
+
+
+
+
   <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/site_global.css'}">
   <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/index.css'}">
-  
-  <!-- IE-only CSS -->
-  <!--[if lt IE 9]>
-  <link rel="stylesheet" type="text/css" href="css/nomq_index.css?crc=3770299251" id="nomq_pagesheet"/>
-  <![endif]-->
-  <!-- JS includes -->
-  <script src="https://use.typekit.net/ik/ZU2rtJSfrSBCGYwiElU4WarS-vFJyAdiME-5RhqZyD3feGjgfw-8qM9PHQI3FD9kFDI3Wh4qFQicwRiRjRIX52quwDwajDSaF2btZQbawhJ3wDBKeKj7O1FTieuySfoRdhXCSh8XdAB3OcFzdPUaiaS0Sh8XdAB3OcFzdPJ4dag8dKuDjAoDH6qJX1IbMg62JMJ7fbR9SsMMeMb6MqGIQWmDZZMgvFL8Xb9.js" type="text/javascript"></script>
-  <!-- Other scripts -->
-  <script type="text/javascript">
-   try {Typekit.load();} catch(e) {}
-</script>
-   </head>
- <body>
-
   <div class="breakpoint active" id="bp_infinity" data-min-width="851"><!-- responsive breakpoint node -->
    <div class="clearfix borderbox" id="page"><!-- group -->
     <div class="clearfix grpelem" id="pu321"><!-- group -->
@@ -45,67 +45,149 @@ if(typeof Muse == "undefined") window.Muse = {}; window.Muse.assets = {"required
      <div class="clearfix grpelem" id="u325-4" data-sizePolicy="fluidWidth" data-pintopage="page_fixedLeft"><!-- content -->
       <p class="shared_content" data-content-guid="u325-4_0_content">Si no eliges ningún asiento, nosotros te asignaremos uno en forma aleatoria. Si eres cliente del Banco de Chile, puedes optar por un asiente preferente en el aeropuerto, sólo presentando tus tarjetas Visa Asignature, Mastercard Black o Visa infinite.</p>
      </div>
-     <div class="rounded-corners grpelem" id="u326"><!-- simple frame -->
-      <div class="fluid_height_spacer"></div>
-     </div>
-     <div class="clearfix grpelem" id="u327-5" data-sizePolicy="fluidWidth" data-pintopage="page_fixedLeft"><!-- content -->
-      <h2 id="u327-3" class="shared_content" data-content-guid="u327-3_content">Pasajero 1 <span id="u327-2">-</span></h2>
-     </div>
-     <div class="clearfix grpelem shared_content" id="u328-4" data-sizePolicy="fluidWidth" data-pintopage="page_fixedLeft" data-content-guid="u328-4_content"><!-- content -->
-      <p id="u328-2">Example Name</p>
-     </div>
-     <div class="rounded-corners grpelem" id="u329"><!-- simple frame -->
-      <div class="fluid_height_spacer"></div>
-     </div>
-     <div class="clearfix grpelem shared_content" id="u330-4" data-muse-temp-textContainer-sizePolicy="true" data-muse-temp-textContainer-pinning="true" data-content-guid="u330-4_content"><!-- content -->
-      <p id="u330-2">Número de Asiento</p>
-     </div>
-     <div class="rounded-corners grpelem" id="u1462"><!-- simple frame -->
-      <div class="fluid_height_spacer"></div>
-     </div>
-     <div class="clearfix grpelem" id="u1463-5" data-sizePolicy="fluidWidth" data-pintopage="page_fixedLeft"><!-- content -->
-      <h2 id="u1463-3" class="shared_content" data-content-guid="u1463-3_content">Pasajero 2 <span id="u1463-2">-</span></h2>
-     </div>
-     <div class="clearfix grpelem shared_content" id="u1464-4" data-sizePolicy="fluidWidth" data-pintopage="page_fixedLeft" data-content-guid="u1464-4_content"><!-- content -->
-      <p id="u1464-2">Example Name</p>
-     </div>
-     <div class="rounded-corners grpelem" id="u1465"><!-- simple frame -->
-      <div class="fluid_height_spacer"></div>
-     </div>
-     <div class="clearfix grpelem" id="u1466-4" data-muse-temp-textContainer-sizePolicy="true" data-muse-temp-textContainer-pinning="true"><!-- content -->
-      <p id="u1466-2" class="shared_content" data-content-guid="u1466-2_content">Número de Asiento</p>
-     </div>
+     
+     
+     
+     %{
+for(int i =1; i <= numberOfSeats; i++) {
+}%
+
+	<div id="selecAsiento" style="margin-top: #{if i>1}50#{/if}#{else}150#{/else}px;">
+	
+	
+             <div style="background-color: white; padding: 15px;" >
+		      <h2 >Pasajero ${i} </h2>
+		     </div>
+		     <div class="u329"><!-- simple frame -->
+		     </div>
+		     <div style="background-color: white; padding: 15px;"  ><!-- content -->
+		      <p class="" id="passenger_${i}">Número de Asiento</p>
+		     </div>
+	</div>
+    %{
+    }
+    }%
+
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
     </div>
     <div class="clearfix grpelem" id="pu360"><!-- group -->
      <div class="grpelem" id="u360"><!-- simple frame -->
       <div class="fluid_height_spacer"></div>
      </div>
      <div class="clearfix grpelem" id="u757-4" data-muse-temp-textContainer-sizePolicy="true" data-muse-temp-textContainer-pinning="true"><!-- content -->
-      <p class="shared_content" data-content-guid="u757-4_0_content">Primera fila</p>
+      <p class="shared_content" data-content-guid="u757-4_0_content">Disponible</p>
      </div>
      <div class="rounded-corners grpelem" id="u760"><!-- simple frame -->
       <div class="fluid_height_spacer shared_content" data-content-guid="u760_0_content"></div>
      </div>
      <div class="clearfix grpelem" id="u763-4" data-muse-temp-textContainer-sizePolicy="true" data-muse-temp-textContainer-pinning="true"><!-- content -->
-      <p class="shared_content" data-content-guid="u763-4_0_content">Primera fila</p>
-     </div>
-     <div class="rounded-corners grpelem" id="u764"><!-- simple frame -->
-      <div class="fluid_height_spacer shared_content" data-content-guid="u764_0_content"></div>
+      <p class="shared_content" data-content-guid="u763-4_0_content"></p>
      </div>
      <div class="clearfix grpelem" id="u769-4" data-muse-temp-textContainer-sizePolicy="true" data-muse-temp-textContainer-pinning="true"><!-- content -->
-      <p class="shared_content" data-content-guid="u769-4_0_content">Primera fila</p>
+      <p class="shared_content" data-content-guid="u769-4_0_content">Ocupado</p>
      </div>
      <div class="rounded-corners grpelem" id="u770"><!-- simple frame -->
       <div class="fluid_height_spacer shared_content" data-content-guid="u770_0_content"></div>
      </div>
-     <div class="museBGSize grpelem" id="u791"><!-- simple frame --></div>
-     <div class="museBGSize grpelem" id="u797"><!-- simple frame --></div>
-     <div class="museBGSize grpelem" id="u800"><!-- simple frame --></div>
+     
+
+
+
+
+
+#{list seatsMapArray, as: 'seatsMap' }
+<div class="container" id="seatsmapBlock_${seatsMap_index}" style="display: none;">
+    <div class="from-to-block txt-from-to-block">${seatsMap.type.getAsString()} ${seatsMap.origin.getAsString()} => ${seatsMap.destination.getAsString()}</div>
+	<img src="@{'/public/images/headairplane.png'}" />
+
+    <div id="seat-map" class="seatCharts-container airplane-drawing">
+        <div class="position-relative-seat">
+            <div class="position-absolute-seat">
+            #{list seatsMap.cabins, as: 'cabin' }
+                %{def columnsDataArray = cabin.getAsJsonObject().get("columns").getAsJsonArray(); }%
+
+                <div class="seatCharts-row">
+                    <div class="seatCharts-cell seatCharts-space"></div>
+                    #{list columnsDataArray, as: 'column' }
+                        #{if columnsDataArray.get(column_index-1) != null && columnsDataArray.get(column_index-1).get("type").getAsString().equals("Aisle")}
+                            #{if columnsDataArray.get(column_index-2).get("type").getAsString().equals("Aisle")}
+                                <div class="seatCharts-cell seatCharts-space"></div>
+                            #{/if}
+                        #{/if}
+                        <div class="seatCharts-cell seatCharts-space economy-class unavailable">${column.get("name").getAsString()}</div>
+                    #{/list}
+                </div>
+
+                #{list cabin.rows, as: 'row' }
+                    <div class="seatCharts-row" #{if row.get("isOverWing").getAsBoolean()} style="background:gray;"#{/if}>
+                    <div class="seatCharts-cell seatCharts-space">${row.rowNumber}</div>
+                        #{if row.seats != null}
+                            %{def seats = row.getAsJsonObject().get("seats").getAsJsonArray();}%
+                            %{int count = 0}%
+                            #{list columnsDataArray, as: 'column' }
+                                %{def seat = count < seats.size() ? seats.get(count).getAsJsonObject(): null;}%
+
+                                #{if columnsDataArray.get(column_index-1) != null && columnsDataArray.get(column_index-1).get("type").getAsString().equals("Aisle")}
+                                    #{if columnsDataArray.get(column_index-2).get("type").getAsString().equals("Aisle")}
+                                        <div class="seatCharts-cell seatCharts-space"></div>
+                                    #{/if}
+                                #{/if}
+
+                                #{if seat != null && (seat.get("chargeableInd").getAsBoolean() || seat.get("occupiedInd").getAsBoolean() || seat.getAsJsonObject().get("inoperativeInd").getAsBoolean())}
+                                    <div class="seatCharts-seat seatCharts-cell economy-class unavailable"></div>
+                                    %{count++;}%
+                                #{/if}
+                                #{else}
+                                    <div id="${row.rowNumber}${column.get("name").getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class available"></div>
+                                #{/else}
+
+                            #{/list}
+                        #{/if}
+                    </div>
+                #{/list}
+            #{/list}
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+#{/list}
+
+
+
+<div class="text-right">
+	<a class="btn btn-search" id="btnContinue">Continuar</a>
+	<a class="btn btn-search" id="btnConfirm" style="display: none;">Confirmar Asientos</a>
+</div>
+
+
+
+
+
+
+
+
+
+     <img src="@{'/public/images/taleairplane.png'}" />
     </div>
    </div>
   </div>
   <div class="breakpoint" id="bp_850" data-max-width="850"><!-- responsive breakpoint node -->
-   <div class="clearfix borderbox temp_no_id" data-orig-id="page"><!-- column -->
+   <div class="clearfix borderbox temp_no_id" data-orig-id="page" style="height: 1450px;"><!-- column -->
     <div class="clearfix colelem temp_no_id" data-orig-id="u321"><!-- column -->
      <div class="position_content" id="u321_position_content">
       <span class="clearfix colelem placeholder" data-placeholder-for="u324-4_content"><!-- placeholder node --></span>
@@ -158,35 +240,97 @@ if(typeof Muse == "undefined") window.Muse = {}; window.Muse.assets = {"required
       <span class="placeholder" data-placeholder-for="u763-4_0_content"><!-- placeholder node --></span>
      </div>
     </div>
-    <div class="clearfix colelem temp_no_id" data-orig-id="u360"><!-- column -->
-     <div class="museBGSize colelem temp_no_id" data-sizePolicy="fixed" data-pintopage="page_fixedCenter" data-orig-id="u791"><!-- simple frame --></div>
-     <div class="museBGSize colelem temp_no_id" data-sizePolicy="fixed" data-pintopage="page_fixedCenter" data-orig-id="u797"><!-- simple frame --></div>
-     <div class="museBGSize colelem temp_no_id" data-sizePolicy="fixed" data-pintopage="page_fixedCenter" data-orig-id="u800"><!-- simple frame --></div>
+   *{ 
+   	<div class="clearfix colelem temp_no_id" data-orig-id="u360"><!-- column -->
+    	 <div class="museBGSize colelem temp_no_id" data-sizePolicy="fixed" data-pintopage="page_fixedCenter" data-orig-id="u791"><!-- simple frame --></div>
+     	<div class="museBGSize colelem temp_no_id" data-sizePolicy="fixed" data-pintopage="page_fixedCenter" data-orig-id="u797"><!-- simple frame --></div>
+     	<div class="museBGSize colelem temp_no_id" data-sizePolicy="fixed" data-pintopage="page_fixedCenter" data-orig-id="u800"><!-- simple frame --></div>
     </div>
+    }*
    </div>
   </div>
-  <!-- Other scripts -->
-  <script type="text/javascript">
-   // Decide weather to suppress missing file error or not based on preference setting
-var suppressMissingFileError = false
-</script>
-  <script type="text/javascript">
-   window.Muse.assets.check=function(d){if(!window.Muse.assets.checked){window.Muse.assets.checked=!0;var b={},c=function(a,b){if(window.getComputedStyle){var c=window.getComputedStyle(a,null);return c&&c.getPropertyValue(b)||c&&c[b]||""}if(document.documentElement.currentStyle)return(c=a.currentStyle)&&c[b]||a.style&&a.style[b]||"";return""},a=function(a){if(a.match(/^rgb/))return a=a.replace(/\s+/g,"").match(/([\d\,]+)/gi)[0].split(","),(parseInt(a[0])<<16)+(parseInt(a[1])<<8)+parseInt(a[2]);if(a.match(/^\#/))return parseInt(a.substr(1),
-16);return 0},g=function(g){for(var f=document.getElementsByTagName("link"),h=0;h<f.length;h++)if("text/css"==f[h].type){var i=(f[h].href||"").match(/\/?css\/([\w\-]+\.css)\?crc=(\d+)/);if(!i||!i[1]||!i[2])break;b[i[1]]=i[2]}f=document.createElement("div");f.className="version";f.style.cssText="display:none; width:1px; height:1px;";document.getElementsByTagName("body")[0].appendChild(f);for(h=0;h<Muse.assets.required.length;){var i=Muse.assets.required[h],l=i.match(/([\w\-\.]+)\.(\w+)$/),k=l&&l[1]?
-l[1]:null,l=l&&l[2]?l[2]:null;switch(l.toLowerCase()){case "css":k=k.replace(/\W/gi,"_").replace(/^([^a-z])/gi,"_$1");f.className+=" "+k;k=a(c(f,"color"));l=a(c(f,"backgroundColor"));k!=0||l!=0?(Muse.assets.required.splice(h,1),"undefined"!=typeof b[i]&&(k!=b[i]>>>24||l!=(b[i]&16777215))&&Muse.assets.outOfDate.push(i)):h++;f.className="version";break;case "js":h++;break;default:throw Error("Unsupported file type: "+l);}}d?d().jquery!="1.8.3"&&Muse.assets.outOfDate.push("jquery-1.8.3.min.js"):Muse.assets.required.push("jquery-1.8.3.min.js");
-f.parentNode.removeChild(f);if(Muse.assets.outOfDate.length||Muse.assets.required.length)f="Puede que determinados archivos falten en el servidor o sean incorrectos. Limpie la cache del navegador e inténtelo de nuevo. Si el problema persiste, póngase en contacto con el administrador del sitio web.",g&&Muse.assets.outOfDate.length&&(f+="\nOut of date: "+Muse.assets.outOfDate.join(",")),g&&Muse.assets.required.length&&(f+="\nMissing: "+Muse.assets.required.join(",")),suppressMissingFileError?(f+="\nUse SuppressMissingFileError key in AppPrefs.xml to show missing file error pop up.",console.log(f)):alert(f)};location&&location.search&&location.search.match&&location.search.match(/muse_debug/gi)?
-setTimeout(function(){g(!0)},5E3):g()}};
-var muse_init=function(){require.config({baseUrl:""});require(["jquery","museutils","whatinput","jquery.musepolyfill.bgsize","jquery.museresponsive"],function(d){var $ = d;$(document).ready(function(){try{
-window.Muse.assets.check($);/* body */
-Muse.Utils.transformMarkupToFixBrowserProblemsPreInit();/* body */
-Muse.Utils.prepHyperlinks(true);/* body */
-Muse.Utils.makeButtonsVisibleAfterSettingMinWidth();/* body */
-$( '.breakpoint' ).registerBreakpoint();/* Register breakpoints */
-Muse.Utils.transformMarkupToFixBrowserProblems();/* body */
-}catch(b){if(b&&"function"==typeof b.notify?b.notify():Muse.Assert.fail("Error calling selector function: "+b),false)throw b;}})})};
 
-</script>
-  <!-- RequireJS script -->
-  <script src="scripts/require.js?crc=4157109226" type="text/javascript" async data-main="scripts/museconfig.js?crc=4153641093" onload="if (requirejs) requirejs.onError = function(requireType, requireModule) { if (requireType && requireType.toString && requireType.toString().indexOf && 0 <= requireType.toString().indexOf('#scripterror')) window.Muse.assets.check(); }" onerror="window.Muse.assets.check();"></script>
-   </body>
-</html>
+  
+  <script>
+	var seatsSelected = 0;
+	var indexSeatMap = 1;
+	var selectionArr = new Array();
+	var finalSelectionArr = new Array();
+	var numberOfMaps = ${seatsMapArray.size()};
+	
+	
+	function resetValues() {
+		seatsSelected = 0;
+		indexSeatMap = 1;
+		selectionArr = new Array();
+		finalSelectionArr = new Array();
+		numberOfMaps = ${seatsMapArray.size()};
+	}
+	
+	$(function () {
+		$("#seatsmapBlock_1").show();
+		$("#btnConfirm").click(function() {
+			$('#modalSeatsMap').modal('toggle');
+		});
+		
+		$("#modalSeatsMap").on("hidden.bs.modal", function () {
+			resetValues();
+			$("#modalSeatsBody").html('<div id="cargandoDiv" >Cargando mapa de asientos...</div>');
+		});
+		
+		$("#btnContinue").click(function() {
+			if (seatsSelected == ${numberOfSeats}){
+                if (indexSeatMap <= numberOfMaps) {
+                    $("#seatsmapBlock_"+indexSeatMap).hide();
+                    indexSeatMap++;
+                    seatsSelected = 0;
+                    finalSelectionArr.push(selectionArr);
+                    selectionArr = new Array();
+                    $("#seatsmapBlock_"+indexSeatMap).show();
+                    if (indexSeatMap>numberOfMaps){
+                        indexSeatMap--;
+                        $("#seatsmapBlock_"+indexSeatMap).hide();
+                        $("#btnContinue").hide();
+                        $("#btnConfirm").show();
+                        $("#seatCharts-legend").hide();
+                    }
+                }
+            }
+			else {
+				alert("Debe seleccionar asientos para todos los pasajeros");
+			}
+		});
+		
+		$(".seatCharts-seat").mouseenter(function() {
+			if ($(this).hasClass("available")) {
+				$(this).addClass("focused");
+			}
+		});
+		$(".seatCharts-seat").mouseout(function() {
+			
+			if ($(this).hasClass("focused")) {
+				$(this).removeClass("focused");
+			}
+		});
+		$(".seatCharts-seat").click(function() {
+			if (!$(this).hasClass("unavailable") && !$(this).hasClass("selected") && seatsSelected < ${numberOfSeats}) {
+				$(this).addClass("selected");
+				seatsSelected++;
+				if(indexSeatMap != 1){
+                    $("#passenger_"+seatsSelected).append("<p id="+indexSeatMap + seatsSelected+">-"+this.id+"</p>");
+                }else{
+                    $("#passenger_"+seatsSelected).append("<p id="+indexSeatMap + seatsSelected+">"+this.id+"</p>");
+                }
+				selectionArr.push(this.id);
+				return;
+			}
+			if ($(this).hasClass("selected")  ) {
+				$(this).removeClass("selected");
+				$("#passenger_"+seatsSelected).children("#"+indexSeatMap + seatsSelected).remove();
+				selectionArr.splice(selectionArr.indexOf(this.id),1);
+				seatsSelected--;
+			}
+		});
+	});
+	</script>
+  
