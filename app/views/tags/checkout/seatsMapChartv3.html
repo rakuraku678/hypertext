@@ -55,7 +55,7 @@ for(int i =1; i <= numberOfSeats; i++) {
 	                </div>
 	
 	                #{list cabin.rows, as: 'row' }
-	                    <div class="seatCharts-row" #{if row.get("isOverWing").getAsBoolean()} style="background:gray;"#{/if}>
+	                    <div class="seatCharts-row" #{if row.get("isOverWing").getAsBoolean()} style="background-color:gray;"#{/if}#{else}style="background-color:white;"#{/else}>
 	                    <div class="seatCharts-cell seatCharts-space">${row.rowNumber}</div>
 	                        #{if row.seats != null}
 	                            %{def seats = row.getAsJsonObject().get("seats").getAsJsonArray();}%
@@ -75,20 +75,36 @@ for(int i =1; i <= numberOfSeats; i++) {
 	                                #{else}
                                     <div data-passenger="n" id="${row.rowNumber}${column.get("name").getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class available"></div>
 	                                <div class="seatInfo_${row.rowNumber}${column.get("name").getAsString()} seatInfoDiv text-left" style="display:none; z-index: 10; position: fixed;">
-	                                	#{if seat.exitRowInd.getAsBoolean()}
-	                                		* Salida de Emergencia <br>
+	                                	#{if column.type.getAsString().equals('Window')}
+	                                		* Ventana<br>
 	                                	#{/if}
+	                                	#{elseif column.type.getAsString().equals('CenterSeat')}
+	                                		* Asiento Central<br>
+	                                	#{/elseif}
+	                                	#{elseif column.type.getAsString().equals('Aisle')}
+	                                		* Pasillo<br>
+	                                	#{/elseif}
+	                                	
 	                                	#{if seat.exitRowInd.getAsBoolean()}
 	                                		* Salida de Emergencia <br>
 	                                	#{/if}
 	                                	#{if seat.restrictedReclineInd.getAsBoolean()}
-	                                		* Restricted Recline <br>
+	                                		* Reclinación limitada <br>
 	                                	#{/if}
 	                                	#{if seat.noInfantInd.getAsBoolean()}
-	                                		* No Infantes <br>
+	                                		* No permite Infantes <br>
 	                                	#{/if}
+	                                	
 	                                	#{list seat.locationDetails, as: 'detail' }
-	                                		* ${detail.getAsString()} <br>
+	                                		#{if detail.getAsString().equals('OverWingSeat(S)')}
+	                                			* Sobre el ala<br>
+	                                		#{/if}
+	                                		#{elseif detail.getAsString().equals('RightSideOf Aircraft')}
+	                                			* Lado derecho<br>
+	                                		#{/elseif}
+	                                		#{elseif detail.getAsString().equals('LeftSideOfAircraft')}
+	                                			* Lado izquierdo<br>
+	                                		#{/elseif}
 	                                	#{/list}
 	                                </div>
 	                                #{/else}
@@ -150,10 +166,15 @@ for(int i =1; i <= numberOfSeats; i++) {
 	
 		$("#seatsmapBlock_1").show();
 		
-		
-		$( ".seatCharts-seat" ).mouseover(function() {
-			if ($( ".seatInfo_"+this.id ).html().trim()!='') {
-				$( ".seatInfo_"+this.id ).show();
+		$( ".seatCharts-seat" ).mouseover(function(e) {
+			try {
+				if ($( ".seatInfo_"+this.id ).html().trim()!='') {
+					$( '.seatInfo_'+this.id).css({'top':$(this).position().top+450 , 'left':$(this).position().left+640});
+					$( ".seatInfo_"+this.id ).show();
+				}
+			}
+			catch(err) {
+				return false;
 			}
 		});
 
