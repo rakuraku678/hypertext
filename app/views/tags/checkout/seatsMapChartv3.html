@@ -32,17 +32,17 @@ for(int i =1; i <= numberOfSeats; i++) {
 	#{list seatsMapArray, as: 'seatsMap' }
 	<div class="container" id="seatsmapBlock_${seatsMap_index}" style="display: none;">
 	    <div class="from-to-block txt-from-to-block">${seatsMap.type.getAsString()}</div>
-	    <div class="from-to-block info-from-to">${seatsMap.origin.getAsString()} => ${seatsMap.destination.getAsString()}</div>
+	    <div class="from-to-block info-from-to">${seatsMap.flightName.getAsString()} - ${seatsMap.origin.getAsString()} => ${seatsMap.destination.getAsString()}</div>
 	
-	<div class="text-left" ><img src="@{'/public/images/headairplane.png'}" /></div>
+	<div class="text-left" ><img style="width: 400px;" src="@{'/public/images/headairplane.png'}" /></div>
 	
-	    <div id="seat-map" class="seatCharts-container airplane-drawing" style="background: url('@{'/public/images/bodyairplane.png'}'); background-repeat: repeat-y;">
-	        <div class="position-relative-seat">
+	    <div id="seat-map" class="seatCharts-container airplane-drawing" style="background-size: 400px; background-repeat: repeat-y;">
+	        <div class="position-relative-seat" style="margin-left: 80px;">
 	            <div class="position-absolute-seat">
 	            #{list seatsMap.cabins, as: 'cabin' }
 	                %{def columnsDataArray = cabin.getAsJsonObject().get("columns").getAsJsonArray(); }%
 	
-	                <div class="seatCharts-row">
+	                <div class="seatCharts-row" style="background-color: white;">
 	                    <div class="seatCharts-cell seatCharts-space"></div>
 	                    #{list columnsDataArray, as: 'column' }
 	                        #{if columnsDataArray.get(column_index-1) != null && columnsDataArray.get(column_index-1).get("type").getAsString().equals("Aisle")}
@@ -71,12 +71,28 @@ for(int i =1; i <= numberOfSeats; i++) {
 	
 	                                #{if seat != null && (seat.get("chargeableInd").getAsBoolean() || seat.get("occupiedInd").getAsBoolean() || seat.getAsJsonObject().get("inoperativeInd").getAsBoolean())}
 	                                    <div class="seatCharts-seat seatCharts-cell economy-class unavailable"></div>
-	                                    %{count++;}%
 	                                #{/if}
 	                                #{else}
-	                                    <div data-passenger="n" id="${row.rowNumber}${column.get("name").getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class available"></div>
+                                    <div data-passenger="n" id="${row.rowNumber}${column.get("name").getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class available"></div>
+	                                <div class="seatInfo_${row.rowNumber}${column.get("name").getAsString()} seatInfoDiv text-left" style="display:none; z-index: 10; position: fixed;">
+	                                	#{if seat.exitRowInd.getAsBoolean()}
+	                                		* Salida de Emergencia <br>
+	                                	#{/if}
+	                                	#{if seat.exitRowInd.getAsBoolean()}
+	                                		* Salida de Emergencia <br>
+	                                	#{/if}
+	                                	#{if seat.restrictedReclineInd.getAsBoolean()}
+	                                		* Restricted Recline <br>
+	                                	#{/if}
+	                                	#{if seat.noInfantInd.getAsBoolean()}
+	                                		* No Infantes <br>
+	                                	#{/if}
+	                                	#{list seat.locationDetails, as: 'detail' }
+	                                		* ${detail.getAsString()} <br>
+	                                	#{/list}
+	                                </div>
 	                                #{/else}
-	
+									 %{count++;}%
 	                            #{/list}
 	                        #{/if}
 	                    </div>
@@ -91,10 +107,11 @@ for(int i =1; i <= numberOfSeats; i++) {
 	
 	
 	#{/list}
-	<div class="text-left" style="margin-left: 14px;"><img src="@{'/public/images/taleairplane.png'}" /></div>
+	<div id="tailPlane" class="text-left" style="margin-left: 14px;"><img src="@{'/public/images/taleairplane.png'}" style="width: 400px;" /></div>
 	</div>
 	
 	<div class="text-center">
+	
 		<a class="btn btn-search" id="btnContinue">Continuar</a>
 		<a class="btn btn-search" id="btnConfirm" style="display: none;">Confirmar Asientos</a>
 	</div>
@@ -110,6 +127,16 @@ for(int i =1; i <= numberOfSeats; i++) {
 	var numberOfMaps = ${seatsMapArray.size()};
 	var arrOfSelectedPassengers = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""];
 	
+	
+	
+	var mouseX;
+	var mouseY;
+	$(document).mousemove( function(e) {
+	   mouseX = e.pageX; 
+	   mouseY = e.pageY;
+	});  
+	
+	
 	function resetValues() {
 		seatsSelected = 0;
 		insertionValue = 1;
@@ -120,7 +147,19 @@ for(int i =1; i <= numberOfSeats; i++) {
 	}
 	
 	$(function () {
+	
 		$("#seatsmapBlock_1").show();
+		
+		
+		$( ".seatCharts-seat" ).mouseover(function() {
+			if ($( ".seatInfo_"+this.id ).html().trim()!='') {
+				$( ".seatInfo_"+this.id ).show();
+			}
+		});
+
+		$( ".seatCharts-seat" ).mouseleave(function() {
+			$( ".seatInfo_"+this.id ).hide();
+		});
 		$("#btnConfirm").click(function() {
 			$('#modalSeatsMap').modal('toggle');
 		});
@@ -145,6 +184,7 @@ for(int i =1; i <= numberOfSeats; i++) {
                         indexSeatMap--;
                         $("#seatsmapBlock_"+indexSeatMap).hide();
                         $("#btnContinue").hide();
+                        $("#tailPlane").hide();
                         $("#btnConfirm").show();
                         $("#seatCharts-legend").hide();
                     }
