@@ -3,9 +3,6 @@
 <h3>Seleccionar asiento</h3>
 <p class="text-selection">Si no eliges ningún asiento, nosotros te asignaremos uno en forma aleatoria. Si eres cliente del Banco de Chile, puedes optar por un asiento preferente en el aeropuerto, sólo presentando tus tarjetas Visa Asignature, Mastercard Black o Visa infinite.
 </p>
-
-
-
 <div class="col-md-12" style="margin-top: 50px;"></div>
 
      %{
@@ -26,6 +23,28 @@ for(int i =1; i <= numberOfSeats; i++) {
      
  </div>    
 <div class="col-md-6">
+
+    <div id="seatCharts-legend" class="seatCharts-legend">
+        <ul class="seatCharts-legendList">
+            <div class="seatCharts-row">
+                <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class unavailable-legend"></div>
+                <span class="seatCharts-legendDescription">Ocupado</span>
+            </div>
+            <div class="seatCharts-row">
+                <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class available-legend"></div>
+                <span class="seatCharts-legendDescription">Disponible</span>
+            </div>
+            <div class="seatCharts-row">
+                <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class bath-legend"></div>
+                <span class="seatCharts-legendDescription">Disponible</span>
+            </div>
+            <div class="seatCharts-row">
+                <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class emergency-legend"></div>
+                <span class="seatCharts-legendDescription">Disponible</span>
+            </div>
+        </ul>
+    </div>
+
 	%{def seatsMapArray = seatsMap.getAsJsonArray();}%
 
 	
