@@ -2,7 +2,7 @@
 
 <!-- Modal -->
 <div class="modal fade modal-air-rules" id="modalSeatsMap" tabindex="-1" role="dialog" aria-labelledby="modalAirRulesLabel">
-    <div class="modal-dialog" role="document" style="width: 1000px;" >
+    <div class="modal-dialog" role="document" style="width: 1200px;" >
         <div class="modal-content info-flight">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="icon-close-modal"></i></button>
@@ -120,6 +120,31 @@ div.seatCharts-seat.available {
 div.seatCharts-seat.available-legend {
 	background-color: #5F98FF;
 }
+div.seatCharts-seat.unavailable {
+    background-color: #EA7979;
+    border: 1px solid #E53A3A;
+}
+div.seatCharts-seat.unavailable-legend {
+    background-color: #EA7979;
+    border: 1px solid #E53A3A;
+}
+div.seatCharts-seat.emergency {
+    background-color: #FFFFFF;
+    border-width: 2px;
+    border-color: #428BCA;
+}
+div.seatCharts-seat.emergency-legend {
+    background-color: #FFFFFF;
+    border: 3px solid #428BCA;
+}
+div.seatCharts-seat.bath-legend {
+    background-color: #fdff2d;
+}
+div.seatCharts-seat.unknown-legend {
+    background-color: #000000;
+}
+
+
 div.seatCharts-seat.available.first-class {
 /* 	background: url(vip.png); */
 	background-color: #3a78c3;
@@ -130,29 +155,15 @@ div.seatCharts-seat.focused {
 div.seatCharts-seat.selected {
 	background-color: #7aff00;
 }
-div.seatCharts-seat.unavailable {
-	background-color: #EA7979;
-	border: 1px solid #E53A3A;
-}
-div.seatCharts-seat.unavailable-legend {
-	background-color: #EA7979;
-	border: 1px solid #E53A3A;
-}
-div.seatCharts-seat.chargeable {
-	background-color: #428BCA;
-}
-div.seatCharts-seat.unknown {
-	background-color: #000000;
-}
 div.seatCharts-container {
 	/*width: 500px;*/
 	padding: 20px 0;
 	float: left;
 }
 div.seatCharts-legend {
-	padding-left: 0px;
-	position: absolute;
-	bottom: 16px;
+	float: right;
+    margin-right: 20px;
+    margin-top: 20px;
 }
 ul.seatCharts-legendList {
 	padding-left: 0px;

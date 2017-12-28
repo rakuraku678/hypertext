@@ -1,11 +1,9 @@
+#{if seatsMap!=null && seatsMap.getAsJsonArray().size()>0}
 <div class="row" style="background-color: #f6f6f6;">	
 <div class="col-md-6">
 <h3>Seleccionar asiento</h3>
 <p class="text-selection">Si no eliges ningún asiento, nosotros te asignaremos uno en forma aleatoria. Si eres cliente del Banco de Chile, puedes optar por un asiento preferente en el aeropuerto, sólo presentando tus tarjetas Visa Asignature, Mastercard Black o Visa infinite.
 </p>
-
-
-
 <div class="col-md-12" style="margin-top: 50px;"></div>
 
      %{
@@ -26,6 +24,32 @@ for(int i =1; i <= numberOfSeats; i++) {
      
  </div>    
 <div class="col-md-6">
+
+    <div id="seatCharts-legend" class="seatCharts-legend">
+        <ul class="seatCharts-legendList">
+            <div class="seatCharts-row">
+                <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class unavailable-legend"></div>
+                <span class="seatCharts-legendDescription">Ocupado</span>
+            </div>
+            <div class="seatCharts-row">
+                <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class available-legend"></div>
+                <span class="seatCharts-legendDescription">Disponible</span>
+            </div>
+            <div class="seatCharts-row">
+                <img src="@{'/public/images/bath.jpg'}" style="width:20px;" />
+                <span class="seatCharts-legendDescription">Baño</span>
+            </div>
+            <div class="seatCharts-row">
+                <img src="@{'/public/images/foodicon.png'}" style="width:20px;" />
+                <span class="seatCharts-legendDescription">Cocina</span>
+            </div>
+            <div class="seatCharts-row">
+                <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class emergency-legend"></div>
+                <span class="seatCharts-legendDescription">Salida de Emergencia</span>
+            </div>
+        </ul>
+    </div>
+
 	%{def seatsMapArray = seatsMap.getAsJsonArray();}%
 
 	
@@ -38,11 +62,33 @@ for(int i =1; i <= numberOfSeats; i++) {
 	
 	    <div id="seat-map" class="seatCharts-container airplane-drawing" style="background-size: 400px; background-repeat: repeat-y;">
 	        <div class="position-relative-seat" style="margin-left: 80px;">
-	            <div class="position-absolute-seat">
+	            <div class="position-absolute-seat" style="background-color: white;">
 	            #{list seatsMap.cabins, as: 'cabin' }
 	                %{def columnsDataArray = cabin.getAsJsonObject().get("columns").getAsJsonArray(); }%
+					
+				#{if cabin.getAsJsonObject().has("facilities") }
+				 	#{list cabin.getAsJsonObject().get("facilities").getAsJsonArray(), as: 'facility' }
+				 		#{if facility.get("type").getAsString().equals('Lavatory') && facility.get("cabinLocation").getAsString().equals('Front')}
+				 			%{def bathAlign = facility.get("facilityLocation").getAsString().equals('LeftSideSection')? 'left' : 'right'; }%
+				 			
+				 			#{if bathAlign.equals('right')}<p style="margin-bottom: 50px;"><img src="@{'/public/images/bath.jpg'}" style="width:40px; float: ${bathAlign};" /></p>#{/if}
+				 			#{else}<img src="@{'/public/images/bath.jpg'}" style="width:40px; float: ${bathAlign};" />#{/else}
+				 		#{/if}
+				 		#{elseif facility.get("type").getAsString().equals('Galley') && facility.get("cabinLocation").getAsString().equals('Front') }
+				 			%{def galleyAlign = facility.get("facilityLocation").getAsString().equals('RightCenterSection')? 'right' : facility.get("facilityLocation").getAsString().equals('LeftCenterSection')? 'left' : ''; }%
+				 		
+				 			
+				 			<img src="@{'/public/images/foodicon.png'}" style="width:40px; float: ${galleyAlign};" />
+				 			#{if galleyAlign.equals('right')}<br />#{/if}
+				 		#{/elseif }
+				 	#{/list}
+					
+					
+				#{/if}
 	
-	                <div class="seatCharts-row" style="background-color: white;">
+	
+	
+                <div class="seatCharts-row">
 	                    <div class="seatCharts-cell seatCharts-space"></div>
 	                    #{list columnsDataArray, as: 'column' }
 	                        #{if columnsDataArray.get(column_index-1) != null && columnsDataArray.get(column_index-1).get("type").getAsString().equals("Aisle")}
@@ -82,10 +128,26 @@ for(int i =1; i <= numberOfSeats; i++) {
 	                                    <div class="seatCharts-seat seatCharts-cell economy-class unavailable"></div>
 	                                #{/if}
 	                                #{else}
-                                    
-                                    <div data-passenger="n" id="${row.rowNumber}${column.get("name").getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class available"></div>
+                                    #{if seat.exitRowInd.getAsBoolean()}
+                                    <div data-passenger="n" id="${row.rowNumber}${column.get("name").getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class emergency-legend"></div>
+	                               #{/if}
+	                               #{else}
+	                               <div data-passenger="n" id="${row.rowNumber}${column.get("name").getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class available"></div>
+	                               #{/else}
 	                               
-	                                <div class="seatInfo_${row.rowNumber}${column.get("name").getAsString()} seatInfoDiv text-left" style="display:none; z-index: 10; position: fixed;">
+	                               %{
+	                                def tooltipAlign = 0;
+	                               	for (def i=1;i<=column_index;i++) {
+	                               		if (i<5 || i >=7){
+	                               		tooltipAlign = tooltipAlign + 40;
+	                               		}
+	                               		else if (i<8) {
+	                               		tooltipAlign = tooltipAlign + 10;
+	                               		}
+	                               		
+	                               	}
+	                               }%
+	                                <div class="seatInfo_${row.rowNumber}${column.get("name").getAsString()} seatInfoDiv text-left" style="margin-left: ${tooltipAlign}px; display:none; z-index: 10; position: fixed;">
 	                                	<strong>${row.rowNumber} ${column.get("name").getAsString()} </strong><br>
 	                                	#{if column.type.getAsString().equals('Window')}
 	                                		* Ventana<br>
@@ -125,10 +187,10 @@ for(int i =1; i <= numberOfSeats; i++) {
 	                            #{/list}
 	                        #{/if}
 	                        #{if row.get("isOverWing").getAsBoolean() && row_isLast}
-	                        <img id="wing2" style="position: absolute; left: 252px; width: 40px; height: 80px;" src="@{'/public/images/wing.jpg'}" />
+	                        <img id="wing2" style="position: absolute; left: 272px; width: 40px; height: 80px;" src="@{'/public/images/wing.jpg'}" />
 	                        #{/if}
 	                        #{elseif row.get("isOverWing").getAsBoolean()}
-			             		<img id="wing2" style="position: absolute; left: 252px; width: 40px;" src="@{'/public/images/wing.jpg'}" />
+			             		<img id="wing2" style="position: absolute; left: 272px; width: 40px;" src="@{'/public/images/wing.jpg'}" />
 							#{/elseif}
 	                    </div>
 	                #{/list}
@@ -186,7 +248,6 @@ for(int i =1; i <= numberOfSeats; i++) {
 		$( ".seatCharts-seat" ).mouseover(function(e) {
 			try {
 				if ($( ".seatInfo_"+this.id ).html().trim()!='') {
-					$( '.seatInfo_'+this.id).css({'top':$(this).position().top+450 , 'left':$(this).position().left+640});
 					$( ".seatInfo_"+this.id ).show();
 				}
 			}
@@ -311,3 +372,13 @@ for(int i =1; i <= numberOfSeats; i++) {
 		
 	});
 	</script>
+#{/if}
+#{else}
+<div class="row">	
+	<div class="col-md-12">
+		<div class="row">
+			<p style="padding: 20px;">Hubo un <strong>Error</strong> al cargar los asientos</p>
+		</div>
+	</div>
+</div>
+#{/else}
