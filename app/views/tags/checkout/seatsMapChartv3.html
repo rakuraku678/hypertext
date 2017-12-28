@@ -186,7 +186,7 @@ for(int i =1; i <= numberOfSeats; i++) {
 		$( ".seatCharts-seat" ).mouseover(function(e) {
 			try {
 				if ($( ".seatInfo_"+this.id ).html().trim()!='') {
-					$( '.seatInfo_'+this.id).css({'top':$(this).position().top+450 , 'left':$(this).position().left+640});
+					$( '.seatInfo_'+this.id).css({'top':$(this).position().top+450 , 'left':$(this).position().left+640-$( '.seatInfo_'+this.id).width()});
 					$( ".seatInfo_"+this.id ).show();
 				}
 			}
