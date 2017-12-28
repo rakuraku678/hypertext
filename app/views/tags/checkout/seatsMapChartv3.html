@@ -125,10 +125,10 @@ for(int i =1; i <= numberOfSeats; i++) {
 	                            #{/list}
 	                        #{/if}
 	                        #{if row.get("isOverWing").getAsBoolean() && row_isLast}
-	                        <img id="wing2" style="position: absolute; left: 252px; width: 40px; height: 80px;" src="@{'/public/images/wing.jpg'}" />
+	                        <img id="wing2" style="position: absolute; left: 272px; width: 40px; height: 80px;" src="@{'/public/images/wing.jpg'}" />
 	                        #{/if}
 	                        #{elseif row.get("isOverWing").getAsBoolean()}
-			             		<img id="wing2" style="position: absolute; left: 252px; width: 40px;" src="@{'/public/images/wing.jpg'}" />
+			             		<img id="wing2" style="position: absolute; left: 272px; width: 40px;" src="@{'/public/images/wing.jpg'}" />
 							#{/elseif}
 	                    </div>
 	                #{/list}
