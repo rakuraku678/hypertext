@@ -29,11 +29,15 @@ for(int i =1; i <= numberOfSeats; i++) {
         <ul class="seatCharts-legendList">
             <div class="seatCharts-row">
                 <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class unavailable-legend"></div>
-                <span class="seatCharts-legendDescription">Ocupado</span>
+                <span class="seatCharts-legendDescription">No Disponible</span>
             </div>
             <div class="seatCharts-row">
                 <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class available-legend"></div>
                 <span class="seatCharts-legendDescription">Disponible</span>
+            </div>
+            <div class="seatCharts-row">
+                <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class no-seat-legend"></div>
+                <span class="seatCharts-legendDescription">No hay Asiento</span>
             </div>
             <div class="seatCharts-row">
                 <img src="@{'/public/images/bath.jpg'}" style="width:20px;" />
@@ -66,6 +70,7 @@ for(int i =1; i <= numberOfSeats; i++) {
 	            #{list seatsMap.cabins, as: 'cabin' }
 	                %{def columnsDataArray = cabin.getAsJsonObject().get("columns").getAsJsonArray(); }%
 					
+					
 				#{if cabin.getAsJsonObject().has("facilities") }
 				 	#{list cabin.getAsJsonObject().get("facilities").getAsJsonArray(), as: 'facility' }
 				 		#{if facility.get("type").getAsString().equals('Lavatory') && facility.get("cabinLocation").getAsString().equals('Front')}
@@ -91,10 +96,8 @@ for(int i =1; i <= numberOfSeats; i++) {
                 <div class="seatCharts-row">
 	                    <div class="seatCharts-cell seatCharts-space"></div>
 	                    #{list columnsDataArray, as: 'column' }
-	                        #{if columnsDataArray.get(column_index-1) != null && columnsDataArray.get(column_index-1).get("type").getAsString().equals("Aisle")}
-	                            #{if columnsDataArray.get(column_index-2).get("type").getAsString().equals("Aisle")}
+	                        #{if column.get("type").getAsString().equals("Aisle")}
 	                                <div class="seatCharts-cell seatCharts-space"></div>
-	                            #{/if}
 	                        #{/if}
 	                        #{if cabin_index==1}
 	                        <div class="seatCharts-cell seatCharts-space economy-class unavailable">${column.get("name").getAsString()}</div>
@@ -118,18 +121,25 @@ for(int i =1; i <= numberOfSeats; i++) {
 	                            #{list columnsDataArray, as: 'column' }
 	                                %{def seat = count < seats.size() ? seats.get(count).getAsJsonObject(): null;}%
 	
-	                                #{if columnsDataArray.get(column_index-1) != null && columnsDataArray.get(column_index-1).get("type").getAsString().equals("Aisle")}
-	                                    #{if columnsDataArray.get(column_index-2).get("type").getAsString().equals("Aisle")}
+	                                #{if column.get("type").getAsString().equals("Aisle")}
 	                                        <div class="seatCharts-cell seatCharts-space"></div>
-	                                    #{/if}
 	                                #{/if}
-	
-	                                #{if seat != null && (seat.get("chargeableInd").getAsBoolean() || seat.get("occupiedInd").getAsBoolean() || seat.getAsJsonObject().get("inoperativeInd").getAsBoolean())}
+									
+									#{if seat != null && (seat.get("noSeat").getAsBoolean())}
+										<div class="seatCharts-seat seatCharts-cell economy-class no-seat-legend"></div>
+									#{/if}
+	                                #{elseif seat != null && (seat.get("chargeableInd").getAsBoolean() || seat.get("occupiedInd").getAsBoolean() || seat.getAsJsonObject().get("inoperativeInd").getAsBoolean())}
 	                                    <div class="seatCharts-seat seatCharts-cell economy-class unavailable"></div>
-	                                #{/if}
+	                                #{/elseif}
 	                                #{else}
                                     #{if seat.exitRowInd.getAsBoolean()}
-                                    <div data-passenger="n" id="${row.rowNumber}${column.get("name").getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class emergency-legend"></div>
+                                    	#{if !column_isLast}
+                                    		<img src="@{'/public/images/emergencyexit.png'}" class="emergencyIconL" /> 
+										#{/if}
+										#{else}
+											<img src="@{'/public/images/emergencyexit.png'}" class="emergencyIconR" />             
+										#{/else}
+                                    	<div data-passenger="n" id="${row.rowNumber}${column.get("name").getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class emergency-legend"></div>
 	                               #{/if}
 	                               #{else}
 	                               <div data-passenger="n" id="${row.rowNumber}${column.get("name").getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class available"></div>
@@ -147,7 +157,7 @@ for(int i =1; i <= numberOfSeats; i++) {
 	                               		
 	                               	}
 	                               }%
-	                                <div class="seatInfo_${row.rowNumber}${column.get("name").getAsString()} seatInfoDiv text-left" style="margin-left: ${tooltipAlign}px; display:none; z-index: 10; position: fixed;">
+	                                <div class="seatInfo_${row.rowNumber}${column.get("name").getAsString()} seatInfoDiv text-left" style="margin-left: ${tooltipAlign}px; display:none; z-index: 200; position: fixed;">
 	                                	<strong>${row.rowNumber} ${column.get("name").getAsString()} </strong><br>
 	                                	#{if column.type.getAsString().equals('Window')}
 	                                		* Ventana<br>
@@ -187,10 +197,10 @@ for(int i =1; i <= numberOfSeats; i++) {
 	                            #{/list}
 	                        #{/if}
 	                        #{if row.get("isOverWing").getAsBoolean() && row_isLast}
-	                        <img id="wing2" style="position: absolute; left: 272px; width: 40px; height: 80px;" src="@{'/public/images/wing.jpg'}" />
+	                        <img id="wing2" style="position: absolute; left: 312px; width: 40px; height: 80px;" src="@{'/public/images/wing.jpg'}" />
 	                        #{/if}
 	                        #{elseif row.get("isOverWing").getAsBoolean()}
-			             		<img id="wing2" style="position: absolute; left: 272px; width: 40px;" src="@{'/public/images/wing.jpg'}" />
+			             		<img id="wing2" style="position: absolute; left: 312px; width: 40px;" src="@{'/public/images/wing.jpg'}" />
 							#{/elseif}
 	                    </div>
 	                #{/list}
