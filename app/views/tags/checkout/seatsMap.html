@@ -135,7 +135,11 @@ div.seatCharts-seat.emergency {
 }
 div.seatCharts-seat.emergency-legend {
     background-color: #FFFFFF;
-    border: 3px solid #428BCA;
+    border: 4px solid #428BCA;
+}
+div.seatCharts-seat.no-seat-legend {
+    background-color: #FFFFFF;
+    border: 4px solid #000000;
 }
 div.seatCharts-seat.bath-legend {
     background-color: #fdff2d;
@@ -144,6 +148,26 @@ div.seatCharts-seat.unknown-legend {
     background-color: #000000;
 }
 
+.emergencyIconL {
+	width: 40px;
+    float: left;
+    left: 700px;
+    position: fixed;
+    z-index: 100;
+}
+.emergencyIconR {
+	width: 40px;
+    float: right;
+    position: fixed;
+    z-index: 100;
+    margin-left: 10px;
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
+    -ms-filter: "FlipH";
+}
 
 div.seatCharts-seat.available.first-class {
 /* 	background: url(vip.png); */
