@@ -62,11 +62,11 @@ for(int i =1; i <= numberOfSeats; i++) {
 	    <div class="from-to-block txt-from-to-block">${seatsMap.type.getAsString()}</div>
 	    <div class="from-to-block info-from-to">${seatsMap.flightName.getAsString()} - ${seatsMap.origin.getAsString()} => ${seatsMap.destination.getAsString()}</div>
 	
-	<div style="margin-left: 60px; margin-bottom: -20px; margin-top:22px"><img id="imgHeadPlane" src="@{'/public/images/headairplane0.png'}" /></div>
+	<div style="margin-left: 60px; margin-bottom: -20px; margin-top:22px"><img id="imgHeadPlane_${seatsMap_index}" src="@{'/public/images/headairplane0.png'}" /></div>
 	
 	    <div id="seat-map" class="seatCharts-container airplane-drawing" style="background-size: 400px; background-repeat: repeat-y; padding:0!important; margin-bottom:20px">
 	        <div class="position-relative-seat" style="margin-left: 60px;">
-	            <div class="position-absolute-seat" id="bodyPlane" style="background-color: white;">
+	            <div class="position-absolute-seat" id="bodyPlane_${seatsMap_index}" style="background-color: white;">
 	            #{list seatsMap.cabins, as: 'cabin' }
 	                %{def columnsDataArray = cabin.getAsJsonObject().get("columns").getAsJsonArray(); }%
 					
@@ -289,6 +289,7 @@ for(int i =1; i <= numberOfSeats; i++) {
                     selectionArr = new Array();
                     arrOfSelectedPassengers = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""];
                     $("#seatsmapBlock_"+indexSeatMap).show();
+                    headTaleAdjust(indexSeatMap);
                     if (indexSeatMap>numberOfMaps){
                         indexSeatMap--;
                         $("#seatsmapBlock_"+indexSeatMap).hide();
@@ -381,10 +382,23 @@ for(int i =1; i <= numberOfSeats; i++) {
 		});
 		
 	});
-        $('#bodyPlane').ready(function(){
-            $("#imgHeadPlane").css({'width':($("#bodyPlane").width()+'px')});
-            $("#imgTalePlane").css({'width':($("#bodyPlane").width()+'px')});
+        $('#bodyPlane_1').ready(function(){
+            var bodyWidthVal = $("#bodyPlane_1").width();
+            if (bodyWidthVal < 150)
+            {$("#imgHeadPlane_1").css({'width':($("#bodyPlane_1").width()+'px'), 'margin-top':('60px')});}
+            else
+            {$("#imgHeadPlane_1").css({'width':($("#bodyPlane_1").width()+'px')});}
+            $("#imgTalePlane").css({'width':($("#bodyPlane_1").width()+'px')});
         });
+        
+        function headTaleAdjust(seatmapNum){
+            var bodyWidthVal = $("#bodyPlane_"+seatmapNum).width();
+            if (bodyWidthVal < 150)
+            {$("#imgHeadPlane_"+seatmapNum).css({'width':(bodyWidthVal+'px'), 'margin-top':('60px')});}
+            else
+            {$("#imgHeadPlane_"+seatmapNum).css({'width':(bodyWidthVal+'px')});}
+            $("#imgTalePlane").css({'width':(bodyWidthVal+'px')});
+        }
 	</script>
 #{/if}
 #{else}
