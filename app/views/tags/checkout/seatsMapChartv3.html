@@ -62,11 +62,11 @@ for(int i =1; i <= numberOfSeats; i++) {
 	    <div class="from-to-block txt-from-to-block">${seatsMap.type.getAsString()}</div>
 	    <div class="from-to-block info-from-to">${seatsMap.flightName.getAsString()} - ${seatsMap.origin.getAsString()} => ${seatsMap.destination.getAsString()}</div>
 	
-	<div class="text-left" ><img style="width: 400px;" src="@{'/public/images/headairplane.png'}" /></div>
+	<div style="margin-left: 60px; margin-bottom: -20px; margin-top:22px"><img id="imgHeadPlane" src="@{'/public/images/headairplane0.png'}" /></div>
 	
-	    <div id="seat-map" class="seatCharts-container airplane-drawing" style="background-size: 400px; background-repeat: repeat-y;">
-	        <div class="position-relative-seat" style="margin-left: 80px;">
-	            <div class="position-absolute-seat" style="background-color: white;">
+	    <div id="seat-map" class="seatCharts-container airplane-drawing" style="background-size: 400px; background-repeat: repeat-y; padding:0!important; margin-bottom:20px">
+	        <div class="position-relative-seat" style="margin-left: 60px;">
+	            <div class="position-absolute-seat" id="bodyPlane" style="background-color: white;">
 	            #{list seatsMap.cabins, as: 'cabin' }
 	                %{def columnsDataArray = cabin.getAsJsonObject().get("columns").getAsJsonArray(); }%
 					
@@ -107,10 +107,10 @@ for(int i =1; i <= numberOfSeats; i++) {
 
 	                #{list cabin.rows, as: 'row' }
 	                	#{if row.get("isOverWing").getAsBoolean() && row_isLast}
-	                	<img id="wing1" style="left: -40px; position: absolute; width: 40px; height: 80px;" src="@{'/public/images/wing.jpg'}" />
+	                	<img id="wing1" style="left: -40px; position: absolute; width: 40px; height: 80px;transform: skewY(-30deg);" src="@{'/public/images/wing.jpg'}" />
 	                	#{/if}
 	                    #{elseif row.get("isOverWing").getAsBoolean()}
-                            <img id="wing1" style="left: -40px; position: absolute; width: 40px;" src="@{'/public/images/wing.jpg'}" />
+                            <img id="wing1" style="left: -40px; position: absolute; width: 40px;transform: skewY(-30deg);" src="@{'/public/images/wing.jpg'}" />
 						#{/elseif}
 
 	                    <div class="seatCharts-row" style="background-color:white;">
@@ -197,10 +197,10 @@ for(int i =1; i <= numberOfSeats; i++) {
 	                            #{/list}
 	                        #{/if}
 	                        #{if row.get("isOverWing").getAsBoolean() && row_isLast}
-	                        <img id="wing2" style="position: absolute; left: 312px; width: 40px; height: 80px;" src="@{'/public/images/wing.jpg'}" />
+	                        <img id="wing2" style="position: absolute; width: 40px; height: 80px; transform: skewY(30deg);" src="@{'/public/images/wing.jpg'}" />
 	                        #{/if}
 	                        #{elseif row.get("isOverWing").getAsBoolean()}
-			             		<img id="wing2" style="position: absolute; left: 312px; width: 40px;" src="@{'/public/images/wing.jpg'}" />
+			             		<img id="wing2" style="position: absolute; width: 40px; transform: skewY(30deg);" src="@{'/public/images/wing.jpg'}" />
 							#{/elseif}
 	                    </div>
 	                #{/list}
@@ -212,7 +212,7 @@ for(int i =1; i <= numberOfSeats; i++) {
 	</div>
 	
 	#{/list}
-	<div id="tailPlane" class="text-left" style="margin-left: 14px;"><img src="@{'/public/images/taleairplane.png'}" style="width: 400px;" /></div>
+	<div id="tailPlane" style="margin-left: 109px;"><img id="imgTalePlane" src="@{'/public/images/taleairplane0.png'}"/></div>
 	</div>
 	
 	<div class="text-center">
@@ -381,6 +381,10 @@ for(int i =1; i <= numberOfSeats; i++) {
 		});
 		
 	});
+        $('#bodyPlane').ready(function(){
+            $("#imgHeadPlane").css({'width':($("#bodyPlane").width()+'px')});
+            $("#imgTalePlane").css({'width':($("#bodyPlane").width()+'px')});
+        });
 	</script>
 #{/if}
 #{else}
