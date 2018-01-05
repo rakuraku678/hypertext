@@ -387,7 +387,7 @@ for(int i =1; i <= numberOfSeats; i++) {
             if (bodyWidthVal < 150)
             {$("#imgHeadPlane_1").css({'width':($("#bodyPlane_1").width()+'px'), 'margin-top':('60px')});}
             else
-            {$("#imgHeadPlane_1").css({'width':($("#bodyPlane_1").width()+'px')});}
+            {$("#imgHeadPlane_1").css({'width':($("#bodyPlane_1").width()+'px'), 'margin-top':('20px')});}
             $("#imgTalePlane").css({'width':($("#bodyPlane_1").width()+'px')});
         });
         
@@ -396,7 +396,7 @@ for(int i =1; i <= numberOfSeats; i++) {
             if (bodyWidthVal < 150)
             {$("#imgHeadPlane_"+seatmapNum).css({'width':(bodyWidthVal+'px'), 'margin-top':('60px')});}
             else
-            {$("#imgHeadPlane_"+seatmapNum).css({'width':(bodyWidthVal+'px')});}
+            {$("#imgHeadPlane_"+seatmapNum).css({'width':(bodyWidthVal+'px'), 'margin-top':('20px')});}
             $("#imgTalePlane").css({'width':(bodyWidthVal+'px')});
         }
 	</script>
