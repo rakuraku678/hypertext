@@ -1,0 +1,129 @@
+<div class="box-info-payment">
+    <div class="head-payment">
+        <h3 class="title-payment">Resumen de Reserva</h3>
+    </div>
+    <table class="detail-payment-table">
+        <thead>
+        <tr>
+            <th></th>
+            <th style="width: 20%;">Pasajeros</th>
+            <th>Precio</th>
+            <th>Impuestos</th>
+            <th>Subtotal</th>
+        </tr>
+        </thead>
+        <tbody>
+        #{if _selectedCurrency=='clp'}
+	        #{list items:_pricingCLP.detail, as:'pricingDetail'}
+	            	%{
+			    	 def passType = "";
+			    	 switch (pricingDetail.code.getAsString()) {
+			         	case "ADT": passType="Adulto"; break;
+			         	case "CHD": passType="Niño"; break;
+			         	case "C02": passType="Niño"; break;
+			         	case "INF": passType="Infante"; break;
+			         	default: passType="Pasajero";
+			      	 }
+			      	 def basefareByQuantity = pricingDetail.basefare.getAsInt() * pricingDetail.quantity?.getAsInt();
+			      	 
+			      	 def totalTaxByQuantity = 0;
+			      	 if (pricingDetail.totalTax!=null) {
+			      	 	totalTaxByQuantity = pricingDetail.totalTax?.getAsInt() * pricingDetail.quantity?.getAsInt();
+			      	 }
+			      	 
+			      	 def subTotalAdt = _pricingCLP.totalAdt.getAsInt() + totalTaxByQuantity;
+			      	 def subTotal = basefareByQuantity + totalTaxByQuantity;
+			    	}%
+	        <tr>
+	            <td></td>
+	            <td class="txt-payment-table-mark">${pricingDetail.quantity?.getAsString()} ${passType}${pricingDetail.quantity?.getAsInt().pluralize()}</td>
+	            #{if passType=="Adulto"}
+	            <td><span class="simbolCurrency">$</span><span class="clppriceCon">${_pricingCLP.totalAdt.getAsString()}</span></td>
+	            <td><span class="simbolCurrency">$</span><span class="clppriceCon">${totalTaxByQuantity ?: "0"}</span></td>
+	            <td class="txt-payment-table-mark"><span class="simbolCurrency">$</span><span class="clppriceCon">${subTotalAdt}</span></td>
+	            #{/if}
+	            #{else}
+	            <td><span class="simbolCurrency">$</span><span class="clppriceCon">${basefareByQuantity}</span></td>
+	            <td><span class="simbolCurrency">$</span><span class="clppriceCon">${totalTaxByQuantity ?: "0"}</span></td>
+	            <td class="txt-payment-table-mark"><span class="simbolCurrency">$</span><span class="clppriceCon">${subTotal}</span></td>
+	            #{/else}
+	            
+	        </tr>
+	        #{/list}
+        #{/if}
+        #{else}
+        	#{list items:_pricing.detail, as:'pricingDetail'}
+	            	%{
+			    	 def passType = "";
+			    	 switch (pricingDetail.code.getAsString()) {
+			         	case "ADT": passType="Adulto"; break;
+			         	case "CHD": passType="Niño"; break;
+			         	case "C02": passType="Niño"; break;
+			         	case "INF": passType="Infante"; break;
+			         	default: passType="Pasajero";
+			      	 }
+			      	 
+			      	 def basefareByQuantity = pricingDetail.basefare.getAsFloat() * pricingDetail.quantity?.getAsInt();
+			      	 def totalTaxByQuantity = 0;
+			      	 if (pricingDetail.totalTax!=null) {
+			      	 	totalTaxByQuantity = pricingDetail.totalTax?.getAsFloat() * pricingDetail.quantity?.getAsInt();
+			      	 }
+					 def subTotalAdt = _pricing.totalAdt.getAsFloat() + totalTaxByQuantity;
+			      	 def subTotal = totalTaxByQuantity + basefareByQuantity;
+			    	}%
+	        <tr>
+	            <td></td>
+	            <td class="txt-payment-table-mark">${pricingDetail.quantity?.getAsString()} ${passType}${pricingDetail.quantity?.getAsInt().pluralize()}</td>
+				#{if passType=="Adulto"}
+				<td><span class="simbolCurrency">US$</span><span class="clppriceCon" >${_pricing.totalAdt.getAsString()}</span></td>
+				<td><span class="simbolCurrency">US$</span><span class="clppriceCon" >${totalTaxByQuantity ? totalTaxByQuantity.round(2).format('00.00').toString().replaceAll('\\.',','): "0"}</span></td>
+				<td class="txt-payment-table-mark"><span class="simbolCurrency">US$</span><span class="clppriceCon">${subTotalAdt.round(2).format('00.00').toString().replaceAll('\\.',',')}</span></td>
+				#{/if}
+				#{else}
+                <td><span class="simbolCurrency">US$</span><span class="clppriceCon" >${basefareByQuantity.round(2).format('00.00').toString().replaceAll('\\.',',')}</span></td>
+                <td><span class="simbolCurrency">US$</span><span class="clppriceCon" >${totalTaxByQuantity>0? totalTaxByQuantity.round(2).format('00.00').toString().replaceAll('\\.',',') : "00,00"}</span></td>
+				<td class="txt-payment-table-mark"><span class="simbolCurrency">US$</span><span class="clppriceCon">${subTotal.round(2).format('00.00').toString().replaceAll('\\.',',')}</span></td>
+				#{/else}
+	        </tr>
+	        #{/list}
+        #{/else}
+        
+        #{if _pricingCLP?.totalFee!=null && _pricingCLP?.totalFee.getAsInt()>0 && !_pricingCLP?.totalFee.getAsString().trim().equals('')}
+        <tr>
+            <td></td>
+            <td class="txt-payment-table-mark">Gestión agencia</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            #{if _selectedCurrency=='clp'}
+            	<td class="txt-payment-table-mark"><span class="simbolCurrency">$</span><span class="clppriceCon">${_pricingCLP.totalFee?.getAsString()}</span></td>
+            #{/if}
+            #{else}
+            	<td class="txt-payment-table-mark"><span class="simbolCurrency">US$</span><span class="clppriceCon">${_pricing.totalFee?.getAsString().replaceAll('\\.',',')}</span></td>
+            #{/else}
+        </tr>
+        #{/if}
+        </tbody>
+    </table>
+    <div class="total-payment">
+        #{if _pricingCLP.adtTotalPriceWithAllTaxes.getAsDouble() > _pricingCLP.adtTotalPrice.getAsDouble()}
+        <ul>
+            <li>&nbsp;</li>
+            #{if _selectedCurrency=='clp'}
+            	<li style="text-decoration: line-through;"><span class="simbolCurrency">$</span><span class="clppriceCon">${_pricingCLP.totalAmountBeforeDiscount?.getAsString()}</span></li>
+            #{/if}
+           	#{else}
+           		<li style="text-decoration: line-through;"><span class="simbolCurrency">US$</span><span class="clppriceCon">${_pricing.totalAmountBeforeDiscount?.getAsString()}</span></li>
+           	#{/else}
+        </ul>
+        #{/if}
+        <ul>
+            <li>Total a Pagar</li>
+            #{if _selectedCurrency=='clp'}
+            	<li><span class="simbolCurrency">$</span><span class="clppriceCon">${_pricingCLP.totalAmount?.getAsString()}</span></li>
+           	#{/if}
+           	#{else}
+           		<li><span class="simbolCurrency">US$</span><span class="clppriceCon">${_pricing.totalAmount?.getAsString()}</span></li>
+           	#{/else}
+        </ul>
+    </div>
+</div>
