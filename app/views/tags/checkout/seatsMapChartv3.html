@@ -95,17 +95,32 @@ for(int i =1; i <= numberOfSeats; i++) {
 	
                 <div class="seatCharts-row">
 	                    <div class="seatCharts-cell seatCharts-space"></div>
+	                    %{aisleCols=0}%
+	                    
+	                    
 	                    #{list columnsDataArray, as: 'column' }
-	                        #{if column.get("type").getAsString().equals("Aisle")}
-	                                <div class="seatCharts-cell seatCharts-space"></div>
-	                        #{/if}
+	                        
 	                        #{if cabin_index==1}
+	                        	#{if aisleCols==1}
+	                        		<div class="seatCharts-cell seatCharts-space"></div>
+	                        		 %{aisleCols++;}%
+	                        	#{/if}
 	                        <div class="seatCharts-cell seatCharts-space economy-class unavailable">${column.get("name").getAsString()}</div>
+	                        
+	                        	
+		                        #{if column.get("type").getAsString().equals("Aisle") && aisleCols<2}
+	                                <div class="seatCharts-cell seatCharts-space"></div>
+	                                 %{aisleCols++;}%
+		                        #{/if}
+		                        #{elseif aisleCols>=2}
+		                        	%{aisleCols=0;}%
+		                        #{/elseif}
 	                        #{/if}
 	                    #{/list}
 	                </div>
 
 	                #{list cabin.rows, as: 'row' }
+	                	%{aisleCols=0}%
 	                	#{if row.get("isOverWing").getAsBoolean() && row_isLast}
 	                	<img id="wing1" style="left: -40px; position: absolute; width: 40px; height: 80px;transform: skewY(-30deg);" src="@{'/public/images/wing.jpg'}" />
 	                	#{/if}
@@ -120,25 +135,23 @@ for(int i =1; i <= numberOfSeats; i++) {
 	                            %{int count = 0}%
 	                            #{list columnsDataArray, as: 'column' }
 	                                %{def seat = count < seats.size() ? seats.get(count).getAsJsonObject(): null;}%
-	
-	                                #{if column.get("type").getAsString().equals("Aisle")}
-	                                        <div class="seatCharts-cell seatCharts-space"></div>
-	                                #{/if}
-									
+	 								#{if aisleCols==1}
+	                        			<div class="seatCharts-cell seatCharts-space"></div>
+	                        		 	%{aisleCols++;}%
+	                        		#{/if}
+	                        	   
+	                        	   
 									#{if seat != null && (seat.get("noSeat").getAsBoolean())}
+										#{emergencyTag isLast:column_isLast,seat:seat/}
 										<div class="seatCharts-seat seatCharts-cell economy-class no-seat-legend"></div>
 									#{/if}
 	                                #{elseif seat != null && (seat.get("chargeableInd").getAsBoolean() || seat.get("occupiedInd").getAsBoolean() || seat.getAsJsonObject().get("inoperativeInd").getAsBoolean())}
+		                                #{emergencyTag isLast:column_isLast,seat:seat/}
 	                                    <div class="seatCharts-seat seatCharts-cell economy-class unavailable"></div>
 	                                #{/elseif}
 	                                #{else}
                                     #{if seat.exitRowInd.getAsBoolean()}
-                                    	#{if !column_isLast}
-                                    		<img src="@{'/public/images/flechaEmerg.png'}" class="emergencyIconL" /> 
-										#{/if}
-										#{else}
-											<img src="@{'/public/images/flechaEmerg.png'}" class="emergencyIconR" />             
-										#{/else}
+                                    	#{emergencyTag isLast:column_isLast,seat:seat/}
                                     	<div data-passenger="n" id="${row.rowNumber}${column.get("name").getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class emergency-legend"></div>
 	                               #{/if}
 	                               #{else}
@@ -152,7 +165,7 @@ for(int i =1; i <= numberOfSeats; i++) {
 	                               		tooltipAlign = tooltipAlign + 40;
 	                               		}
 	                               		else if (i<8) {
-	                               		tooltipAlign = tooltipAlign + 10;
+	                               		tooltipAlign = tooltipAlign + 20;
 	                               		}
 	                               		
 	                               	}
@@ -192,6 +205,15 @@ for(int i =1; i <= numberOfSeats; i++) {
 	                                	#{/list}
 	                                </div>
 	                                #{/else}
+	                                
+	                                #{if column.get("type").getAsString().equals("Aisle") && aisleCols<2}
+		                                <div class="seatCharts-cell seatCharts-space"></div>
+		                                 %{aisleCols++;}%
+			                        #{/if}
+			                        #{elseif aisleCols>=2}
+			                        	%{aisleCols=0;}%
+			                        #{/elseif}
+			                        
 									 %{count++;}%
 									 
 	                            #{/list}
