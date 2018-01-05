@@ -134,10 +134,10 @@ for(int i =1; i <= numberOfSeats; i++) {
 	                                #{else}
                                     #{if seat.exitRowInd.getAsBoolean()}
                                     	#{if !column_isLast}
-                                    		<img src="@{'/public/images/emergencyexit.png'}" class="emergencyIconL" /> 
+                                    		<img src="@{'/public/images/flechaEmerg.png'}" class="emergencyIconL" /> 
 										#{/if}
 										#{else}
-											<img src="@{'/public/images/emergencyexit.png'}" class="emergencyIconR" />             
+											<img src="@{'/public/images/flechaEmerg.png'}" class="emergencyIconR" />             
 										#{/else}
                                     	<div data-passenger="n" id="${row.rowNumber}${column.get("name").getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class emergency-legend"></div>
 	                               #{/if}
