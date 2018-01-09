@@ -56,6 +56,11 @@ for(int i =1; i <= numberOfSeats; i++) {
 
 	%{def seatsMapArray = seatsMap.getAsJsonArray();}%
 
+
+
+
+
+
 	
 	#{list seatsMapArray, as: 'seatsMap' }
 	<div class="container" id="seatsmapBlock_${seatsMap_index}" style="display: none;">
@@ -63,6 +68,10 @@ for(int i =1; i <= numberOfSeats; i++) {
 	    <div class="from-to-block info-from-to">${seatsMap.flightName.getAsString()} - ${seatsMap.origin.getAsString()} => ${seatsMap.destination.getAsString()}</div>
 	
 	<div style="margin-left: 60px; margin-bottom: -20px; margin-top:22px"><img id="imgHeadPlane_${seatsMap_index}" src="@{'/public/images/headairplane0.png'}" /></div>
+	
+	#{if !seatsMap.cabins.get(0).getAsJsonObject().get("cabinClass").getAsString().equals("C")}
+	<div class="seatCharts-container exec-class text-center"> Clase ejecutiva </div>
+	#{/if}
 	
 	    <div id="seat-map" class="seatCharts-container airplane-drawing" style="background-size: 400px; background-repeat: repeat-y; padding:0!important; margin-bottom:20px">
 	        <div class="position-relative-seat" style="margin-left: 60px;">
@@ -427,7 +436,7 @@ for(int i =1; i <= numberOfSeats; i++) {
 <div class="row">	
 	<div class="col-md-12">
 		<div class="row">
-			<p style="padding: 20px;">Hubo un <strong>Error</strong> al cargar los asientos</p>
+			<p style="padding: 20px;">No es posible reservar asientos en este momento.</p>
 		</div>
 	</div>
 </div>
