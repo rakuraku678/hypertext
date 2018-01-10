@@ -70,7 +70,7 @@ for(int i =1; i <= numberOfSeats; i++) {
 	<div style="margin-left: 60px; margin-bottom: -20px; margin-top:22px"><img id="imgHeadPlane_${seatsMap_index}" src="@{'/public/images/headairplane0.png'}" /></div>
 	
 	#{if !seatsMap.cabins.get(0).getAsJsonObject().get("cabinClass").getAsString().equals("C")}
-	<div class="seatCharts-container exec-class text-center"> Clase ejecutiva </div>
+	<div id="execContainerClass" class="seatCharts-container exec-class text-center"> Clase ejecutiva </div>
 	#{/if}
 	
 	    <div id="seat-map" class="seatCharts-container airplane-drawing" style="background-size: 400px; background-repeat: repeat-y; padding:0!important; margin-bottom:20px">
@@ -420,6 +420,7 @@ for(int i =1; i <= numberOfSeats; i++) {
             else
             {$("#imgHeadPlane_1").css({'width':($("#bodyPlane_1").width()+'px'), 'margin-top':('20px')});}
             $("#imgTalePlane").css({'width':($("#bodyPlane_1").width()+'px')});
+            $("#execContainerClass").css({'width':($("#bodyPlane_1").width()+'px')});
         });
         
         function headTaleAdjust(seatmapNum){
@@ -429,6 +430,7 @@ for(int i =1; i <= numberOfSeats; i++) {
             else
             {$("#imgHeadPlane_"+seatmapNum).css({'width':(bodyWidthVal+'px'), 'margin-top':('20px')});}
             $("#imgTalePlane").css({'width':(bodyWidthVal+'px')});
+            $("#execContainerClass").css({'width':(bodyWidthVal+'px')});
         }
 	</script>
 #{/if}
