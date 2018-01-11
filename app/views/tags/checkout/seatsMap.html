@@ -295,7 +295,12 @@ span.seatCharts-legendDescription {
 			    'type': 'POST',
 			    'data': data,
 			    'success': function(result){
-		        	$('#modalSeatsBody').append(result);
+		        	$('#modalSeatsBody').html(result);
+		        	$('#cargandoDiv').hide();
+		        	$('#chartWrapper').show();
+			    },
+				'error': function(result){
+		        	$('#modalSeatsBody').html(result);
 		        	$('#cargandoDiv').hide();
 		        	$('#chartWrapper').show();
 			    }
