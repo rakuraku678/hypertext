@@ -65,7 +65,7 @@ for(int i =1; i <= numberOfSeats; i++) {
 	#{list seatsMapArray, as: 'seatsMap' }
 	<div class="container" id="seatsmapBlock_${seatsMap_index}" style="display: none;">
 	    <div class="from-to-block txt-from-to-block">${seatsMap.type.getAsString()}</div>
-	    <div class="from-to-block info-from-to">${seatsMap.flightName.getAsString()} - ${seatsMap.origin.getAsString()} => ${seatsMap.destination.getAsString()}</div>
+	    <div class="from-to-block info-from-to">${seatsMap.flightName.getAsString()} - ${new utils.ApiFlightsSdk.v1.Airport().getByIataCode(seatsMap.origin.getAsString()).city} => ${new utils.ApiFlightsSdk.v1.Airport().getByIataCode(seatsMap.destination.getAsString()).city}</div>
 	
 	<div style="margin-left: 60px; margin-bottom: -20px; margin-top:22px"><img id="imgHeadPlane_${seatsMap_index}" src="@{'/public/images/headairplane0.png'}" /></div>
 	
