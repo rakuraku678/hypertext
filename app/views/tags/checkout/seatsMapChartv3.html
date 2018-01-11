@@ -137,9 +137,12 @@ for(int i =1; i <= numberOfSeats; i++) {
                             <img id="wing1" style="left: -40px; position: absolute; width: 40px;transform: skewY(-30deg);" src="@{'/public/images/wing.jpg'}" />
 						#{/elseif}
 
-						#{if row.get("isExitRow").getAsBoolean()}
+						#{if row.get("isExitRow").getAsBoolean() && !row.get("isOverWing").getAsBoolean()}
 							<img src="@{'/public/images/exitIconR.png'}" class="emergencyIconL" />
 						#{/if}
+						#{elseif row.get("isExitRow").getAsBoolean() && row.get("isOverWing").getAsBoolean()}
+							<img src="@{'/public/images/flechaEmerg.png'}" class="emergencyIconL" />
+						#{/elseif}
 
 	                    <div class="seatCharts-row" style="background-color:white;">
                     	<div id="rowNUM_${row.rowNumber}${column.get("name").getAsString()}"  class="seatCharts-cell seatCharts-space">${row.rowNumber}</div>
@@ -153,10 +156,12 @@ for(int i =1; i <= numberOfSeats; i++) {
 	                        		 	%{aisleCols++;}%
 	                        		#{/if}
 	                        	   
-	                        	   #{if row.get("isExitRow").getAsBoolean() && column_isLast}
+	                        	   #{if row.get("isExitRow").getAsBoolean() && column_isLast && !row.get("isOverWing").getAsBoolean()}
 										<img src="@{'/public/images/exitIconR.png'}" class="emergencyIconR" />
 									#{/if}
-	                        	   
+	                        	   #{elseif row.get("isExitRow").getAsBoolean() && column_isLast && row.get("isOverWing").getAsBoolean()}
+										<img src="@{'/public/images/flechaEmerg.png'}" class="emergencyIconR" />
+									#{/elseif}
 	                        	   
 	                        	   
 	                        	   
@@ -270,7 +275,7 @@ for(int i =1; i <= numberOfSeats; i++) {
 			                        	#{/if}
 			                        	#{elseif facility.type.getAsString().equals("Galley")}
 			                        		%{def galleyAlign = facility.get("facilityLocation").getAsString().equals('RightCenterSection')? 'right' : facility.get("facilityLocation").getAsString().equals('LeftCenterSection')? 'left' : ''; }%
-				 							<img src="@{'/public/images/foodicon.png'}" style="width:40px; float: ${galleyAlign};" />
+				 							<img src="@{'/public/images/foodicon.png'}" style="width:40px;" />
 			                        	#{/elseif}
 			                        	
 									#{/list}
@@ -294,6 +299,30 @@ for(int i =1; i <= numberOfSeats; i++) {
 							#{/elseif}
 	                    </div>
 	                #{/list}
+	                
+	                
+	                
+	                #{if cabin.getAsJsonObject().has("facilities")}
+	                <div class="container" style="width: 100%;">
+	                 #{list cabin.getAsJsonObject().get("facilities").getAsJsonArray(), as: 'facility' }
+	                 
+						 		#{if facility.get("type").getAsString().equals('Lavatory') && facility.get("cabinLocation").getAsString().equals('Rear')}
+						 			%{def bathAlign = facility.get("facilityLocation").getAsString().equals('LeftSideSection')? 'left' : 'right'; }%
+						 			
+						 			#{if bathAlign.equals('right')}<img src="@{'/public/images/bath.jpg'}" style="width:40px; float: ${bathAlign};" />#{/if}
+						 			#{else}<img src="@{'/public/images/bath.jpg'}" style="width:40px; float: ${bathAlign};" />#{/else}
+						 		#{/if}
+						 		#{elseif facility.get("type").getAsString().equals('Galley') && facility.get("cabinLocation").getAsString().equals('Rear') }
+						 		
+						 			
+						 			<img src="@{'/public/images/foodicon.png'}" style="width:40px;" />f
+						 			#{if galleyAlign.equals('right')}<br />#{/if}
+						 		#{/elseif }
+						 	#{/list}
+					</div>	 	
+					#{/if}
+						 	
+						 	
 	            #{/list}
 	            </div>
 	        </div>
@@ -407,28 +436,6 @@ for(int i =1; i <= numberOfSeats; i++) {
 				$(this).removeClass("focused");
 			}
 		});
-		
-		
-		*{$(".seatCharts-seat").click(function() {
-			if (!$(this).hasClass("unavailable") && !$(this).hasClass("selected") && seatsSelected < ${numberOfSeats}) {
-				$(this).addClass("selected");
-				seatsSelected++;
-				if(indexSeatMap != 1){
-					$("#passenger_"+seatsSelected).append("-"+this.id);
-                }else{
-                	$("#passenger_"+seatsSelected).html(this.id);
-                }
-				selectionArr.push(this.id);
-				return;
-			}
-			if ($(this).hasClass("selected")  ) {
-				$(this).removeClass("selected");
-				$("#passenger_"+seatsSelected).children("#"+indexSeatMap + seatsSelected).remove();
-				selectionArr.splice(selectionArr.indexOf(this.id),1);
-				seatsSelected--;
-			}
-		});
-		}*
 		
 		
 		$(".seatCharts-seat").click(function() {
