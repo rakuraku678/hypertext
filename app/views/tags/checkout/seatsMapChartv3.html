@@ -134,7 +134,7 @@ for(int i =1; i <= numberOfSeats; i++) {
 	                	<img id="wing1" style="left: -40px; position: absolute; width: 40px; height: 80px;transform: skewY(-30deg);" src="@{'/public/images/wing.jpg'}" />
 	                	#{/if}
 	                    #{elseif row.get("isOverWing").getAsBoolean()}
-                            <img id="wing1" style="left: -40px; position: absolute; width: 40px;transform: skewY(-30deg);" src="@{'/public/images/wing.jpg'}" />
+                            <img id="wing1" style="left: -40px; position: absolute; width: 40px;  #{if row.has("facilities") && column_isLast } height:80px; #{/if} transform: skewY(-30deg);" src="@{'/public/images/wing.jpg'}" />
 						#{/elseif}
 
 						#{if row.get("isExitRow").getAsBoolean() && !row.get("isOverWing").getAsBoolean()}
@@ -144,7 +144,7 @@ for(int i =1; i <= numberOfSeats; i++) {
 							<img src="@{'/public/images/flechaEmerg.png'}" class="emergencyIconL" />
 						#{/elseif}
 
-	                    <div class="seatCharts-row" style="background-color:white;">
+						<div class="seatCharts-row" style="background-color:white;">
                     	<div id="rowNUM_${row.rowNumber}${column.get("name").getAsString()}"  class="seatCharts-cell seatCharts-space">${row.rowNumber}</div>
 	                        #{if row.seats != null}
 	                            %{def seats = row.getAsJsonObject().get("seats").getAsJsonArray();}%
@@ -242,7 +242,6 @@ for(int i =1; i <= numberOfSeats; i++) {
 	                                
 	                                
 	                                #{list row.facilities, as: 'facility' }  
-										%{facility.type.getAsString()}%
 										#{if facility.type.getAsString().equals("ExitDoor") && column_isLast}
 			                        		<img src="@{'/public/images/exitIconR.png'}" class="emergencyIconR" />
 			                        	#{/if}
@@ -259,48 +258,52 @@ for(int i =1; i <= numberOfSeats; i++) {
 			                        
 									 %{count++;}%
 									 
+					
+							
+							
 	                            #{/list}
+	                            				 
+									 
+									
 	                        #{/if}
 	                        
 	                        
-	                        #{if row.has("facilities")  }
-								<div class="rowFacilityDiv container">
-									
-
-									#{list row.facilities, as: 'facility' }
-										%{facility.type.getAsString()}%
-										#{if facility.type.getAsString().equals("Lavatory")}
-											%{def bathAlign = facility.get("facilityLocation").getAsString().equals('LeftSideSection')? 'left' : 'right'; }%
-			                        		<img src="@{'/public/images/bath.jpg'}" style="width:40px; float: ${bathAlign};" />
-			                        	#{/if}
-			                        	#{elseif facility.type.getAsString().equals("Galley")}
-			                        		%{def galleyAlign = facility.get("facilityLocation").getAsString().equals('RightCenterSection')? 'right' : facility.get("facilityLocation").getAsString().equals('LeftCenterSection')? 'left' : ''; }%
-				 							<img src="@{'/public/images/foodicon.png'}" style="width:40px;" />
-			                        	#{/elseif}
-			                        	
-									#{/list}
-							
-								</div>
-								
-							#{/if}
-						
-						
-						
-						
-						
-						
-						
-						
+	                    
 	                        #{if row.get("isOverWing").getAsBoolean() && row_isLast}
 	                        <img id="wing2" style="position: absolute; width: 40px; height: 80px; transform: skewY(30deg);" src="@{'/public/images/wing.jpg'}" />
 	                        #{/if}
 	                        #{elseif row.get("isOverWing").getAsBoolean()}
-			             		<img id="wing2" style="position: absolute; width: 40px; transform: skewY(30deg);" src="@{'/public/images/wing.jpg'}" />
+			             		<img id="wing2" style="position: absolute; width: 40px; #{if row.has("facilities") && column_isLast } height:80px; #{/if} transform: skewY(30deg);" src="@{'/public/images/wing.jpg'}" />
 							#{/elseif}
 	                    </div>
+	                    
+	                   
+						#{if row.has("facilities") && column_isLast }
+							*{<img id="wing1" style="left: -40px; position: absolute; width: 40px;transform: skewY(-30deg);" src="/public-vol3/images/wing.jpg" />}*
+							<div>
+								<div>
+								#{list row.facilities, as: 'facility' }
+									%{facility.type.getAsString()}%
+									#{if facility.type.getAsString().equals("Lavatory")}
+										%{def bathAlign = facility.get("facilityLocation").getAsString().equals('LeftSideSection')? 'left' : 'right'; }%
+		                        		<img src="@{'/public/images/bath.jpg'}" style="width:40px; " />
+		                        	#{/if}
+		                        	#{elseif facility.type.getAsString().equals("Galley")}
+		                        		%{def galleyAlign = facility.get("facilityLocation").getAsString().equals('RightCenterSection')? 'right' : facility.get("facilityLocation").getAsString().equals('LeftCenterSection')? 'left' : ''; }%
+			 							<img src="@{'/public/images/foodicon.png'}" style="width:40px;" />
+		                        	#{/elseif}
+		                        	
+								#{/list}
+								</div>
+							</div>
+						#{/if}
+						
+									
 	                #{/list}
 	                
 	                
+	                
+	                 
 	                
 	                #{if cabin.getAsJsonObject().has("facilities")}
 	                <div class="container" style="width: 100%;">
@@ -319,7 +322,7 @@ for(int i =1; i <= numberOfSeats; i++) {
 						 			#{if galleyAlign.equals('right')}<br />#{/if}
 						 		#{/elseif }
 						 	#{/list}
-					</div>	 	
+					</div>
 					#{/if}
 						 	
 						 	
