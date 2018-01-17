@@ -13,8 +13,10 @@ public class PromotionDto implements Dto {
     public AgencyDto agency;
     public boolean active;
     public boolean defaultPromotion;
+    public boolean displaySeatMap;
 
     public static PromotionDto parsePromotionDto(JsonElement responseJson){
+
         PromotionDto promotionDto = new PromotionDto();
         JsonObject jsonObject = responseJson.getAsJsonObject();
         promotionDto.id = JsonUtils.getStringFromJson(jsonObject, "_id");
@@ -23,6 +25,7 @@ public class PromotionDto implements Dto {
         promotionDto.agency = AgencyDto.parseAgencyDto(JsonUtils.getJsonObjectFromJson(jsonObject,"agency"));
         promotionDto.active = JsonUtils.getBooleanFromJson(jsonObject, "active");
         promotionDto.defaultPromotion = JsonUtils.getBooleanFromJson(jsonObject, "defaultPromotion");
+        promotionDto.displaySeatMap = JsonUtils.getBooleanFromJson(jsonObject, "displaySeatMap");
 
         return promotionDto;
     }
