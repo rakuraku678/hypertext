@@ -4,14 +4,58 @@
 <h3>Seleccionar asiento</h3>
 <p class="text-selection">Si no eliges ningún asiento, nosotros te asignaremos uno en forma aleatoria. Si eres cliente del Banco de Chile, puedes optar por un asiento preferente en el aeropuerto, sólo presentando tus tarjetas Visa Asignature, Mastercard Black o Visa infinite.
 </p>
-<div class="col-md-12" style="margin-top: 50px;"></div>
+         <div id="seatCharts-legend" class="seatCharts-legend">
+		        <ul class="seatCharts-legendList">
+		            <div class="seatCharts-row">
+		                <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class unavailable-legend"></div>
+		                <span class="seatCharts-legendDescription">No Disponible</span>
+		            </div>
+		            <div class="seatCharts-row">
+		                <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class available-legend"></div>
+		                <span class="seatCharts-legendDescription">Disponible</span>
+		            </div>
+			        <div class="seatCharts-row">
+		                <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class no-seat-legend"></div>
+		                <span class="seatCharts-legendDescription">No hay Asiento</span>
+		            </div>
+		        </ul>
+		 </div>
+		 <div id="seatCharts-legend" class="seatCharts-legend">
+		         <ul class="seatCharts-legendList">
+		            <div class="seatCharts-row">
+		                <img src="@{'/public/images/foodicon.png'}" style="width:20px;" />
+		                <span class="seatCharts-legendDescription">Cocina</span>
+		            </div>
+		            <div class="seatCharts-row">
+		                <img src="@{'/public/images/bath.jpg'}" style="width:20px;" />
+		                <span class="seatCharts-legendDescription">Baño</span>
+		            </div>
+		        </ul>
+    	</div>
+		 <div id="seatCharts-legend" class="seatCharts-legend">
+		         <ul class="seatCharts-legendList">
 
+					<div class="seatCharts-row">
+		                <img src="@{'/public/images/exitIconR.png'}" style="width:20px;" />
+		                <span class="seatCharts-legendDescription">Salida</span>
+		            </div>
+		            <div class="seatCharts-row">
+		                <img src="@{'/public/images/flechaEmerg.png'}" style="width:20px;" />
+		                <span class="seatCharts-legendDescription">Salida de Emergencia</span>
+		            </div>
+		        </ul>
+    	</div>
+    	
+<div class="col-md-12" style="margin-top: 20px; margin-bottom: 25px;" id="segmentDetailsContainer"></div>
+
+
+    
      %{
 for(int i =1; i <= numberOfSeats; i++) {
 }%
 
 		<div class="col-md-12 form-group" >
-			 <p class="form-control" style="color: gray; padding: 20px; display: table;"> Pasajero ${i} </p>
+			 <p class="form-control" style="color: gray; padding: 20px; display: table; width:25%;"> Pasajero ${i} </p>
 			 <p class="form-control" id="passenger_${i}" style="color: gray; padding: 20px; display: table;" data-info="blank">Número de Asiento</p>
 		</div>
     %{
@@ -20,57 +64,24 @@ for(int i =1; i <= numberOfSeats; i++) {
 
      
      
-     
-     
  </div>    
 <div class="col-md-6">
 
-    <div id="seatCharts-legend" class="seatCharts-legend">
-        <ul class="seatCharts-legendList">
-            <div class="seatCharts-row">
-                <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class unavailable-legend"></div>
-                <span class="seatCharts-legendDescription">No Disponible</span>
-            </div>
-            <div class="seatCharts-row">
-                <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class available-legend"></div>
-                <span class="seatCharts-legendDescription">Disponible</span>
-            </div>
-            <div class="seatCharts-row">
-                <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class no-seat-legend"></div>
-                <span class="seatCharts-legendDescription">No hay Asiento</span>
-            </div>
-            <div class="seatCharts-row">
-                <img src="@{'/public/images/bath.jpg'}" style="width:20px;" />
-                <span class="seatCharts-legendDescription">Baño</span>
-            </div>
-            <div class="seatCharts-row">
-                <img src="@{'/public/images/foodicon.png'}" style="width:20px;" />
-                <span class="seatCharts-legendDescription">Cocina</span>
-            </div>
-            <div class="seatCharts-row">
-                <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class emergency-legend"></div>
-                <span class="seatCharts-legendDescription">Salida de Emergencia</span>
-            </div>
-        </ul>
-    </div>
 
 	%{def seatsMapArray = seatsMap.getAsJsonArray();}%
 
-
-
-
-
-
-	
 	#{list seatsMapArray, as: 'seatsMap' }
 	<div class="container" id="seatsmapBlock_${seatsMap_index}" style="display: none;">
-	    <div class="from-to-block txt-from-to-block">${seatsMap.type.getAsString()}</div>
-	    <div class="from-to-block info-from-to">${seatsMap.flightName.getAsString()} - ${new utils.ApiFlightsSdk.v1.Airport().getByIataCode(seatsMap.origin.getAsString()).city} => ${new utils.ApiFlightsSdk.v1.Airport().getByIataCode(seatsMap.destination.getAsString()).city}</div>
-	
+		<div class="segmentDetails" id="segmentDetails_${seatsMap_index}" style="display: none;">
+	    	<div class="from-to-block info-from-to txt-from-to-block">${seatsMap.type.getAsString()}</div>
+	    	<div class="from-to-block info-from-to">${seatsMap.flightName.getAsString()} - ${new utils.ApiFlightsSdk.v1.Airport().getByIataCode(seatsMap.origin.getAsString()).city} => ${new utils.ApiFlightsSdk.v1.Airport().getByIataCode(seatsMap.destination.getAsString()).city}</div>
+	    	<div class="from-to-block" style="font-style: italic;">Avión: ${seatsMap.equipment.getAsString()}</div>
+		</div>
 	<div style="margin-left: 60px; margin-bottom: -20px; margin-top:22px"><img id="imgHeadPlane_${seatsMap_index}" src="@{'/public/images/headairplane0.png'}" /></div>
 	
-	#{if !seatsMap.cabins.get(0).getAsJsonObject().get("cabinClass").getAsString().equals("C")}
-	<div id="execContainerClass_${seatsMap_index}" class="seatCharts-container exec-class text-center"> Clase ejecutiva </div>
+
+	#{if !seatsMap.cabins.get(0).getAsJsonObject().get("cabinClass").getAsString().equals("C") && seatsMap.cabins.get(0).rows.get(0).rowNumber!=1}
+	<div class="seatCharts-container exec-class text-center"> Zona no disponible </div>
 	#{/if}
 	
 	    <div id="seat-map" class="seatCharts-container airplane-drawing" style="background-size: 400px; background-repeat: repeat-y; padding:0!important; margin-bottom:20px">
@@ -137,12 +148,17 @@ for(int i =1; i <= numberOfSeats; i++) {
                             <img id="wing1" style="left: -40px; position: absolute; width: 40px;  #{if row.has("facilities") && column_isLast } height:80px; #{/if} transform: skewY(-30deg);" src="@{'/public/images/wing.jpg'}" />
 						#{/elseif}
 
-						#{if row.get("isExitRow").getAsBoolean() && !row.get("isOverWing").getAsBoolean()}
-							<img src="@{'/public/images/exitIconR.png'}" class="emergencyIconL" />
-						#{/if}
-						#{elseif row.get("isExitRow").getAsBoolean() && row.get("isOverWing").getAsBoolean()}
-							<img src="@{'/public/images/flechaEmerg.png'}" class="emergencyIconL" />
-						#{/elseif}
+						
+						*{
+								#{if row.get("isExitRow").getAsBoolean() && !row.get("isOverWing").getAsBoolean()}
+									 <img src="@{'/public/images/exitIconR.png'}" class="emergencyIconL" id="A"/>
+								#{/if}
+								#{elseif row.get("isExitRow").getAsBoolean() && row.get("isOverWing").getAsBoolean()}
+									 <img src="@{'/public/images/flechaEmerg.png'}" class="emergencyIconL" id="B"/>
+								#{/elseif}
+
+						}*
+
 
 						<div class="seatCharts-row" style="background-color:white;">
                     	<div id="rowNUM_${row.rowNumber}${column.get("name").getAsString()}"  class="seatCharts-cell seatCharts-space">${row.rowNumber}</div>
@@ -156,19 +172,18 @@ for(int i =1; i <= numberOfSeats; i++) {
 	                        		 	%{aisleCols++;}%
 	                        		#{/if}
 	                        	   
-	                        	   #{if row.get("isExitRow").getAsBoolean() && column_isLast && !row.get("isOverWing").getAsBoolean()}
-										<img src="@{'/public/images/exitIconR.png'}" class="emergencyIconR" />
+	                        	   #{if seat.get("exitRowInd").getAsBoolean() && column_isLast && !row.get("isOverWing").getAsBoolean()}
+										<img src="@{'/public/images/exitIconR.png'}" class="emergencyIconR" id="C"/>
 									#{/if}
-	                        	   #{elseif row.get("isExitRow").getAsBoolean() && column_isLast && row.get("isOverWing").getAsBoolean()}
-										<img src="@{'/public/images/flechaEmerg.png'}" class="emergencyIconR" />
+	                        	   #{elseif seat.get("exitRowInd").getAsBoolean() && column_isLast && row.get("isOverWing").getAsBoolean()}
+										<img src="@{'/public/images/flechaEmerg.png'}" class="emergencyIconR" id="D"/>
 									#{/elseif}
 	                        	   
 	                        	   
 	                        	   
 	                        	   #{list row.facilities, as: 'facility' }  
-										%{facility.type.getAsString()}%
-										#{if facility.type.getAsString().equals("ExitDoor")}
-			                        		<img src="@{'/public/images/exitIconR.png'}" class="emergencyIconL" />
+										#{if facility.type.getAsString().equals("ExitDoor") && !seat.exitRowInd.getAsBoolean()}
+			                        		<img src="@{'/public/images/exitIconR.png'}" class="emergencyIconL" id="E" />
 			                        	#{/if}
 									#{/list}
 									
@@ -195,7 +210,7 @@ for(int i =1; i <= numberOfSeats; i++) {
 	                                def tooltipAlign = 0;
 	                               	for (def i=1;i<=column_index;i++) {
 	                               		if (i<5 || i >=7){
-	                               		tooltipAlign = tooltipAlign + 40;
+	                               		tooltipAlign = tooltipAlign + 50;
 	                               		}
 	                               		else if (i<8) {
 	                               		tooltipAlign = tooltipAlign + 20;
@@ -242,8 +257,8 @@ for(int i =1; i <= numberOfSeats; i++) {
 	                                
 	                                
 	                                #{list row.facilities, as: 'facility' }  
-										#{if facility.type.getAsString().equals("ExitDoor") && column_isLast}
-			                        		<img src="@{'/public/images/exitIconR.png'}" class="emergencyIconR" />
+										#{if facility.type.getAsString().equals("ExitDoor") && column_isLast && !seat.exitRowInd.getAsBoolean()}
+			                        		<img src="@{'/public/images/exitIconR.png'}" class="emergencyIconR" id="O" />
 			                        	#{/if}
 									#{/list}
 									
@@ -375,6 +390,9 @@ for(int i =1; i <= numberOfSeats; i++) {
 	
 	$(function () {
 	
+		$( ".segmentDetails" ).appendTo( "#segmentDetailsContainer" );
+		$("#segmentDetails_1").show();
+		
 		$("#seatsmapBlock_1").show();
 		
 		$( ".seatCharts-seat" ).mouseover(function(e) {
@@ -404,6 +422,7 @@ for(int i =1; i <= numberOfSeats; i++) {
 			if (seatsSelected == ${numberOfSeats}){
                 if (indexSeatMap <= numberOfMaps) {
                     $("#seatsmapBlock_"+indexSeatMap).hide();
+                    $("#segmentDetails_"+indexSeatMap).hide();
                     indexSeatMap++;
                     seatsSelected = 0;
                     insertionValue = 1;	
@@ -411,10 +430,12 @@ for(int i =1; i <= numberOfSeats; i++) {
                     selectionArr = new Array();
                     arrOfSelectedPassengers = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""];
                     $("#seatsmapBlock_"+indexSeatMap).show();
+                    $("#segmentDetails_"+indexSeatMap).show();
                     headTaleAdjust(indexSeatMap);
                     if (indexSeatMap>numberOfMaps){
                         indexSeatMap--;
                         $("#seatsmapBlock_"+indexSeatMap).hide();
+                        $("#segmentDetails_"+indexSeatMap).hide();
                         $("#btnContinue").hide();
                         $("#tailPlane").hide();
                         $("#btnConfirm").show();
