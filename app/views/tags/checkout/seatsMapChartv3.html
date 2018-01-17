@@ -463,7 +463,7 @@ for(int i =1; i <= numberOfSeats; i++) {
 		
 		
 		$(".seatCharts-seat").click(function() {
-			if (!$(this).hasClass("unavailable") && !$(this).hasClass("selected") && seatsSelected < ${numberOfSeats}) {
+			if (!$(this).hasClass("unavailable") && !$(this).hasClass("no-seat-legend") && !$(this).hasClass("selected") && seatsSelected < ${numberOfSeats}) {
 				$(this).addClass("selected");
 				seatsSelected++;
 				
