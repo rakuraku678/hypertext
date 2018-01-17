@@ -81,7 +81,7 @@ for(int i =1; i <= numberOfSeats; i++) {
 	
 
 	#{if !seatsMap.cabins.get(0).getAsJsonObject().get("cabinClass").getAsString().equals("C") && seatsMap.cabins.get(0).rows.get(0).rowNumber!=1}
-	<div class="seatCharts-container exec-class text-center"> Zona no disponible </div>
+		<div id="execContainerClass_${seatsMap_index}" class="seatCharts-container exec-class text-center"> Zona no disponible </div>
 	#{/if}
 	
 	    <div id="seat-map" class="seatCharts-container airplane-drawing" style="background-size: 400px; background-repeat: repeat-y; padding:0!important; margin-bottom:20px">
@@ -439,7 +439,7 @@ for(int i =1; i <= numberOfSeats; i++) {
                         $("#btnContinue").hide();
                         $("#tailPlane").hide();
                         $("#btnConfirm").show();
-                        $("#seatCharts-legend").hide();
+                        $(".seatCharts-legend").hide();
                     }
                 }
                 $('#modalSeatsMap').animate({ scrollTop: 0 }, 'slow');

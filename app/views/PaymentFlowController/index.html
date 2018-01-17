@@ -86,7 +86,14 @@
                    	#{/if}
 
                     #{checkout.airRules airRulesResultList:airRulesResultList/}
-                    #{checkout.seatsMap bfmResultItem:bfmResultItem /}
+                    
+                    
+                    #{if promotionDto.displaySeatMap}
+                    	#{checkout.seatsMap bfmResultItem:bfmResultItem /}
+                    #{/if}
+                    
+                    
+                    
                 </div>
                 #{if params.promotion == "traveldelta"}
                 <div class="col-md-4" id="banner_checkout_delta" >
