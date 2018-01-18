@@ -7,15 +7,15 @@
          <div id="seatCharts-legend" class="seatCharts-legend">
 		        <ul class="seatCharts-legendList">
 		            <div class="seatCharts-row">
-		                <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class unavailable-legend"></div>
+		                <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class unavailable-legend legend"></div>
 		                <span class="seatCharts-legendDescription">No Disponible</span>
 		            </div>
 		            <div class="seatCharts-row">
-		                <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class available-legend"></div>
+		                <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class available-legend legend"></div>
 		                <span class="seatCharts-legendDescription">Disponible</span>
 		            </div>
 			        <div class="seatCharts-row">
-		                <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class no-seat-legend"></div>
+		                <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class no-seat-legend legend"></div>
 		                <span class="seatCharts-legendDescription">No hay Asiento</span>
 		            </div>
 		        </ul>
@@ -56,7 +56,7 @@ for(int i =1; i <= numberOfSeats; i++) {
 
 		<div class="col-md-12 form-group" >
 			 <p class="form-control" style="color: gray; padding: 20px; display: table; width:25%;"> Pasajero ${i} </p>
-			 <p class="form-control" id="passenger_${i}" style="color: gray; padding: 20px; display: table;" data-info="blank">Número de Asiento</p>
+			 <p class="form-control" id="passenger_${i}" style="color: gray; padding: 20px; display: table; width: 50%;" data-info="blank">Número de Asiento</p>
 		</div>
     %{
     }
@@ -193,14 +193,13 @@ for(int i =1; i <= numberOfSeats; i++) {
 										#{emergencyTag isLast:column_isLast,seat:seat/}
 										<div class="seatCharts-seat seatCharts-cell economy-class no-seat-legend"></div>
 									#{/if}
-	                                #{elseif seat != null && (seat.get("chargeableInd").getAsBoolean() || seat.get("occupiedInd").getAsBoolean() || seat.getAsJsonObject().get("inoperativeInd").getAsBoolean())}
+	                                #{elseif seat != null && (seat.get("chargeableInd").getAsBoolean() || seat.get("occupiedInd").getAsBoolean() || seat.getAsJsonObject().get("inoperativeInd").getAsBoolean() || seat.get("exitRowInd").getAsBoolean())}
 		                                #{emergencyTag isLast:column_isLast,seat:seat/}
 	                                    <div class="seatCharts-seat seatCharts-cell economy-class unavailable"></div>
 	                                #{/elseif}
 	                                #{else}
                                     #{if seat.exitRowInd.getAsBoolean()}
                                     	#{emergencyTag isLast:column_isLast,seat:seat/}
-                                    	<div data-passenger="n" id="${row.rowNumber}${column.get("name").getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class emergency-legend"></div>
 	                               #{/if}
 	                               #{else}
 	                               <div data-passenger="n" id="${row.rowNumber}${column.get("name").getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class available"></div>
@@ -463,7 +462,7 @@ for(int i =1; i <= numberOfSeats; i++) {
 		
 		
 		$(".seatCharts-seat").click(function() {
-			if (!$(this).hasClass("unavailable") && !$(this).hasClass("no-seat-legend") && !$(this).hasClass("selected") && seatsSelected < ${numberOfSeats}) {
+			if (!$(this).hasClass("unavailable") && !$(this).hasClass("legend") && !$(this).hasClass("no-seat-legend") && !$(this).hasClass("selected") && seatsSelected < ${numberOfSeats}) {
 				$(this).addClass("selected");
 				seatsSelected++;
 				
