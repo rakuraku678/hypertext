@@ -27,6 +27,21 @@ function numberWithCommas(x) {
 	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
 
+function showHighPriceOnMatrix(curr){
+	var replacePrice = "";
+	if (!$('.price').first().children().first().hasClass("hidden")) {
+		replacePrice = $('.price').first().children().first().html().substr($('.price').first().children().first().html().indexOf("</span>")+7,$('.price').first().children().first().html().length)
+	}
+	else {
+		replacePrice = $('.price').first().children().eq(1).html();
+	}
+	var currency = '';
+	if (curr=='usd') 
+			currency = 'US$';
+	$('.high').first().html(currency + replacePrice);	
+}
+
+
 
 var jsonPricesAirlines = new Array();
 $(function () {
@@ -66,10 +81,12 @@ $(function () {
 					"/flights/matrix?" + getSearchParams(),
 					function (responseText, textStatus, XMLHttpRequest) {
 						if (textStatus == "success") {
+							showHighPriceOnMatrix();
 							$("#tarifasDiv").hide();
 							$("#airlineSugDiv").hide();
 							$("#priceSugDiv").show();
 							$("#priceSuggestionMatrix").show();
+							
 							onReadyMatrix();
 						}
 						else {
@@ -83,6 +100,8 @@ $(function () {
 			$("#airlineSugDiv").hide();
 			$("#priceSugDiv").show();
 			$("#priceSuggestionMatrix").show();
+			showHighPriceOnMatrix();
+			
 		}
 	});
 
@@ -127,6 +146,9 @@ $(function () {
         $( ".simbolCurrency" ).each(function( index ) {
             $(this).html("US$");
         });
+        
+        showHighPriceOnMatrix('usd');
+        
 	}
 var changedCLP=false;
 	function setClpExchange() {
@@ -145,6 +167,7 @@ var changedCLP=false;
 	 		changedCLP = true;
         }
         calculateClpExchange();
+        showHighPriceOnMatrix();
     }
 	function commaToPrices() {
 		$( ".clppriceCon" ).each(function( index ) {
