@@ -13,6 +13,7 @@ public class AgencyDto implements Dto {
     public boolean active;
     public boolean defaultAgency;
     public boolean showLoginOnSelection;
+    public boolean showFFPBox;
     
     public static AgencyDto parseAgencyDto(JsonElement responseJson){
         AgencyDto agencyDto = new AgencyDto();
@@ -24,6 +25,8 @@ public class AgencyDto implements Dto {
         agencyDto.active = JsonUtils.getBooleanFromJson(jsonObject, "active");
         agencyDto.defaultAgency = JsonUtils.getBooleanFromJson(jsonObject, "defaultAgency");
         agencyDto.showLoginOnSelection = JsonUtils.getBooleanFromJson(jsonObject, "showLoginOnSelection");
+        agencyDto.showFFPBox = JsonUtils.getBooleanFromJson(jsonObject, "showFFPBox");
+
         return agencyDto;
     }
 }
