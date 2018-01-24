@@ -447,8 +447,8 @@
 
               $(function() {
                 $("#startDate").datepicker({
-                  minDate: 5,
-                  maxDate: 300,
+                  minDate: ${searchConfigurationDto.minDaysAP},
+                  maxDate: ${searchConfigurationDto.maxDaysAP},
                   onClose: function(){
                     $("#endDate").datepicker("show");
                   }
@@ -473,8 +473,8 @@
 
               $(function() {
                 $( "#endDate" ).datepicker({
-                  minDate: 5,
-                  maxDate: 300,
+                  minDate: ${searchConfigurationDto.minDaysAP},
+                  maxDate: ${searchConfigurationDto.maxDaysAP}
                 }).on( "change", function() {
                   var currentEndDate = getDate($("#endDate"));
                   if(currentEndDate <= maxDate){
