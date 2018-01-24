@@ -447,8 +447,8 @@
 
               $(function() {
                 $("#startDate").datepicker({
-                  minDate: ${searchConfigurationDto.minDaysAP},
-                  maxDate: ${searchConfigurationDto.maxDaysAP},
+                  minDate: #{if searchConfigurationDto.minDaysAP > 0} ${searchConfigurationDto.minDaysAP} #{/if} #{else} 5 #{/else},
+                  maxDate: #{if searchConfigurationDto.maxDaysAP > 0} ${searchConfigurationDto.maxDaysAP}#{/if} #{else} 320 #{/else},
                   onClose: function(){
                     $("#endDate").datepicker("show");
                   }
@@ -473,8 +473,8 @@
 
               $(function() {
                 $( "#endDate" ).datepicker({
-                  minDate: ${searchConfigurationDto.minDaysAP},
-                  maxDate: ${searchConfigurationDto.maxDaysAP}
+                  minDate: #{if searchConfigurationDto.minDaysAP > 0} ${searchConfigurationDto.minDaysAP} #{/if} #{else} 5 #{/else},
+                  maxDate: #{if searchConfigurationDto.maxDaysAP > 0} ${searchConfigurationDto.maxDaysAP}#{/if} #{else} 320 #{/else},
                 }).on( "change", function() {
                   var currentEndDate = getDate($("#endDate"));
                   if(currentEndDate <= maxDate){
