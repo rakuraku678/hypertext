@@ -1,8 +1,8 @@
 #{include "FlightsDataController/airlinesMatrix.html" /}
 <input type="hidden" id="dlx" value="${dollarExchangeRate}" />
 
-#{list items:flightsResults, as:'flight'}
-    #{flightsItem promotion: params.promotion, flight:flight, flightsResultsFilters:flightsResultsFilters, tknumber:flight_index/}
+#{list items:bigFlightsResults, as:'flight'}
+    #{flightsItemV2 promotion: params.promotion, flight:flight, flightsResultsFilters:flightsResultsFilters, tknumber:flight_index, bigFlightsResults:bigFlightsResults, flightsResults:flightsResults /}
 #{/list}
 <script type="text/javascript">
 	$(function () {

@@ -28,6 +28,7 @@ public class FlightsResultsFilters {
     public Map<String,String> outboundAirportCodes = Maps.newHashMap();
     public Map<String,String> inboundAirportCodes = Maps.newHashMap();
 
+    
     public static FlightsResultsFilters processFlightsResults(JsonElement flightsResults){
         FlightsResultsFilters flightsResultsFilters = new FlightsResultsFilters();
 
