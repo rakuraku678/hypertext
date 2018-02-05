@@ -104,7 +104,7 @@
                         <small class="help-block" id="emptyfnac${_key}" style="display: none;">El campo esta vacio.</small>
                     </div>
                 </div>
-                #{if !_agencySlug.equals('travelclub')}
+                #{if _agency.showFFPBox}
                 <div class="col-md-6 form-group">
                     <div class="" style="margin-bottom: -15px;">
                         <label >Información Pasajero Frecuente:</label>
@@ -130,10 +130,12 @@
                 </div>
                 #{/if}
             </div>
-       		#{if _agencySlug.equals('traveldelta')}
-			<div class="alert alert-info fade in alert-dismissable">
-				<p>* Los nombres y apellidos  deben coincidir con la información ingresada en SKYMILES.</p>
-			</div>
+       		#{if _agency.showFFPBox}
+            <div class="row">
+                <div class="alert alert-info fade in alert-dismissable">
+                    <p>* Los nombres y apellidos  deben coincidir con la información ingresada en SKYMILES.</p>
+                </div>
+            </div>
 			#{/if}
         </div>            
 
@@ -143,8 +145,8 @@
 
 
 
-#{if !_agencySlug.equals('travelclub')}
 <script type="text/javascript" src="@{'/public/javascripts/jquery-3.0.0.min.js'}"></script>
+#{if !_agency.slug.equals('travelclub')}
 <script>
 
 $(document).ready(function () {
