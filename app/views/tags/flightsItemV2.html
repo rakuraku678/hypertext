@@ -65,7 +65,7 @@
                 #{list items:_flight.idaAirSearchSegments, as:'segment'}
                 <li class="txt-view-detail">
                     <ul>
-                    	<input type="radio" name="elRADIOBUTTTTTTONONONASASNASONNASONDASKFJLKFJLJKHKGHGHGGGGGGGGGGGGGGGGGGGGGGGGGGGGHHHHHHHHHHHHH" />
+                    	<input type="radio" name="RADIO_IDA" />
                         <li>
                             <label style="font-weight: 500;">
                                 #{list items:segment.detail.get(0).marketingAirline, as:"airlineCode"}
@@ -130,11 +130,11 @@
 							        <h4 class="modal-title" id="myModalLabel">Detalle del Vuelo</h4>
 							      </div>
 							      <div class="modal-body txt-view-detail">
-				                  *{
+				                  
 				                            #{list items:segment, as:'flightSegment'}
 				                           		 #{modalDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes: _flightsResults.get(0).pricing.bookingCodes/}
 				                            #{/list}
-	                                }*
+	                                
 	                                    <!-- END MODAL BODY-->
 							      </div>
 							    </div>
@@ -147,11 +147,11 @@
                         </li>
 
                         <div class="collapse" id="departureSegment${_flight.sequenceNumber.getAsString()}">
-                           *{
+                           
                             #{list items:segment, as:'flightSegment'}
                                 #{flightsItemDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes: _flightsResults.get(0).pricing.bookingCodes/}
                             #{/list}
-                            }*
+                            
                         </div>
                     </ul>
                 </li>
@@ -192,23 +192,44 @@
                         </li>
                     </ul>
                 </li>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                *{ACA EMPIEZA EL BAILE COSMICO VUELTA}*
+                
+                #{list items:_flight.vueltaAirSearchSegments, as:'segment'}
                 <li class="txt-view-detail">
                     <ul>
+                    	<input type="radio" name="VUELTA_RADIO" />
                         <li>
                             <label style="font-weight: 500;">
-                                #{list items:_flightsResults.get(0).returnSegment.detail.get(0).marketingAirline, as:"airlineCode"}
+                                #{list items:segment.detail.get(0).marketingAirline, as:"airlineCode"}
                                 	#{airlineLogo carriersCode:airlineCode?.getAsString().toLowerCase(), carriersName: airlineCode /}
                                     ${_flightsResultsFilters?.mktCarriersCodesXNames?.get(airlineCode.getAsString())}
                                 #{/list}
                             </label>
                         </li>
                         <li class="hour-of-flight">
-                            <span>${_flightsResults.get(0).returnSegment.departureTime.getAsString()}</span>
+                            <span>${segment.departureTime.getAsString()}</span>
                         </li>
                         <li class="stops-route">
                             <a type="button" data-toggle="collapse" data-target="#returnSegment${_flight.sequenceNumber.getAsString()}" aria-expanded="false" aria-controls="collapseExample2" class="link-detail-desktop">
                             %{
-                                connectionsCount = _flightsResults.get(0).returnSegment.flightsCount.getAsInt() - 1;
+                                connectionsCount = segment.flightsCount.getAsInt() - 1;
                             }%
                             #{if connectionsCount == 0 }
                                 <span class="stop-txt">Directo</span>
@@ -228,18 +249,18 @@
                             </a>
                         </li>
                         <li class="hour-of-flight">
-                            <span>${_flightsResults.get(0).returnSegment.returnTime.getAsString()}</span>
-                            #{daysDifference departure:_flightsResults.get(0).returnSegment.departureDate, arrival: _flightsResults.get(0).returnSegment.returnDate/}
+                            <span>${segment.returnTime.getAsString()}</span>
+                            #{daysDifference departure:segment.departureDate, arrival: segment.returnDate/}
                         </li>
                         <li class="time">
                         %{
-                            returnElapsedTime = _flightsResults.get(0).returnSegment.elapsedTime.getAsInt();
+                            returnElapsedTime = segment.elapsedTime.getAsInt();
                             int returnElapsedHours = returnElapsedTime / 60;
                             int returnElapsedMinutes = returnElapsedTime % 60;
                             }%
                             <span>&{"%dh %02dm", returnElapsedHours, returnElapsedMinutes}</span>
                         </li>
-                        <li class="detail">
+                        <li class="detail" style="margin:0px;">
                             <a id="returnSegment${_flight.sequenceNumber.getAsString()}Button" type="button" data-toggle="collapse" data-target="#returnSegment${_flight.sequenceNumber.getAsString()}" aria-expanded="false" aria-controls="collapseExample2" class="link-detail-desktop" style="font-weight: bold;">
                                 Ver detalle
                             </a>
@@ -254,9 +275,11 @@
 							        <h4 class="modal-title" id="myModalLabel">Detalle del Vuelo</h4>
 							      </div>
 							      <div class="modal-body txt-view-detail">
-				                            #{list items:_flightsResults.get(0).returnSegment, as:'flightSegment'}
+				                   
+				                            #{list items:segment, as:'flightSegment'}
 				                           		 #{modalDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes: _flightsResults.get(0).pricing.bookingCodes/}
 				                            #{/list}
+				                     
 	                                    <!-- END MODAL BODY-->
 							      </div>
 							    </div>
@@ -265,14 +288,29 @@
 							
 							
                         </li>
-                        </li>
+                        
+                        
                         <div class="collapse" id="returnSegment${_flight.sequenceNumber.getAsString()}">
-                            #{list items:_flightsResults.get(0).returnSegment, as:'flightSegment'}
+                            
+                            #{list items:segment, as:'flightSegment'}
                                 #{flightsItemDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes:_flightsResults.get(0).pricing.bookingCodes/}
                             #{/list}
+                            
                         </div>
                     </ul>
                 </li>
+                
+                 #{/list}
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
                 <li class="info-detail-promo" id="bigImgPromoLi">
                 	#{if _flight.pricing.urlBannerImage!=null && !_flight.pricing.urlBannerImage.equals("")}
 	               		<img style="height:auto;" src="${utils.CloudinaryUtils.getUrl(_flight.pricing.urlBannerImage.getAsString(), 'q_90,c_fill,h_130', '')}">
