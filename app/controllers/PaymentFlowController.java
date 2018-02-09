@@ -49,13 +49,25 @@ public class PaymentFlowController extends Controller {
         AgencyConfigurationDto agencyConfigurationDto = TravelClubUtils.getAgencyConfiguration(promotionDto.agency.externalId);
 
         JsonElement bfmResultItem = new JsonParser().parse(params.get("bfmResultItem"));
+        JsonObject pricingJsonObject = new JsonParser().parse(params.get("pricingElement")).getAsJsonObject();
 
+        
+        JsonElement resultSegmentIda = new JsonParser().parse(params.get("resultSegmentIda"));
+        JsonElement resultSegmentVuelta = new JsonParser().parse(params.get("resultSegmentVuelta"));
+        
+        System.out.println("resultSegmentIda: "+resultSegmentIda.toString());
+        
+        
+        
+        
+        
         String selectedCurrency = params.get("selectedCurrency");
         String dollarExchangeRate = TravelClubUtils.getDollarExchangeRate(promotionDto.agency.externalId);
 
         JsonObject bfmResultJsonObject = bfmResultItem.getAsJsonObject();
-        JsonObject pricingJsonObject = (JsonObject) JsonUtils.getJsonObjectFromJson(bfmResultJsonObject, "pricing");
+        //JsonObject pricingJsonObject = (JsonObject) JsonUtils.getJsonObjectFromJson(bfmResultJsonObject, "pricing");
 
+        
         List<AirRulesDto> airRulesResultList = Lists.newArrayList();
 
         AirRules airRules = new AirRules();
@@ -101,7 +113,8 @@ public class PaymentFlowController extends Controller {
         
         String urlServer = Play.configuration.getProperty("url.server");
         render(agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate, airRulesResultList, promotionDto, 
-        		countriesList, onlyPassport, whiteListAirlines, validatingCarrier, AllianceMessage, transactionId, token, state, urlServer);
+        		countriesList, onlyPassport, whiteListAirlines, validatingCarrier, AllianceMessage, transactionId, token, state, urlServer, 
+        		resultSegmentIda, resultSegmentVuelta);
 	
     }
 

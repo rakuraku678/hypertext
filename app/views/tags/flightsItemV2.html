@@ -65,7 +65,7 @@
                 #{list items:_flight.idaAirSearchSegments, as:'segment'}
                 <li class="txt-view-detail">
                     <ul>
-                    	<input type="radio" name="RADIO_IDA" />
+                    	<input type="radio" name="resultSegmentIda" value="${segment.toString()}" />
                         <li>
                             <label style="font-weight: 500;">
                                 #{list items:segment.detail.get(0).marketingAirline, as:"airlineCode"}
@@ -113,16 +113,16 @@
                             <span>&{"%dh %02dm", departureElapsedHours, departureElapsedMinutes}</span>
                         </li>
                         <li class="detail" style="margin: 0px;">
-                            <a id="departureSegment${_flight.sequenceNumber.getAsString()}Button" type="button" data-toggle="collapse" data-target="#departureSegment${_flight.sequenceNumber.getAsString()}" aria-expanded="false" aria-controls="collapseExample" class="link-detail-desktop" style="font-weight: bold;">
+                            <a id="departureSegment${_flight.sequenceNumber.getAsString()}_${segment_index}Button" type="button" data-toggle="collapse" data-target="#departureSegment${_flight.sequenceNumber.getAsString()}_${segment_index}" aria-expanded="false" aria-controls="collapseExample" class="link-detail-desktop" style="font-weight: bold;">
                                 Ver detalle
                             </a>
-                            <a data-toggle="modal" data-target="#detailModalFlight${_flight.sequenceNumber.getAsString()}" class="link-detail-mobile">detalle</a>
+                            <a data-toggle="modal" data-target="#detailModalFlight${_flight.sequenceNumber.getAsString()}_${segment_index}" class="link-detail-mobile">detalle</a>
                             
                             
                             
                             
                             <!-- Modal -->
-							<div class="modal fade" id="detailModalFlight${_flight.sequenceNumber.getAsString()}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+							<div class="modal fade" id="detailModalFlight${_flight.sequenceNumber.getAsString()}_${segment_index}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 							  <div class="modal-dialog" role="document">
 							    <div class="modal-content info-flight">
 							      <div class="modal-header">
@@ -146,7 +146,7 @@
                             
                         </li>
 
-                        <div class="collapse" id="departureSegment${_flight.sequenceNumber.getAsString()}">
+                        <div class="collapse" id="departureSegment${_flight.sequenceNumber.getAsString()}_${segment_index}">
                            
                             #{list items:segment, as:'flightSegment'}
                                 #{flightsItemDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes: _flightsResults.get(0).pricing.bookingCodes/}
@@ -214,7 +214,8 @@
                 #{list items:_flight.vueltaAirSearchSegments, as:'segment'}
                 <li class="txt-view-detail">
                     <ul>
-                    	<input type="radio" name="VUELTA_RADIO" />
+                    	<input type="radio" name="resultSegmentVuelta" value="${segment.toString()}" />
+                    	
                         <li>
                             <label style="font-weight: 500;">
                                 #{list items:segment.detail.get(0).marketingAirline, as:"airlineCode"}
@@ -261,13 +262,13 @@
                             <span>&{"%dh %02dm", returnElapsedHours, returnElapsedMinutes}</span>
                         </li>
                         <li class="detail" style="margin:0px;">
-                            <a id="returnSegment${_flight.sequenceNumber.getAsString()}Button" type="button" data-toggle="collapse" data-target="#returnSegment${_flight.sequenceNumber.getAsString()}" aria-expanded="false" aria-controls="collapseExample2" class="link-detail-desktop" style="font-weight: bold;">
+                            <a id="returnSegment${_flight.sequenceNumber.getAsString()}_${segment_index}Button" type="button" data-toggle="collapse" data-target="#returnSegment${_flight.sequenceNumber.getAsString()}_${segment_index}" aria-expanded="false" aria-controls="collapseExample2" class="link-detail-desktop" style="font-weight: bold;">
                                 Ver detalle
                             </a>
-                             <a data-toggle="modal" data-target="#detailModalFlight2${_flight.sequenceNumber.getAsString()}" class="link-detail-mobile">detalle</a>
+                             <a data-toggle="modal" data-target="#detailModalFlight2${_flight.sequenceNumber.getAsString()}_${segment_index}" class="link-detail-mobile">detalle</a>
                              
                             <!-- Modal -->
-							<div class="modal fade" id="detailModalFlight2${_flight.sequenceNumber.getAsString()}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+							<div class="modal fade" id="detailModalFlight2${_flight.sequenceNumber.getAsString()}_${segment_index}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 							  <div class="modal-dialog" role="document">
 							    <div class="modal-content info-flight">
 							      <div class="modal-header">
@@ -290,7 +291,7 @@
                         </li>
                         
                         
-                        <div class="collapse" id="returnSegment${_flight.sequenceNumber.getAsString()}">
+                        <div class="collapse" id="returnSegment${_flight.sequenceNumber.getAsString()}_${segment_index}">
                             
                             #{list items:segment, as:'flightSegment'}
                                 #{flightsItemDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes:_flightsResults.get(0).pricing.bookingCodes/}
@@ -395,6 +396,7 @@
                 <input type="hidden" name="promotion" value="${_promotion}">
                 <input type="hidden" name="bfmResultItem" value="${_flight.toString()}">
                 <input type="submit" style="margin-top:20px;" class="btn btn-ticket btnSelFlight" value="Seleccionar">
+                <input type="hidden" name="pricingElement" value="${_flight.pricing.toString()}"/>
                 *{<a class="btn btn-ticket" href="@{PaymentFlowController.index}">Comprar</a>}*
 
             </div>

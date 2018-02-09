@@ -69,10 +69,10 @@
                     #{/list}
                     *{#{checkout.paymentBox/}}*
                     #{checkout.termsConditionBox/}
-                    #{checkout.hiddenInputBox bfmResultItem: bfmResultItem, promotion: promotionDto/}
+                    #{checkout.hiddenInputBox bfmResultItem: bfmResultItem, promotion: promotionDto, resultSegmentIda:resultSegmentIda, resultSegmentVuelta:resultSegmentVuelta/}
                 </div>
                 <div class="col-md-4">
-                    #{checkout.flightBox bfmResultItem:bfmResultItem/}
+                    #{checkout.flightBox bfmResultItem:bfmResultItem, resultSegmentIda:resultSegmentIda, resultSegmentVuelta:resultSegmentVuelta/}
                     #{checkout.summaryBox pricing:bfmResultItem.pricing, pricingCLP:bfmResultItem.pricingCLP, selectedCurrency:selectedCurrency/}
 
                     #{list items:bfmResultItem.refoundRuleTexts, as:'refoundRuleText'}
