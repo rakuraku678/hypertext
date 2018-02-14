@@ -76,6 +76,10 @@ public class BookingController extends Controller {
 	    renderJSON(booking.process(bodyJsonElement));	
     }
 
+    public static void isPnrEmitted(String pnr) {
+        Booking booking = new Booking();
+        renderJSON(booking.isPnrEmitted(pnr));
+    }
 
     public static void statusBooking() {
         Booking booking = new Booking();

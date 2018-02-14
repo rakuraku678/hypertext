@@ -123,10 +123,18 @@ public class PaymentFlowController extends Controller {
 
         Map processData = Maps.newHashMap();
         processData.put("checkoutId", params.get("id"));
-
+        processData.put("agency", promotionDto.agency.externalId);
         render(agencyConfigurationDto,processData);
     }
 
+    public static void processEmissionError() {
+    	AgencyConfigurationDto agencyConfigurationDto = TravelClubUtils.getAgencyConfiguration(params.get("agency"));
+    	String checkoutId = params.get("id");
+    	Booking booking = new Booking();
+    	String pnr = booking.get(checkoutId).getAsJsonObject().get("pnr").getAsString();
+    	render(agencyConfigurationDto, pnr);
+    }
+    
     public static void processError(String type, String pnr, String a){
     	if (Strings.isNullOrEmpty(pnr)){
     		AgencyConfigurationDto agencyConfigurationDto = null;
@@ -191,7 +199,7 @@ public class PaymentFlowController extends Controller {
             Minutes diff = Minutes.minutesBetween(DateTime.now(), pendingBookingTime);
             int mins = diff.getMinutes() >= 0 ? diff.getMinutes(): 0;
 
-            render(configurationDto, agencyConfigurationDto, pnr, mins);
+            render(configurationDto, agencyConfigurationDto, pnr, mins, checkout);
     	}
     }
 
