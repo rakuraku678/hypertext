@@ -56,7 +56,8 @@ public class PaymentFlowController extends Controller {
         JsonElement resultSegmentVuelta = new JsonParser().parse(params.get("resultSegmentVuelta"));
         
         System.out.println("resultSegmentIda: "+resultSegmentIda.toString());
-        
+        System.out.println("==========================");
+        System.out.println("resultSegmentVuelta: "+resultSegmentVuelta.toString());
         
         
         
