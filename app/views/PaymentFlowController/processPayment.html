@@ -81,7 +81,7 @@ function statusBooking() {
                 window.location="@{PaymentConfirmController.index(id:processData.get("checkoutId"))}";
             }
             if(result.status == "Failure"){
-                window.location=error_location.replace("_error_id_", "failure");
+                window.location="@{PaymentFlowController.processEmissionError(id:processData.get("checkoutId"),agency:processData.get("agency"))}";
             }
             if(result.status == "Canceled"){
                 window.location=error_location.replace("_error_id_", "canceled");

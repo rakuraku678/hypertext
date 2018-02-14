@@ -1,0 +1,44 @@
+#{extends 'main.html' /}
+#{set title:'PaymentFlow' /}
+
+#{set isAgencyHeader: false /}
+
+
+<section class="bg-path">
+    <article class="container-fluid">
+        <div class="row">
+            <ul class="general-path">
+                <li>
+                    <span class="circle-path icon-checked-path"></span>
+                    <span class="name-path">búsqueda</span>
+                </li>
+                <li class="line-path">
+                    <span class="circle-path icon-checked-path"></span>
+                    <span class="name-path">pasajeros</span>
+                </li>
+                <li>
+                    <span class="circle-path bg-circle-path">3</span>
+                    <span class="name-path">pago</span>
+                </li>
+            </ul>
+        </div>
+    </article>
+</section>
+<section class="search-arrive payment-path">
+    <article class="container-fluid">
+        <div class="row">
+            <p class="text-center">Hemos detectado un problema con la emisión de sus boletos, requerimos que se contacte con Venta 
+            On Line de Travel Club <br> Indicando el siguiente código de reserva: <strong>${pnr}</strong> a <strong>ventaonline@travelclub.cl</strong></p>
+        </div>
+    </article>
+</section>
+#{set 'moreScripts' }
+#{get 'moreScripts' /}
+
+#{/set}
+
+
+#{modalNeadHelp /}
+#{modalExpiredSession /}
+
+#{set isAgencyFooter: false /}
