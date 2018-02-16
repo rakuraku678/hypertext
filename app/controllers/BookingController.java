@@ -19,8 +19,11 @@ public class BookingController extends Controller {
     private static final String APIALIANZA = Play.configuration.getProperty("apiAlianza.url");
 
     public static void startBooking(String body) throws IOException {
-
+    	
         JsonElement bodyJsonElement = new JsonParser().parse(body);
+        System.out.println("==================================================>>>>>>>>>>>>>>>>>>>>>>>>>>>>:>:>:>::>:>:>:>::>:>:>");
+    	System.out.println("lo que llega al body de hyper en startBooking: "+bodyJsonElement.toString());
+    	
         JsonArray passengersArray = bodyJsonElement.getAsJsonObject().get("passengers").getAsJsonArray();
         JsonArray cleanPassengersArray = new JsonArray();
         for (int i = 0; i < passengersArray.size(); i++) {

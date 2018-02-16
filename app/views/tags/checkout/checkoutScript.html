@@ -438,12 +438,14 @@ function startBooking(showModal) {
     
     var formSerializeJson = $("#checkoutForm").serializeJSON({useIntKeysAsArrayIndex: true, checkboxUncheckedValue: false});
     formSerializeJson.bfmResultItem = $.parseJSON(formSerializeJson.bfmResultItem);
+    formSerializeJson.resultSegmentIda = $.parseJSON(formSerializeJson.resultSegmentIda);
+    formSerializeJson.resultSegmentVuelta = $.parseJSON(formSerializeJson.resultSegmentVuelta);
     formSerializeJson.origin = window.location.origin;
     if (typeof finalSelectionArr !== 'undefined' && finalSelectionArr.length>0){
     	formSerializeJson.seatsSelected =  finalSelectionArr.join();
     }
     var data = JSON.stringify(formSerializeJson);
-    
+    console.log(data);
     $.ajax({
         type: "POST",
         url: "@{BookingController.startBooking}",
