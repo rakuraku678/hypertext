@@ -23,9 +23,9 @@
 		data-returnElapsedTime="${returnElapsedTimeEX}" 
 		data-returntime="$_flightsResults.get(0).returnSegment.departureTime.getAsString()}" 
 		data-departuretime="${_flightsResults.get(0).departureSegment.departureTime.getAsString()}" 
-		data-price="${_flightsResults.get(0).pricing.totalPassengerFare.getAsString()}"
-		data-airline="${_flightsResults.get(0).departureSegment.detail.get(0).operatingAirlineCode.getAsString()}"
-        	data-marketingAirline="${_flightsResults.get(0).departureSegment.detail.get(0).marketingAirline.getAsString()}"
+		data-price="${_flight.pricing.totalPassengerFare.getAsString()}"
+		data-airline="${_flight.idaAirSearchSegments.get(0).airlinesCodes.get(0).getAsString()}"
+        data-marketingAirline="${_flight.idaAirSearchSegments.get(0).marketingAirlinesCodes.get(0).getAsString()}"
 		data-escala="${connectionsDepartureCount}"
 		data-returnEscala="${connectionsReturnCount}" style="min-height: ${baxerHeight}">
     <form class="form-ticket" action="@{PaymentFlowController.index}" method="post" data-tknumber="${_tknumber}">
@@ -53,15 +53,6 @@
                 
                 
                 
-                
-                
-                
-                
-                
-                
-                
-                
-                *{ACA EMPIEZA EL BAILE COSMICO}*
                 #{list items:_flight.idaAirSearchSegments, as:'segment'}
                 <li class="txt-view-detail">
                     <ul>
