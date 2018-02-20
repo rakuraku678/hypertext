@@ -21,8 +21,6 @@
 		data-airportDeparture="${_flight.departureAirportCode.getAsString()}" 
 		data-departureElapsedTime="${departureElapsedTimeEX}"
 		data-returnElapsedTime="${returnElapsedTimeEX}" 
-		data-returntime="$_flightsResults.get(0).returnSegment.departureTime.getAsString()}" 
-		data-departuretime="${_flightsResults.get(0).departureSegment.departureTime.getAsString()}" 
 		data-price="${_flight.pricing.totalPassengerFare.getAsString()}"
 		data-airline="${_flight.idaAirSearchSegments.get(0).airlinesCodes.get(0).getAsString()}"
         data-marketingAirline="${_flight.idaAirSearchSegments.get(0).marketingAirlinesCodes.get(0).getAsString()}"
@@ -55,7 +53,7 @@
                 
                 #{list items:_flight.idaAirSearchSegments, as:'segment'}
                 <li class="txt-view-detail">
-                    <ul>
+                    <ul class="segmentBaxer" data-departuretime="${segment.departureTime.getAsString()}">
                     	<input type="radio" name="resultSegmentIda" value="${segment.toString()}" />
                         <li>
                             <label style="font-weight: 500;">
@@ -188,7 +186,7 @@
                 
                 #{list items:_flight.vueltaAirSearchSegments, as:'segment'}
                 <li class="txt-view-detail">
-                    <ul>
+                    <ul class="segmentBaxer" data-returntime="${segment.returnTime.getAsString()}" >
                     	<input type="radio" name="resultSegmentVuelta" value="${segment.toString()}" />
                     	
                         <li>

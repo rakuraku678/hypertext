@@ -141,7 +141,7 @@ $(document).ready(function() {
         var vueltaHorarioLeft = parseInt($("#vueltaHorarioLeft").html().replace(":",''));
         var vueltaHorarioRight = parseInt($("#vueltaHorarioRight").html().replace(":",''));
         
-        $(".ticketBaxer").each(function( index ) {
+        $(".segmentBaxer").each(function( index ) {
         	var departureTime = parseInt($(this).data("departuretime").replace(":",''));
         	var returnTime = parseInt($(this).data("returntime").replace(":",''));
         	if (departureTime>=idaHorarioLeft && departureTime<=idaHorarioRight && returnTime>=vueltaHorarioLeft && returnTime<=vueltaHorarioRight) {
