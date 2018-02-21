@@ -132,7 +132,7 @@
 
                         <div class="collapse" id="departureSegment${_flight.sequenceNumber.getAsString()}">
                             #{list items:_flight.departureSegment, as:'flightSegment'}
-                                #{flightsItemDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes: _flight.pricing.bookingCodes/}
+                                #{flightsItemDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes: _flight.pricing.bookingCodes, baggageInfoList: _flight.baggageInformationDtoList, meals:_flight.pricing.meal /}
                             #{/list}
                         </div>
                     </ul>
@@ -217,7 +217,7 @@
 							      </div>
 							      <div class="modal-body txt-view-detail">
 				                            #{list items:_flight.returnSegment, as:'flightSegment'}
-				                           		 #{modalDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes: _flight.pricing.bookingCodes/}
+				                           		 #{modalDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes: _flight.pricing.bookingCodes, baggageInfoList: _flight.baggageInformationDtoList, meals:_flight.pricing.meal /}
 				                            #{/list}
 	                                    <!-- END MODAL BODY-->
 							      </div>
@@ -230,7 +230,7 @@
                         </li>
                         <div class="collapse" id="returnSegment${_flight.sequenceNumber.getAsString()}">
                             #{list items:_flight.returnSegment, as:'flightSegment'}
-                                #{flightsItemDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes:_flight.pricing.bookingCodes/}
+                                #{flightsItemDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes:_flight.pricing.bookingCodes, baggageInfoList: _flight.baggageInformationDtoList, meals:_flight.pricing.meal /}
                             #{/list}
                         </div>
                     </ul>

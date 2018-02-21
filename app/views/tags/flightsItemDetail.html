@@ -92,12 +92,34 @@
                             %{ resBookDesigCode = flightSegmentDetail.resBookDesigCode.getAsString();}%
                             <span class="inline-detail-flight-data-description">#{cabin bookingCode:resBookDesigCode, bookingCodeList:_bookingCodes/}</span>
                         </div>
+                        
+
                         <div class="box-airplane-name">
                             <span class="airplane-name">
                                 <i class="icon-airplane-name"></i>MATERIAL DE VUELO: ${flightSegmentDetail.airEquipType.getAsString()}
                             </span>
                         </div>
                     </li>
+                    
+                    
+                        <div class="box-airplane-name" >
+                        #{list items:_baggageInfoList, as:'baggageInfo'}
+	                        #{if flightSegmentDetail_index -1 == baggageInfo.segmentId.getAsInt()}
+	                        	#{if baggageInfo.pieces.getAsInt()==1}
+	                        	<img src="@{'/public/img/valija.png'}" />
+	                        	#{/if}
+	                        	#{elseif baggageInfo.pieces.getAsInt()==2}
+	                        	<img src="@{'/public/img/2valijas.png'}" style="max-width: 40px;" />
+	                        	#{/elseif}
+	                        #{/if}
+                        #{/list}
+                        #{if _meals!=null && _meals.getAsString().trim()!=''}
+		                        <img src="@{'/public/img/food-icon-detail.png'}" style="max-width: 40px;" title="${_meals.getAsString()}" />
+                        #{/if}
+                        </div>
+                        
+                        
+                        
                 </ul>
                 #{if flightSegmentDetail.extraData!=null && flightSegmentDetail.extraData.longConnection}
                 	<span class="extraInfoDetail">Conexión por tiempo extenso, se sugiere estadía.</span>
