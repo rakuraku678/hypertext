@@ -101,16 +101,13 @@
                         </div>
                     </li>
                     
-                    
-                        <div class="box-airplane-name" >
+	                    <div class="box-airplane-name" >
+	                    	<img src="@{'/public/img/valija-mano.png'}" title="Equipaje de mano" /> 
                         #{list items:_baggageInfoList, as:'baggageInfo'}
-	                        #{if flightSegmentDetail_index -1 == baggageInfo.segmentId.getAsInt()}
-	                        	#{if baggageInfo.pieces.getAsInt()==1}
-	                        	<img src="@{'/public/img/valija.png'}" />
+	                        #{if baggageInfo.segmentIds.getAsString().contains((flightSegmentDetail_index -1)+'')}
+	                        	#{if baggageInfo.pieces.getAsInt()==2}
+	                        	<img src="@{'/public/img/valija.png'}" title="2 maletas" /> 
 	                        	#{/if}
-	                        	#{elseif baggageInfo.pieces.getAsInt()==2}
-	                        	<img src="@{'/public/img/2valijas.png'}" style="max-width: 40px;" />
-	                        	#{/elseif}
 	                        #{/if}
                         #{/list}
                         #{if _meals!=null && _meals.getAsString().trim()!=''}
