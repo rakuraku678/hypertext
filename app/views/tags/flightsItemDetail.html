@@ -110,8 +110,13 @@
 	                        	#{/if}
 	                        #{/if}
                         #{/list}
-                        #{if _meals!=null && _meals.getAsString().trim()!=''}
-		                        <img src="@{'/public/img/food-icon-detail.png'}" style="max-width: 40px;" title="${_meals.getAsString()}" />
+                        
+                        #{if _meals!=null && _meals.size()>0}
+	                        #{list items:_meals, as:'meal'}
+	                        	#{if flightSegmentDetail_index==meal_index}
+			                	<img src="@{'/public/img/food-icon-detail.png'}" style="max-width: 40px;" title="${meal.getAsString()}" />
+			                	#{/if}
+			                #{/list}         
                         #{/if}
                         </div>
                         
