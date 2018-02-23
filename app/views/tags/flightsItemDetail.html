@@ -105,8 +105,8 @@
 	                    	<img src="@{'/public/img/valija.png'}" title="Equipaje de mano" /> 
                         #{list items:_baggageInfoList, as:'baggageInfo'}
 	                        #{if baggageInfo.segmentIds.getAsString().contains((flightSegmentDetail_index -1)+'')}
-	                        	#{if baggageInfo.pieces.getAsInt()==2}
-	                        	<img src="@{'/public/img/valija-mano.png'}" title="2 maletas" /> 
+	                        	#{if baggageInfo.pieces.getAsInt()>=1}
+	                        	<img src="@{'/public/img/valija-mano.png'}" title="${baggageInfo.pieces.getAsInt()} maleta${baggageInfo.pieces.getAsInt().pluralize()}" /> 
 	                        	#{/if}
 	                        #{/if}
                         #{/list}
