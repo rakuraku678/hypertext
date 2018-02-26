@@ -113,10 +113,14 @@
                         
                         #{if _meals!=null && _meals.size()>0}
 	                        #{list items:_meals, as:'meal'}
-	                        	#{if flightSegmentDetail_index==meal_index}
+	                        	#{if flightSegmentDetail_index==meal_index && _isDeparture}
 			                	<img src="@{'/public/img/food-icon-detail.png'}" style="max-width: 40px;" title="${meal.getAsString()}" />
 			                	#{/if}
-			                #{/list}         
+			                	#{elseif meal_index==_startSegmentCount+flightSegmentDetail_index && !_isDeparture}
+			                	<img src="@{'/public/img/food-icon-detail.png'}" style="max-width: 40px;" title="${meal.getAsString()}" />
+			                	#{/elseif}
+			                #{/list}
+			                         
                         #{/if}
                         </div>
                         
