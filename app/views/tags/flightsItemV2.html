@@ -50,7 +50,6 @@
                 </li>
                 
                 
-                
                 #{list items:_flight.idaAirSearchSegments, as:'segment'}
                 <li class="txt-view-detail">
                     <ul class="segmentBaxer" data-departuretime="${segment.departureTime.getAsString()}">
@@ -138,7 +137,8 @@
                         <div class="collapse" id="departureSegment${_flight.sequenceNumber.getAsString()}_${segment_index}">
                            
                             #{list items:segment, as:'flightSegment'}
-                                #{flightsItemDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes: _flightsResults.get(0).pricing.bookingCodes/}
+                                #{flightsItemDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes: _flightsResults.get(0).pricing.bookingCodes,
+                                	baggageInfoList: _flight.baggageInformationDtoList, meals:_flight.pricing.meals, isDeparture:true, startSegmentCount: flightSegment.flightsCount.getAsInt()/}
                             #{/list}
                             
                         </div>
@@ -146,8 +146,7 @@
                 </li>
                 
                  #{/list}
-                 
-                
+                     
                 <li class="txt-airport-date">
                     <ul>
                         <li>
@@ -177,12 +176,6 @@
                 
                 
                 
-                
-                
-                
-                
-                
-                *{ACA EMPIEZA EL BAILE COSMICO VUELTA}*
                 
                 #{list items:_flight.vueltaAirSearchSegments, as:'segment'}
                 <li class="txt-view-detail">
@@ -267,7 +260,8 @@
                         <div class="collapse" id="returnSegment${_flight.sequenceNumber.getAsString()}_${segment_index}">
                             
                             #{list items:segment, as:'flightSegment'}
-                                #{flightsItemDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes:_flightsResults.get(0).pricing.bookingCodes/}
+                                #{flightsItemDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes:_flightsResults.get(0).pricing.bookingCodes,
+                                	baggageInfoList: _flight.baggageInformationDtoList, meals:_flight.pricing.meals, isDeparture:false, startSegmentCount: segment.flightsCount.getAsInt()/}
                             #{/list}
                             
                         </div>
@@ -275,12 +269,6 @@
                 </li>
                 
                  #{/list}
-                
-                
-                
-                
-                
-                
                 
                 
                 
