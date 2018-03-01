@@ -132,7 +132,7 @@
 
                         <div class="collapse" id="departureSegment${_flight.sequenceNumber.getAsString()}">
                             #{list items:_flight.departureSegment, as:'flightSegment'}
-                                #{flightsItemDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes: _flight.pricing.bookingCodes, baggageInfoList: _flight.baggageInformationDtoList, meals:_flight.pricing.meals, isDeparture:true, startSegmentCount: _flight.departureSegment.flightsCount.getAsInt() /}
+                                #{flightsItemDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes: _flight.pricing.bookingCodes/}
                             #{/list}
                         </div>
                     </ul>
@@ -217,7 +217,7 @@
 							      </div>
 							      <div class="modal-body txt-view-detail">
 				                            #{list items:_flight.returnSegment, as:'flightSegment'}
-				                           		 #{modalDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes: _flight.pricing.bookingCodes, baggageInfoList: _flight.baggageInformationDtoList, meals:_flight.pricing.meals, startSegmentCount: _flight.departureSegment.flightsCount.getAsInt() /}
+				                           		 #{modalDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes: _flight.pricing.bookingCodes/}
 				                            #{/list}
 	                                    <!-- END MODAL BODY-->
 							      </div>
@@ -230,7 +230,7 @@
                         </li>
                         <div class="collapse" id="returnSegment${_flight.sequenceNumber.getAsString()}">
                             #{list items:_flight.returnSegment, as:'flightSegment'}
-                                #{flightsItemDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes:_flight.pricing.bookingCodes, baggageInfoList: _flight.baggageInformationDtoList, meals:_flight.pricing.meals, isDeparture:false, startSegmentCount: _flight.departureSegment.flightsCount.getAsInt() /}
+                                #{flightsItemDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes:_flight.pricing.bookingCodes/}
                             #{/list}
                         </div>
                     </ul>
