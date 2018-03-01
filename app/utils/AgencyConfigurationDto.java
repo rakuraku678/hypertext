@@ -11,7 +11,7 @@ public class AgencyConfigurationDto implements Dto {
 	public String headerHtml;
 	public String footerHtml;
 	public String customCss;
-        public String gtmHead;
+	public String gtmHead;
 	public String gtmBody;
 	public boolean styleTag;
 
