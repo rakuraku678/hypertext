@@ -291,9 +291,9 @@
                 
                 
                 <li><span class="item-detail">Imp. y Tasas</span><span class="item-price usdpriceCon"><span class="simbolCurrency">US$ </span>${_flight.pricing.totalTax?.getAsString()}</span><span class="item-price clppriceCon hidden">${_flight.pricingCLP.totalTax?.getAsString()}</span></li>
-                #{if _flight.pricingCLP?.totalFee!=null && _flight.pricingCLP?.totalFee.getAsInt()>0 && !_flight.pricingCLP?.totalFee.getAsString().trim().equals('')}
-                	<li><span class="item-detail">Gestión agencia </span><span class="item-price usdpriceCon"><span class="simbolCurrency">US$ </span>${_flight.pricing.totalFee?.getAsString()}</span><span class="item-price clppriceCon hidden">${_flight.pricingCLP.totalFee?.getAsString()}</span></li>
-                #{/if}
+                #{if _promotionDto.agency.showNoFeeOnPrice || (_flight.pricingCLP?.totalFee!=null && _flight.pricingCLP?.totalFee.getAsInt()>0 && !_flight.pricingCLP?.totalFee.getAsString().trim().equals(''))}
+               		<li><span class="item-detail">Gestión agencia </span><span class="item-price usdpriceCon"><span class="simbolCurrency">US$ </span>${_flight.pricing.totalFee?.getAsString()}</span><span class="item-price clppriceCon hidden">${_flight.pricingCLP.totalFee?.getAsString()}</span></li>
+               	#{/if}
                 <hr>
                 <li><span class="">Total </span><span class="item-price usdpriceCon"><span class="simbolCurrency">US$ </span>${_flight.pricing.totalAmount?.getAsString()}</span><span class="item-price clppriceCon hidden">${_flight.pricingCLP.totalAmount?.getAsString()}</span></li>
                 <li style="text-align: center;">Incluye tasas e impuestos</li>

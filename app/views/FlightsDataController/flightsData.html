@@ -2,7 +2,7 @@
 <input type="hidden" id="dlx" value="${dollarExchangeRate}" />
 
 #{list items:flightsResults, as:'flight'}
-    #{flightsItem promotion: params.promotion, flight:flight, flightsResultsFilters:flightsResultsFilters, tknumber:flight_index/}
+    #{flightsItem promotion: params.promotion, flight:flight, flightsResultsFilters:flightsResultsFilters, tknumber:flight_index, promotionDto:promotionDto/}
 #{/list}
 <script type="text/javascript">
 	$(function () {
