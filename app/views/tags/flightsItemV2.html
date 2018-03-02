@@ -26,7 +26,7 @@
         data-marketingAirline="${_flight.idaAirSearchSegments.get(0).marketingAirlinesCodes.get(0).getAsString()}"
 		data-escala="${connectionsDepartureCount}"
 		data-returnEscala="${connectionsReturnCount}" style="min-height: ${baxerHeight}">
-    <form class="form-ticket" action="@{PaymentFlowController.index}" method="post" data-tknumber="${_tknumber}">
+    <form class="form-ticket" id="fnumber${_flightNumber}" action="@{PaymentFlowController.index}" method="post" data-tknumber="${_tknumber}">
     	<input type="hidden" name="selectedCurrency" class="selCurrency" value="usd" id="hdnSelectedCurrency"/>
     	
         <div class="col-md-9 info-flight">
@@ -52,8 +52,10 @@
                 
                 #{list items:_flight.idaAirSearchSegments, as:'segment'}
                 <li class="txt-view-detail">
-                    <ul class="segmentBaxer" data-departuretime="${segment.departureTime.getAsString()}">
-                    	<input type="radio" name="resultSegmentIda" value="${segment.toString()}" />
+                    <ul class="segmentBaxerIda" data-departuretime="${segment.departureTime.getAsString()}" data-returntime="${segment.returnTime.getAsString()}"
+                    							data-departureelapsedtime="${segment.elapsedTime.getAsInt()}">
+                    	
+                    	<input type="radio" name="resultSegmentIda" value="${segment.toString()}" class="r${_flightNumber}" #{if segment_index==1} checked="checked" #{/if} />
                         <li>
                             <label style="font-weight: 500;">
                                 #{list items:segment.detail.get(0).marketingAirline, as:"airlineCode"}
@@ -168,19 +170,11 @@
                 
                 
                 
-                
-                
-                
-                
-                
-                
-                
-                
-                
                 #{list items:_flight.vueltaAirSearchSegments, as:'segment'}
                 <li class="txt-view-detail">
-                    <ul class="segmentBaxer" data-returntime="${segment.returnTime.getAsString()}" >
-                    	<input type="radio" name="resultSegmentVuelta" value="${segment.toString()}" />
+                    <ul class="segmentBaxerVuelta" data-departuretime="${segment.departureTime.getAsString()}" data-returntime="${segment.returnTime.getAsString()}" 
+                    							   data-returnelapsedtime="${segment.elapsedTime.getAsInt()}"	>
+                    	<input type="radio" name="resultSegmentVuelta" value="${segment.toString()}" class="r${_flightNumber}" #{if segment_index==1} checked="checked" #{/if}/>
                     	
                         <li>
                             <label style="font-weight: 500;">
@@ -356,7 +350,7 @@
             <div class="text-center box-ticket-submit">
                 <input type="hidden" name="promotion" value="${_promotion}">
                 <input type="hidden" name="bfmResultItem" value="${_flight.toString()}">
-                <input type="submit" style="margin-top:20px;" class="btn btn-ticket btnSelFlight" value="Seleccionar">
+                <input type="submit" style="margin-top:20px;" class="btn btn-ticket btnSelFlight" data-flightnumber="${_flightNumber}" value="Seleccionar">
                 <input type="hidden" name="pricingElement" value="${_flight.pricing.toString()}"/>
                 *{<a class="btn btn-ticket" href="@{PaymentFlowController.index}">Comprar</a>}*
 
@@ -364,4 +358,4 @@
         </div>
     </form>
 </div>
-                
+
