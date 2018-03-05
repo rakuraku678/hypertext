@@ -2,11 +2,9 @@ package controllers;
 
 import com.google.common.base.Strings;
 
-import dto.StateDto;
-import play.cache.Cache;
 import play.mvc.Controller;
 import utils.AgencyConfigurationDto;
-import utils.CrossLoginUtils;
+import utils.SearchConfigurationDto;
 import utils.TravelClubUtils;
 import utils.ApiFlightsSdk.v1.Agency;
 import utils.ApiFlightsSdk.v1.Airport;
@@ -52,7 +50,10 @@ public class FlightsController extends Controller {
         }
 
         System.out.println("tknumber: "+tknumber);
-        render(agencyConfigurationDto, cabinConfigurationDto, promotionDto, transactionId, tknumber);
+        
+        SearchConfigurationDto searchConfigurationDto = SearchConfigurationDto.getSearchConfiguration();
+        
+        render(agencyConfigurationDto, cabinConfigurationDto, promotionDto, transactionId, tknumber, searchConfigurationDto);
     }
     public static void reloadWithTransaction(String transactionId,String tknumber) {
         render("FlightsController/successfulLogin.html",transactionId, tknumber);
