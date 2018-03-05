@@ -374,11 +374,10 @@ function startBooking(showModal) {
                     window.location=error_location.replace("_error_id_", result.error).replace("_agency_","${_promotionDto.agency.externalId}");
             	}
             	else {
-            		//alert("pnr: "+pnr);
 	            	var pnr = result.data.pnr;
 	                var error_location ="@{PaymentFlowController.newPayment(pnr: '_pnr_')}";
-	                //window.location=error_location.replace("_pnr_",pnr);
-            	}
+	                window.location=error_location.replace("_pnr_",pnr);
+            	} 
             }
         },
         error: function (request, status, error) {
