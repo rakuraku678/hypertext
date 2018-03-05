@@ -357,25 +357,27 @@ function startBooking(showModal) {
     formSerializeJson.bfmResultItem = $.parseJSON(formSerializeJson.bfmResultItem);
     formSerializeJson.origin = window.location.origin;
     var data = JSON.stringify(formSerializeJson);
-    
+   
     $.ajax({
         type: "POST",
         url: "@{BookingController.startBooking}",
         data: data,
         dataType: "json",
         success:function(result) {
+        	resultado = result;
             if(result.status){
                 window.location=result.data.location;
             } else {
             	jg=result;
-            	if (result.data==null) {
+            	if (result.data==null || result.error=='pricedifference') {
             		var error_location ="@{PaymentFlowController.processError(type: '_error_id_',a: '_agency_')}";
                     window.location=error_location.replace("_error_id_", result.error).replace("_agency_","${_promotionDto.agency.externalId}");
             	}
             	else {
+            		//alert("pnr: "+pnr);
 	            	var pnr = result.data.pnr;
 	                var error_location ="@{PaymentFlowController.newPayment(pnr: '_pnr_')}";
-	                window.location=error_location.replace("_pnr_",pnr);
+	                //window.location=error_location.replace("_pnr_",pnr);
             	}
             }
         },
@@ -384,7 +386,7 @@ function startBooking(showModal) {
         }
     });
 }
-
+    var resultado;
 var jg;
 function checkRut(rut) {
     // Despejar Puntos
