@@ -265,7 +265,7 @@
                 <span class="private-fare-space-saver" id="private-fare-img">&nbsp;</span>
             #{/else}
             <span class="title">Precio por Adulto</span>
-            #{if _flight.pricingCLP.adtTotalPriceWithAllTaxes.getAsDouble() > _flight.pricingCLP.adtTotalPrice.getAsDouble() && _flight.pricing.adtTotalPriceBeforeDiscount && _flight.pricing.adtTotalPriceBeforeDiscount != _flight.pricing.adtTotalPrice}
+            #{if _flight.pricing.adtTotalPriceWithAllTaxes.getAsString().replaceAll(',','.').toDouble() > _flight.pricing.adtTotalPrice.getAsString().replaceAll(',','.').toDouble() && _flight.pricing.adtTotalPriceBeforeDiscount && _flight.pricing.adtTotalPriceBeforeDiscount != _flight.pricing.adtTotalPrice}
             <span class="price before-discount"><span class="usdpriceCon"><span class="simbolCurrency">US$</span>${_flight.pricing.adtTotalPriceWithAllTaxes?.getAsString()}</span><span class="clppriceCon hidden">${_flight.pricingCLP.adtTotalPriceWithAllTaxes?.getAsString()}</span></span>
             <span class="price"><span class="usdpriceCon"><span class="simbolCurrency">US$</span>${_flight.pricing.adtTotalPriceString?.getAsString()}</span><span class="clppriceCon hidden">${_flight.pricingCLP.adtTotalPriceString?.getAsString()}</span></span>
             #{/if}
