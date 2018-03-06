@@ -45,18 +45,39 @@
 $(document).ready(function() {
 	
 	$('.escalaRd').change(function() {
-		if ($(this).val()=='x'){
-			$('.ticketBaxer').show();
+		$(".ticketBaxer").show();
+		$('.segmentBaxerIda').show();
+		$('.segmentBaxerVuelta').show();
+		
+		var escalafiltro = $(this).val();
+		
+		if (escalafiltro!='x') {
+	        $(".segmentBaxerIda").each(function( index ) {
+	        	var escalas = $(this).data("escalas");
+	        	if (escalas==escalafiltro) {
+	        		 $(this).show();
+	        	}
+	        	else {
+	        		$(this).hide();
+	        	}
+	        });
+	        $(".segmentBaxerVuelta").each(function( index ) {
+	        	var escalas = $(this).data("escalas");
+	        	if (escalas==escalafiltro) {
+	        		 $(this).show();
+	        	}
+	        	else {
+	        		$(this).hide();
+	        	}
+	        });
+		
+	        checkEmptyFilterResult();
+	        checkFlightsVisibility();
 		}
-		else {
-			$('.ticketBaxer').hide();
-        	$("div").find("[data-escala='" + $(this).val() + "'][data-returnEscala='" + $(this).val() + "']").show();
-		}
-        checkEmptyFilterResult();
     });
-	$("#allStops").html($('.ticketBaxer').length);
-	$("#directStop").html($("div").find("[data-escala='0'][data-returnEscala='0']").length);
-	$("#oneStop").html($("div").find("[data-escala='1'][data-returnEscala='1']").length);
-	$("#twoStop").html($("div").find("[data-escala='2'][data-returnEscala='2']").length);
+    $("#allStops").html($('.ticketBaxer').length);
+	$("#directStop").html($("ul").find("[data-escalas='0']").length);
+	$("#oneStop").html($("ul").find("[data-escalas='1']").length);
+	$("#twoStop").html($("ul").find("[data-escalas='2']").length);
 });
 </script>

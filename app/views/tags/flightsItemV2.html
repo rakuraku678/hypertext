@@ -52,8 +52,12 @@
                 
                 #{list items:_flight.idaAirSearchSegments, as:'segment'}
                 <li class="txt-view-detail">
+                 				%{
+                                    connectionsCount = segment.flightsCount.getAsInt() - 1;
+                                    stopsQtySignal = (segment.detail.inject(0, { sum, value -> sum + value.stopQuantity?.getAsInt() }) > 0)?"*":""
+                                }%
                     <ul class="segmentBaxerIda" data-departuretime="${segment.departureTime.getAsString()}" data-returntime="${segment.returnTime.getAsString()}"
-                    							data-departureelapsedtime="${segment.elapsedTime.getAsInt()}">
+                    							data-departureelapsedtime="${segment.elapsedTime.getAsInt()}" data-escalas="${connectionsCount}">
                     	
                     	<input type="radio" name="resultSegmentIda" value="${segment.toString()}" class="r${_flightNumber}" #{if segment_index==1} checked="checked" #{/if} />
                         <li>
@@ -69,10 +73,7 @@
                         </li>
                         <li class="stops-route">
                             <a type="button" data-toggle="collapse" data-target="#departureSegment${_flight.sequenceNumber.getAsString()}" aria-expanded="false" aria-controls="collapseExample" class="link-detail-desktop">
-                                %{
-                                    connectionsCount = segment.flightsCount.getAsInt() - 1;
-                                    stopsQtySignal = (segment.detail.inject(0, { sum, value -> sum + value.stopQuantity?.getAsInt() }) > 0)?"*":""
-                                }%
+                               
                             #{if connectionsCount == 0 }
                                 <span class="stop-txt">Directo${stopsQtySignal}</span>
                                 <span class="line-route"></span>
@@ -172,8 +173,11 @@
                 
                 #{list items:_flight.vueltaAirSearchSegments, as:'segment'}
                 <li class="txt-view-detail">
+                			%{
+                                connectionsCount = segment.flightsCount.getAsInt() - 1;
+                            }%
                     <ul class="segmentBaxerVuelta" data-departuretime="${segment.departureTime.getAsString()}" data-returntime="${segment.returnTime.getAsString()}" 
-                    							   data-returnelapsedtime="${segment.elapsedTime.getAsInt()}"	>
+                    							   data-returnelapsedtime="${segment.elapsedTime.getAsInt()}"  data-escalas="${connectionsCount}">
                     	<input type="radio" name="resultSegmentVuelta" value="${segment.toString()}" class="r${_flightNumber}" #{if segment_index==1} checked="checked" #{/if}/>
                     	
                         <li>
@@ -189,9 +193,7 @@
                         </li>
                         <li class="stops-route">
                             <a type="button" data-toggle="collapse" data-target="#returnSegment${_flight.sequenceNumber.getAsString()}" aria-expanded="false" aria-controls="collapseExample2" class="link-detail-desktop">
-                            %{
-                                connectionsCount = segment.flightsCount.getAsInt() - 1;
-                            }%
+                            
                             #{if connectionsCount == 0 }
                                 <span class="stop-txt">Directo</span>
                                 <span class="line-route"></span>

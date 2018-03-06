@@ -131,7 +131,44 @@
 
 <script>
 
+
+
+function checkFlightsVisibility() {
+	
+	$(".ticketBaxer").each(function( index ) {
+		var oneVisible = false;
+		var segments = $(this).find('.segmentBaxerIda');
+		$(segments).each(function( index ) {
+			if ($(this).is(':visible')){
+				oneVisible = true;
+				return;
+			}
+		});
+		
+		if (!oneVisible) {
+			$(this).hide();
+		}
+	});
+	
+	$(".ticketBaxer").each(function( index ) {
+		var oneVisible = false;
+		var segments = $(this).find('.segmentBaxerVuelta');
+		$(segments).each(function( index ) {
+			if ($(this).is(':visible')){
+				oneVisible = true;
+				return;
+			}
+		});
+		
+		if (!oneVisible) {
+			$(this).hide();
+		}
+	});
+	
+}
+
 $(document).ready(function() {
+	
 	
 	$('#aplFiltrosHorarios').click(function() {
         
@@ -165,6 +202,7 @@ $(document).ready(function() {
         
         
         checkEmptyFilterResult();
+        checkFlightsVisibility();
     });
 	
 	$('#aplFiltrosDur').click(function() {
@@ -190,6 +228,7 @@ $(document).ready(function() {
 	        	}
 	     });
         checkEmptyFilterResult();
+        checkFlightsVisibility();
 	});
 	
 	$('.aeroChkDeparture').change(function() {
@@ -206,6 +245,7 @@ $(document).ready(function() {
 			 	}
 		 });
         checkEmptyFilterResult();
+        checkFlightsVisibility();
    });
 	
 	$('.aeroChkReturn').change(function() {
@@ -222,6 +262,7 @@ $(document).ready(function() {
 			 }
 		 });
         checkEmptyFilterResult();
+        checkFlightsVisibility();
     });
 });
 var checkEmptyFilterResult = function (){
