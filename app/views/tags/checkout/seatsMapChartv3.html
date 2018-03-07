@@ -30,6 +30,10 @@
 		                <img src="@{'/public/images/bath.jpg'}" style="width:20px;" />
 		                <span class="seatCharts-legendDescription">Baño</span>
 		            </div>
+ 					<div class="seatCharts-row">
+		                <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class available selected"></div>
+		                <span class="seatCharts-legendDescription">Seleccionado</span>
+		            </div>
 		        </ul>
     	</div>
 		 <div id="seatCharts-legend" class="seatCharts-legend">
@@ -74,8 +78,8 @@ for(int i =1; i <= numberOfSeats; i++) {
 	<div class="container" id="seatsmapBlock_${seatsMap_index}" style="display: none;">
 		<div class="segmentDetails" id="segmentDetails_${seatsMap_index}" style="display: none;">
 	    	<div class="from-to-block info-from-to txt-from-to-block">${seatsMap.type.getAsString()}</div>
-	    	<div class="from-to-block info-from-to">${seatsMap.flightName.getAsString()} - ${new utils.ApiFlightsSdk.v1.Airport().getByIataCode(seatsMap.origin.getAsString()).city} => ${new utils.ApiFlightsSdk.v1.Airport().getByIataCode(seatsMap.destination.getAsString()).city}</div>
-	    	<div class="from-to-block" style="font-style: italic;">Avión: ${seatsMap.equipment.getAsString()}</div>
+	    	<div class="from-to-block info-from-to">${seatsMap.flightName.getAsString()} - <label class="tramoVuelo"> ${new utils.ApiFlightsSdk.v1.Airport().getByIataCode(seatsMap.origin.getAsString()).city} => ${new utils.ApiFlightsSdk.v1.Airport().getByIataCode(seatsMap.destination.getAsString()).city}</label></div>
+*{	    	<div class="from-to-block" style="font-style: italic;">Avión: ${seatsMap.equipment.getAsString()}</div>}*	
 		</div>
 	<div style="margin-left: 60px; margin-bottom: -20px; margin-top:22px"><img id="imgHeadPlane_${seatsMap_index}" src="@{'/public/images/headairplane0.png'}" /></div>
 	
@@ -367,7 +371,7 @@ for(int i =1; i <= numberOfSeats; i++) {
 	var finalSelectionArr = new Array();
 	var numberOfMaps = ${seatsMapArray.size()};
 	var arrOfSelectedPassengers = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""];
-	
+	var lastSeatSelected;
 	
 	
 	var mouseX;
@@ -476,17 +480,65 @@ for(int i =1; i <= numberOfSeats; i++) {
 				}
 				$(this).attr('data-passenger', insertionValue);
 				var fromTo = $(".info-from-to:visible").html();
+				var tramo = $(".tramoVuelo:visible").html();
 				if ($("#passenger_"+insertionValue).html()=='Número de Asiento'){
-					$("#passenger_"+insertionValue).html('<label id="'+this.id+insertionValue+'">'+fromTo+': '+this.id+'</label>');
+					$("#passenger_"+insertionValue).html('<label id="'+this.id+insertionValue+'">'+tramo+': '+this.id+'</label>');
 					$("#passenger_"+insertionValue).data("info","filled");
 				}
 				else {
-					$("#passenger_"+insertionValue).append('<br><label id="'+this.id+insertionValue+'">'+fromTo+': '+this.id+'</label>');
+					$("#passenger_"+insertionValue).append('<br><label id="'+this.id+insertionValue+'">'+tramo+': '+this.id+'</label>');
 				}
 				arrOfSelectedPassengers[insertionValue]="x";
 				insertionValue++;
 				selectionArr.push(this.id);
+				lastSeatSelected = this;
 				return;
+			}
+			else if(seatsSelected >= ${numberOfSeats}) {
+				$(lastSeatSelected).removeClass("selected");
+				var pass = $(lastSeatSelected).attr('data-passenger');
+				$("#passenger_"+pass).children("#"+lastSeatSelected.id + pass).remove();
+				if ($("#passenger_"+pass).html()=='') {
+					$("#passenger_"+pass).html("Número de Asiento");
+				}
+				selectionArr.splice(selectionArr.length-1,1);
+				arrOfSelectedPassengers[pass]='';
+				seatsSelected--;
+				
+				
+				
+				
+				
+				
+				$(this).addClass("selected");
+				seatsSelected++;
+				
+				for (var i=1;i<20;i++){
+					if (arrOfSelectedPassengers[i]==''){
+						insertionValue = i;
+						break;
+					}
+				}
+				$(this).attr('data-passenger', insertionValue);
+				var fromTo = $(".info-from-to:visible").html();
+				var tramo = $(".tramoVuelo:visible").html();
+				if ($("#passenger_"+insertionValue).html()=='Número de Asiento'){
+					$("#passenger_"+insertionValue).html('<label id="'+this.id+insertionValue+'">'+tramo+': '+this.id+'</label>');
+					$("#passenger_"+insertionValue).data("info","filled");
+				}
+				else {
+					$("#passenger_"+insertionValue).append('<br><label id="'+this.id+insertionValue+'">'+tramo+': '+this.id+'</label>');
+				}
+				arrOfSelectedPassengers[insertionValue]="x";
+				insertionValue++;
+				selectionArr.push(this.id);
+				lastSeatSelected = this;
+				return;
+				
+				
+				
+				
+				
 			}
 			
 			if ($(this).hasClass("selected") ) {
