@@ -28,7 +28,7 @@ public class StateDto {
 		stateDto.paymentTokenExpirationTime = JsonUtils.getIntegerFromJson(jsonObject, "paymentTokenExpirationTime");
 		stateDto.bchToken = JsonUtils.getStringFromJson(jsonObject, "bchToken");
 		stateDto.bchTokenExpirationTime = JsonUtils.getStringFromJson(jsonObject, "bchTokenExpirationTime");
-		stateDto.clientRut = JsonUtils.getStringFromJson(jsonObject, "clientRut");
+		stateDto.clientRut = JsonUtils.getStringFromJson(jsonObject, "clientRut").replace("-","");
 		stateDto.clientName = JsonUtils.getStringFromJson(jsonObject, "clientName");
 		stateDto.stateBch = JsonUtils.getStringFromJson(jsonObject, "stateBch");
 		stateDto.clientDp = JsonUtils.getStringFromJson(jsonObject, "clientDp");

@@ -14,6 +14,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import dto.CheckoutPostDto;
 import dto.StateDto;
 import org.joda.time.DateTime;
 import org.joda.time.Minutes;
@@ -104,7 +105,7 @@ public class PaymentFlowController extends Controller {
         		countriesList, onlyPassport, whiteListAirlines, validatingCarrier, AllianceMessage, transactionId, token, state, urlServer);
 	
     }
-    
+
     
     public static void reloadWithTransaction() {
         render("PaymentFlowController/successfulLogin.html");
@@ -163,7 +164,7 @@ public class PaymentFlowController extends Controller {
     	}
 
     }
-
+    
     public static void javascript() {
         render("app/views/PaymentFlowController/checkout.js");
     }

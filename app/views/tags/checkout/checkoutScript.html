@@ -11,6 +11,7 @@ $(document).ready(function () {
       }
     });
 
+
     $('.validatedate').datepicker(
         {
             dateFormat: 'dd/mm/yy',
@@ -151,14 +152,96 @@ $(document).ready(function () {
             }
         },
         submitHandler: function(validator, form, submitButton) {
-        	
-        	#{if _promotionDto.agency.showLoginOnSelection}
-        	startBooking(true);
-        	#{/if}
-        	#{else}
-        	startBooking(false);
-        	#{/else}
+            if (currentApiPaxResponse != null){
+                for(var i = 0; i < passengerCount; i++) {
+                    if ($("#savePax"+ i).is(':checked')){
+                        saveApiPaxPassenger(i,passengerGetRut(currentApiPaxResponse.client),function(result){
+                            console.log(result);
+                        });
+                    }
+                }
+            }
+#{if _promotionDto.agency.showLoginOnSelection}
+        startBooking(true);
+#{/if}
+#{else}
+        startBooking(false);
+#{/else}
        			
+        }
+    });
+
+function loadPaxDefault() {
+        $("#savedRutNum0").ready(function(){
+        if($("#savedRutNum0").val()=="0" && $("#rutNum0").val())
+          {$("#savedRutNum0").val($("#rutNum0").val())}
+      for (var z=0; z < passengerCount; z++)
+        {
+          if ($("#savedRutNum"+z).val() == $("#rutNum"+z).val())
+           { for (var j=0; j < passengerCount; j++)
+              { $("#savedRutNum"+j+" option:eq("+$("#savedRutNum"+z).prop("selectedIndex")+")").attr("disabled",true) }
+            }
+          if($("#savedRutNum"+z).val()=="0")
+           {$("#savedRutNum"+z).next("button").attr('disabled',true)}
+        }
+         });
+	$(document).ready(function(){
+	  for (var i=0; i < passengerCount; i++)
+	   {
+	     if($("#savedRutNum"+i).val()=="0")
+		 $("#savedRutNum"+i).next("button").attr('disabled',true)
+             else
+          	 $("#savedRutNum"+i).next("button").attr('disabled',false)
+	   }
+	});
+	}
+	setTimeout(loadPaxDefault, 2000);
+
+        $("[id*=savedRutNum]").on('change', function(){
+        if($(this).val()=="0") {
+          $(this).next("button").attr('disabled',true);
+          var indexId = $(this).attr("id");
+          var indexNum = indexId[indexId.length-1];
+          var lastRut = $('#rutNum'+indexNum).val();
+          $('#rutNum'+indexNum).val("");
+          $('#pasName'+indexNum).val("");
+          $('#pasBirth'+indexNum).val("");
+          $('#pasLastName'+indexNum).val("");
+          $('#FFPNumber'+indexNum).val("");
+          $('#FFPAirlineIataCode'+indexNum).val("");
+        }
+        else
+          {$(this).next("button").attr('disabled',false)}
+      
+      for (var v=0; v < $("#savedRutNum0 option").length; v++)
+      {
+        var boolValid = false;
+        for(var b=0; b < passengerCount; b++)
+        {
+            if($("#savedRutNum0 option:eq("+v+")").val() == $('#rutNum'+b).val())
+            {
+                boolValid = true;
+            }
+        }
+        if (!boolValid)
+        {
+            for (var z=0; z < passengerCount; z++)
+            {
+                $("#savedRutNum"+z+" option:eq("+v+")").attr("disabled",false)
+            }
+        }
+        
+      }
+
+	for (var z=0; z < passengerCount; z++)
+        {
+    	  if ($("#savedRutNum"+z).val() == $("#rutNum"+z).val())
+    	   {  
+              for (var j=0; j < passengerCount; j++)
+              {
+                $("#savedRutNum"+j+" option:eq("+$("#savedRutNum"+z).prop("selectedIndex")+")").attr("disabled",true)
+              }
+            }
         }
     });
 
@@ -356,6 +439,9 @@ function startBooking(showModal) {
     var formSerializeJson = $("#checkoutForm").serializeJSON({useIntKeysAsArrayIndex: true, checkboxUncheckedValue: false});
     formSerializeJson.bfmResultItem = $.parseJSON(formSerializeJson.bfmResultItem);
     formSerializeJson.origin = window.location.origin;
+    if (typeof finalSelectionArr !== 'undefined' && finalSelectionArr.length>0){
+    	formSerializeJson.seatsSelected =  finalSelectionArr.join();
+    }
     var data = JSON.stringify(formSerializeJson);
    
     $.ajax({
