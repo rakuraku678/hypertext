@@ -1,0 +1,316 @@
+<div class="box-info-payment">
+    <div class="head-payment col-md-12">
+        <div class="title-payment col-md-8" id="seatsTitle">Selecciona tu asiento</div>
+        <div><a type="button" class="btn btn-travel modalAirRulesLink" href="#" id="seatMapBtn">AGREGAR</a></div>
+    </div>
+    <div class="body-payment col-md-12">
+        <p>Te invitamos a escoger tu asiento.<br/>Si necesitas un servicio especial de silla de ruedas o cuna debes solicitarlo escribiendo a <a href="mailto:ventaonline@travel.cl" target="_top">ventaonline@travel.cl</a>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade modal-air-rules" id="modalSeatsMap" tabindex="-1" role="dialog" aria-labelledby="modalAirRulesLabel">
+    <div class="modal-dialog" role="document" style="width: 1200px;" >
+        <div class="modal-content info-flight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="icon-close-modal"></i></button>
+                <h4 class="modal-title" id="modalAirRulesLabel">Elija sus asientos</h4>
+            </div>
+            <div class="modal-body" id="modalSeatsBody"  >
+				<div id="cargandoDiv" >Cargando mapa de asientos...</div>
+
+				<div class="wrapper" style="display: none;" id="chartWrapper">
+					<div class="container">
+						<div id="seat-map">
+							
+							
+						</div>
+					</div>
+				</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<style>
+
+
+.rowFacilityDiv {
+	padding-top: 40px;
+    background-color: white;
+	width: 100% !important;
+}
+.seatInfoDiv {
+	background-color: white;
+	padding:10px;
+	border: 1px solid black;
+}
+
+.exec-class {
+	border: 4px solid #d1d1d1;
+    height: 150px;
+    margin-left: 60px;
+    margin-top: 20px;
+    margin-bottom: -20px;
+    font-weight: bolder;
+	padding: 50px 20px !important;
+}
+
+.text-selection {
+	font-family: open-sans, sans-serif;
+	min-height: 81px;
+	z-index: 7;
+	background-color: transparent;
+	font-weight: 300;
+	text-align: justify;
+	color: #656565;
+	position: relative; margin: 0px;
+    padding: 0px;
+    border-width: 0px;
+    border-style: solid;
+    border-color: transparent;
+    -webkit-transform-origin: left top;
+    -ms-transform-origin: left top;
+    -o-transform-origin: left top;
+    transform-origin: left top;
+    background-repeat: no-repeat;
+}
+
+
+.front-indicator {
+	background-color: #f6f6f6;	
+	color: #adadad;
+	text-align: left;
+	padding: 3px;
+
+	/* Rectangle 4: */
+	background: #FFFFFF;
+	box-shadow: 0 1px 2px 0 rgba(0,0,0,0.30);
+	border-radius: 5px;
+    background: #2c4d6f;
+	font-size: 15px;
+	color: #fff;
+}
+.txt-from-to-block {
+	color: #666;
+}
+.info-from-to {
+	font-weight: 700;
+}
+.wrapper {
+	width: 100%;
+	text-align: center;
+}
+.container {
+	margin: 0 auto;
+	width: 500px;
+	text-align: left;
+}
+.booking-details {
+	float: left;
+	text-align: left;
+	margin-left: 35px;
+	font-size: 12px;
+	position: relative;
+	height: 401px;
+}
+.booking-details h2 {
+	margin: 25px 0 20px 0;
+	font-size: 17px;
+}
+.booking-details h3 {
+	margin: 5px 5px 0 0;
+	font-size: 14px;
+}
+div.seatCharts-cell {
+	color: #182C4E;
+	height: 25px;
+	width: 25px;
+	line-height: 25px;
+	
+}
+div.seatCharts-seat {
+	color: #FFFFFF;
+	cursor: pointer;	
+}
+div.seatCharts-row {
+	height: 35px;
+}
+div.seatCharts-seat.available {
+	background-color: #5F98FF;
+}
+div.seatCharts-seat.available-legend {
+	background-color: #5F98FF;
+}
+div.seatCharts-seat.unavailable {
+    background-color: #EA7979;
+    border: 1px solid #E53A3A;
+}
+div.seatCharts-seat.unavailable-legend {
+    background-color: #EA7979;
+    border: 1px solid #E53A3A;
+}
+div.seatCharts-seat.emergency {
+    background-color: #FFFFFF;
+    border-width: 2px;
+    border-color: #428BCA;
+}
+div.seatCharts-seat.emergency-legend {
+    background-color: #FFFFFF;
+    border: 4px solid #428BCA;
+}
+div.seatCharts-seat.no-seat-legend {
+    background-color: #FFFFFF;
+    border: 4px solid #ccc;
+}
+div.seatCharts-seat.bath-legend {
+    background-color: #fdff2d;
+}
+div.seatCharts-seat.unknown-legend {
+    background-color: #000000;
+}
+
+.emergencyIconL {
+	width: 20px;
+    float: left;
+    left: 700px;
+    position: fixed;
+    z-index: 100;
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
+    -ms-filter: "FlipH";
+}
+.emergencyIconR {
+	width: 20px;
+    float: right;
+    position: fixed;
+    z-index: 100;
+    margin-left: 10px;
+}
+
+div.seatCharts-seat.available.first-class {
+/* 	background: url(vip.png); */
+	background-color: #3a78c3;
+}
+div.seatCharts-seat.focused {
+	background-color: #76B474;
+}
+div.seatCharts-seat.selected {
+	background-color: #7aff00;
+	border-color: #7aff00;
+}
+div.seatCharts-container {
+	/*width: 500px;*/
+	padding: 20px 0;
+	float: left;
+}
+div.seatCharts-legend {
+	float: left;
+    margin-right: 20px;
+}
+ul.seatCharts-legendList {
+	padding-left: 0px;
+}
+span.seatCharts-legendDescription {
+	margin-left: 5px;
+	line-height: 30px;
+}
+.checkout-button {
+	display: block;
+	margin: 10px 0;
+	font-size: 14px;
+}
+#selected-seats {
+	max-height: 90px;
+	overflow-y: scroll;
+	overflow-x: none;
+	width: 170px;
+}
+
+
+
+
+
+.position-seat {
+	position: relative;
+}
+.position-absolute-seat {
+	position: relative;
+    top: 20px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    width: fit-content;
+}
+.position-absolute-seat div.seatCharts-cell {
+    height: 17px;
+    width: 15px;
+    line-height: inherit;
+    font-size: 11px;
+}
+.airplane-drawing {
+	<!--background-image: url(/public/images/airplane-drawing.svg);-->
+	background-repeat: no-repeat;
+	background-position: 50px 60px;
+	display: inline-block;
+	width: 500px!important;
+	height: auto;
+	vertical-align: top;
+}
+
+#selectedSeatsBlock {
+	border: 1px solid #ddd;
+    background-color: #f8f8f8;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 18px;
+}
+
+#seatsTitle {
+    margin-top: 10px;
+}
+
+#seatMapBtn {
+    margin-top: 0;
+}
+
+</style>
+
+		
+<script>
+
+	$(function () {
+
+		$("#seatMapBtn").click(function( event ) {
+			finalSelectionArr = new Array();
+			$('#modalSeatsMap').modal('show');
+			var data = $("[name='bfmResultItem']").val();
+			$.ajax({
+			    'url': '@{SeatsMapController.getSeats}',
+			    'type': 'POST',
+			    'data': data,
+			    'success': function(result){
+		        	$('#modalSeatsBody').html(result);
+		        	$('#cargandoDiv').hide();
+		        	$('#chartWrapper').show();
+			    },
+				'error': function(result){
+		        	$('#modalSeatsBody').html(result);
+		        	$('#cargandoDiv').hide();
+		        	$('#chartWrapper').show();
+			    }
+			});
+		});
+		
+		$(".seatCharts-seat").hover(function() {
+			if ($(this).hasClass("available")) {
+				$(this).addClass("focused");
+			}
+		});
+		
+	});
+</script>

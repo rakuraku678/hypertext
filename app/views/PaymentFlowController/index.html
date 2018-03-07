@@ -68,6 +68,7 @@
                         #{/list}
                     #{/list}
                     *{#{checkout.paymentBox/}}*
+                    #{checkout.seatsMap bfmResultItem:bfmResultItem /}
                     #{checkout.termsConditionBox/}
                     #{checkout.hiddenInputBox bfmResultItem: bfmResultItem, promotion: promotionDto/}
                 </div>
@@ -86,6 +87,8 @@
                    	#{/if}
 
                     #{checkout.airRules airRulesResultList:airRulesResultList/}
+                    
+                    
                 </div>
                 #{if params.promotion == "traveldelta"}
                 <div class="col-md-4" id="banner_checkout_delta" >
@@ -169,16 +172,21 @@
 
 
 <script type="text/javascript">
+    var passengerCount = ${passengersCount};
+    var passengers = null;
+    var currentApiPaxResponse = null;
+    var availableAirlines = [#{list items:whiteListAirlines, as:'whiteListAirlines'}${whiteListAirlines.iataCode.raw()}${whiteListAirlines_isLast ? '' : ','}#{/list}];
+    var validatingCarrier = "${validatingCarrier}";
+
 	function numberWithCommas(x) {
 		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 	}
 
 	$(function () {
-
 		var selectedCurrency = "${selectedCurrency}";
 		$( ".clppriceCon" ).each(function( index ) {
-				$(this).html(numberWithCommas($(this).html()));
-			});	
+            $(this).html(numberWithCommas($(this).html()));
+        });
 // 		if (selectedCurrency=="clp"){
 // 			$( ".usdpriceCon" ).each(function( index ) {
 // 				var exchangeRate = parseFloat("${dollarExchangeRate}");
@@ -193,47 +201,207 @@
 // 			});	
 // 		}
 
+#{if state==null}
+        $('#loginDiv').show();
+        $( "#btnLoginTrUser" ).click(function( event ) {
+            var agencyId ="${promotionDto.agency.externalId}";
+            var transactionId = "${transactionId}";
+            var agencySlug = "${promotionDto.agency.slug}";
+            var selectedCurrency = "clp";
+            var step = 'checkoutReload';
+            // window.history.pushState("", "", window.location.href+transactionId);
 
-	    #{if state==null}
-	    	$('#loginDiv').show();
-	        $( "#btnLoginTrUser" ).click(function( event ) {
-	            var agencyId ="${promotionDto.agency.externalId}";
-	            var transactionId = "${transactionId}";
-	            var agencySlug = "${promotionDto.agency.slug}";
-	            var selectedCurrency = "clp";
-	            var step = 'checkoutReload';
-	           // window.history.pushState("", "", window.location.href+transactionId);
+            $('<iframe src="/auth/'+transactionId+'/'+selectedCurrency+'/'+agencyId+'/'+agencySlug+'/'+step+'" frameborder="0" style="padding-left: 50px; position: relative; top: -100px;" width="500" height="500" scrolling="no" id="myFrame"></iframe>').appendTo('.loginModalBody');
+            $('#modalLogin').modal('show');
+        });
+#{/if}
+#{else}
+        $("#loginDiv").hide();
+        $('#logoutDiv').show();
+        $('#loggedDiv').show();
+        $('#loggedDiv').html("${state.clientName}");
+        document.cookie = "tokenVuelos=${state.appToken}";
 
-	            $('<iframe src="/auth/'+transactionId+'/'+selectedCurrency+'/'+agencyId+'/'+agencySlug+'/'+step+'" frameborder="0" style="padding-left: 50px; position: relative; top: -100px;" width="500" height="500" scrolling="no" id="myFrame"></iframe>').appendTo('.loginModalBody');
-	            $('#modalLogin').modal('show');
-	        });
-		#{/if}
-		#{else}
-    	    $("#loginDiv").hide();
-    	    $('#logoutDiv').show();
-    	    $('#loggedDiv').show();
-    	    $('#loggedDiv').html("${state.clientName}");
-    	    document.cookie = "tokenVuelos=${state.appToken}";
-    	    
-    	    $( "#btnLogoutTrUser" ).click(function( event ) {
-   	    	 $.ajax({
-	    	        type: "GET",
-   	            data: {"transactionId": "${transactionId}"},
-   	            url: "@{OAuthController.logout}",
-   	            success:function(result) {
-   	            		window.location.reload();
-   	            },
-   	            error: function (request, status, error) {
-   	            	 	alert(error);
-   	            }
-   	        });
-   	    });
-    	    
-    	    
-    	    
-    	    
-    	#{/else}
+        $( "#btnLogoutTrUser" ).click(function( event ) {
+            $.ajax({
+                type: "GET",
+                data: {"transactionId": "${transactionId}"},
+                url: "@{OAuthController.logout}",
+                success:function(result) {
+                    window.location.reload();
+                },
+                error: function (request, status, error) {
+                    alert(error);
+                }
+            });
+        });
+
+        getApiPaxUser(${state.clientRut},function(result) {
+            if(result.status != "BAD_REQUEST"){
+               currentApiPaxResponse =result;
+               passengers = listPassengers(result);
+               fillInRutSelect();
+               autocompleteApiPax0(result.client);
+            }else {
+                getMockupUser(${state.clientRut},function(result) {
+                    if(result.status != 0 && result.alianza[0].nombre != ""){
+                        saveMockupToApiPax(result,function(result) {
+                            if(result.status != "BAD_REQUEST"){
+                                getApiPaxUser(result.document,function(result) {
+                                    if(result.status != "BAD_REQUEST"){
+                                       currentApiPaxResponse = result;
+                                       passengers = listPassengers(result);
+                                       fillInRutSelect();
+                                       autocompleteApiPax0(result.client);
+                                    }else {
+                                        console.log('ApiPax Get error on passenger :'+ mockupRut);
+                                    }
+                                });
+                            }else {
+                                console.log("Error trying to save passenger");
+                            }
+                        });
+                    }
+                });
+            }
+        });
+#{/else}
 	});
+    function getApiPaxUser(RUT,todo){
+        $.ajax({
+            type: "GET",
+            url: "${_urlServer}/getApiPaxClientByRut" +"?rut="+ RUT,
+            dataType: "json",
+            success:todo
+        });
+    }
+    function getMockupUser(RUT,todo){
+        $.ajax({
+            type: "GET",
+            url: "${_urlServer}/getMockupClientByRut" +"?rut="+ RUT,
+            dataType: "json",
+            success: todo
+        });
+    }
+
+    function saveMockupToApiPax(mockupUser,todo){
+        var mockupRut = "" + mockupUser.rut + mockupUser.dv;
+        var mockupAlianzas = [];
+        for (var a in mockupUser.alianza){
+            var alianza = {number: mockupUser.alianza[a].id, alliance: validateIataCode(mockupUser.alianza[a].nombre) };
+            if (mockupAlianzas.length !== 0){
+                if(!containsObject(alianza,mockupAlianzas)){
+                    mockupAlianzas.push(alianza);
+                }
+            }else {
+                mockupAlianzas.push(alianza);
+            }
+        }
+
+        var data = JSON.stringify({
+            name: mockupUser.alianza[0].clientenombre,
+            lastname: mockupUser.alianza[0].clienteapellido + " " + mockupUser.alianza[0].clientesegundoapellido,
+            documents: [
+                {
+                    documentType: 'RUT',
+                    value: mockupRut
+                }
+            ],
+            regularPassengers: mockupAlianzas
+        });
+        $.ajax({
+            type: "POST",
+            url: "${_urlServer}/createApiPaxClient",
+            contentType: "application/json",
+            dataType: "json",
+            data: data,
+            success: todo
+        });
+    }
+    function saveApiPaxPassenger(key,clientRut,todo){
+        var data = JSON.stringify([{
+            name: $('#pasName'+ key).val(),
+            lastname: $('#pasLastName' + key).val(),
+            birthdate:  $('#pasBirth' + key).val(),
+            documents: [
+                {
+                    documentType: 'RUT',
+                    value: $('#rutNum' + key).val()
+                }
+            ],
+            "regularPassengers": [
+				{
+					"number": $('#FFPNumber' + key).val(),
+					"alliance": $('#FFPAirlineIataCode' + key).val()
+				}
+			]
+        }]);
+        $.ajax({
+            type: "POST",
+            url: "${_urlServer}/addApiPaxPassenger" + "?ClientRut=" + clientRut,
+            contentType: "application/json",
+            dataType: "json",
+            data: data,
+            success: todo
+        });
+    }
+
+    function listPassengers(result){
+        var list = [];
+        for (var user in result.passengers){
+            list.push(result.passengers[user]);
+        }
+        list.push(result.client);
+        return list;
+    }
+    function fillInRutSelect(){
+        for(var i = 0; i < ${passengersCount}; i++) {
+            var select = document.getElementById("savedRutNum"+i);
+            select.options.length = 0;
+            var el = document.createElement("option");
+            el.textContent = "pasajeros Guardados";
+            el.value = "0";
+            select.appendChild(el);
+            for (var p in passengers){
+                var opt = passengerGetRut(passengers[p]);
+                el = document.createElement("option");
+                el.textContent = opt;
+                el.value = opt;
+                select.appendChild(el);
+            }
+        }
+    }
+    function passengerGetRut(passenger){
+        for(var d in passenger.documents){
+            if (passenger.documents[d].documentType == "RUT"){
+                return  passenger.documents[d].value;
+            }
+        }
+    }
+    function containsObject(obj, list) {
+        var i;
+        for (i = 0; i < list.length; i++) {
+            if (list[i].alliance === obj.alliance) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    function validateIataCode(airlineName){
+        switch(airlineName){
+            case "Delta":
+                return "DL";
+            case "Iberia":
+                return "IB";
+            case "British":
+                return "BA";
+            case "Gol":
+                return "G3"
+            default :
+                return ""
+        }
+    };
 
 </script>
 

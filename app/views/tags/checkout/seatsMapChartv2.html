@@ -1,0 +1,336 @@
+
+
+%{def seatsMapArray = seatsMap.getAsJsonArray();}%
+%{
+for(int i =1; i <= numberOfSeats; i++) {
+}%
+<div class="form-group">
+    <div class="row">
+    </div>
+    %{
+    }
+    }%
+    <div id="seatCharts-legend" class="seatCharts-legend">
+        <ul class="seatCharts-legendList">
+            <div class="seatCharts-row">
+                <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class unavailable-legend"></div>
+                <span class="seatCharts-legendDescription">Ocupado</span>
+            </div>
+            <div class="seatCharts-row">
+                <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class available-legend"></div>
+                <span class="seatCharts-legendDescription">Disponible</span>
+            </div>
+        </ul>
+    </div>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/site_global.css'}">
+  <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/index.css'}">
+  <div class="breakpoint active" id="bp_infinity" data-min-width="851"><!-- responsive breakpoint node -->
+   <div class="clearfix borderbox" id="page"><!-- group -->
+    <div class="clearfix grpelem" id="pu321"><!-- group -->
+     <div class="grpelem" id="u321"><!-- simple frame -->
+      <div class="fluid_height_spacer"></div>
+     </div>
+     <div class="clearfix grpelem shared_content" id="u324-4" data-sizePolicy="fluidWidth" data-pintopage="page_fixedLeft" data-content-guid="u324-4_content"><!-- content -->
+      <h1>Seleccionar asiento</h1>
+     </div>
+     <div class="clearfix grpelem" id="u325-4" data-sizePolicy="fluidWidth" data-pintopage="page_fixedLeft"><!-- content -->
+      <p class="shared_content" data-content-guid="u325-4_0_content">Si no eliges ningún asiento, nosotros te asignaremos uno en forma aleatoria. Si eres cliente del Banco de Chile, puedes optar por un asiente preferente en el aeropuerto, sólo presentando tus tarjetas Visa Asignature, Mastercard Black o Visa infinite.</p>
+     </div>
+     
+     
+     
+     %{
+for(int i =1; i <= numberOfSeats; i++) {
+}%
+
+	<div id="selecAsiento" style="margin-top: #{if i>1}50#{/if}#{else}150#{/else}px;">
+	
+	
+             <div style="background-color: white; padding: 15px;" >
+		      <h2 >Pasajero ${i} </h2>
+		     </div>
+		     <div class="u329"><!-- simple frame -->
+		     </div>
+		     <div style="background-color: white; padding: 15px;"  ><!-- content -->
+		      <p class="" id="passenger_${i}">Número de Asiento</p>
+		     </div>
+	</div>
+    %{
+    }
+    }%
+
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+    </div>
+    <div class="clearfix grpelem" id="pu360"><!-- group -->
+     <div class="grpelem" id="u360"><!-- simple frame -->
+      <div class="fluid_height_spacer"></div>
+     </div>
+     <div class="clearfix grpelem" id="u757-4" data-muse-temp-textContainer-sizePolicy="true" data-muse-temp-textContainer-pinning="true"><!-- content -->
+      <p class="shared_content" data-content-guid="u757-4_0_content">Disponible</p>
+     </div>
+     <div class="rounded-corners grpelem" id="u760"><!-- simple frame -->
+      <div class="fluid_height_spacer shared_content" data-content-guid="u760_0_content"></div>
+     </div>
+     <div class="clearfix grpelem" id="u763-4" data-muse-temp-textContainer-sizePolicy="true" data-muse-temp-textContainer-pinning="true"><!-- content -->
+      <p class="shared_content" data-content-guid="u763-4_0_content"></p>
+     </div>
+     <div class="clearfix grpelem" id="u769-4" data-muse-temp-textContainer-sizePolicy="true" data-muse-temp-textContainer-pinning="true"><!-- content -->
+      <p class="shared_content" data-content-guid="u769-4_0_content">Ocupado</p>
+     </div>
+     <div class="rounded-corners grpelem" id="u770"><!-- simple frame -->
+      <div class="fluid_height_spacer shared_content" data-content-guid="u770_0_content"></div>
+     </div>
+     
+
+
+
+
+
+#{list seatsMapArray, as: 'seatsMap' }
+<div class="container" id="seatsmapBlock_${seatsMap_index}" style="display: none;">
+    <div class="from-to-block txt-from-to-block">${seatsMap.type.getAsString()} ${seatsMap.origin.getAsString()} => ${seatsMap.destination.getAsString()}</div>
+	<img src="@{'/public/images/headairplane.png'}" />
+
+    <div id="seat-map" class="seatCharts-container airplane-drawing">
+        <div class="position-relative-seat">
+            <div class="position-absolute-seat">
+            #{list seatsMap.cabins, as: 'cabin' }
+                %{def columnsDataArray = cabin.getAsJsonObject().get("columns").getAsJsonArray(); }%
+
+                <div class="seatCharts-row">
+                    <div class="seatCharts-cell seatCharts-space"></div>
+                    #{list columnsDataArray, as: 'column' }
+                        #{if columnsDataArray.get(column_index-1) != null && columnsDataArray.get(column_index-1).get("type").getAsString().equals("Aisle")}
+                            #{if columnsDataArray.get(column_index-2).get("type").getAsString().equals("Aisle")}
+                                <div class="seatCharts-cell seatCharts-space"></div>
+                            #{/if}
+                        #{/if}
+                        <div class="seatCharts-cell seatCharts-space economy-class unavailable">${column.get("name").getAsString()}</div>
+                    #{/list}
+                </div>
+
+                #{list cabin.rows, as: 'row' }
+                    <div class="seatCharts-row" #{if row.get("isOverWing").getAsBoolean()} style="background:gray;"#{/if}>
+                    <div class="seatCharts-cell seatCharts-space">${row.rowNumber}</div>
+                        #{if row.seats != null}
+                            %{def seats = row.getAsJsonObject().get("seats").getAsJsonArray();}%
+                            %{int count = 0}%
+                            #{list columnsDataArray, as: 'column' }
+                                %{def seat = count < seats.size() ? seats.get(count).getAsJsonObject(): null;}%
+
+                                #{if columnsDataArray.get(column_index-1) != null && columnsDataArray.get(column_index-1).get("type").getAsString().equals("Aisle")}
+                                    #{if columnsDataArray.get(column_index-2).get("type").getAsString().equals("Aisle")}
+                                        <div class="seatCharts-cell seatCharts-space"></div>
+                                    #{/if}
+                                #{/if}
+
+                                #{if seat != null && (seat.get("chargeableInd").getAsBoolean() || seat.get("occupiedInd").getAsBoolean() || seat.getAsJsonObject().get("inoperativeInd").getAsBoolean())}
+                                    <div class="seatCharts-seat seatCharts-cell economy-class unavailable"></div>
+                                    %{count++;}%
+                                #{/if}
+                                #{else}
+                                    <div id="${row.rowNumber}${column.get("name").getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class available"></div>
+                                #{/else}
+
+                            #{/list}
+                        #{/if}
+                    </div>
+                #{/list}
+            #{/list}
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+#{/list}
+
+
+
+<div class="text-right">
+	<a class="btn btn-search" id="btnContinue">Continuar</a>
+	<a class="btn btn-search" id="btnConfirm" style="display: none;">Confirmar Asientos</a>
+</div>
+
+
+
+
+
+
+
+
+
+     <img src="@{'/public/images/taleairplane.png'}" />
+    </div>
+   </div>
+  </div>
+  <div class="breakpoint" id="bp_850" data-max-width="850"><!-- responsive breakpoint node -->
+   <div class="clearfix borderbox temp_no_id" data-orig-id="page" style="height: 1450px;"><!-- column -->
+    <div class="clearfix colelem temp_no_id" data-orig-id="u321"><!-- column -->
+     <div class="position_content" id="u321_position_content">
+      <span class="clearfix colelem placeholder" data-placeholder-for="u324-4_content"><!-- placeholder node --></span>
+      <div class="clearfix colelem temp_no_id" data-muse-temp-textContainer-sizePolicy="true" data-muse-temp-textContainer-pinning="true" data-orig-id="u325-4"><!-- content -->
+       <span class="placeholder" data-placeholder-for="u325-4_0_content"><!-- placeholder node --></span>
+      </div>
+      <div class="rounded-corners clearfix colelem temp_no_id" data-orig-id="u326"><!-- group -->
+       <div class="clearfix grpelem temp_no_id" data-sizePolicy="fixed" data-pintopage="page_fixedLeft" data-orig-id="u327-5"><!-- content -->
+        <span class="placeholder" data-placeholder-for="u327-3_content"><!-- placeholder node --></span>
+       </div>
+       <span class="clearfix grpelem placeholder" data-placeholder-for="u328-4_content"><!-- placeholder node --></span>
+      </div>
+      <div class="rounded-corners clearfix colelem temp_no_id" data-orig-id="u329"><!-- group -->
+       <span class="clearfix grpelem placeholder" data-placeholder-for="u330-4_content"><!-- placeholder node --></span>
+      </div>
+      <div class="rounded-corners clearfix colelem temp_no_id" data-orig-id="u1462"><!-- group -->
+       <div class="clearfix grpelem temp_no_id" data-sizePolicy="fixed" data-pintopage="page_fixedLeft" data-orig-id="u1463-5"><!-- content -->
+        <span class="placeholder" data-placeholder-for="u1463-3_content"><!-- placeholder node --></span>
+       </div>
+       <span class="clearfix grpelem placeholder" data-placeholder-for="u1464-4_content"><!-- placeholder node --></span>
+      </div>
+      <div class="rounded-corners clearfix colelem temp_no_id" data-orig-id="u1465"><!-- group -->
+       <div class="clearfix grpelem temp_no_id" data-sizePolicy="fluidWidth" data-pintopage="page_fixedLeft" data-orig-id="u1466-4"><!-- content -->
+        <span class="placeholder" data-placeholder-for="u1466-2_content"><!-- placeholder node --></span>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="clearfix colelem" id="pu760"><!-- group -->
+     <div class="rounded-corners grpelem temp_no_id" data-sizePolicy="fluidWidthHeight" data-pintopage="page_fixedLeft" data-orig-id="u760"><!-- simple frame -->
+      <span class="fluid_height_spacer placeholder" data-placeholder-for="u760_0_content"><!-- placeholder node --></span>
+     </div>
+     <div class="clearfix grpelem temp_no_id" data-sizePolicy="fluidWidth" data-pintopage="page_fixedLeft" data-orig-id="u757-4"><!-- content -->
+      <span class="placeholder" data-placeholder-for="u757-4_0_content"><!-- placeholder node --></span>
+     </div>
+    </div>
+    <div class="clearfix colelem" id="pu770"><!-- group -->
+     <div class="rounded-corners grpelem temp_no_id" data-sizePolicy="fluidWidthHeight" data-pintopage="page_fixedLeft" data-orig-id="u770"><!-- simple frame -->
+      <span class="fluid_height_spacer placeholder" data-placeholder-for="u770_0_content"><!-- placeholder node --></span>
+     </div>
+     <div class="clearfix grpelem temp_no_id" data-sizePolicy="fluidWidth" data-pintopage="page_fixedLeft" data-orig-id="u769-4"><!-- content -->
+      <span class="placeholder" data-placeholder-for="u769-4_0_content"><!-- placeholder node --></span>
+     </div>
+    </div>
+    <div class="clearfix colelem" id="pu764"><!-- group -->
+     <div class="rounded-corners grpelem temp_no_id" data-sizePolicy="fluidWidthHeight" data-pintopage="page_fixedLeft" data-orig-id="u764"><!-- simple frame -->
+      <span class="fluid_height_spacer placeholder" data-placeholder-for="u764_0_content"><!-- placeholder node --></span>
+     </div>
+     <div class="clearfix grpelem temp_no_id" data-sizePolicy="fluidWidth" data-pintopage="page_fixedLeft" data-orig-id="u763-4"><!-- content -->
+      <span class="placeholder" data-placeholder-for="u763-4_0_content"><!-- placeholder node --></span>
+     </div>
+    </div>
+   *{ 
+   	<div class="clearfix colelem temp_no_id" data-orig-id="u360"><!-- column -->
+    	 <div class="museBGSize colelem temp_no_id" data-sizePolicy="fixed" data-pintopage="page_fixedCenter" data-orig-id="u791"><!-- simple frame --></div>
+     	<div class="museBGSize colelem temp_no_id" data-sizePolicy="fixed" data-pintopage="page_fixedCenter" data-orig-id="u797"><!-- simple frame --></div>
+     	<div class="museBGSize colelem temp_no_id" data-sizePolicy="fixed" data-pintopage="page_fixedCenter" data-orig-id="u800"><!-- simple frame --></div>
+    </div>
+    }*
+   </div>
+  </div>
+
+  
+  <script>
+	var seatsSelected = 0;
+	var indexSeatMap = 1;
+	var selectionArr = new Array();
+	var finalSelectionArr = new Array();
+	var numberOfMaps = ${seatsMapArray.size()};
+	
+	
+	function resetValues() {
+		seatsSelected = 0;
+		indexSeatMap = 1;
+		selectionArr = new Array();
+		finalSelectionArr = new Array();
+		numberOfMaps = ${seatsMapArray.size()};
+	}
+	
+	$(function () {
+		$("#seatsmapBlock_1").show();
+		$("#btnConfirm").click(function() {
+			$('#modalSeatsMap').modal('toggle');
+		});
+		
+		$("#modalSeatsMap").on("hidden.bs.modal", function () {
+			resetValues();
+			$("#modalSeatsBody").html('<div id="cargandoDiv" >Cargando mapa de asientos...</div>');
+		});
+		
+		$("#btnContinue").click(function() {
+			if (seatsSelected == ${numberOfSeats}){
+                if (indexSeatMap <= numberOfMaps) {
+                    $("#seatsmapBlock_"+indexSeatMap).hide();
+                    indexSeatMap++;
+                    seatsSelected = 0;
+                    finalSelectionArr.push(selectionArr);
+                    selectionArr = new Array();
+                    $("#seatsmapBlock_"+indexSeatMap).show();
+                    if (indexSeatMap>numberOfMaps){
+                        indexSeatMap--;
+                        $("#seatsmapBlock_"+indexSeatMap).hide();
+                        $("#btnContinue").hide();
+                        $("#btnConfirm").show();
+                        $("#seatCharts-legend").hide();
+                    }
+                }
+            }
+			else {
+				alert("Debe seleccionar asientos para todos los pasajeros");
+			}
+		});
+		
+		$(".seatCharts-seat").mouseenter(function() {
+			if ($(this).hasClass("available")) {
+				$(this).addClass("focused");
+			}
+		});
+		$(".seatCharts-seat").mouseout(function() {
+			
+			if ($(this).hasClass("focused")) {
+				$(this).removeClass("focused");
+			}
+		});
+		$(".seatCharts-seat").click(function() {
+			if (!$(this).hasClass("unavailable") && !$(this).hasClass("selected") && seatsSelected < ${numberOfSeats}) {
+				$(this).addClass("selected");
+				seatsSelected++;
+				if(indexSeatMap != 1){
+                    $("#passenger_"+seatsSelected).append("<p id="+indexSeatMap + seatsSelected+">-"+this.id+"</p>");
+                }else{
+                    $("#passenger_"+seatsSelected).append("<p id="+indexSeatMap + seatsSelected+">"+this.id+"</p>");
+                }
+				selectionArr.push(this.id);
+				return;
+			}
+			if ($(this).hasClass("selected")  ) {
+				$(this).removeClass("selected");
+				$("#passenger_"+seatsSelected).children("#"+indexSeatMap + seatsSelected).remove();
+				selectionArr.splice(selectionArr.indexOf(this.id),1);
+				seatsSelected--;
+			}
+		});
+	});
+	</script>
+  
