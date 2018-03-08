@@ -102,19 +102,19 @@
                     </li>
                     
 	                    <div class="box-airplane-name" >
-	                    	<img src="@{'/public/img/Equipaje-de-mano-azul.png'}" title="Equipaje de mano" style="margin-bottom: 15px;"/> Incluye equipaje de mano <br />
+	                    	<img src="@{'/public/img/Equipaje-de-mano-azul.png'}" style="margin-bottom: 15px;"/> <label style="font-weight: normal; color: #002766;">Incluye equipaje de mano </label><br />
 	                    	%{def numberOfBaggage = 0;}% 
                         #{list items:_baggageInfoList, as:'baggageInfo'}
 	                        #{if baggageInfo.segmentIds.getAsString().contains((flightSegmentDetail_index -1)+'')}
 	                        	#{if baggageInfo.pieces.getAsInt()>=1}
-	                        	<img src="@{'/public/img/Equipaje-de-bodega-azul.png'}" style="margin-bottom: 15px;"/> ${baggageInfo.pieces.getAsInt()} maleta${baggageInfo.pieces.getAsInt().pluralize()} de equipaje en bodega <br />
+	                        	<img src="@{'/public/img/Equipaje-de-bodega-azul.png'}" style="margin-bottom: 15px;"/><label style="font-weight: normal; color: #002766;"> ${baggageInfo.pieces.getAsInt()} maleta${baggageInfo.pieces.getAsInt().pluralize()} de equipaje en bodega </label><br />
 	                        	%{numberOfBaggage++;}%  
 	                        	#{/if}	
 	                        #{/if}
                         #{/list}
                         
                         #{if numberOfBaggage==0}
-                        	<img src="@{'/public/img/Equipaje-de-bodega-gris.png'}" style="margin-bottom: 15px;"/>No Incluye equipaje en bodega <br>
+                        	<img src="@{'/public/img/Equipaje-de-bodega-gris.png'}" style="margin-bottom: 15px;"/><label style="font-weight: normal; color: #8b8b8b;">No Incluye equipaje en bodega</label> <br>
                         #{/if}
                         
                         %{def mealsAdded=0;}%
@@ -122,17 +122,17 @@
 	                        #{list items:_meals, as:'meal'}
 	                        	#{if flightSegmentDetail_index==meal_index && _isDeparture}
 
-			                	<img src="@{'/public/img/Servicio-a-bordo-azul.png'}" style="max-width: 40px; margin-bottom: 15px;" /> ${meal.getAsString()} <br />
+			                	<img src="@{'/public/img/Servicio-a-bordo-azul.png'}" style="max-width: 40px; margin-bottom: 15px;" /> <label style="font-weight: normal; color: #002766;">${meal.getAsString()}</label> <br />
 			                	%{mealsAdded++;}%
 			                	#{/if}
 			                	#{elseif meal_index==_startSegmentCount+flightSegmentDetail_index && !_isDeparture}
-			                	<img src="@{'/public/img/Servicio-a-bordo-azul.png'}" style="max-width: 40px; margin-bottom: 15px;" /> ${meal.getAsString()} <br />
+			                	<img src="@{'/public/img/Servicio-a-bordo-azul.png'}" style="max-width: 40px; margin-bottom: 15px;" /> <label style="font-weight: normal; color: #002766;">${meal.getAsString()} </label><br />
 			                	%{mealsAdded++;}%
 			                	#{/elseif}
 			                #{/list}
                         #{/if}
                         #{if mealsAdded==0}
-                        	<img src="@{'/public/img/Servicio-a-bordo-gris.png'}" style="max-width: 40px; margin-bottom: 15px;" />No incluye servicio a bordo <br />
+                        	<img src="@{'/public/img/Servicio-a-bordo-gris.png'}" style="max-width: 40px; margin-bottom: 15px;" /><label style="font-weight: normal; color: #8b8b8b;">No incluye servicio a bordo </label><br />
                         #{/if}
                         </div>
                         
