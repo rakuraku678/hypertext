@@ -60,7 +60,7 @@
                     							data-departureelapsedtime="${segment.elapsedTime.getAsInt()}" data-escalas="${connectionsCount}">
                     	
                     	<input type="radio" name="resultSegmentIda" value="${segment.toString()}" class="r${_flightNumber}" #{if segment_index==1} checked="checked" #{/if} />
-                        <li>
+                        <li style="width:10%;">
                             <label style="font-weight: 500;">
                                 #{list items:segment.detail.get(0).marketingAirline, as:"airlineCode"}
                                 	#{airlineLogo carriersCode:airlineCode?.getAsString().toLowerCase(), carriersName: airlineCode /}
@@ -68,7 +68,7 @@
                                 #{/list}
                             </label>
                         </li>
-                        <li class="hour-of-flight">
+                        <li class="hour-of-flight" style="width: 15% !important;">
                             <span>${segment.departureTime.getAsString()}</span>
                         </li>
                         <li class="stops-route">
@@ -91,7 +91,7 @@
                             #{/elseif}
                             </a>
                         </li>
-                        <li class="hour-of-flight">
+                        <li class="hour-of-flight" style="width: 15% !important;">
                             <span>${segment.returnTime.getAsString()}</span>
                             #{daysDifference departure:segment.departureDate, arrival: segment.returnDate/}
                         </li>
@@ -180,7 +180,7 @@
                     							   data-returnelapsedtime="${segment.elapsedTime.getAsInt()}"  data-escalas="${connectionsCount}">
                     	<input type="radio" name="resultSegmentVuelta" value="${segment.toString()}" class="r${_flightNumber}" #{if segment_index==1} checked="checked" #{/if}/>
                     	
-                        <li>
+                        <li style="width:10%;">
                             <label style="font-weight: 500;">
                                 #{list items:segment.detail.get(0).marketingAirline, as:"airlineCode"}
                                 	#{airlineLogo carriersCode:airlineCode?.getAsString().toLowerCase(), carriersName: airlineCode /}
@@ -188,7 +188,7 @@
                                 #{/list}
                             </label>
                         </li>
-                        <li class="hour-of-flight">
+                        <li class="hour-of-flight" style="width: 15% !important;">
                             <span>${segment.departureTime.getAsString()}</span>
                         </li>
                         <li class="stops-route">
@@ -211,7 +211,7 @@
                             #{/if}
                             </a>
                         </li>
-                        <li class="hour-of-flight">
+                        <li class="hour-of-flight" style="width: 15% !important;">
                             <span>${segment.returnTime.getAsString()}</span>
                             #{daysDifference departure:segment.departureDate, arrival: segment.returnDate/}
                         </li>
