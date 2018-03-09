@@ -68,7 +68,9 @@
                         #{/list}
                     #{/list}
                     *{#{checkout.paymentBox/}}*
-                    #{checkout.seatsMap bfmResultItem:bfmResultItem /}
+                    #{if promotionDto.displaySeatMap}
+                        #{checkout.seatsMap bfmResultItem:bfmResultItem /}
+                    #{/if}
                     #{checkout.termsConditionBox/}
                     #{checkout.hiddenInputBox bfmResultItem: bfmResultItem, promotion: promotionDto/}
                 </div>
