@@ -1,0 +1,563 @@
+#{if seatsMap!=null && seatsMap.getAsJsonArray().size()>0}
+<div class="row" style="background-color: #f6f6f6;">	
+<div class="col-md-6">
+<h3>Seleccionar asiento</h3>
+<p id="infoTextSeats" class="text-selection">Te invitamos a escoger tu asiento.<br/>Si necesitas un servicio especial de silla de ruedas o cuna debes solicitarlo escribiendo a <a href="mailto:ventaonline@travel.cl" target="_top">ventaonline@travel.cl</a>
+</p>
+         <div id="seatCharts-legend" class="seatCharts-legend">
+		        <ul class="seatCharts-legendList">
+		            <div class="seatCharts-row">
+		                <div role="checkbox" class="legg seatCharts-seat seatCharts-cell economy-class unavailable-legend"></div>
+		                <span class="seatCharts-legendDescription">No Disponible</span>
+		            </div>
+		            <div class="seatCharts-row">
+		                <div role="checkbox" class="legg seatCharts-seat seatCharts-cell economy-class available-legend"></div>
+		                <span class="seatCharts-legendDescription">Disponible</span>
+		            </div>
+			        <div class="seatCharts-row">
+		                <div role="checkbox" class="seatCharts-seat seatCharts-cell economy-class no-seat-legend legend"></div>
+		                <span class="seatCharts-legendDescription">No hay Asiento</span>
+		            </div>
+		        </ul>
+		 </div>
+		 <div id="seatCharts-legend" class="seatCharts-legend">
+		         <ul class="seatCharts-legendList">
+		            <div class="seatCharts-row">
+		                <img src="@{'/public/images/foodicon.png'}" style="width:20px;" />
+		                <span class="seatCharts-legendDescription">Cocina</span>
+		            </div>
+		            <div class="seatCharts-row">
+		                <img src="@{'/public/images/bath.jpg'}" style="width:20px;" />
+		                <span class="seatCharts-legendDescription">Baño</span>
+		            </div>
+ 					<div class="seatCharts-row">
+		                <div role="checkbox" class="legg seatCharts-seat seatCharts-cell economy-class available selected"></div>
+		                <span class="seatCharts-legendDescription">Seleccionado</span>
+		            </div>
+		        </ul>
+    	</div>
+		 <div id="seatCharts-legend" class="seatCharts-legend">
+		         <ul class="seatCharts-legendList">
+
+					<div class="seatCharts-row">
+		                <img src="@{'/public/images/exitIconR.png'}" style="width:20px;" />
+		                <span class="seatCharts-legendDescription">Salida</span>
+		            </div>
+		            <div class="seatCharts-row">
+		                <img src="@{'/public/images/flechaEmerg.png'}" style="width:20px;" />
+		                <span class="seatCharts-legendDescription">Salida de Emergencia</span>
+		            </div>
+		        </ul>
+    	</div>
+    	
+<div class="col-md-12" style="margin-top: 20px; margin-bottom: 25px;" id="segmentDetailsContainer"></div>
+
+
+    
+     %{
+for(int i =1; i <= numberOfSeats; i++) {
+}%
+
+		<div class="col-md-12 form-group" >
+			 <p class="form-control" style="color: gray; padding: 20px; display: table; width:25%;"> Pasajero ${i} </p>
+			 <p class="form-control" id="passenger_${i}" style="color: gray; padding: 20px; display: table; width: 50%;" data-info="blank">Número de Asiento</p>
+		</div>
+    %{
+    }
+    }%
+
+     
+     
+ </div>    
+<div class="col-md-6">
+
+
+	%{def seatsMapArray = seatsMap.getAsJsonArray();}%
+
+	#{list seatsMapArray, as: 'seatsMap' }
+	<div class="container" id="seatsmapBlock_${seatsMap_index}" style="display: none;">
+		<div class="segmentDetails" id="segmentDetails_${seatsMap_index}" style="display: none;">
+	    	<div class="from-to-block info-from-to txt-from-to-block">${seatsMap.type.getAsString()}</div>
+	    	<div class="from-to-block info-from-to">${seatsMap.flightName.getAsString()} - <label class="tramoVuelo"> ${new utils.ApiFlightsSdk.v1.Airport().getByIataCode(seatsMap.origin.getAsString()).city} => ${new utils.ApiFlightsSdk.v1.Airport().getByIataCode(seatsMap.destination.getAsString()).city}</label></div>
+*{	    	<div class="from-to-block" style="font-style: italic;">Avión: ${seatsMap.equipment.getAsString()}</div>}*	
+		</div>
+	<div style="margin-left: 60px; margin-bottom: -20px; margin-top:22px"><img id="imgHeadPlane_${seatsMap_index}" src="@{'/public/images/headairplane0.png'}" /></div>
+	
+	#{if seatsMap.cabins.get(0).rows.get(0).rowNumber.getAsInt()!=1}
+		<div id="execContainerClass_${seatsMap_index}" class="seatCharts-container exec-class text-center"> Zona no disponible </div>
+	#{/if}
+	
+	    <div id="seat-map" class="seatCharts-container airplane-drawing" style="background-size: 400px; background-repeat: repeat-y; padding:0!important; margin-bottom:20px">
+	        <div class="position-relative-seat" style="margin-left: 60px;">
+	            <div class="position-absolute-seat" id="bodyPlane_${seatsMap_index}" style="background-color: white;">
+	            #{list seatsMap.cabins, as: 'cabin' }
+	                %{def columnsDataArray = cabin.getAsJsonObject().get("columns").getAsJsonArray(); }%
+					
+					
+				#{if cabin.getAsJsonObject().has("facilities") }
+				 	#{list cabin.getAsJsonObject().get("facilities").getAsJsonArray(), as: 'facility' }
+				 		#{if facility.get("type").getAsString().equals('Lavatory') && facility.get("cabinLocation").getAsString().equals('Front')}
+				 			%{def bathAlign = facility.get("facilityLocation").getAsString().equals('LeftSideSection')? 'left' : 'right'; }%
+				 			
+				 			#{if bathAlign.equals('right')}<p style="margin-bottom: 50px;"><img src="@{'/public/images/bath.jpg'}" style="width:40px; float: ${bathAlign};" /></p>#{/if}
+				 			#{else}<img src="@{'/public/images/bath.jpg'}" style="width:40px; float: ${bathAlign};" />#{/else}
+				 		#{/if}
+				 		#{elseif facility.get("type").getAsString().equals('Galley') && facility.get("cabinLocation").getAsString().equals('Front') }
+				 			%{def galleyAlign = facility.get("facilityLocation").getAsString().equals('RightCenterSection')? 'right' : facility.get("facilityLocation").getAsString().equals('LeftCenterSection')? 'left' : ''; }%
+				 		
+				 			
+				 			<img src="@{'/public/images/foodicon.png'}" style="width:40px; float: ${galleyAlign};" />
+				 			#{if galleyAlign.equals('right')}<br />#{/if}
+				 		#{/elseif }
+				 	#{/list}
+					
+					
+				#{/if}
+	
+	
+	
+                <div class="seatCharts-row">
+	                    <div class="seatCharts-cell seatCharts-space"></div>
+	                    %{aisleCols=0}%
+	                    
+	                    
+	                    #{list columnsDataArray, as: 'column' }
+	                        
+	                        #{if cabin_index==1}
+	                        	#{if aisleCols==1}
+	                        		<div class="seatCharts-cell seatCharts-space"></div>
+	                        		 %{aisleCols++;}%
+	                        	#{/if}
+	                        <div class="seatCharts-cell seatCharts-space economy-class unavailable">${column.get("name").getAsString()}</div>
+	                        
+	                        	
+		                        #{if column.get("type").getAsString().equals("Aisle") && aisleCols<2}
+	                                <div class="seatCharts-cell seatCharts-space"></div>
+	                                 %{aisleCols++;}%
+		                        #{/if}
+		                        #{elseif aisleCols>=2}
+		                        	%{aisleCols=0;}%
+		                        #{/elseif}
+	                        #{/if}
+	                    #{/list}
+	                </div>
+
+	                #{list cabin.rows, as: 'row' }
+	                	%{aisleCols=0}%
+	                	#{if row.get("isOverWing").getAsBoolean() && row_isLast}
+	                	<img id="wing1" style="left: -40px; position: absolute; width: 40px; height: 80px;transform: skewY(-30deg);" src="@{'/public/images/wing.jpg'}" />
+	                	#{/if}
+	                    #{elseif row.get("isOverWing").getAsBoolean()}
+                            <img id="wing1" style="left: -40px; position: absolute; width: 40px;  #{if row.has("facilities") && column_isLast } height:80px; #{/if} transform: skewY(-30deg);" src="@{'/public/images/wing.jpg'}" />
+						#{/elseif}
+
+						
+						*{
+								#{if row.get("isExitRow").getAsBoolean() && !row.get("isOverWing").getAsBoolean()}
+									 <img src="@{'/public/images/exitIconR.png'}" class="emergencyIconL" id="A"/>
+								#{/if}
+								#{elseif row.get("isExitRow").getAsBoolean() && row.get("isOverWing").getAsBoolean()}
+									 <img src="@{'/public/images/flechaEmerg.png'}" class="emergencyIconL" id="B"/>
+								#{/elseif}
+
+						}*
+
+
+						<div class="seatCharts-row" style="background-color:white;">
+                    	<div id="rowNUM_${row.rowNumber}${column.get("name").getAsString()}"  class="seatCharts-cell seatCharts-space">${row.rowNumber}</div>
+	                        #{if row.seats != null}
+	                            %{def seats = row.getAsJsonObject().get("seats").getAsJsonArray();}%
+	                            %{int count = 0}%
+	                            #{list columnsDataArray, as: 'column' }
+	                                %{def seat = count < seats.size() ? seats.get(count).getAsJsonObject(): null;}%
+	 								#{if aisleCols==1}
+	                        			<div class="seatCharts-cell seatCharts-space"></div>
+	                        		 	%{aisleCols++;}%
+	                        		#{/if}
+	                        	   
+	                        	   #{if seat.get("exitRowInd").getAsBoolean() && column_isLast && !row.get("isOverWing").getAsBoolean()}
+										<img src="@{'/public/images/exitIconR.png'}" class="emergencyIconR" id="C"/>
+									#{/if}
+	                        	   #{elseif seat.get("exitRowInd").getAsBoolean() && column_isLast && row.get("isOverWing").getAsBoolean()}
+										<img src="@{'/public/images/flechaEmerg.png'}" class="emergencyIconR" id="D"/>
+									#{/elseif}
+	                        	   
+	                        	   
+	                        	   
+	                        	   #{list row.facilities, as: 'facility' }  
+										#{if facility.type.getAsString().equals("ExitDoor") && !seat.exitRowInd.getAsBoolean()}
+			                        		<img src="@{'/public/images/exitIconR.png'}" class="emergencyIconL" id="E" />
+			                        	#{/if}
+									#{/list}
+									
+									
+									
+									#{if seat != null && (seat.get("noSeat").getAsBoolean())}
+										#{emergencyTag isLast:column_isLast,seat:seat/}
+										<div class="seatCharts-seat seatCharts-cell economy-class no-seat-legend"></div>
+									#{/if}
+	                                #{elseif seat != null && (seat.get("chargeableInd").getAsBoolean() || seat.get("occupiedInd").getAsBoolean() || seat.getAsJsonObject().get("inoperativeInd").getAsBoolean() || seat.get("exitRowInd").getAsBoolean())}
+		                                #{emergencyTag isLast:column_isLast,seat:seat/}
+	                                    <div class="seatCharts-seat seatCharts-cell economy-class unavailable"></div>
+	                                #{/elseif}
+	                                #{else}
+                                    #{if seat.exitRowInd.getAsBoolean()}
+                                    	#{emergencyTag isLast:column_isLast,seat:seat/}
+	                               #{/if}
+	                               #{else}
+	                               <div data-passenger="n" id="${row.rowNumber}${column.get("name").getAsString()}" role="checkbox"  class="seatCharts-seat seatCharts-cell economy-class available"></div>
+	                               #{/else}
+	                               
+	                               %{
+	                                def tooltipAlign = 0;
+	                               	for (def i=1;i<=column_index;i++) {
+	                               		if (i<5 || i >=7){
+	                               		tooltipAlign = tooltipAlign + 50;
+	                               		}
+	                               		else if (i<8) {
+	                               		tooltipAlign = tooltipAlign + 20;
+	                               		}
+	                               		
+	                               	}
+	                               }%
+	                                <div class="seatInfo_${row.rowNumber}${column.get("name").getAsString()} seatInfoDiv text-left" style="margin-left: ${tooltipAlign}px; display:none; z-index: 200; position: fixed;">
+	                                	<strong>${row.rowNumber} ${column.get("name").getAsString()} </strong><br>
+	                                	#{if column.type.getAsString().equals('Window')}
+	                                		* Ventana<br>
+	                                	#{/if}
+	                                	#{elseif column.type.getAsString().equals('CenterSeat')}
+	                                		* Asiento Central<br>
+	                                	#{/elseif}
+	                                	#{elseif column.type.getAsString().equals('Aisle')}
+	                                		* Pasillo<br>
+	                                	#{/elseif}
+	                                	
+	                                	#{if seat.exitRowInd.getAsBoolean()}
+	                                		* Salida de Emergencia <br>
+	                                	#{/if}
+	                                	#{if seat.restrictedReclineInd.getAsBoolean()}
+	                                		* Reclinación limitada <br>
+	                                	#{/if}
+	                                	#{if seat.noInfantInd.getAsBoolean()}
+	                                		* No permite Infantes <br>
+	                                	#{/if}
+	                                	
+	                                	#{list seat.locationDetails, as: 'detail' }
+	                                		#{if detail.getAsString().equals('OverWingSeat(S)')}
+	                                			* Sobre el ala<br>
+	                                		#{/if}
+	                                		#{elseif detail.getAsString().equals('RightSideOf Aircraft')}
+	                                			* Lado derecho<br>
+	                                		#{/elseif}
+	                                		#{elseif detail.getAsString().equals('LeftSideOfAircraft')}
+	                                			* Lado izquierdo<br>
+	                                		#{/elseif}
+	                                	#{/list}
+	                                </div>
+	                                #{/else}
+	                                
+	                                
+	                                
+	                                #{list row.facilities, as: 'facility' }  
+										#{if facility.type.getAsString().equals("ExitDoor") && column_isLast && !seat.exitRowInd.getAsBoolean()}
+			                        		<img src="@{'/public/images/exitIconR.png'}" class="emergencyIconR" id="O" />
+			                        	#{/if}
+									#{/list}
+									
+									
+	                                #{if column.get("type").getAsString().equals("Aisle") && aisleCols<2}
+		                                <div class="seatCharts-cell seatCharts-space"></div>
+		                                 %{aisleCols++;}%
+			                        #{/if}
+			                        #{elseif aisleCols>=2}
+			                        	%{aisleCols=0;}%
+			                        #{/elseif}
+			                        
+									 %{count++;}%
+									 
+					
+							
+							
+	                            #{/list}
+	                            				 
+									 
+									
+	                        #{/if}
+	                        
+	                        
+	                    
+	                        #{if row.get("isOverWing").getAsBoolean() && row_isLast}
+	                        <img id="wing2" style="position: absolute; width: 40px; height: 80px; transform: skewY(30deg);" src="@{'/public/images/wing.jpg'}" />
+	                        #{/if}
+	                        #{elseif row.get("isOverWing").getAsBoolean()}
+			             		<img id="wing2" style="position: absolute; width: 40px; #{if row.has("facilities") && column_isLast } height:80px; #{/if} transform: skewY(30deg);" src="@{'/public/images/wing.jpg'}" />
+							#{/elseif}
+	                    </div>
+	                    
+	                   
+						#{if row.has("facilities") && column_isLast }
+							*{<img id="wing1" style="left: -40px; position: absolute; width: 40px;transform: skewY(-30deg);" src="/public-vol3/images/wing.jpg" />}*
+							<div>
+								<div>
+								#{list row.facilities, as: 'facility' }
+									%{facility.type.getAsString()}%
+									#{if facility.type.getAsString().equals("Lavatory")}
+										%{def bathAlign = facility.get("facilityLocation").getAsString().equals('LeftSideSection')? 'left' : 'right'; }%
+		                        		<img src="@{'/public/images/bath.jpg'}" style="width:40px; " />
+		                        	#{/if}
+		                        	#{elseif facility.type.getAsString().equals("Galley")}
+		                        		%{def galleyAlign = facility.get("facilityLocation").getAsString().equals('RightCenterSection')? 'right' : facility.get("facilityLocation").getAsString().equals('LeftCenterSection')? 'left' : ''; }%
+			 							<img src="@{'/public/images/foodicon.png'}" style="width:40px;" />
+		                        	#{/elseif}
+		                        	
+								#{/list}
+								</div>
+							</div>
+						#{/if}
+						
+									
+	                #{/list}
+	                
+	                
+	                
+	                 
+	                
+	                #{if cabin.getAsJsonObject().has("facilities")}
+	                <div class="container" style="width: 100%;">
+	                 #{list cabin.getAsJsonObject().get("facilities").getAsJsonArray(), as: 'facility' }
+	                 
+						 		#{if facility.get("type").getAsString().equals('Lavatory') && facility.get("cabinLocation").getAsString().equals('Rear')}
+						 			%{def bathAlign = facility.get("facilityLocation").getAsString().equals('LeftSideSection')? 'left' : 'right'; }%
+						 			
+						 			#{if bathAlign.equals('right')}<img src="@{'/public/images/bath.jpg'}" style="width:40px; float: ${bathAlign};" />#{/if}
+						 			#{else}<img src="@{'/public/images/bath.jpg'}" style="width:40px; float: ${bathAlign};" />#{/else}
+						 		#{/if}
+						 		#{elseif facility.get("type").getAsString().equals('Galley') && facility.get("cabinLocation").getAsString().equals('Rear') }
+						 		
+						 			
+						 			<img src="@{'/public/images/foodicon.png'}" style="width:40px;" />
+						 			#{if galleyAlign.equals('right')}<br />#{/if}
+						 		#{/elseif }
+						 	#{/list}
+					</div>
+					#{/if}
+						 	
+						 	
+	            #{/list}
+	            </div>
+	        </div>
+	
+	    </div>
+	</div>
+	
+	#{/list}
+	<div id="tailPlane" style="margin-left: 109px;"><img id="imgTalePlane" src="@{'/public/images/taleairplane0.png'}"/></div>
+	</div>
+	
+	<div class="text-center">
+	
+		<a class="btn btn-search" id="btnContinue">Continuar</a>
+		<a class="btn btn-search" id="btnConfirm" style="display: none;">Confirmar Asientos</a>
+                <p id="msgConfirm" style="display: none; margin: 15px">Tu asignación de asientos, será confirmada en el aeropuerto ya que podrían existir cambios efectuados por la línea aérea.</p>
+	</div>
+</div><!-- col -->
+</div><!-- row -->
+
+	<script>
+	var seatsSelected = 0;
+	var insertionValue = 1;
+	var indexSeatMap = 1;
+	var selectionArr = new Array();
+	var finalSelectionArr = new Array();
+	var numberOfMaps = ${seatsMapArray.size()};
+	var arrOfSelectedPassengers = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""];
+	var lastSeatSelected;
+	
+	
+	var mouseX;
+	var mouseY;
+	$(document).mousemove( function(e) {
+	   mouseX = e.pageX; 
+	   mouseY = e.pageY;
+	});  
+	
+	
+	function resetValues() {
+		seatsSelected = 0;
+		insertionValue = 1;
+		indexSeatMap = 1;
+		selectionArr = new Array();
+		arrOfSelectedPassengers = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""];
+		numberOfMaps = ${seatsMapArray.size()};
+	}
+	
+	function addSeat(elem){
+		$(elem).addClass("selected");
+		seatsSelected++;
+		
+		for (var i=1;i<20;i++){
+			if (arrOfSelectedPassengers[i]==''){
+				insertionValue = i;
+				break;
+			}
+		}
+		$(elem).attr('data-passenger', insertionValue);
+		var fromTo = $(".info-from-to:visible").html();
+		var tramo = $(".tramoVuelo:visible").html();
+		if ($("#passenger_"+insertionValue).html()=='Número de Asiento'){
+			$("#passenger_"+insertionValue).html('<label style="width: 100%;" id="'+elem.id+insertionValue+'">'+tramo+': '+elem.id+'</label>');
+			$("#passenger_"+insertionValue).data("info","filled");
+		}
+		else {
+			$("#passenger_"+insertionValue).append('<label style="width: 100%;" id="'+elem.id+insertionValue+'">'+tramo+': '+elem.id+'</label>');
+		}
+		arrOfSelectedPassengers[insertionValue]="x";
+		insertionValue++;
+		selectionArr.push(elem.id);
+	}
+	
+	$(function () {
+	
+		$( ".segmentDetails" ).appendTo( "#segmentDetailsContainer" );
+		$("#segmentDetails_1").show();
+		
+		$("#seatsmapBlock_1").show();
+		
+		$( ".seatCharts-seat" ).mouseover(function(e) {
+			try {
+				if ($( ".seatInfo_"+this.id ).html().trim()!='') {
+					$( ".seatInfo_"+this.id ).show();
+				}
+			}
+			catch(err) {
+				return false;
+			}
+		});
+
+		$( ".seatCharts-seat" ).mouseleave(function() {
+			$( ".seatInfo_"+this.id ).hide();
+		});
+		$("#btnConfirm").click(function() {
+			$('#modalSeatsMap').modal('toggle');
+		});
+		
+		$("#modalSeatsMap").on("hidden.bs.modal", function () {
+			resetValues();
+			$("#modalSeatsBody").html('<div id="cargandoDiv" >Cargando mapa de asientos...</div>');
+		});
+		
+		$("#btnContinue").click(function() {
+			if (seatsSelected == ${numberOfSeats}){
+                if (indexSeatMap <= numberOfMaps) {
+                    $("#seatsmapBlock_"+indexSeatMap).hide();
+                    $("#segmentDetails_"+indexSeatMap).hide();
+                    indexSeatMap++;
+                    seatsSelected = 0;
+                    insertionValue = 1;	
+                    finalSelectionArr.push(selectionArr);
+                    selectionArr = new Array();
+                    arrOfSelectedPassengers = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""];
+                    $("#seatsmapBlock_"+indexSeatMap).show();
+                    $("#segmentDetails_"+indexSeatMap).show();
+                    headTaleAdjust(indexSeatMap);
+                    if (indexSeatMap>numberOfMaps){
+                        indexSeatMap--;
+                        $("#seatsmapBlock_"+indexSeatMap).hide();
+                        $("#segmentDetails_"+indexSeatMap).hide();
+                        $("#btnContinue").hide();
+                        $("#tailPlane").hide();
+                        $("#btnConfirm").show();
+                        $("#infoTextSeats").hide();
+                        $(".seatCharts-legend").hide();
+                        $("#msgConfirm").show();
+                    }
+                }
+                $('#modalSeatsMap').animate({ scrollTop: 0 }, 'slow');
+            }
+			else {
+				alert("Debe seleccionar asientos para todos los pasajeros");
+			}
+		});
+		
+		$(".seatCharts-seat").mouseenter(function() {
+			if ($(this).hasClass("available")) {
+				$(this).addClass("focused");
+			}
+		});
+		$(".seatCharts-seat").mouseout(function() {
+			
+			if ($(this).hasClass("focused")) {
+				$(this).removeClass("focused");
+			}
+		});
+		
+		
+		$(".seatCharts-seat").click(function() {
+
+			if (!$(this).hasClass("unavailable") && !$(this).hasClass("legg") && !$(this).hasClass("no-seat-legend") && !$(this).hasClass("selected") && seatsSelected < ${numberOfSeats}) {
+				addSeat(this);
+				lastSeatSelected = this;
+				return;
+			}
+			else if(!$(this).hasClass("unavailable") && !$(this).hasClass("legg") && !$(this).hasClass("no-seat-legend") && seatsSelected >= ${numberOfSeats} && !$(this).hasClass("selected") ) {
+				
+				$(lastSeatSelected).removeClass("selected");
+				var pass = $(lastSeatSelected).attr('data-passenger');
+				$("#passenger_"+pass).children("#"+lastSeatSelected.id + pass).remove();
+				if ($("#passenger_"+pass).html()=='') {
+					$("#passenger_"+pass).html("Número de Asiento");
+				}
+				selectionArr.splice(selectionArr.length-1,1);
+				arrOfSelectedPassengers[pass]='';
+				seatsSelected--;
+				
+				addSeat(this);
+				lastSeatSelected = this;
+				return;
+			}
+			
+			if ($(this).hasClass("selected") && !$(this).hasClass("legg") ) {
+				$(this).removeClass("selected");
+				var pass = $(this).attr('data-passenger');
+				$("#passenger_"+pass).children("#"+this.id + pass).remove();
+				if ($("#passenger_"+pass).html()=='') {
+					$("#passenger_"+pass).html("Número de Asiento");
+				}
+				selectionArr.splice(selectionArr.indexOf(this.id),1);
+				arrOfSelectedPassengers[pass]='';
+				seatsSelected--;
+			}
+			
+		});
+		
+	});
+        $('#bodyPlane_1').ready(function(){
+            var bodyWidthVal = $("#bodyPlane_1").width();
+            if (bodyWidthVal < 150)
+            {$("#imgHeadPlane_1").css({'width':($("#bodyPlane_1").width()+'px'), 'margin-top':('60px')});}
+            else
+            {$("#imgHeadPlane_1").css({'width':($("#bodyPlane_1").width()+'px'), 'margin-top':('20px')});}
+            $("#imgTalePlane").css({'width':($("#bodyPlane_1").width()+'px')});
+            $("#execContainerClass_1").css({'width':($("#bodyPlane_1").width()+'px')});
+        });
+        
+        function headTaleAdjust(seatmapNum){
+            var bodyWidthVal = $("#bodyPlane_"+seatmapNum).width();
+            if (bodyWidthVal < 150)
+            {$("#imgHeadPlane_"+seatmapNum).css({'width':(bodyWidthVal+'px'), 'margin-top':('60px')});}
+            else
+            {$("#imgHeadPlane_"+seatmapNum).css({'width':(bodyWidthVal+'px'), 'margin-top':('20px')});}
+            $("#imgTalePlane").css({'width':(bodyWidthVal+'px')});
+            $("#execContainerClass_"+seatmapNum).css({'width':(bodyWidthVal+'px')});
+        }
+	</script>
+#{/if}
+#{else}
+<div class="row">	
+	<div class="col-md-12">
+		<div class="row">
+			<p style="padding: 20px;">No es posible reservar asientos en este momento.</p>
+		</div>
+	</div>
+</div>
+#{/else}

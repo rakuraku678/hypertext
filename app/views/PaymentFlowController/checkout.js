@@ -1,7 +1,5 @@
 $(document).ready(function () {
-    new Fingerprint2().get(function(result){
-        $("#fingerprint").val(result);
-    });
+    
 
     $('.validatedate').datepicker(
         {
@@ -317,6 +315,9 @@ function startBooking() {
     var formSerializeJson = $("#checkoutForm").serializeJSON({useIntKeysAsArrayIndex: true, checkboxUncheckedValue: false});
     formSerializeJson.bfmResultItem = $.parseJSON(formSerializeJson.bfmResultItem);
     formSerializeJson.origin = window.location.origin;
+    if (typeof finalSelectionArr !== 'undefined' && finalSelectionArr.length>0){
+    	formSerializeJson.seatsSelected =  finalSelectionArr.join();
+    }
     var data = JSON.stringify(formSerializeJson);
     $.ajax({
         type: "POST",

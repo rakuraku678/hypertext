@@ -1,9 +1,9 @@
-                            %{
-                              connectionsDepartureCount = _flight.departureSegment.flightsCount.getAsInt() - 1;
-                              connectionsReturnCount = _flight.returnSegment.flightsCount.getAsInt() - 1;
-                              returnElapsedTimeEX = _flight.returnSegment.elapsedTime.getAsInt();
-                              departureElapsedTimeEX = _flight.departureSegment.elapsedTime.getAsInt();
-                              baxerHeight = _flight.pricing.shareNumber!=null? '350px':'320px';
+                            %{                                   
+                              connectionsDepartureCount = _flightsResults.get(0).departureSegment.flightsCount.getAsInt() - 1;
+                              connectionsReturnCount = _flightsResults.get(0).returnSegment.flightsCount.getAsInt() - 1;
+                              returnElapsedTimeEX = _flightsResults.get(0).returnSegment.elapsedTime.getAsInt();
+                              departureElapsedTimeEX = _flightsResults.get(0).departureSegment.elapsedTime.getAsInt();
+                              baxerHeight = _flightsResults.get(0).pricing.shareNumber!=null? '350px':'320px';
                             }%
 			#{if baxerHeight == "350px" && _flight.pricing.accountCode}
 			%{
@@ -21,11 +21,11 @@
 		data-airportDeparture="${_flight.departureAirportCode.getAsString()}" 
 		data-departureElapsedTime="${departureElapsedTimeEX}"
 		data-returnElapsedTime="${returnElapsedTimeEX}" 
-		data-returntime="${_flight.returnSegment.departureTime.getAsString()}" 
-		data-departuretime="${_flight.departureSegment.departureTime.getAsString()}" 
-		data-price="${_flight.pricing.totalPassengerFare.getAsString()}"
-		data-airline="${_flight.departureSegment.detail.get(0).operatingAirlineCode.getAsString()}"
-        	data-marketingAirline="${_flight.departureSegment.detail.get(0).marketingAirline.getAsString()}"
+		data-returntime="$_flightsResults.get(0).returnSegment.departureTime.getAsString()}" 
+		data-departuretime="${_flightsResults.get(0).departureSegment.departureTime.getAsString()}" 
+		data-price="${_flightsResults.get(0).pricing.totalPassengerFare.getAsString()}"
+		data-airline="${_flightsResults.get(0).departureSegment.detail.get(0).operatingAirlineCode.getAsString()}"
+        	data-marketingAirline="${_flightsResults.get(0).departureSegment.detail.get(0).marketingAirline.getAsString()}"
 		data-escala="${connectionsDepartureCount}"
 		data-returnEscala="${connectionsReturnCount}" style="min-height: ${baxerHeight}">
     <form class="form-ticket" action="@{PaymentFlowController.index}" method="post" data-tknumber="${_tknumber}">
@@ -50,24 +50,38 @@
                         </li>
                     </ul>
                 </li>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                *{ACA EMPIEZA EL BAILE COSMICO}*
+                #{list items:_flight.idaAirSearchSegments, as:'segment'}
                 <li class="txt-view-detail">
                     <ul>
+                    	<input type="radio" name="elRADIOBUTTTTTTONONONASASNASONNASONDASKFJLKFJLJKHKGHGHGGGGGGGGGGGGGGGGGGGGGGGGGGGGHHHHHHHHHHHHH" />
                         <li>
                             <label style="font-weight: 500;">
-                                #{list items:_flight.departureSegment.detail.get(0).marketingAirline, as:"airlineCode"}
+                                #{list items:segment.detail.get(0).marketingAirline, as:"airlineCode"}
                                 	#{airlineLogo carriersCode:airlineCode?.getAsString().toLowerCase(), carriersName: airlineCode /}
                                 	${_flightsResultsFilters?.mktCarriersCodesXNames?.get(airlineCode.getAsString())}
                                 #{/list}
                             </label>
                         </li>
                         <li class="hour-of-flight">
-                            <span>${_flight.departureSegment.departureTime.getAsString()}</span>
+                            <span>${segment.departureTime.getAsString()}</span>
                         </li>
                         <li class="stops-route">
                             <a type="button" data-toggle="collapse" data-target="#departureSegment${_flight.sequenceNumber.getAsString()}" aria-expanded="false" aria-controls="collapseExample" class="link-detail-desktop">
                                 %{
-                                    connectionsCount = _flight.departureSegment.flightsCount.getAsInt() - 1;
-                                    stopsQtySignal = (_flight.departureSegment.detail.inject(0, { sum, value -> sum + value.stopQuantity?.getAsInt() }) > 0)?"*":""
+                                    connectionsCount = segment.flightsCount.getAsInt() - 1;
+                                    stopsQtySignal = (segment.detail.inject(0, { sum, value -> sum + value.stopQuantity?.getAsInt() }) > 0)?"*":""
                                 }%
                             #{if connectionsCount == 0 }
                                 <span class="stop-txt">Directo${stopsQtySignal}</span>
@@ -87,18 +101,18 @@
                             </a>
                         </li>
                         <li class="hour-of-flight">
-                            <span>${_flight.departureSegment.returnTime.getAsString()}</span>
-                            #{daysDifference departure:_flight.departureSegment.departureDate, arrival: _flight.departureSegment.returnDate/}
+                            <span>${segment.returnTime.getAsString()}</span>
+                            #{daysDifference departure:segment.departureDate, arrival: segment.returnDate/}
                         </li>
                         <li class="time">
                             %{
-                            	departureElapsedTime = _flight.departureSegment.elapsedTime.getAsInt();
+                            	departureElapsedTime = segment.elapsedTime.getAsInt();
                                 int departureElapsedHours = departureElapsedTime / 60;
                                 int departureElapsedMinutes = departureElapsedTime % 60;
                             }%
                             <span>&{"%dh %02dm", departureElapsedHours, departureElapsedMinutes}</span>
                         </li>
-                        <li class="detail">
+                        <li class="detail" style="margin: 0px;">
                             <a id="departureSegment${_flight.sequenceNumber.getAsString()}Button" type="button" data-toggle="collapse" data-target="#departureSegment${_flight.sequenceNumber.getAsString()}" aria-expanded="false" aria-controls="collapseExample" class="link-detail-desktop" style="font-weight: bold;">
                                 Ver detalle
                             </a>
@@ -116,9 +130,11 @@
 							        <h4 class="modal-title" id="myModalLabel">Detalle del Vuelo</h4>
 							      </div>
 							      <div class="modal-body txt-view-detail">
-				                            #{list items:_flight.departureSegment, as:'flightSegment'}
-				                           		 #{modalDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes: _flight.pricing.bookingCodes/}
+				                  *{
+				                            #{list items:segment, as:'flightSegment'}
+				                           		 #{modalDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes: _flightsResults.get(0).pricing.bookingCodes/}
 				                            #{/list}
+	                                }*
 	                                    <!-- END MODAL BODY-->
 							      </div>
 							    </div>
@@ -131,26 +147,48 @@
                         </li>
 
                         <div class="collapse" id="departureSegment${_flight.sequenceNumber.getAsString()}">
-                            #{list items:_flight.departureSegment, as:'flightSegment'}
-                                #{flightsItemDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes: _flight.pricing.bookingCodes, baggageInfoList: _flight.baggageInformationDtoList, meals:_flight.pricing.meals, isDeparture:true, startSegmentCount: _flight.departureSegment.flightsCount.getAsInt() /}
+                           *{
+                            #{list items:segment, as:'flightSegment'}
+                                #{flightsItemDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes: _flightsResults.get(0).pricing.bookingCodes/}
                             #{/list}
+                            }*
                         </div>
                     </ul>
                 </li>
+                
+                 #{/list}
+                 
+                *{ACA TERMINA EL BAILE COSMICO}*
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
                 <li class="txt-airport-date">
                     <ul>
                         <li>
                             <i class="icon-fly-vuelta"></i>
                             <span class="leaving">vuelta</span>
-                            <span class="fly-day">${utils.DateUtils.reformateDate(_flight.returnDate.getAsString(),"yyyy-MM-dd","dd-MM-yyyy")}</span>
+                            <span class="fly-day">${utils.DateUtils.reformateDate(_flightsResults.get(0).returnDate.getAsString(),"yyyy-MM-dd","dd-MM-yyyy")}</span>
                         </li>
                         <li>
-                            <span class="airport">${new utils.ApiFlightsSdk.v1.Airport().getByIataCode(_flight.returnSegment.departureCityCode.getAsString()).name}</span>
-                            <span class="description-airport">${_flight.returnSegment.departureCityCode.getAsString()}</span>
+                            <span class="airport">${new utils.ApiFlightsSdk.v1.Airport().getByIataCode(_flightsResults.get(0).returnSegment.departureCityCode.getAsString()).name}</span>
+                            <span class="description-airport">${_flightsResults.get(0).returnSegment.departureCityCode.getAsString()}</span>
                         </li>
                         <li>
-                            <span class="airport">${new utils.ApiFlightsSdk.v1.Airport().getByIataCode(_flight.returnSegment.returnCityCode.getAsString()).name}</span>
-                            <span class="description-airport">${_flight.returnSegment.returnCityCode.getAsString()}</span>
+                            <span class="airport">${new utils.ApiFlightsSdk.v1.Airport().getByIataCode(_flightsResults.get(0).returnSegment.returnCityCode.getAsString()).name}</span>
+                            <span class="description-airport">${_flightsResults.get(0).returnSegment.returnCityCode.getAsString()}</span>
                         </li>
                     </ul>
                 </li>
@@ -158,19 +196,19 @@
                     <ul>
                         <li>
                             <label style="font-weight: 500;">
-                                #{list items:_flight.returnSegment.detail.get(0).marketingAirline, as:"airlineCode"}
+                                #{list items:_flightsResults.get(0).returnSegment.detail.get(0).marketingAirline, as:"airlineCode"}
                                 	#{airlineLogo carriersCode:airlineCode?.getAsString().toLowerCase(), carriersName: airlineCode /}
                                     ${_flightsResultsFilters?.mktCarriersCodesXNames?.get(airlineCode.getAsString())}
                                 #{/list}
                             </label>
                         </li>
                         <li class="hour-of-flight">
-                            <span>${_flight.returnSegment.departureTime.getAsString()}</span>
+                            <span>${_flightsResults.get(0).returnSegment.departureTime.getAsString()}</span>
                         </li>
                         <li class="stops-route">
                             <a type="button" data-toggle="collapse" data-target="#returnSegment${_flight.sequenceNumber.getAsString()}" aria-expanded="false" aria-controls="collapseExample2" class="link-detail-desktop">
                             %{
-                                connectionsCount = _flight.returnSegment.flightsCount.getAsInt() - 1;
+                                connectionsCount = _flightsResults.get(0).returnSegment.flightsCount.getAsInt() - 1;
                             }%
                             #{if connectionsCount == 0 }
                                 <span class="stop-txt">Directo</span>
@@ -190,12 +228,12 @@
                             </a>
                         </li>
                         <li class="hour-of-flight">
-                            <span>${_flight.returnSegment.returnTime.getAsString()}</span>
-                            #{daysDifference departure:_flight.returnSegment.departureDate, arrival: _flight.returnSegment.returnDate/}
+                            <span>${_flightsResults.get(0).returnSegment.returnTime.getAsString()}</span>
+                            #{daysDifference departure:_flightsResults.get(0).returnSegment.departureDate, arrival: _flightsResults.get(0).returnSegment.returnDate/}
                         </li>
                         <li class="time">
                         %{
-                            returnElapsedTime = _flight.returnSegment.elapsedTime.getAsInt();
+                            returnElapsedTime = _flightsResults.get(0).returnSegment.elapsedTime.getAsInt();
                             int returnElapsedHours = returnElapsedTime / 60;
                             int returnElapsedMinutes = returnElapsedTime % 60;
                             }%
@@ -216,8 +254,8 @@
 							        <h4 class="modal-title" id="myModalLabel">Detalle del Vuelo</h4>
 							      </div>
 							      <div class="modal-body txt-view-detail">
-				                            #{list items:_flight.returnSegment, as:'flightSegment'}
-				                           		 #{modalDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes: _flight.pricing.bookingCodes, baggageInfoList: _flight.baggageInformationDtoList, meals:_flight.pricing.meals, startSegmentCount: _flight.departureSegment.flightsCount.getAsInt() /}
+				                            #{list items:_flightsResults.get(0).returnSegment, as:'flightSegment'}
+				                           		 #{modalDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes: _flightsResults.get(0).pricing.bookingCodes/}
 				                            #{/list}
 	                                    <!-- END MODAL BODY-->
 							      </div>
@@ -229,8 +267,8 @@
                         </li>
                         </li>
                         <div class="collapse" id="returnSegment${_flight.sequenceNumber.getAsString()}">
-                            #{list items:_flight.returnSegment, as:'flightSegment'}
-                                #{flightsItemDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes:_flight.pricing.bookingCodes, baggageInfoList: _flight.baggageInformationDtoList, meals:_flight.pricing.meals, isDeparture:false, startSegmentCount: _flight.departureSegment.flightsCount.getAsInt() /}
+                            #{list items:_flightsResults.get(0).returnSegment, as:'flightSegment'}
+                                #{flightsItemDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes:_flightsResults.get(0).pricing.bookingCodes/}
                             #{/list}
                         </div>
                     </ul>
@@ -265,7 +303,7 @@
                 <span class="private-fare-space-saver" id="private-fare-img">&nbsp;</span>
             #{/else}
             <span class="title">Precio por Adulto</span>
-            #{if _flight.pricing.adtTotalPriceWithAllTaxes.getAsString().replaceAll(',','.').toDouble() > _flight.pricing.adtTotalPrice.getAsString().replaceAll(',','.').toDouble() && _flight.pricing.adtTotalPriceBeforeDiscount && _flight.pricing.adtTotalPriceBeforeDiscount != _flight.pricing.adtTotalPrice}
+            #{if _flight.pricingCLP.adtTotalPriceWithAllTaxes.getAsDouble() > _flight.pricingCLP.adtTotalPrice.getAsDouble() && _flight.pricing.adtTotalPriceBeforeDiscount && _flight.pricing.adtTotalPriceBeforeDiscount != _flight.pricing.adtTotalPrice}
             <span class="price before-discount"><span class="usdpriceCon"><span class="simbolCurrency">US$</span>${_flight.pricing.adtTotalPriceWithAllTaxes?.getAsString()}</span><span class="clppriceCon hidden">${_flight.pricingCLP.adtTotalPriceWithAllTaxes?.getAsString()}</span></span>
             <span class="price"><span class="usdpriceCon"><span class="simbolCurrency">US$</span>${_flight.pricing.adtTotalPriceString?.getAsString()}</span><span class="clppriceCon hidden">${_flight.pricingCLP.adtTotalPriceString?.getAsString()}</span></span>
             #{/if}
@@ -291,9 +329,9 @@
                 
                 
                 <li><span class="item-detail">Imp. y Tasas</span><span class="item-price usdpriceCon"><span class="simbolCurrency">US$ </span>${_flight.pricing.totalTax?.getAsString()}</span><span class="item-price clppriceCon hidden">${_flight.pricingCLP.totalTax?.getAsString()}</span></li>
-                #{if _promotionDto.agency.showNoFeeOnPrice || (_flight.pricingCLP?.totalFee!=null && _flight.pricingCLP?.totalFee.getAsInt()>0 && !_flight.pricingCLP?.totalFee.getAsString().trim().equals(''))}
-               		<li><span class="item-detail">Gestión agencia </span><span class="item-price usdpriceCon"><span class="simbolCurrency">US$ </span>${_flight.pricing.totalFee?.getAsString()}</span><span class="item-price clppriceCon hidden">${_flight.pricingCLP.totalFee?.getAsString()}</span></li>
-               	#{/if}
+                #{if _flight.pricingCLP?.totalFee!=null && _flight.pricingCLP?.totalFee.getAsInt()>0 && !_flight.pricingCLP?.totalFee.getAsString().trim().equals('')}
+                	<li><span class="item-detail">Gestión agencia </span><span class="item-price usdpriceCon"><span class="simbolCurrency">US$ </span>${_flight.pricing.totalFee?.getAsString()}</span><span class="item-price clppriceCon hidden">${_flight.pricingCLP.totalFee?.getAsString()}</span></li>
+                #{/if}
                 <hr>
                 <li><span class="">Total </span><span class="item-price usdpriceCon"><span class="simbolCurrency">US$ </span>${_flight.pricing.totalAmount?.getAsString()}</span><span class="item-price clppriceCon hidden">${_flight.pricingCLP.totalAmount?.getAsString()}</span></li>
                 <li style="text-align: center;">Incluye tasas e impuestos</li>
@@ -318,12 +356,11 @@
             <div class="text-center box-ticket-submit">
                 <input type="hidden" name="promotion" value="${_promotion}">
                 <input type="hidden" name="bfmResultItem" value="${_flight.toString()}">
-                #{if _flight.onBlackOut== null || !_flight.onBlackOut.getAsBoolean()}
-                	<input type="submit" style="margin-top:20px;" class="btn btn-ticket btnSelFlight" value="Seleccionar">
-                #{/if} 	
+                <input type="submit" style="margin-top:20px;" class="btn btn-ticket btnSelFlight" value="Seleccionar">
                 *{<a class="btn btn-ticket" href="@{PaymentFlowController.index}">Comprar</a>}*
 
             </div>
         </div>
     </form>
 </div>
+                

@@ -35,6 +35,11 @@ public class Booking extends ApiFlightsSDKBase {
         return processResponsePost(request);
     }
 
+    public JsonElement isPnrEmitted(String pnr){
+        WS.WSRequest request = prepareRequest(ENDPOINT + "/" + pnr + "/isemitted");
+        return processResponse(request);
+    }
+    
     public JsonElement confirmation(String id){
         WS.WSRequest request = prepareRequest(ENDPOINT + "/" + id + "/confirmation");
         return processResponsePost(request);
@@ -53,9 +58,4 @@ public class Booking extends ApiFlightsSDKBase {
         WS.WSRequest request = prepareRequest(ENDPOINT + "/" + pnr );
         return processResponse(request);
     }
-    public JsonElement isPnrEmitted(String pnr){
-    	WS.WSRequest request = prepareRequest(ENDPOINT + "/" + pnr + "/isemitted");
-    	return processResponse(request);
-    }
-
 }
