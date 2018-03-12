@@ -1,9 +1,10 @@
 #{include "FlightsDataController/airlinesMatrix.html" /}
 <input type="hidden" id="dlx" value="${dollarExchangeRate}" />
 
-#{list items:flightsResults, as:'flight'}
-    #{flightsItem promotion: params.promotion, flight:flight, flightsResultsFilters:flightsResultsFilters, tknumber:flight_index, promotionDto:promotionDto/}
+#{list items:bigFlightsResults, as:'flight'}
+    #{flightsItemV2 promotion: params.promotion, flight:flight, flightsResultsFilters:flightsResultsFilters, tknumber:flight_index, bigFlightsResults:bigFlightsResults, flightsResults:flightsResults, flightNumber:flight_index /}
 #{/list}
+
 <script type="text/javascript">
 	$(function () {
 		$('[data-toggle="tooltip"]').tooltip();
@@ -267,9 +268,26 @@ var changedCLP=false;
     
     });
     
-        
-        
-        
 });
-</script>
+
+	$(document).ready(function() {
+		$(".btnSelFlight").click(function(event) {
+			event.preventDefault();
+			var flightNumber = $(this).data("flightnumber");
+			var allRadios = $(".r"+flightNumber);
+			var checkCounter = 0;
+			allRadios.each(function( index ) {
+				if ($(this).is(':checked')) {
+					checkCounter++;	
+				}
+			});
+			if  (checkCounter != 2) {
+				alert("Debe seleccionar por lo menos un destino de ida y de vuelta");
+				return false;
+			}
+			
+			$('#fnumber'+flightNumber).submit();
+		});
+	});
+
 	

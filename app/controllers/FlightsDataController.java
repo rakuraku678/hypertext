@@ -29,6 +29,7 @@ import dto.StateDto;
 
 public class FlightsDataController extends Controller {
 
+	
     public static void index(String slugAgency) throws InterruptedException {
         PromotionDto promotionDto;
 
@@ -62,16 +63,89 @@ public class FlightsDataController extends Controller {
         	bfmSearch.setTransactionId(transactionId);
         }
         JsonElement flightsResults = bfmSearch.process();
+        
+        //TODO: tener en cuenta en el display de filtros el nuevo objeto BigResult
+        JsonElement smallResults = flightsResults.getAsJsonArray().get(0).getAsJsonObject().get("airSearchResults");
+        FlightsResultsFilters flightsResultsFilters = FlightsResultsFilters.processFlightsResults(smallResults);
+
+        //TODO: tener en cuenta en el display de aerolineas el nuevo objeto BigResult
+        Collection airlineArray = getAirlinePriceArray(smallResults);
+
+        if (Strings.isNullOrEmpty(transactionId)){
+            //TODO: tener en cuenta en la obtencion de transactionId el nuevo objeto BigResult
+        	transactionId = smallResults.getAsJsonArray().get(0).getAsJsonObject().get("transactionId").getAsString();
+        }
+        String tknumber = params.get("tknumber");
+        System.out.println("TKNUMBER: "+tknumber);
+        String token = Cache.get(transactionId, String.class);
+        System.out.println("transactionId: "+transactionId+", token: "+token);
+        
+        StateDto state = null;
+        if (!Strings.isNullOrEmpty(token)){
+            state = CrossLoginUtils.getState(token);
+            state.transactionId = transactionId;
+            System.out.println("state name: "+state.appToken);
+            System.out.println("state name: "+state.clientName);
+        }
+        
+        Template template = TemplateLoader.load(template("FlightsDataController/flightsData.html"));
+        Map m = Maps.newHashMap();
+        m.put("flightsResults", smallResults);
+        m.put("bigFlightsResults", flightsResults);
+        m.put("flightsResultsFilters", flightsResultsFilters);
+        m.put("dollarExchangeRate", dollarExchangeRate);
+        m.put("airlineArray", airlineArray);
+        m.put("params", request.params);
+        m.put("transactionId", transactionId);
+        m.put("state", state);
+        m.put("promotionDto", promotionDto);
+        m.put("tknumber", tknumber);
+        
+        renderHtml(template.render(m).replaceAll("\\s{2,}"," "));
+    }
+    
+    public static void indexDeprecated(String slugAgency) throws InterruptedException {
+        PromotionDto promotionDto;
+
+        if (!Strings.isNullOrEmpty(params.get("promotion"))) {
+            promotionDto = new Promotion().getBySlug(params.get("promotion"));
+        } else {
+            promotionDto = new Promotion().getDefault();
+        }
+        String dollarExchangeRate = TravelClubUtils.getDollarExchangeRate(promotionDto.agency.externalId);
+        String transactionId = params.get("transactionId");
+        
+        BFMSearch bfmSearch  = new BFMSearch();
+        bfmSearch.setOrigin(params.get("origin"));
+        bfmSearch.setDestination(params.get("destination"));
+        AirportDto destinationAirport = new Airport().getByIataCode(params.get("destination"));
+        AirportDto departureAirport = new Airport().getByIataCode(params.get("origin"));
+        bfmSearch.setCountry(destinationAirport.country);
+        bfmSearch.setCity(destinationAirport.iataCityCode);
+        bfmSearch.setDepartureCountry(departureAirport.country);
+        bfmSearch.setDepartureCity(departureAirport.iataCityCode);
+        bfmSearch.setDeparturedate(DateUtils.reformateDate(params.get("departuredate")));
+        bfmSearch.setReturndate(DateUtils.reformateDate(params.get("returndate")));
+        bfmSearch.addPassengerType("ADT", params.get("adultcount"));
+        bfmSearch.addPassengerType("C02", params.get("childrencount"));
+        bfmSearch.addPassengerType("INF", params.get("infantcount"));
+        bfmSearch.setCabin(params.get("cabin"));
+        bfmSearch.setPromotion(promotionDto.slug);
+        bfmSearch.setExternalId(promotionDto.agency.externalId);
+        bfmSearch.setDollarExchangeRate(dollarExchangeRate);
+        if (!Strings.isNullOrEmpty(transactionId)){
+        	bfmSearch.setTransactionId(transactionId);
+        }
+        JsonElement flightsResults = bfmSearch.process();
+        
+        //TODO: tener en cuenta en el display de filtros el nuevo objeto BigResult
         FlightsResultsFilters flightsResultsFilters = FlightsResultsFilters.processFlightsResults(flightsResults);
 
-        
+        //TODO: tener en cuenta en el display de aerolineas el nuevo objeto BigResult
         Collection airlineArray = getAirlinePriceArray(flightsResults);
 
-        //renderTemplate("FlightsDataController/flightsData.html", flightsResults, flightsResultsFilters, dollarExchangeRate, airlineArray);
-
-        
-        
         if (Strings.isNullOrEmpty(transactionId)){
+            //TODO: tener en cuenta en la obtencion de transactionId el nuevo objeto BigResult
         	transactionId = flightsResults.getAsJsonArray().get(0).getAsJsonObject().get("transactionId").getAsString();
         }
         String tknumber = params.get("tknumber");

@@ -72,10 +72,10 @@
                         #{checkout.seatsMap bfmResultItem:bfmResultItem /}
                     #{/if}
                     #{checkout.termsConditionBox/}
-                    #{checkout.hiddenInputBox bfmResultItem: bfmResultItem, promotion: promotionDto/}
+                    #{checkout.hiddenInputBox bfmResultItem: bfmResultItem, promotion: promotionDto, resultSegmentIda:resultSegmentIda, resultSegmentVuelta:resultSegmentVuelta/}
                 </div>
                 <div class="col-md-4">
-                    #{checkout.flightBox bfmResultItem:bfmResultItem/}
+                    #{checkout.flightBox bfmResultItem:bfmResultItem, resultSegmentIda:resultSegmentIda, resultSegmentVuelta:resultSegmentVuelta/}
                     #{checkout.summaryBox pricing:bfmResultItem.pricing, pricingCLP:bfmResultItem.pricingCLP, selectedCurrency:selectedCurrency/}
 
                     #{list items:bfmResultItem.refoundRuleTexts, as:'refoundRuleText'}
@@ -89,7 +89,6 @@
                    	#{/if}
 
                     #{checkout.airRules airRulesResultList:airRulesResultList/}
-                    
                     
                 </div>
                 #{if params.promotion == "traveldelta"}
@@ -189,19 +188,6 @@
 		$( ".clppriceCon" ).each(function( index ) {
             $(this).html(numberWithCommas($(this).html()));
         });
-// 		if (selectedCurrency=="clp"){
-// 			$( ".usdpriceCon" ).each(function( index ) {
-// 				var exchangeRate = parseFloat("${dollarExchangeRate}");
-// 				var numToChange = parseFloat($(this).html());
-// 				$(this).html(numberWithCommas(parseFloat(numToChange * exchangeRate).toFixed(0)));
-// 			});	
-// 			$( ".simbolCurrency" ).each(function( index ) {
-// 				$(this).html("$");
-// 			});	
-// 			$( ".clppriceCon" ).each(function( index ) {
-// 				$(this).html(numberWithCommas($(this).html()));
-// 			});	
-// 		}
 
 #{if state==null}
         $('#loginDiv').show();
@@ -212,7 +198,6 @@
             var selectedCurrency = "clp";
             var step = 'checkoutReload';
             // window.history.pushState("", "", window.location.href+transactionId);
-
             $('<iframe src="/auth/'+transactionId+'/'+selectedCurrency+'/'+agencyId+'/'+agencySlug+'/'+step+'" frameborder="0" style="padding-left: 50px; position: relative; top: -100px;" width="500" height="500" scrolling="no" id="myFrame"></iframe>').appendTo('.loginModalBody');
             $('#modalLogin').modal('show');
         });
