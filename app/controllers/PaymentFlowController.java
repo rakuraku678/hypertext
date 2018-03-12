@@ -18,6 +18,8 @@ import dto.CheckoutPostDto;
 import dto.StateDto;
 import org.joda.time.DateTime;
 import org.joda.time.Minutes;
+
+import play.Logger;
 import play.Play;
 import play.cache.Cache;
 import play.mvc.Controller;
@@ -56,12 +58,9 @@ public class PaymentFlowController extends Controller {
         JsonElement resultSegmentIda = new JsonParser().parse(params.get("resultSegmentIda"));
         JsonElement resultSegmentVuelta = new JsonParser().parse(params.get("resultSegmentVuelta"));
         
-        System.out.println("resultSegmentIda: "+resultSegmentIda.toString());
-        System.out.println("==========================");
-        System.out.println("resultSegmentVuelta: "+resultSegmentVuelta.toString());
-        
-        
-        
+        Logger.info("resultSegmentIda: "+resultSegmentIda.toString(),"DESARROLLO");
+        Logger.info("==========================","DESARROLLO");
+        Logger.info("resultSegmentVuelta: "+resultSegmentVuelta.toString(),"DESARROLLO");
         
         String selectedCurrency = params.get("selectedCurrency");
         String dollarExchangeRate = TravelClubUtils.getDollarExchangeRate(promotionDto.agency.externalId);
