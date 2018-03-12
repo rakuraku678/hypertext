@@ -131,7 +131,44 @@
 
 <script>
 
+
+
+function checkFlightsVisibility() {
+	
+	$(".ticketBaxer").each(function( index ) {
+		var oneVisible = false;
+		var segments = $(this).find('.segmentBaxerIda');
+		$(segments).each(function( index ) {
+			if ($(this).is(':visible')){
+				oneVisible = true;
+				return;
+			}
+		});
+		
+		if (!oneVisible) {
+			$(this).hide();
+		}
+	});
+	
+	$(".ticketBaxer").each(function( index ) {
+		var oneVisible = false;
+		var segments = $(this).find('.segmentBaxerVuelta');
+		$(segments).each(function( index ) {
+			if ($(this).is(':visible')){
+				oneVisible = true;
+				return;
+			}
+		});
+		
+		if (!oneVisible) {
+			$(this).hide();
+		}
+	});
+	
+}
+
 $(document).ready(function() {
+	
 	
 	$('#aplFiltrosHorarios').click(function() {
         
@@ -141,26 +178,49 @@ $(document).ready(function() {
         var vueltaHorarioLeft = parseInt($("#vueltaHorarioLeft").html().replace(":",''));
         var vueltaHorarioRight = parseInt($("#vueltaHorarioRight").html().replace(":",''));
         
-        $(".ticketBaxer").each(function( index ) {
+        $(".segmentBaxerIda").each(function( index ) {
         	var departureTime = parseInt($(this).data("departuretime").replace(":",''));
         	var returnTime = parseInt($(this).data("returntime").replace(":",''));
-        	if (departureTime>=idaHorarioLeft && departureTime<=idaHorarioRight && returnTime>=vueltaHorarioLeft && returnTime<=vueltaHorarioRight) {
+        	if (departureTime>=idaHorarioLeft && departureTime<=idaHorarioRight) {
         		 $(this).show();
         	}
         	else {
         		$(this).hide();
         	}
         });
+        
+        $(".segmentBaxerVuelta").each(function( index ) {
+        	var departureTime = parseInt($(this).data("departuretime").replace(":",''));
+        	var returnTime = parseInt($(this).data("returntime").replace(":",''));
+        	if (returnTime>=vueltaHorarioLeft && returnTime<=vueltaHorarioRight) {
+        		 $(this).show();
+        	}
+        	else {
+        		$(this).hide();
+        	}
+        });
+        
+        
         checkEmptyFilterResult();
+        checkFlightsVisibility();
     });
 	
 	$('#aplFiltrosDur').click(function() {
 		var idaDuracion = parseInt($('#startDur').val());
 		var vueltaDuracion = parseInt($('#endDur').val());
-		 $(".ticketBaxer").each(function( index ) {
+		 $(".segmentBaxerIda").each(function( index ) {
 	        	var departureElapsedTime = parseInt($(this).data("departureelapsedtime"));
+	        	if (idaDuracion>=departureElapsedTime) {
+	        		 $(this).show();
+	        	}
+	        	else {
+	        		$(this).hide();
+	        	}
+	     });
+		 
+		 $(".segmentBaxerVuelta").each(function( index ) {
 	        	var returnElapsedTime = parseInt($(this).data("returnelapsedtime"));
-	        	if (idaDuracion>=departureElapsedTime && vueltaDuracion>=returnElapsedTime) {
+	        	if (vueltaDuracion>=returnElapsedTime) {
 	        		 $(this).show();
 	        	}
 	        	else {
@@ -168,6 +228,7 @@ $(document).ready(function() {
 	        	}
 	     });
         checkEmptyFilterResult();
+        checkFlightsVisibility();
 	});
 	
 	$('.aeroChkDeparture').change(function() {
@@ -184,6 +245,7 @@ $(document).ready(function() {
 			 	}
 		 });
         checkEmptyFilterResult();
+        checkFlightsVisibility();
    });
 	
 	$('.aeroChkReturn').change(function() {
@@ -200,6 +262,7 @@ $(document).ready(function() {
 			 }
 		 });
         checkEmptyFilterResult();
+        checkFlightsVisibility();
     });
 });
 var checkEmptyFilterResult = function (){

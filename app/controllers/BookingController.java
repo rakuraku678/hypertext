@@ -19,8 +19,9 @@ public class BookingController extends Controller {
     private static final String APIALIANZA = Play.configuration.getProperty("apiAlianza.url");
 
     public static void startBooking(String body) throws IOException {
-
+    	
         JsonElement bodyJsonElement = new JsonParser().parse(body);
+
         JsonArray passengersArray = bodyJsonElement.getAsJsonObject().get("passengers").getAsJsonArray();
         JsonArray cleanPassengersArray = new JsonArray();
         for (int i = 0; i < passengersArray.size(); i++) {
@@ -58,6 +59,7 @@ public class BookingController extends Controller {
             jsonEl.addProperty("dateOfBirth", DateUtils.reformateDate(passengersArray.get(i).getAsJsonObject().get("dateOfBirth").getAsString(), "dd/MM/yyyy", "yyyy-MM-dd"));
             cleanPassengersArray.add(jsonEl);
         }
+
 
         bodyJsonElement.getAsJsonObject().remove("passengers");
         bodyJsonElement.getAsJsonObject().add("passengers", cleanPassengersArray);
@@ -264,6 +266,7 @@ public class BookingController extends Controller {
         String url = APIALIANZA + rut;
         System.out.println(url);
         WS.WSRequest request = WS.url(url);
+
 
         WS.HttpResponse response = request.get();
         // fix for non escaped json By Mockup Api

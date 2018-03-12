@@ -23,12 +23,12 @@
 		data-returnElapsedTime="${returnElapsedTimeEX}" 
 		data-returntime="$_flightsResults.get(0).returnSegment.departureTime.getAsString()}" 
 		data-departuretime="${_flightsResults.get(0).departureSegment.departureTime.getAsString()}" 
-		data-price="${_flightsResults.get(0).pricing.totalPassengerFare.getAsString()}"
-		data-airline="${_flightsResults.get(0).departureSegment.detail.get(0).operatingAirlineCode.getAsString()}"
-        	data-marketingAirline="${_flightsResults.get(0).departureSegment.detail.get(0).marketingAirline.getAsString()}"
+		data-price="${_flight.pricing.totalPassengerFare.getAsString()}"
+		data-airline="${_flight.idaAirSearchSegments.get(0).airlinesCodes.get(0).getAsString()}"
+        data-marketingAirline="${_flight.idaAirSearchSegments.get(0).marketingAirlinesCodes.get(0).getAsString()}"
 		data-escala="${connectionsDepartureCount}"
 		data-returnEscala="${connectionsReturnCount}" style="min-height: ${baxerHeight}">
-    <form class="form-ticket" action="@{PaymentFlowController.index}" method="post" data-tknumber="${_tknumber}">
+    <form class="form-ticket" id="fnumber${_flightNumber}" action="@{PaymentFlowController.index}" method="post" data-tknumber="${_tknumber}">
     	<input type="hidden" name="selectedCurrency" class="selCurrency" value="usd" id="hdnSelectedCurrency"/>
     	
         <div class="col-md-9 info-flight">
@@ -50,23 +50,17 @@
                         </li>
                     </ul>
                 </li>
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                *{ACA EMPIEZA EL BAILE COSMICO}*
                 #{list items:_flight.idaAirSearchSegments, as:'segment'}
                 <li class="txt-view-detail">
-                    <ul>
-                    	<input type="radio" name="elRADIOBUTTTTTTONONONASASNASONNASONDASKFJLKFJLJKHKGHGHGGGGGGGGGGGGGGGGGGGGGGGGGGGGHHHHHHHHHHHHH" />
-                        <li>
+                 				%{
+                                    connectionsCount = segment.flightsCount.getAsInt() - 1;
+                                    stopsQtySignal = (segment.detail.inject(0, { sum, value -> sum + value.stopQuantity?.getAsInt() }) > 0)?"*":""
+                                }%
+                    <ul class="segmentBaxerIda" data-departuretime="${segment.departureTime.getAsString()}" data-returntime="${segment.returnTime.getAsString()}"
+                    							data-departureelapsedtime="${segment.elapsedTime.getAsInt()}" data-escalas="${connectionsCount}">
+                    	
+                    	<input type="radio" name="resultSegmentIda" value="${segment.toString()}" class="r${_flightNumber}" #{if segment_index==1} checked="checked" #{/if} />
+                        <li style="width:10%;">
                             <label style="font-weight: 500;">
                                 #{list items:segment.detail.get(0).marketingAirline, as:"airlineCode"}
                                 	#{airlineLogo carriersCode:airlineCode?.getAsString().toLowerCase(), carriersName: airlineCode /}
@@ -74,15 +68,11 @@
                                 #{/list}
                             </label>
                         </li>
-                        <li class="hour-of-flight">
+						<li class="hour-of-flight" style="width: 15% !important;">
                             <span>${segment.departureTime.getAsString()}</span>
                         </li>
                         <li class="stops-route">
                             <a type="button" data-toggle="collapse" data-target="#departureSegment${_flight.sequenceNumber.getAsString()}" aria-expanded="false" aria-controls="collapseExample" class="link-detail-desktop">
-                                %{
-                                    connectionsCount = segment.flightsCount.getAsInt() - 1;
-                                    stopsQtySignal = (segment.detail.inject(0, { sum, value -> sum + value.stopQuantity?.getAsInt() }) > 0)?"*":""
-                                }%
                             #{if connectionsCount == 0 }
                                 <span class="stop-txt">Directo${stopsQtySignal}</span>
                                 <span class="line-route"></span>
@@ -100,7 +90,7 @@
                             #{/elseif}
                             </a>
                         </li>
-                        <li class="hour-of-flight">
+                        <li class="hour-of-flight" style="width: 15% !important;">
                             <span>${segment.returnTime.getAsString()}</span>
                             #{daysDifference departure:segment.departureDate, arrival: segment.returnDate/}
                         </li>
@@ -113,16 +103,13 @@
                             <span>&{"%dh %02dm", departureElapsedHours, departureElapsedMinutes}</span>
                         </li>
                         <li class="detail" style="margin: 0px;">
-                            <a id="departureSegment${_flight.sequenceNumber.getAsString()}Button" type="button" data-toggle="collapse" data-target="#departureSegment${_flight.sequenceNumber.getAsString()}" aria-expanded="false" aria-controls="collapseExample" class="link-detail-desktop" style="font-weight: bold;">
+                            <a id="departureSegment${_flight.sequenceNumber.getAsString()}_${segment_index}Button" type="button" data-toggle="collapse" data-target="#departureSegment${_flight.sequenceNumber.getAsString()}_${segment_index}" aria-expanded="false" aria-controls="collapseExample" class="link-detail-desktop" style="font-weight: bold;">
                                 Ver detalle
                             </a>
-                            <a data-toggle="modal" data-target="#detailModalFlight${_flight.sequenceNumber.getAsString()}" class="link-detail-mobile">detalle</a>
-                            
-                            
-                            
+                            <a data-toggle="modal" data-target="#detailModalFlight${_flight.sequenceNumber.getAsString()}_${segment_index}" class="link-detail-mobile">detalle</a>
                             
                             <!-- Modal -->
-							<div class="modal fade" id="detailModalFlight${_flight.sequenceNumber.getAsString()}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="detailModalFlight${_flight.sequenceNumber.getAsString()}_${segment_index}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 							  <div class="modal-dialog" role="document">
 							    <div class="modal-content info-flight">
 							      <div class="modal-header">
@@ -130,11 +117,9 @@
 							        <h4 class="modal-title" id="myModalLabel">Detalle del Vuelo</h4>
 							      </div>
 							      <div class="modal-body txt-view-detail">
-				                  *{
-				                            #{list items:segment, as:'flightSegment'}
+  										#{list items:segment, as:'flightSegment'}
 				                           		 #{modalDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes: _flightsResults.get(0).pricing.bookingCodes/}
-				                            #{/list}
-	                                }*
+				                        #{/list}
 	                                    <!-- END MODAL BODY-->
 							      </div>
 							    </div>
@@ -145,36 +130,17 @@
                             
                             
                         </li>
-
-                        <div class="collapse" id="departureSegment${_flight.sequenceNumber.getAsString()}">
-                           *{
+                        <div class="collapse" id="departureSegment${_flight.sequenceNumber.getAsString()}_${segment_index}">
+                           
                             #{list items:segment, as:'flightSegment'}
-                                #{flightsItemDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes: _flightsResults.get(0).pricing.bookingCodes/}
+                                #{flightsItemDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes: _flightsResults.get(0).pricing.bookingCodes,
+                                	baggageInfoList: _flight.baggageInformationDtoList, meals:_flight.pricing.meals, isDeparture:true, startSegmentCount: flightSegment.flightsCount.getAsInt()/}
                             #{/list}
-                            }*
                         </div>
                     </ul>
                 </li>
                 
                  #{/list}
-                 
-                *{ACA TERMINA EL BAILE COSMICO}*
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
                 <li class="txt-airport-date">
                     <ul>
                         <li>
@@ -192,24 +158,31 @@
                         </li>
                     </ul>
                 </li>
+       
+                
+                #{list items:_flight.vueltaAirSearchSegments, as:'segment'}
                 <li class="txt-view-detail">
-                    <ul>
-                        <li>
+                			%{
+                                connectionsCount = segment.flightsCount.getAsInt() - 1;
+                            }%
+                    <ul class="segmentBaxerVuelta" data-departuretime="${segment.departureTime.getAsString()}" data-returntime="${segment.returnTime.getAsString()}" 
+                    							   data-returnelapsedtime="${segment.elapsedTime.getAsInt()}"  data-escalas="${connectionsCount}">
+                    	<input type="radio" name="resultSegmentVuelta" value="${segment.toString()}" class="r${_flightNumber}" #{if segment_index==1} checked="checked" #{/if}/>
+                    	
+                        <li style="width:10%;">
                             <label style="font-weight: 500;">
-                                #{list items:_flightsResults.get(0).returnSegment.detail.get(0).marketingAirline, as:"airlineCode"}
+                                #{list items:segment.detail.get(0).marketingAirline, as:"airlineCode"}
                                 	#{airlineLogo carriersCode:airlineCode?.getAsString().toLowerCase(), carriersName: airlineCode /}
                                     ${_flightsResultsFilters?.mktCarriersCodesXNames?.get(airlineCode.getAsString())}
                                 #{/list}
                             </label>
                         </li>
-                        <li class="hour-of-flight">
-                            <span>${_flightsResults.get(0).returnSegment.departureTime.getAsString()}</span>
+                        <li class="hour-of-flight" style="width: 15% !important;">
+                            <span>${segment.departureTime.getAsString()}</span>
                         </li>
                         <li class="stops-route">
                             <a type="button" data-toggle="collapse" data-target="#returnSegment${_flight.sequenceNumber.getAsString()}" aria-expanded="false" aria-controls="collapseExample2" class="link-detail-desktop">
-                            %{
-                                connectionsCount = _flightsResults.get(0).returnSegment.flightsCount.getAsInt() - 1;
-                            }%
+                            
                             #{if connectionsCount == 0 }
                                 <span class="stop-txt">Directo</span>
                                 <span class="line-route"></span>
@@ -227,26 +200,26 @@
                             #{/if}
                             </a>
                         </li>
-                        <li class="hour-of-flight">
-                            <span>${_flightsResults.get(0).returnSegment.returnTime.getAsString()}</span>
-                            #{daysDifference departure:_flightsResults.get(0).returnSegment.departureDate, arrival: _flightsResults.get(0).returnSegment.returnDate/}
+                        <li class="hour-of-flight" style="width: 15% !important;">
+                            <span>${segment.returnTime.getAsString()}</span>
+                            #{daysDifference departure:segment.departureDate, arrival: segment.returnDate/}
                         </li>
                         <li class="time">
                         %{
-                            returnElapsedTime = _flightsResults.get(0).returnSegment.elapsedTime.getAsInt();
+                            returnElapsedTime = segment.elapsedTime.getAsInt();
                             int returnElapsedHours = returnElapsedTime / 60;
                             int returnElapsedMinutes = returnElapsedTime % 60;
                             }%
                             <span>&{"%dh %02dm", returnElapsedHours, returnElapsedMinutes}</span>
                         </li>
-                        <li class="detail">
-                            <a id="returnSegment${_flight.sequenceNumber.getAsString()}Button" type="button" data-toggle="collapse" data-target="#returnSegment${_flight.sequenceNumber.getAsString()}" aria-expanded="false" aria-controls="collapseExample2" class="link-detail-desktop" style="font-weight: bold;">
+                        <li class="detail" style="margin:0px;">
+                            <a id="returnSegment${_flight.sequenceNumber.getAsString()}_${segment_index}Button" type="button" data-toggle="collapse" data-target="#returnSegment${_flight.sequenceNumber.getAsString()}_${segment_index}" aria-expanded="false" aria-controls="collapseExample2" class="link-detail-desktop" style="font-weight: bold;">
                                 Ver detalle
                             </a>
-                             <a data-toggle="modal" data-target="#detailModalFlight2${_flight.sequenceNumber.getAsString()}" class="link-detail-mobile">detalle</a>
+                             <a data-toggle="modal" data-target="#detailModalFlight2${_flight.sequenceNumber.getAsString()}_${segment_index}" class="link-detail-mobile">detalle</a>
                              
                             <!-- Modal -->
-							<div class="modal fade" id="detailModalFlight2${_flight.sequenceNumber.getAsString()}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+							<div class="modal fade" id="detailModalFlight2${_flight.sequenceNumber.getAsString()}_${segment_index}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 							  <div class="modal-dialog" role="document">
 							    <div class="modal-content info-flight">
 							      <div class="modal-header">
@@ -254,9 +227,10 @@
 							        <h4 class="modal-title" id="myModalLabel">Detalle del Vuelo</h4>
 							      </div>
 							      <div class="modal-body txt-view-detail">
-				                            #{list items:_flightsResults.get(0).returnSegment, as:'flightSegment'}
+				                            #{list items:segment, as:'flightSegment'}
 				                           		 #{modalDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes: _flightsResults.get(0).pricing.bookingCodes/}
 				                            #{/list}
+				                     
 	                                    <!-- END MODAL BODY-->
 							      </div>
 							    </div>
@@ -265,14 +239,20 @@
 							
 							
                         </li>
-                        </li>
-                        <div class="collapse" id="returnSegment${_flight.sequenceNumber.getAsString()}">
-                            #{list items:_flightsResults.get(0).returnSegment, as:'flightSegment'}
-                                #{flightsItemDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes:_flightsResults.get(0).pricing.bookingCodes/}
+                        
+                        <div class="collapse" id="returnSegment${_flight.sequenceNumber.getAsString()}_${segment_index}">
+                            
+                            #{list items:segment, as:'flightSegment'}
+                                #{flightsItemDetail flightSegment:flightSegment, flightsResultsFilters:_flightsResultsFilters, bookingCodes:_flightsResults.get(0).pricing.bookingCodes,
+                                	baggageInfoList: _flight.baggageInformationDtoList, meals:_flight.pricing.meals, isDeparture:false, startSegmentCount: segment.flightsCount.getAsInt()/}
                             #{/list}
+                            
                         </div>
                     </ul>
                 </li>
+                
+                 #{/list}
+                
                 <li class="info-detail-promo" id="bigImgPromoLi">
                 	#{if _flight.pricing.urlBannerImage!=null && !_flight.pricing.urlBannerImage.equals("")}
 	               		<img style="height:auto;" src="${utils.CloudinaryUtils.getUrl(_flight.pricing.urlBannerImage.getAsString(), 'q_90,c_fill,h_130', '')}">
@@ -356,11 +336,11 @@
             <div class="text-center box-ticket-submit">
                 <input type="hidden" name="promotion" value="${_promotion}">
                 <input type="hidden" name="bfmResultItem" value="${_flight.toString()}">
-                <input type="submit" style="margin-top:20px;" class="btn btn-ticket btnSelFlight" value="Seleccionar">
+                <input type="submit" style="margin-top:20px;" class="btn btn-ticket btnSelFlight" data-flightnumber="${_flightNumber}" value="Seleccionar">
+                <input type="hidden" name="pricingElement" value="${_flight.pricing.toString()}"/>
                 *{<a class="btn btn-ticket" href="@{PaymentFlowController.index}">Comprar</a>}*
 
             </div>
         </div>
     </form>
 </div>
-                

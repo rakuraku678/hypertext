@@ -748,20 +748,24 @@ function onReadyFilters() {
 	var maxDeparture = 0;
 	var maxReturn = 0;
        
-	$(".ticketBaxer").each(function( index ) {
+	$(".segmentBaxerIda").each(function( index ) {
      	var departureElapsedTime = parseInt($(this).data("departureelapsedtime"));
-     	var returnElapsedTime = parseInt($(this).data("returnelapsedtime"));
-     	
 
      	if (departureElapsedTime>maxDeparture){
      		maxDeparture = departureElapsedTime;
      	}
-     	if (returnElapsedTime>maxReturn){
+	});
+	
+	$(".segmentBaxerVuelta").each(function( index ) {
+     	var returnElapsedTime = parseInt($(this).data("returnelapsedtime"));
+ 
+      	if (returnElapsedTime>maxReturn){
      		maxReturn = returnElapsedTime;
      	}
 	});
-	
-     
+     	
+     	
+     	
 	var durationSliderStart = $('.duration-start-slider')[0];
     var durationSliderEnd = $('.duration-end-slider')[0];
      
