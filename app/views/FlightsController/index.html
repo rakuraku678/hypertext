@@ -6,12 +6,12 @@
 <section class="search-arrive">
     <article class="container-fluid">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 #{include "tags/searchBox.html" /}
                
                 <div id="filterContent"></div>
             </div>
-            <div class="col-md-8 tickets-arrives">
+            <div class="col-md-9 tickets-arrives">
                 <div id="errorMessage" style="display: none;" class="alert alert-warning  alert-dismissible" role="alert">
                 </div>
                 <div id="priceSuggestionMatrix" style="display: none"></div>
@@ -23,7 +23,7 @@
                 <div id="loading" style="display: none">#{preload departureCity:originCity, returnCity:destinationCity/}</div>
             </div>
         </div>
-    </article>    
+    </article>
 </section>
 
 
