@@ -75,9 +75,15 @@ $(document).ready(function() {
 	        checkFlightsVisibility();
 		}
     });
-    $("#allStops").html($('.ticketBaxer').length);
-	$("#directStop").html($("ul").find("[data-escalas='0']").length);
-	$("#oneStop").html($("ul").find("[data-escalas='1']").length);
-	$("#twoStop").html($("ul").find("[data-escalas='2']").length);
+	
+	
+	var directStops = $("ul").find("[data-escalas='0']").length
+	var oneStop = $("ul").find("[data-escalas='1']").length;
+	var twoStops = $("ul").find("[data-escalas='2']").length;
+	var allStops = directStops + oneStop + twoStops;
+    $("#allStops").html(allStops);
+	$("#directStop").html(directStops);
+	$("#oneStop").html(oneStop);
+	$("#twoStop").html(twoStops);
 });
 </script>
