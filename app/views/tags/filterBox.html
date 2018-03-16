@@ -1,8 +1,8 @@
    *{ 
   <div class="active-filter" id="activeFilters">
   <h4>Filtros activos:</h4>
-  	#{list items:_flightsResultsFilters.carriers, as:'carriersKey'}
-  		<div class="box-active-filter"><span class="txt-filter-activer">${_flightsResultsFilters.carriersCodesXNames.get(carriersKey)}</span><i class="icon-close-filter"></i></div>
+  	#{list items:_flightsResultsFilters.mktcarriers, as:'carriersKey'}
+  		<div class="box-active-filter"><span class="txt-filter-activer">${_flightsResultsFilters.mktCarriersCodesXNames.get(carriersKey)}</span><i class="icon-close-filter"></i></div>
   	#{/list}
    
    *{ 
@@ -34,7 +34,7 @@
     #{/if}
 
     #{filters.stopsFilter/}
-    #{filters.carrierFilter carriers:_flightsResultsFilters.carriers, carriersNames: _flightsResultsFilters.carriersCodesXNames /}
+    #{filters.carrierFilter carriers:_flightsResultsFilters.mktcarriers, carriersNames: _flightsResultsFilters.mktCarriersCodesXNames /}
     #{filters.priceFilter/}
 
     <div class="box-filter hour-filter" id="hoursFilter">
