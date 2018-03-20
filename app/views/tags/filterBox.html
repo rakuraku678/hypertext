@@ -274,6 +274,10 @@ var checkEmptyFilterResult = function (){
         em.show();
         $('#flightSearchForm input[type="submit"]').attr('disabled', false);
     }
+    else {
+    	var em = $("#errorMessageBottom");
+    	em.hide();
+    }
 };
 var cleanFilters = function() {
     $("#clearCarriersFilter").prop('checked', true);
