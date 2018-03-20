@@ -42,12 +42,12 @@ $(document).ready(function() {
 	
 	$('.chkAerolinea').change(function() {
         if(!$(this).is(":checked")) {
-        	$("div").find("[data-airline='" +  $(this).val() + "']").hide();
+        	$("div").find("[data-marketingairline='" +  $(this).val() + "']").hide();
         	$('#clearCarriersFilter').prop('checked', false);
         	$("div").find("[data-filtervalue='" + "\""+ $(this).val() +"\"" + "']").remove();
         }
         else {
-        	$("div").find("[data-airline='" + $(this).val()  + "']").show();
+        	$("div").find("[data-marketingairline='" + $(this).val()  + "']").show();
         	$("#activeFilters").append('<div style="margin: 10px;" class="box-active-filter filter" data-filtervalue="'+ $(this).val()+'"><span class="txt-filter-activer">'+$(this).val()+'</span><i class="icon-close-filter"></i></div>');
         }
         checkEmptyFilterResult();
