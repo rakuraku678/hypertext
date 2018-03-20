@@ -346,8 +346,8 @@ function checkRut(rut) {
     valor = valor.replace('-','');
     
     // Aislar Cuerpo y Dígito Verificador
-    cuerpo = valor.slice(0,-1);
-    dv = valor.slice(-1).toUpperCase();
+    var cuerpo = valor.slice(0,-1);
+    var dv = valor.slice(-1).toUpperCase();
     
     // Formatear RUN
     rut.value = cuerpo + '-'+ dv
@@ -356,14 +356,14 @@ function checkRut(rut) {
     if(cuerpo.length < 7) {  rut.value = valor; return false;}
     
     // Calcular Dígito Verificador
-    suma = 0;
-    multiplo = 2;
+    var suma = 0;
+    var multiplo = 2;
     
     // Para cada dígito del Cuerpo
-    for(i=1;i<=cuerpo.length;i++) {
+    for(var i=1;i<=cuerpo.length;i++) {
     
         // Obtener su Producto con el Múltiplo Correspondiente
-        index = multiplo * valor.charAt(cuerpo.length - i);
+        var index = multiplo * valor.charAt(cuerpo.length - i);
         
         // Sumar al Contador General
         suma = suma + index;
@@ -374,7 +374,7 @@ function checkRut(rut) {
     }
     
     // Calcular Dígito Verificador en base al Módulo 11
-    dvEsperado = 11 - (suma % 11);
+    var dvEsperado = 11 - (suma % 11);
     
     // Casos Especiales (0 y K)
     dv = (dv == 'K')?10:dv;
