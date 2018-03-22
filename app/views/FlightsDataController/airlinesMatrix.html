@@ -29,21 +29,21 @@
 		<tr>
 		    <td>Directo</td>
 		    #{list items:airlineArray, as:'airlineBlock'}
-		    	<td style="cursor: pointer;" class="chkAerolineaMatrix" data-airlinename="${airlineBlock.airline}"> #{if airlineBlock?.price0!=null}<span class="simbolCurrency">US$</span><span class="usdTablePrice">${airlineBlock?.price0}</span> <span class="clppriceCon hidden"></span>#{/if} #{else} - #{/else}</td>
+		    	<td style="cursor: pointer;" class="chkAerolineaMatrix" data-stop="0" data-airlinename="${airlineBlock.airline}"> #{if airlineBlock?.price0!=null}<span class="simbolCurrency">US$</span><span class="usdTablePrice">${airlineBlock?.price0}</span> <span class="clppriceCon hidden clptdMatrix"></span>#{/if} #{else} - #{/else}</td>
 		    #{/list}
 		</tr>
 		
 		<tr>
 		    <td>1 escala</td>
 		    #{list items:airlineArray, as:'airlineBlock'}
-		    	<td style="cursor: pointer;" class="chkAerolineaMatrix" data-airlinename="${airlineBlock.airline}"> #{if airlineBlock?.price1!=null} <span class="simbolCurrency">US$</span><span class="usdTablePrice">${airlineBlock?.price1}</span><span class="clppriceCon hidden"></span> #{/if} #{else} - #{/else}</td>
+		    	<td style="cursor: pointer;" class="chkAerolineaMatrix" data-stop="1" data-airlinename="${airlineBlock.airline}"> #{if airlineBlock?.price1!=null} <span class="simbolCurrency">US$</span><span class="usdTablePrice">${airlineBlock?.price1}</span><span class="clppriceCon hidden clptdMatrix"></span> #{/if} #{else} - #{/else}</td>
 		    #{/list}
 		</tr>
 		
 		<tr>
 		    <td>2 escalas o más</td>
 		    #{list items:airlineArray, as:'airlineBlock'}
-		    	<td style="cursor: pointer;" class="chkAerolineaMatrix" data-airlinename="${airlineBlock.airline}"> #{if airlineBlock?.price2!=null} <span class="simbolCurrency">US$</span><span class="usdTablePrice">${airlineBlock?.price2}</span><span class="clppriceCon hidden"></span>#{/if} #{else} - #{/else}</td>
+		    	<td style="cursor: pointer;" class="chkAerolineaMatrix" data-stop="2" data-airlinename="${airlineBlock.airline}"> #{if airlineBlock?.price2!=null} <span class="simbolCurrency">US$</span><span class="usdTablePrice">${airlineBlock?.price2}</span><span class="clppriceCon hidden clptdMatrix"></span>#{/if} #{else} - #{/else}</td>
 		    #{/list}
 		</tr>
 	
@@ -59,15 +59,30 @@
 <script>
 
 	$(document).ready(function() {
+	
 		$('.chkAerolineaMatrix').click(function() {
 			$(".ticketBaxer").hide();
-			$("div").find("[data-airline='" +  $(this).data("airlinename") + "']").show();
+
 			$("div").find("[data-filtervalue='" + "\""+ $(this).data("airlinename") +"\"" + "']").remove();
 			
 			$('#clearCarriersFilter').prop('checked', false);
 			$(".chkAerolinea").prop('checked', false);
 			var airline = $(this).data("airlinename");
 			$('.chkAerolinea').filter(function(){return this.value==airline}).prop('checked', true);
+			$("div").find("[data-marketingairline='" +  $(this).data("airlinename") + "']").show(); 
+			
+			var escalafiltro = $(this).data("stop");
+			$("ul").find("[data-marketingairline='" +  $(this).data("airlinename") + "']").each(function() {
+				var escalas = $(this).data("escalas");
+	        	if (escalas==escalafiltro) {
+	        		 $(this).show();
+	        	}
+	        	else {
+	        		$(this).hide();
+	        	}
+			});
+			checkFlightsVisibility();
+			checkEmptyFilterResult();
 		});
 	});
 </script>

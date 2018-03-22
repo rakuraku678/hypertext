@@ -27,7 +27,28 @@ function findIndex(arr,element){
 function numberWithCommas(x) {
 	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
-
+function calculateAirlineMatrixPrices(){
+	$('.chkAerolineaMatrix').each(function() {
+		if ($(this).html()!=' - ') { 
+			var minPrice = parseFloat(999999999999);
+			var escalafiltro = $(this).data("stop");
+			
+			$("div [data-marketingairline='" +  $(this).data("airlinename") + "']").find('.superPrice').each(function() {
+				var superPrice = $(this).html().replaceAll('\\$','').replaceAll('\\.','');
+				var escala = $(this).closest('.ticketBaxer').data("escala");
+				if ( (minPrice > superPrice) && (escalafiltro == escala) ) {
+					minPrice = superPrice;
+				}
+			});
+			if (minPrice==999999999999){
+				$(this).html(" - ");
+			}
+			else {
+				$(this).find(".clptdMatrix").html(numberWithCommas(minPrice));
+			}
+		}
+	});
+}
 function showHighPriceOnMatrix(curr){
 	var replacePrice = "";
 	if (!$('.price').first().children().first().hasClass("hidden")) {
@@ -168,7 +189,8 @@ var changedCLP=false;
 	 		changedCLP = true;
         }
         calculateClpExchange();
-        showHighPriceOnMatrix();
+        
+        calculateAirlineMatrixPrices();
     }
 	function commaToPrices() {
 		$( ".clppriceCon" ).each(function( index ) {
@@ -189,7 +211,14 @@ var changedCLP=false;
         });
     }
 	
-    $(document).ready(function () {setClpExchange(); commaToPrices(); calculateClpExchange(); });
+	
+    $(document).ready(function () {
+    	
+    	setClpExchange(); 
+    	commaToPrices(); 
+    	calculateClpExchange();
+    	calculateAirlineMatrixPrices();
+    });
 
         
 	#{/if}
@@ -265,12 +294,12 @@ var changedCLP=false;
 	    	        });
 	    	    });
 	    #{/else}
-    
     });
     
 });
 
 	$(document).ready(function() {
+		
 		$(".btnSelFlight").click(function(event) {
 			event.preventDefault();
 			var flightNumber = $(this).data("flightnumber");
