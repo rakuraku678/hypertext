@@ -270,7 +270,7 @@ var checkEmptyFilterResult = function (){
     if (qty == 0){
         $("#errorMessageBottom div").remove();
         var em = $("#errorMessageBottom");
-        em.append('<div>Sin resultados, por favor, <a href="#" onClick="cleanFilters()">modifica tus opciones de filtro</a>.</div>');
+        em.append('<div>Sin resultados, por favor, <a href="#">modifica tus opciones de filtro</a>.</div>');
         em.show();
         $('#flightSearchForm input[type="submit"]').attr('disabled', false);
     }

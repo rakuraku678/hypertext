@@ -1,31 +1,36 @@
 package controllers;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.ParseException;
 import java.util.Collection;
 import java.util.Map;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
-import models.FlightsResultsFilters;
-import play.cache.Cache;
-import play.mvc.Controller;
-import play.mvc.Util;
-import play.templates.Template;
-import play.templates.TemplateLoader;
-import utils.ApiFlightsSdk.v1.*;
-import utils.CrossLoginUtils;
-import utils.DateUtils;
-import utils.TravelClubUtils;
-import utils.dtos.AirportDto;
-import utils.dtos.AlternateDatesDto;
-import utils.dtos.PromotionDto;
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import dto.StateDto;
+import models.FlightsResultsFilters;
+import play.cache.Cache;
+import play.mvc.Controller;
+import play.mvc.Util;
+import play.templates.Template;
+import play.templates.TemplateLoader;
+import utils.CrossLoginUtils;
+import utils.DateUtils;
+import utils.TravelClubUtils;
+import utils.ApiFlightsSdk.v1.Airport;
+import utils.ApiFlightsSdk.v1.BFMSearch;
+import utils.ApiFlightsSdk.v1.FlightsAltenateDates;
+import utils.ApiFlightsSdk.v1.LowFareHistory;
+import utils.ApiFlightsSdk.v1.Promotion;
+import utils.dtos.AirportDto;
+import utils.dtos.AlternateDatesDto;
+import utils.dtos.PromotionDto;
 
 public class FlightsDataController extends Controller {
 
@@ -185,6 +190,20 @@ public class FlightsDataController extends Controller {
             int layoverCountReturn = json.getAsJsonObject().get("returnSegment").getAsJsonObject().get("flightsCount").getAsInt() - 1;
             int layoverCount = Math.min(2, Math.max(layoverCountDeparture, layoverCountReturn));
             double price = json.getAsJsonObject().get("pricing").getAsJsonObject().get("adtTotalPrice").getAsDouble();
+            
+            if ((json.getAsJsonObject().get("pricingCLP").getAsJsonObject().get("adtTotalPrice").getAsDouble() > json.getAsJsonObject().get("pricingCLP").getAsJsonObject().get("adtTotalPrice").getAsDouble() 
+            		&& json.getAsJsonObject().get("pricing").getAsJsonObject().has("adtTotalPriceBeforeDiscount") && 
+            		json.getAsJsonObject().get("pricing").getAsJsonObject().get("adtTotalPriceBeforeDiscount").getAsDouble() != json.getAsJsonObject().get("pricing").getAsJsonObject().get("adtTotalPrice").getAsDouble() )
+             ||(json.getAsJsonObject().get("pricingCLP").getAsJsonObject().get("adtTotalPriceWithAllTaxes").getAsDouble() <= json.getAsJsonObject().get("pricingCLP").getAsJsonObject().get("adtTotalPrice").getAsDouble() 
+            		&& json.getAsJsonObject().get("pricing").getAsJsonObject().has("adtTotalPriceBeforeDiscount") && 
+            		json.getAsJsonObject().get("pricing").getAsJsonObject().get("adtTotalPriceBeforeDiscount").getAsDouble() != json.getAsJsonObject().get("pricing").getAsJsonObject().get("adtTotalPrice").getAsDouble()
+            		) ){																												
+            	price = Double.valueOf(json.getAsJsonObject().get("pricing").getAsJsonObject().get("adtTotalPriceString").getAsString());
+            }
+            else {
+            	price = Double.valueOf(json.getAsJsonObject().get("pricing").getAsJsonObject().get("adtTotalPriceWithAllTaxes").getAsString().replaceAll(",", "."));
+            }
+            
             String key = airlineCode;
 
             if (airlineMap.get(key) == null){

@@ -26,7 +26,7 @@
 		data-price="${_flight.pricing.totalPassengerFare.getAsString()}"
 		data-airline="${_flight.idaAirSearchSegments.get(0).airlinesCodes.get(0).getAsString()}"
         data-marketingAirline="${_flight.idaAirSearchSegments.get(0).marketingAirlinesCodes.get(0).getAsString()}"
-		data-escala="${connectionsDepartureCount}"
+		data-escala="${_flight.idaAirSearchSegments.get(0).flightsCount.getAsInt() - 1}"
 		data-returnEscala="${connectionsReturnCount}" style="min-height: ${baxerHeight}">
     <form class="form-ticket" id="fnumber${_flightNumber}" action="@{PaymentFlowController.index}" method="post" data-tknumber="${_tknumber}">
     	<input type="hidden" name="selectedCurrency" class="selCurrency" value="usd" id="hdnSelectedCurrency"/>
@@ -57,7 +57,7 @@
                                     stopsQtySignal = (segment.detail.inject(0, { sum, value -> sum + value.stopQuantity?.getAsInt() }) > 0)?"*":""
                                 }%
                     <ul class="segmentBaxerIda" data-departuretime="${segment.departureTime.getAsString()}" data-returntime="${segment.returnTime.getAsString()}"
-                    							data-departureelapsedtime="${segment.elapsedTime.getAsInt()}" data-escalas="${connectionsCount}">
+                    							data-departureelapsedtime="${segment.elapsedTime.getAsInt()}" data-escalas="${connectionsCount}" data-marketingairline="${segment.detail.get(0).marketingAirline.getAsString()}">
                     	
                     	<input type="radio" name="resultSegmentIda" value="${segment.toString()}" class="r${_flightNumber}" #{if segment_index==1} checked="checked" #{/if} />
                         <li style="width:20%;" id="liAirlineBaxer">
@@ -166,7 +166,8 @@
                                 connectionsCount = segment.flightsCount.getAsInt() - 1;
                             }%
                     <ul class="segmentBaxerVuelta" data-departuretime="${segment.departureTime.getAsString()}" data-returntime="${segment.returnTime.getAsString()}" 
-                    							   data-returnelapsedtime="${segment.elapsedTime.getAsInt()}"  data-escalas="${connectionsCount}">
+                    							   data-returnelapsedtime="${segment.elapsedTime.getAsInt()}"  data-escalas="${connectionsCount}" data-marketingairline="${segment.detail.get(0).marketingAirline.getAsString()}">
+                    							   
                     	<input type="radio" name="resultSegmentVuelta" value="${segment.toString()}" class="r${_flightNumber}" #{if segment_index==1} checked="checked" #{/if}/>
                     	
                         <li style="width:20%;" id="liAirlineBaxer">
@@ -285,13 +286,13 @@
             <span class="title">Precio por Adulto</span>
             #{if _flight.pricingCLP.adtTotalPriceWithAllTaxes.getAsDouble() > _flight.pricingCLP.adtTotalPrice.getAsDouble() && _flight.pricing.adtTotalPriceBeforeDiscount && _flight.pricing.adtTotalPriceBeforeDiscount != _flight.pricing.adtTotalPrice}
             <span class="price before-discount"><span class="usdpriceCon"><span class="simbolCurrency">US$</span>${_flight.pricing.adtTotalPriceWithAllTaxes?.getAsString()}</span><span class="clppriceCon hidden">${_flight.pricingCLP.adtTotalPriceWithAllTaxes?.getAsString()}</span></span>
-            <span class="price"><span class="usdpriceCon"><span class="simbolCurrency">US$</span>${_flight.pricing.adtTotalPriceString?.getAsString()}</span><span class="clppriceCon hidden">${_flight.pricingCLP.adtTotalPriceString?.getAsString()}</span></span>
+            <span class="price"><span class="usdpriceCon"><span class="simbolCurrency">US$</span>${_flight.pricing.adtTotalPriceString?.getAsString()}</span><span class="clppriceCon hidden superPrice">${_flight.pricingCLP.adtTotalPriceString?.getAsString()}</span></span>
             #{/if}
             #{elseif _flight.pricingCLP.adtTotalPriceWithAllTaxes.getAsDouble() <= _flight.pricingCLP.adtTotalPrice.getAsDouble() && _flight.pricing.adtTotalPriceBeforeDiscount && _flight.pricing.adtTotalPriceBeforeDiscount != _flight.pricing.adtTotalPrice}
-            <span class="price"><span class="usdpriceCon"><span class="simbolCurrency">US$</span>${_flight.pricing.adtTotalPriceString?.getAsString()}</span><span class="clppriceCon hidden">${_flight.pricingCLP.adtTotalPriceString?.getAsString()}</span></span>
+            <span class="price"><span class="usdpriceCon"><span class="simbolCurrency">US$</span>${_flight.pricing.adtTotalPriceString?.getAsString()}</span><span class="clppriceCon hidden superPrice">${_flight.pricingCLP.adtTotalPriceString?.getAsString()}</span></span>
             #{/elseif}
             #{else}
-            <span class="price"><span class="usdpriceCon"><span class="simbolCurrency">US$</span>${_flight.pricing.adtTotalPriceWithAllTaxes?.getAsString()}</span><span class="clppriceCon hidden">${_flight.pricingCLP.adtTotalPriceWithAllTaxes?.getAsString()}</span></span>
+            <span class="price"><span class="usdpriceCon"><span class="simbolCurrency">US$</span>${_flight.pricing.adtTotalPriceWithAllTaxes?.getAsString()}</span><span class="clppriceCon hidden superPrice">${_flight.pricingCLP.adtTotalPriceWithAllTaxes?.getAsString()}</span></span>
             #{/else}
            
             <ul class="detail-price">
