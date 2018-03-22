@@ -29,21 +29,21 @@
 		<tr>
 		    <td>Directo</td>
 		    #{list items:airlineArray, as:'airlineBlock'}
-		    	<td style="cursor: pointer;" class="chkAerolineaMatrix" data-stop="0" data-airlinename="${airlineBlock.airline}"> #{if airlineBlock?.price0!=null}<span class="simbolCurrency">US$</span><span class="usdTablePrice">${airlineBlock?.price0}</span> <span class="clppriceCon hidden clptdMatrix"></span>#{/if} #{else} - #{/else}</td>
+		    	<td style="cursor: pointer;" #{if airlineBlock?.price0!=null} class="chkAerolineaMatrix" #{/if}data-stop="0" data-airlinename="${airlineBlock.airline}"> #{if airlineBlock?.price0!=null}<span class="simbolCurrency">US$</span><span class="usdTablePrice">${airlineBlock?.price0}</span> <span class="clppriceCon hidden clptdMatrix"></span>#{/if} #{else} - #{/else}</td>
 		    #{/list}
 		</tr>
 		
 		<tr>
 		    <td>1 escala</td>
 		    #{list items:airlineArray, as:'airlineBlock'}
-		    	<td style="cursor: pointer;" class="chkAerolineaMatrix" data-stop="1" data-airlinename="${airlineBlock.airline}"> #{if airlineBlock?.price1!=null} <span class="simbolCurrency">US$</span><span class="usdTablePrice">${airlineBlock?.price1}</span><span class="clppriceCon hidden clptdMatrix"></span> #{/if} #{else} - #{/else}</td>
+		    	<td style="cursor: pointer;" #{if airlineBlock?.price1!=null} class="chkAerolineaMatrix" #{/if}data-stop="1" data-airlinename="${airlineBlock.airline}"> #{if airlineBlock?.price1!=null} <span class="simbolCurrency">US$</span><span class="usdTablePrice">${airlineBlock?.price1}</span><span class="clppriceCon hidden clptdMatrix"></span> #{/if} #{else} - #{/else}</td>
 		    #{/list}
 		</tr>
 		
 		<tr>
 		    <td>2 escalas o más</td>
 		    #{list items:airlineArray, as:'airlineBlock'}
-		    	<td style="cursor: pointer;" class="chkAerolineaMatrix" data-stop="2" data-airlinename="${airlineBlock.airline}"> #{if airlineBlock?.price2!=null} <span class="simbolCurrency">US$</span><span class="usdTablePrice">${airlineBlock?.price2}</span><span class="clppriceCon hidden clptdMatrix"></span>#{/if} #{else} - #{/else}</td>
+		    	<td style="cursor: pointer;" #{if airlineBlock?.price2!=null} class="chkAerolineaMatrix" #{/if}data-stop="2" data-airlinename="${airlineBlock.airline}"> #{if airlineBlock?.price2!=null} <span class="simbolCurrency">US$</span><span class="usdTablePrice">${airlineBlock?.price2}</span><span class="clppriceCon hidden clptdMatrix"></span>#{/if} #{else} - #{/else}</td>
 		    #{/list}
 		</tr>
 	
