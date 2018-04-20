@@ -98,24 +98,20 @@ function calculateClpExchange() {
     $(document).ready(function () {
     	calculateClpExchange();
     	
-		$('.chkAerolineaMatrix').each(function() {
-			if ($(this).html()!=' - ') { 
-				var minPrice = parseFloat(999999999999);
-				var escalafiltro = $(this).data("stop");
-				
-				$("div [data-marketingairline='" +  $(this).data("airlinename") + "']").find('.superPrice').each(function() {
-					var superPrice = $(this).html().replaceAll('\\$','').replaceAll('\\.','');
-					var escala = $(this).closest('.ticketBaxer').data("escala");
-					if ( (minPrice > superPrice) && (escalafiltro == escala) ) {
-						minPrice = superPrice;
+		$( ".chkAerolineaMatrix" ).each(function( index ) {
+			
+			var airline = $(this).data("airlinename");
+			if ($(this).text()!=' - '){
+				var minPrice = 99999999;
+				$(".ticketBaxer").each(function() {
+					if (airline==$(this).data("marketingairline")) {
+						var price = $(".superPrice",this).html().substr(1).replaceAll('\\.','');
+						if (parseInt(price)<minPrice){
+							minPrice=price;
+						}
 					}
 				});
-				if (minPrice==999999999999){
-					$(this).html(" - ");
-				}
-				else {
-					$(this).find(".clptdMatrix").html(numberWithCommas(minPrice));
-				}
+				$('.clppriceCon',this).html(numberWithCommas(minPrice));
 			}
 		});
     });

@@ -262,7 +262,6 @@ public class FlightsDataController extends Controller {
     
     public static void priceAirlinesMatrix(String airlinesPrices, String carriersNames){
         JsonArray airlineArray = new JsonParser().parse(airlinesPrices).getAsJsonArray();
-        System.out.println(airlinesPrices);
         renderTemplate("FlightsDataController/airlinesMatrix.html", airlineArray);
     }
     
