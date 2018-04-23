@@ -41,13 +41,26 @@ function createFilter(){
 $(document).ready(function() {
 	
 	$('.chkAerolinea').change(function() {
+		var airline =  $(this).val();
         if(!$(this).is(":checked")) {
-        	$("div").find("[data-marketingairline='" +  $(this).val() + "']").hide();
+        	$(".ticketBaxer").each(function() {
+        		var allStopsI = $(this).data("allstopsi");
+				var allStopsV = $(this).data("allstopsv");
+				if ( allStopsI.indexOf(airline)!=-1 || allStopsV.indexOf(airline)!=-1) {
+					$(this).hide();
+				}
+        	});
         	$('#clearCarriersFilter').prop('checked', false);
         	$("div").find("[data-filtervalue='" + "\""+ $(this).val() +"\"" + "']").remove();
         }
         else {
-        	$("div").find("[data-marketingairline='" + $(this).val()  + "']").show();
+        	$(".ticketBaxer").each(function() {
+        		var allStopsI = $(this).data("allstopsi");
+				var allStopsV = $(this).data("allstopsv");
+				if ( allStopsI.indexOf(airline)!=-1 || allStopsV.indexOf(airline)!=-1) {
+					$(this).show();
+				}
+        	});
         	$("#activeFilters").append('<div style="margin: 10px;" class="box-active-filter filter" data-filtervalue="'+ $(this).val()+'"><span class="txt-filter-activer">'+$(this).val()+'</span><i class="icon-close-filter"></i></div>');
         }
         checkEmptyFilterResult();

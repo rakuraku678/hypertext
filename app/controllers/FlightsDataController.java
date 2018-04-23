@@ -1,12 +1,12 @@
 package controllers;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.text.ParseException;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -74,8 +74,10 @@ public class FlightsDataController extends Controller {
         FlightsResultsFilters flightsResultsFilters = FlightsResultsFilters.processFlightsResults(smallResults);
 
         //TODO: tener en cuenta en el display de aerolineas el nuevo objeto BigResult
-        Collection airlineArray = getAirlinePriceArray(smallResults);
+        Map<String,String> allStops = getAllStops(flightsResults);
 
+        Collection airlineArray = getAirlinePriceArray(smallResults);
+        
         if (Strings.isNullOrEmpty(transactionId)){
             //TODO: tener en cuenta en la obtencion de transactionId el nuevo objeto BigResult
         	transactionId = smallResults.getAsJsonArray().get(0).getAsJsonObject().get("transactionId").getAsString();
@@ -105,11 +107,53 @@ public class FlightsDataController extends Controller {
         m.put("state", state);
         m.put("promotionDto", promotionDto);
         m.put("tknumber", tknumber);
+        m.put("allStops", allStops);
         
         renderHtml(template.render(m).replaceAll("\\s{2,}"," "));
     }
     
-    public static void indexDeprecated(String slugAgency) throws InterruptedException {
+    private static Map<String,String> getAllStops(JsonElement flightsResults) {
+    	Map<String,String> ticketsAndStops = Maps.newHashMap();
+    	JsonArray flightsArray = flightsResults.getAsJsonArray();
+    	int i = 1;
+    	for (JsonElement flight : flightsArray) {
+    		JsonArray segmentArray = flight.getAsJsonObject().get("idaAirSearchSegments").getAsJsonArray();
+    		
+    		StringBuilder airlineBuilder = new StringBuilder();
+    		for (JsonElement segmentElement : segmentArray) {
+    			String airlineName = segmentElement.getAsJsonObject().get("detail").getAsJsonArray().get(0).getAsJsonObject().get("marketingAirline").getAsString();
+				Integer stops = segmentElement.getAsJsonObject().get("flightsCount").getAsInt()-1;
+				if (airlineBuilder.indexOf(airlineName+"-"+stops.toString())==-1){
+					airlineBuilder.append(airlineName+"-"+stops.toString()+",");
+				}
+			}
+    		ticketsAndStops.put("I_"+i, airlineBuilder.substring(0,airlineBuilder.length()-1).toString());
+    		
+    		airlineBuilder = new StringBuilder();
+    		segmentArray = flight.getAsJsonObject().get("vueltaAirSearchSegments").getAsJsonArray();
+    		
+    		for (JsonElement segmentElement : segmentArray) {
+    			String airlineName = segmentElement.getAsJsonObject().get("detail").getAsJsonArray().get(0).getAsJsonObject().get("marketingAirline").getAsString();
+				Integer stops = segmentElement.getAsJsonObject().get("flightsCount").getAsInt()-1;
+				
+				if (airlineBuilder.indexOf(airlineName+"-"+stops.toString())==-1){
+					airlineBuilder.append(airlineName+"-"+stops.toString()+",");
+				}
+			}
+    		ticketsAndStops.put("V_"+i, airlineBuilder.substring(0,airlineBuilder.length()-1).toString());
+    		i++;
+    	}
+    	
+    	
+		return ticketsAndStops;
+	}
+
+	private static Map<String,List<String>> getAirlineBigPriceArray(JsonElement bigFlightResults) {
+		
+		return null;
+	}
+
+	public static void indexDeprecated(String slugAgency) throws InterruptedException {
         PromotionDto promotionDto;
 
         if (!Strings.isNullOrEmpty(params.get("promotion"))) {

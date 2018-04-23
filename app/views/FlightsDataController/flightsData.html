@@ -2,7 +2,8 @@
 <input type="hidden" id="dlx" value="${dollarExchangeRate}" />
 
 #{list items:bigFlightsResults, as:'flight'}
-    #{flightsItemV2 promotion: params.promotion, flight:flight, flightsResultsFilters:flightsResultsFilters, tknumber:flight_index, bigFlightsResults:bigFlightsResults, flightsResults:flightsResults, flightNumber:flight_index /}
+    #{flightsItemV2 promotion: params.promotion, flight:flight, flightsResultsFilters:flightsResultsFilters, tknumber:flight_index, 
+    bigFlightsResults:bigFlightsResults, flightsResults:flightsResults, flightNumber:flight_index, indexTicket:flight_index, allStops:allStops /}
 #{/list}
 
 <script type="text/javascript">
@@ -28,22 +29,7 @@ function numberWithCommas(x) {
 	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
 function calculateAirlineMatrixPrices(){
-	$( ".chkAerolineaMatrix" ).each(function( index ) {
-		
-		var airline = $(this).data("airlinename");
-		if ($(this).text()!=' - '){
-			var minPrice = 99999999;
-			$(".ticketBaxer").each(function() {
-				if (airline==$(this).data("marketingairline")) {
-					var price = $(".superPrice",this).html().substr(1).replaceAll('\\.','');
-					if (parseInt(price)<minPrice){
-						minPrice=price;
-					}
-				}
-			});
-			$('.clppriceCon',this).html(numberWithCommas(minPrice));
-		}
-	});
+
 	
 }
 function showHighPriceOnMatrix(curr){
@@ -314,26 +300,6 @@ var changedCLP=false;
 			
 			$('#fnumber'+flightNumber).submit();
 		});
-		
-		
-		
-		$( ".chkAerolineaMatrix" ).each(function( index ) {
-			
-			var airline = $(this).data("airlinename");
-			if ($(this).text()!=' - '){
-				var minPrice = 99999999;
-				$(".ticketBaxer").each(function() {
-					if (airline==$(this).data("marketingairline")) {
-						var price = $(".superPrice",this).html().substr(1).replaceAll('\\.','');
-						if (parseInt(price)<minPrice){
-							minPrice=price;
-						}
-					}
-				});
-				$('.clppriceCon',this).html(numberWithCommas(minPrice));
-			}
-		});
-		
 		
 		
 		$(".thlow").each(function( index ) {
