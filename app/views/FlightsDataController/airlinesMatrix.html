@@ -107,6 +107,29 @@
 				else if (escalafiltro==2 && airline==validatingCarrier && (allStopsI.indexOf("-2")!=-1 || allStopsV.indexOf("-2")!=-1)) {
 					$(this).show();
 	        	}
+				
+				var hasOneValueChecked = false;
+				$('input:radio',$(this).find('.segmentBaxerIda')).each(function() {
+					if ($(this).is(':checked') && $(this).parent().parent().is(':visible') ) {
+						hasOneValueChecked = true;
+						return false;
+					}
+				});
+				if (!hasOneValueChecked){
+					$('input:radio:visible',$(this).find('.segmentBaxerIda')).first().prop("checked", true);	
+				}
+				
+				hasOneValueChecked = false;
+				$('input:radio',$(this).find('.segmentBaxerVuelta')).each(function() {
+					if ($(this).is(':checked') && $(this).parent().parent().is(':visible') ) {
+						hasOneValueChecked = true;
+						return false; 
+					}
+				});
+				if (!hasOneValueChecked){
+					$('input:radio:visible',$(this).find('.segmentBaxerVuelta')).first().prop("checked", true);	
+				}
+				
 			});
 			checkFlightsVisibility();
 			checkEmptyFilterResult();
