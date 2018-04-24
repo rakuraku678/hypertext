@@ -65,12 +65,23 @@
                     	<input type="radio" name="resultSegmentIda" value="${segment.toString()}" class="r${_flightNumber}" #{if segment_index==1} checked="checked" #{/if} />
                         <li style="width:20%;" id="liAirlineBaxer">
                             <label style="font-weight: 500;">
-                            *{
+                            
                             #{if segment.detail.size()>1}
+                            
+                            	%{def airlinesPrinted='';}%
+                            	%{def numberAirlinesPrinted=0;}%
                             	#{list items:segment.detail, as:"detail"}
                             		%{def fullName=_flightsResultsFilters?.mktCarriersCodesXNames?.get(detail.marketingAirline.getAsString())}%
-                                	#{airlineLogo carriersCode:detail.marketingAirline.getAsString().toLowerCase(), carriersName: detail.marketingAirline.getAsString(), carriersFullName:fullName /}
+                            		#{if !airlinesPrinted.contains(detail.marketingAirline.getAsString())}
+                            			%{airlinesPrinted = airlinesPrinted + detail.marketingAirline.getAsString() + ',';}%
+                            			%{numberAirlinesPrinted++;}%
+                            			#{airlineLogo carriersCode:detail.marketingAirline.getAsString().toLowerCase(), carriersName: detail.marketingAirline.getAsString(), carriersFullName:fullName /}
+                            		#{/if}
                                 #{/list}
+                                #{if numberAirlinesPrinted==1}
+                                	${_flightsResultsFilters?.mktCarriersCodesXNames?.get(segment.detail.get(0).marketingAirline.getAsString())}
+                                #{/if}
+                                
                             #{/if}    
                             #{else}
                                 #{list items:segment.detail.get(0).marketingAirline, as:"airlineCode"}
@@ -79,11 +90,6 @@
                                 #{/list}
                             #{/else}
                             
-                            }*
-                            #{list items:segment.detail.get(0).marketingAirline, as:"airlineCode"}
-                                	#{airlineLogo carriersCode:airlineCode?.getAsString().toLowerCase(), carriersName: airlineCode /}
-                                	${_flightsResultsFilters?.mktCarriersCodesXNames?.get(airlineCode.getAsString())}
-                                #{/list}
                             </label>
                         </li>
 			<li class="hour-of-flight" style="width: 13% !important;">
@@ -190,10 +196,30 @@
                     	
                         <li style="width:20%;" id="liAirlineBaxer">
                             <label style="font-weight: 500;">
+                            #{if segment.detail.size()>1}
+                            
+                            	%{def airlinesPrinted='';}%
+                            	%{def numberAirlinesPrinted=0;}%
+                            	#{list items:segment.detail, as:"detail"}
+                            		%{def fullName=_flightsResultsFilters?.mktCarriersCodesXNames?.get(detail.marketingAirline.getAsString())}%
+                            		#{if !airlinesPrinted.contains(detail.marketingAirline.getAsString())}
+                            			%{airlinesPrinted = airlinesPrinted + detail.marketingAirline.getAsString() + ',';}%
+                            			%{numberAirlinesPrinted++;}%
+                            			#{airlineLogo carriersCode:detail.marketingAirline.getAsString().toLowerCase(), carriersName: detail.marketingAirline.getAsString(), carriersFullName:fullName /}
+                            		#{/if}
+                                #{/list}
+                                #{if numberAirlinesPrinted==1}
+                                	${_flightsResultsFilters?.mktCarriersCodesXNames?.get(segment.detail.get(0).marketingAirline.getAsString())}
+                                #{/if}
+                                
+                            #{/if}    
+                            #{else}
                                 #{list items:segment.detail.get(0).marketingAirline, as:"airlineCode"}
                                 	#{airlineLogo carriersCode:airlineCode?.getAsString().toLowerCase(), carriersName: airlineCode /}
-                                    ${_flightsResultsFilters?.mktCarriersCodesXNames?.get(airlineCode.getAsString())}
+                                	${_flightsResultsFilters?.mktCarriersCodesXNames?.get(airlineCode.getAsString())}
                                 #{/list}
+                            #{/else}
+
                             </label>
                         </li>
                         <li class="hour-of-flight" style="width: 13% !important;">
