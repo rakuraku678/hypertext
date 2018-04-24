@@ -29,7 +29,7 @@
 		<tr>
 		    <td>Directo</td>
 		    #{list items:airlineArray, as:'airlineBlock'}
-		    	<td style="cursor: pointer;" class="td_${airlineBlock.airline} chkAerolineaMatrix" #{if airlineBlock?.price0!=null && !airlineBlock?.price0.equals('')}  data-airlineName="${airlineBlock.airline}" #{/if}data-stop="0" data-airlinename="${airlineBlock.airline}"> #{if airlineBlock?.price0!=null}<span class="simbolCurrency">US$</span><span class="usdTablePrice">${airlineBlock?.price0}</span> <span class="clppriceCon hidden clptdMatrix"></span>#{/if} #{else} - #{/else}</td>
+		    	<td style="cursor: pointer;" class="td_${airlineBlock.airline} chkAerolineaMatrix" #{if airlineBlock?.price0!=null && !airlineBlock?.price0.equals('')}  data-airlineName="${airlineBlock.airline}" #{/if}data-stop="0" data-airlinename="${airlineBlock.airline}"> #{if airlineBlock?.price0!=null}<span class="simbolCurrency">US$</span><span class="usdTablePrice">${airlineBlock?.price0}</span><span class="clppriceCon hidden clptdMatrix"></span>#{/if} #{else} - #{/else}</td>
 		    #{/list}
 		</tr>
 		
@@ -96,6 +96,7 @@
 		
 		$('.chkAerolineaMatrix').click(function() {
 			$(".ticketBaxer").hide();
+			$("li").show();
 			
 			var airline = $(this).data("airlinename");
 			var escalafiltro = $(this).data("stop");
@@ -103,17 +104,45 @@
 			$(".ticketBaxer").each(function() {
 				var allStopsI = $(this).data("allstopsi");
 				var allStopsV = $(this).data("allstopsv");
-				
-				if (escalafiltro==0 && (allStopsI.indexOf(airline+"-0")!=-1 || allStopsV.indexOf(airline+"-0")!=-1 )) {
+				var validatingCarrier = $(this).data("validatingcarrier");
+
+				if (escalafiltro==0 && airline==validatingCarrier && (allStopsI.indexOf("-0")!=-1 && allStopsV.indexOf("-0")!=-1 )) {
 					$(this).show();
+					
+					$(this).find('.segmentBaxerIda').each(function() {
+						var escalas = $(this).data("escalas");
+						if (escalas!=0){
+							 $(this).parent().hide();
+						}
+					});
+					$(this).find('.segmentBaxerVuelta').each(function() {
+						var escalas = $(this).data("escalas");
+						if (escalas!=0){
+							 $(this).parent().hide();
+						}
+					});
+					
 				}
-				else if (escalafiltro==1 && (allStopsI.indexOf(airline+"-1")!=-1 || allStopsV.indexOf(airline+"-1")!=-1)) {
+				else if (escalafiltro==1 && airline==validatingCarrier && (allStopsI.indexOf("-1")!=-1 || allStopsV.indexOf("-1")!=-1)) {
 					$(this).show();
+					$(this).find('.segmentBaxerIda').each(function() {
+						var escalas = $(this).data("escalas");
+						if (escalas>1){
+							 $(this).parent().hide();
+						}
+					});
+					$(this).find('.segmentBaxerVuelta').each(function() {
+						var escalas = $(this).data("escalas");
+						if (escalas>1){
+							 $(this).parent().hide();
+						}
+					});
 	        	}
-				else if (escalafiltro==2 && (allStopsI.indexOf(airline+"-2")!=-1 || allStopsV.indexOf(airline+"-2")!=-1)) {
+				else if (escalafiltro==2 && airline==validatingCarrier && (allStopsI.indexOf("-2")!=-1 || allStopsV.indexOf("-2")!=-1)) {
 					$(this).show();
 	        	}
 			});
+			checkFlightsVisibility();
 			checkEmptyFilterResult();
 		});
 		

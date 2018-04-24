@@ -28,6 +28,7 @@
 		data-price="${_flight.pricing.totalPassengerFare.getAsString()}"
 		data-airline="${_flight.idaAirSearchSegments.get(0).airlinesCodes.get(0).getAsString()}"
         data-marketingAirline="${_flight.idaAirSearchSegments.get(0).marketingAirlinesCodes.get(0).getAsString()}"
+        data-validatingcarrier="${_flight.pricing.validatingCarrier.getAsString()}"
 		data-escala="${_flight.idaAirSearchSegments.get(0).flightsCount.getAsInt() - 1}"
 		data-returnEscala="${connectionsReturnCount}" style="min-height: ${baxerHeight}">
     <form class="form-ticket" id="fnumber${_flightNumber}" action="@{PaymentFlowController.index}" method="post" data-tknumber="${_tknumber}">
