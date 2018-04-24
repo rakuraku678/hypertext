@@ -60,40 +60,6 @@
 
 	$(document).ready(function() {
 	
-		$('.chkAerolineaMatrixDEPRECATED').click(function() {
-			$(".ticketBaxer").hide();
-
-			$("div").find("[data-filtervalue='" + "\""+ $(this).data("airlinename") +"\"" + "']").remove();
-			
-			$('#clearCarriersFilter').prop('checked', false);
-			$(".chkAerolinea").prop('checked', false);
-			var airline = $(this).data("airlinename");
-			$('.chkAerolinea').filter(function(){return this.value==airline}).prop('checked', true);
-			$("div").find("[data-marketingairline='" +  $(this).data("airlinename") + "']").show(); 
-			
-			var escalafiltro = $(this).data("stop");
-			$("ul").find("[data-marketingairline='" +  $(this).data("airlinename") + "']").each(function() {
-				var escalas = $(this).data("escalas");
-				
-				if (escalafiltro==0 && escalas==0) {
-					$(this).show();
-				}
-				else if (escalafiltro==1 && (escalas==1 || escalas==0)) {
-	        		 $(this).show();
-	        	}
-				else if (escalafiltro==2 && (escalas==2 || escalas==1 || escalas==0)) {
-	        		 $(this).show();
-	        	} 
-	        	else {
-	        		$(this).hide();
-	        	}
-			});
-			checkFlightsVisibility();
-			checkEmptyFilterResult();
-		});
-		
-		
-		
 		$('.chkAerolineaMatrix').click(function() {
 			$(".ticketBaxer").hide();
 			$("li").show();
