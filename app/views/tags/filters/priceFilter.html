@@ -4,13 +4,23 @@
     </div>
     <div class="body-filter">
 
-        <div class="checkbox">
+        <div id="rangePricerFilterCLP" class="checkbox">
             <strong class="price-number-left price-range-slider-start-label" id="leftPriceRange"></strong>
             <strong class="price-number-right price-range-slider-end-label" id="rightPriceRange"></strong>
             <div class="price-range-slider"></div>
 
             <div class="btn-filter">
                 <a href="#" class="btn btn-search" id="aplFiltersPrice">Aplicar filtros</a>
+            </div>
+
+        </div>
+        <div id="rangePricerFilterUSD" class="checkbox" style="display:none;">
+            <strong class="price-number-left price-range-slider-start-labelUSD" id="leftPriceRangeUSD"></strong>
+            <strong class="price-number-right price-range-slider-end-labelUSD" id="rightPriceRangeUSD"></strong>
+            <div class="price-range-sliderUSD"></div>
+
+            <div class="btn-filter">
+                <a href="#" class="btn btn-search" id="aplFiltersPriceUSD">Aplicar filtros</a>
             </div>
 
         </div>
@@ -23,8 +33,24 @@
 $(document).ready(function() {
 	
 	$('#aplFiltersPrice').click(function() {
-        var leftPrice = parseInt($("#leftPriceRange").html().substring(1));
-        var rightPrice = parseInt($("#rightPriceRange").html().substring(1));
+        var leftPrice = parseInt($("#leftPriceRange").html().replaceAll('\\.','').substring(1));
+        var rightPrice = parseInt($("#rightPriceRange").html().replaceAll('\\.','').substring(1));
+
+        $(".ticketBaxer").each(function( index ) {
+        	var price = parseInt($(".superPrice",this).html().substr(1).replaceAll('\\.',''));
+        	if (price<=rightPrice && price>=leftPrice ) {
+        		 $(this).show();
+        	}
+        	else {
+        		$(this).hide();
+        	}
+        });
+        checkEmptyFilterResult();
+    });
+	
+	$('#aplFiltersPriceUSD').click(function() {
+        var leftPrice = parseInt($("#leftPriceRangeUSD").html().substring(3));
+        var rightPrice = parseInt($("#rightPriceRangeUSD").html().substring(3));
 
         $(".ticketBaxer").each(function( index ) {
         	var price = parseFloat($(".superUsdPrice",this).html()).toFixed(0);
@@ -37,5 +63,6 @@ $(document).ready(function() {
         });
         checkEmptyFilterResult();
     });
+	
 });
 </script>

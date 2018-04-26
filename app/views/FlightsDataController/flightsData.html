@@ -152,6 +152,8 @@ $(function () {
             $(this).html("US$");
         });
         
+        $('#rangePricerFilterCLP').hide();
+        $('#rangePricerFilterUSD').show();
         showHighPriceOnMatrix('usd');
         
 	}
@@ -172,6 +174,9 @@ var changedCLP=false;
 	 		changedCLP = true;
         }
         calculateClpExchange();
+        
+        $('#rangePricerFilterCLP').show();
+        $('#rangePricerFilterUSD').hide();
         
         calculateAirlineMatrixPrices();
     }
