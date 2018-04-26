@@ -97,6 +97,39 @@ function calculateClpExchange() {
 }
     $(document).ready(function () {
     	calculateClpExchange();
+		
+		$( ".chkAerolineaMatrix" ).each(function( index ) {
+			
+			var airline = $(this).data("airlinename");
+			var escalafiltro = $(this).data("stop");
+			
+			if ($(this).text()!=' - '){
+				var minPrice = 99999999;
+				$(".ticketBaxer").each(function() {
+					var allStopsI = $(this).data("allstopsi");
+					var allStopsV = $(this).data("allstopsv");
+					var validatingCarrier = $(this).data("validatingcarrier");
+					
+					if (escalafiltro==0 && validatingCarrier==airline && ( allStopsI.indexOf('-'+escalafiltro)!=-1 && allStopsV.indexOf('-'+escalafiltro)!=-1)){
+						var price = $(".superPrice",this).html().substr(1).replaceAll('\\.','');
+						if (parseInt(price)<minPrice){
+							minPrice=price;
+						}
+					}
+					else if (escalafiltro==1 && validatingCarrier==airline && ( allStopsI.indexOf('-'+escalafiltro)!=-1 || allStopsV.indexOf('-'+escalafiltro)!=-1)){
+						var price = $(".superPrice",this).html().substr(1).replaceAll('\\.','');
+						if (parseInt(price)<minPrice){
+							minPrice=price;
+						}
+					}
+				
+				});
+				if (minPrice!=99999999){
+					$('.clppriceCon',this).html(numberWithCommas(minPrice));
+				}
+			}
+		});
+		
     });
 </script>
 

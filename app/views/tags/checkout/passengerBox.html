@@ -150,6 +150,7 @@
                 </div>
             </div>
 			#{/if}-->
+
             #{if _state != null}
             <div class="row">
                 <div>
@@ -167,6 +168,7 @@
 <script>
 
 #{if _state!=null}
+
     $('#pasNum${_key}').focusout(function(){
         if ($(this).val().length >= 8){
         //implementar autocomplet con mockups
@@ -362,5 +364,6 @@
         $('#FFPNumber${_key}').val("");
         $('#FFPAirlineIataCode${_key}').val("");
     }
+
 </script>
 #{/if}

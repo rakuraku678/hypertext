@@ -4,4 +4,5 @@ try {
 }
 catch (Exception e) {}
 }%
-" class="airlineLogo" title="${_carriersName}" alt="${_carriersName}">
+" #{if _carriersFullName!=null }class="airlineLogo" alt="${_carriersFullName}" title="${_carriersFullName}">#{/if}
+#{else}class="airlineLogo" alt="${_carriersName}">#{/else}

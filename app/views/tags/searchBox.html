@@ -607,11 +607,33 @@ function onReadyFilters() {
     var hourRangeSliderFrom = $('.hour-range-from-slider')[0];
 
 
+	var maxPriceValue = 0;
+	if ($($('.usdpriceCon').last()[0]).text().substr(1).indexOf(',')!=-1){
+		maxPriceValue = parseInt($($('.usdpriceCon').last()[0]).text().substr(1).split(',')[0])+1;
+	}
+	else if ($($('.usdpriceCon').last()[0]).text().substr(1).indexOf('.')!=-1){
+		maxPriceValue = parseInt($($('.usdpriceCon').last()[0]).text().substr(1).split('.')[0])+1;
+	}
+	else {
+		maxPriceValue = $($('.usdpriceCon').last()[0]).text().substr(1);
+	}
+	
+	var minPriceValue = 0;
+	if ($($('.usdpriceCon').first()[0]).text().substr(1).indexOf(',')!=-1){
+		minPriceValue = parseInt($($('.usdpriceCon').first()[0]).text().substr(1).split(',')[0]);
+	}
+	else if ($($('.usdpriceCon').first()[0]).text().substr(1).indexOf('.')!=-1){
+		minPriceValue = parseInt($($('.usdpriceCon').first()[0]).text().substr(1).split('.')[0]);
+	}
+	else {
+		minPriceValue = $($('.usdpriceCon').first()[0]).text().substr(1);
+	}	
+	
     noUiSlider.create(priceRangeSlider, {
-        start: [ 100, 500 ],
+        start: [ minPriceValue, maxPriceValue ],
         range: {
-            'min': 0,
-            'max': 1000
+            'min': minPriceValue,
+            'max': maxPriceValue
         },
             margin: 1,
             step: 1,
@@ -748,20 +770,24 @@ function onReadyFilters() {
 	var maxDeparture = 0;
 	var maxReturn = 0;
        
-	$(".ticketBaxer").each(function( index ) {
+	$(".segmentBaxerIda").each(function( index ) {
      	var departureElapsedTime = parseInt($(this).data("departureelapsedtime"));
-     	var returnElapsedTime = parseInt($(this).data("returnelapsedtime"));
-     	
 
      	if (departureElapsedTime>maxDeparture){
      		maxDeparture = departureElapsedTime;
      	}
-     	if (returnElapsedTime>maxReturn){
+	});
+	
+	$(".segmentBaxerVuelta").each(function( index ) {
+     	var returnElapsedTime = parseInt($(this).data("returnelapsedtime"));
+ 
+      	if (returnElapsedTime>maxReturn){
      		maxReturn = returnElapsedTime;
      	}
 	});
-	
-     
+     	
+     	
+     	
 	var durationSliderStart = $('.duration-start-slider')[0];
     var durationSliderEnd = $('.duration-end-slider')[0];
      
@@ -822,7 +848,6 @@ function onReadyFilters() {
 
 
 
-     
      
      
      

@@ -1,9 +1,11 @@
 #{include "FlightsDataController/airlinesMatrix.html" /}
 <input type="hidden" id="dlx" value="${dollarExchangeRate}" />
 
-#{list items:flightsResults, as:'flight'}
-    #{flightsItem promotion: params.promotion, flight:flight, flightsResultsFilters:flightsResultsFilters, tknumber:flight_index, promotionDto:promotionDto/}
+#{list items:bigFlightsResults, as:'flight'}
+    #{flightsItemV2 promotion: params.promotion, flight:flight, flightsResultsFilters:flightsResultsFilters, tknumber:flight_index, 
+    bigFlightsResults:bigFlightsResults, flightsResults:flightsResults, flightNumber:flight_index, indexTicket:flight_index, allStops:allStops /}
 #{/list}
+
 <script type="text/javascript">
 	$(function () {
 		$('[data-toggle="tooltip"]').tooltip();
@@ -26,7 +28,10 @@ function findIndex(arr,element){
 function numberWithCommas(x) {
 	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
+function calculateAirlineMatrixPrices(){
 
+	
+}
 function showHighPriceOnMatrix(curr){
 	var replacePrice = "";
 	if (!$('.price').first().children().first().hasClass("hidden")) {
@@ -167,7 +172,8 @@ var changedCLP=false;
 	 		changedCLP = true;
         }
         calculateClpExchange();
-        showHighPriceOnMatrix();
+        
+        calculateAirlineMatrixPrices();
     }
 	function commaToPrices() {
 		$( ".clppriceCon" ).each(function( index ) {
@@ -188,7 +194,14 @@ var changedCLP=false;
         });
     }
 	
-    $(document).ready(function () {setClpExchange(); commaToPrices(); calculateClpExchange(); });
+	
+    $(document).ready(function () {
+    	
+    	setClpExchange(); 
+    	commaToPrices(); 
+    	calculateClpExchange();
+    	calculateAirlineMatrixPrices();
+    });
 
         
 	#{/if}
@@ -264,12 +277,45 @@ var changedCLP=false;
 	    	        });
 	    	    });
 	    #{/else}
-    
     });
     
-        
-        
-        
 });
-</script>
+
+	$(document).ready(function() {
+		
+		$(".btnSelFlight").click(function(event) {
+			event.preventDefault();
+			var flightNumber = $(this).data("flightnumber");
+			var allRadios = $(".r"+flightNumber);
+			var checkCounter = 0;
+			allRadios.each(function( index ) {
+				if ($(this).is(':checked')) {
+					checkCounter++;	
+				}
+			});
+			if  (checkCounter != 2) {
+				alert("Debe seleccionar por lo menos un destino de ida y de vuelta");
+				return false;
+			}
+			
+			$('#fnumber'+flightNumber).submit();
+		});
+		
+		
+		$(".thlow").each(function( index ) {
+			var airlinename = $(this).data("airlinename");
+			var markCount = 0;
+			$(".td_"+airlinename).each(function( index ) {
+				if ($(this).html()==" - "){
+					markCount++;			
+				}	
+			});
+			if (markCount==3){
+				$(".td_"+airlinename).remove();
+			}
+		});
+		
+		
+	});
+
 	

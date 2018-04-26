@@ -14,7 +14,7 @@ public class PromotionDto implements Dto {
     public boolean active;
     public boolean defaultPromotion;
     public boolean displaySeatMap;
-    
+
     public static PromotionDto parsePromotionDto(JsonElement responseJson){
 
         PromotionDto promotionDto = new PromotionDto();

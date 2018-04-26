@@ -83,7 +83,8 @@ public class BFMSearch extends ApiFlightsSDKBase {
     	String arrivalTime = "";
     	String departureTime = "";
     	
-    	for (JsonElement jsonElement : responseJsonObject.getAsJsonArray()) {
+    	JsonElement smallResults = responseJsonObject.getAsJsonArray().get(0).getAsJsonObject().get("airSearchResults");
+    	for (JsonElement jsonElement : smallResults.getAsJsonArray()) {
             JsonObject flightsResult = jsonElement.getAsJsonObject();
 	    	JsonObject departureSegment = flightsResult.getAsJsonObject("departureSegment");
 	    	JsonObject returnSegment = flightsResult.getAsJsonObject("returnSegment");
@@ -101,7 +102,7 @@ public class BFMSearch extends ApiFlightsSDKBase {
 			    		DateTime departureDateTime = formatter.parseDateTime(departureTime);
 			    		int hourDiff = Hours.hoursBetween(arrivalDateTime, departureDateTime).getHours();
 			    		if (hourDiff>=5){
-		                	responseJsonObject.getAsJsonArray().get(i).getAsJsonObject().getAsJsonObject("departureSegment").getAsJsonArray("detail").get(j-1).getAsJsonObject().add("extraData", jMapElement);
+			    			responseJsonObject.getAsJsonArray().get(0).getAsJsonObject().get("airSearchResults").getAsJsonArray().get(i).getAsJsonObject().getAsJsonObject("departureSegment").getAsJsonArray("detail").get(j-1).getAsJsonObject().add("extraData", jMapElement);
 			    		}
 			    		arrivalTime = departureSegmentDetail.get(j).getAsJsonObject().get("arrivalDateTime").getAsString();
 		    		}
@@ -120,7 +121,7 @@ public class BFMSearch extends ApiFlightsSDKBase {
 			    		DateTime departureDateTime = formatter.parseDateTime(departureTime);
 			    		int hourDiff = Hours.hoursBetween(arrivalDateTime, departureDateTime).getHours();
 			    		if (hourDiff>=5){
-		                	responseJsonObject.getAsJsonArray().get(i).getAsJsonObject().getAsJsonObject("returnSegment").getAsJsonArray("detail").get(j-1).getAsJsonObject().add("extraData", jMapElement);
+			    			responseJsonObject.getAsJsonArray().get(0).getAsJsonObject().get("airSearchResults").getAsJsonArray().get(i).getAsJsonObject().getAsJsonObject("returnSegment").getAsJsonArray("detail").get(j-1).getAsJsonObject().add("extraData", jMapElement);
 			    		}
 			    		arrivalTime = returnSegmentDetail.get(j).getAsJsonObject().get("arrivalDateTime").getAsString();
 		    		}
