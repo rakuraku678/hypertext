@@ -661,7 +661,7 @@ transition: 0.5s;
 }
 
 .shadow-checked {
-    box-shadow: 0 0 10px #418bca;
+    box-shadow: 0 0 10px #3B4D6D;
     z-index: 99;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -924,13 +924,13 @@ transition: 0.5s;
 
 .ticket .txt-airport-date .fly-day,
 .ticket .txt-airport-date .description-airport {
-	color: #5F6169;
+	color: #000000;
 	display: block;
 	font-size: 11px;
 	text-align: left;
 }
 .ticket .txt-airport-date .airport {
-	color: #55575F;
+	color: #000000;
 	font-size: 15px;
 	/*text-transform: uppercase;*/
 }
