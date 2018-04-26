@@ -592,17 +592,19 @@ function deleteActiveFilter(obj) {
 function onReadyFilters() {
 
     /*FILTER*/
-
-    var priceRangeSliderStartLabel = $('.price-range-slider-start-label');
+	var priceRangeSliderStartLabel = $('.price-range-slider-start-label');
     var priceRangeSliderEndLabel = $('.price-range-slider-end-label');
+    var priceRangeSliderStartLabelUSD = $('.price-range-slider-start-labelUSD');
+    var priceRangeSliderEndLabelUSD = $('.price-range-slider-end-labelUSD');
     var timeRangeSliderStartToLabel = $('.time-range-slider-start-to-label');
     var timeRangeSliderStartFromLabel = $('.time-range-slider-start-from-label');
     var timeRangeSliderEndToLabel = $('.time-range-slider-end-to-label');
     var timeRangeSliderEndFromLabel = $('.time-range-slider-end-from-label');
 
 
-    var availabilityTimeRangeSlider = $(' .time-range-slider')[0];
+    var availabilityTimeRangeSlider = $('.time-range-slider')[0];
     var priceRangeSlider = $('.price-range-slider')[0];
+    var priceRangeSliderUSD = $('.price-range-sliderUSD')[0];
     var hourRangeSliderTo = $('.hour-range-to-slider')[0];
     var hourRangeSliderFrom = $('.hour-range-from-slider')[0];
 
@@ -629,7 +631,8 @@ function onReadyFilters() {
 		minPriceValue = $($('.usdpriceCon').first()[0]).text().substr(1);
 	}	
 	
-    noUiSlider.create(priceRangeSlider, {
+	
+	noUiSlider.create(priceRangeSliderUSD, {
         start: [ minPriceValue, maxPriceValue ],
         range: {
             'min': minPriceValue,
@@ -642,12 +645,45 @@ function onReadyFilters() {
             mode: 'count',
             values: 1,
             density: 4
-        }
+        },
+        	format: wNumb({
+				decimals: 0
+		})
+        
+    });
+
+    priceRangeSliderUSD.noUiSlider.on('update', function(values, handle) {
+        priceRangeSliderStartLabelUSD.text('US$' + values[0]);
+        priceRangeSliderEndLabelUSD.text('US$' + values[1]);
+    });
+	
+	
+	
+	var minCLPPriceValue = parseInt($($('.superPrice').first()).text().substr(1).replaceAll('\\.',''));
+	var maxCLPPriceValue = parseInt($($('.superPrice').last()).text().substr(1).replaceAll('\\.',''));
+	
+    noUiSlider.create(priceRangeSlider, {
+        start: [ minCLPPriceValue, maxCLPPriceValue ],
+        range: {
+            'min': minCLPPriceValue,
+            'max': maxCLPPriceValue
+        },
+            margin: 1,
+            step: 1,
+            connect: true,
+            pips: {
+            mode: 'count',
+            values: 1,
+            density: 4
+        },
+        	format: wNumb({
+				decimals: 0
+		})
     });
 
     priceRangeSlider.noUiSlider.on('update', function(values, handle) {
-        priceRangeSliderStartLabel.text('$' + values[0]);
-        priceRangeSliderEndLabel.text('$' + values[1]);
+        priceRangeSliderStartLabel.text('$' + numberWithCommas(values[0]));
+        priceRangeSliderEndLabel.text('$' + numberWithCommas(values[1]));
     });
 
     noUiSlider.create(hourRangeSliderTo, {
