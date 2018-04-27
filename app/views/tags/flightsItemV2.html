@@ -336,7 +336,7 @@
             <span class="price"><span class="usdpriceCon"><span class="simbolCurrency">US$</span><span class="superUsdPrice">${_flight.pricing.adtTotalPriceString?.getAsString()}</span></span><span class="clppriceCon hidden superPrice">${_flight.pricingCLP.adtTotalPriceString?.getAsString()}</span></span>
             #{/elseif}
             #{else}
-            <span class="price"><span class="usdpriceCon"><span class="simbolCurrency">US$</span><span class="superUsdPrice">${_flight.pricing.adtTotalPriceWithAllTaxes?.getAsString()}</span></span><span class="clppriceCon hidden superPrice">${_flight.pricingCLP.adtTotalPriceWithAllTaxes?.getAsString()}</span></span>
+              <span class="price"><span class="usdpriceCon"><span class="simbolCurrency">US$ </span><span class="superUsdPrice">${_flight.pricing.totalAmount?.getAsString()}</span></span><span class="clppriceCon hidden superPrice">${_flight.pricingCLP.totalAmount?.getAsString()}</span></span>
             #{/else}
            
             <ul class="detail-price">
