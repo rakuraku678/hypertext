@@ -631,7 +631,10 @@ function onReadyFilters() {
 		minPriceValue = $($('.usdpriceCon').first()[0]).text().substr(1);
 	}	
 	
-	
+	if (minPriceValue==maxPriceValue){
+		minPriceValue-=1
+		maxPriceValue +=1;
+	}
 	noUiSlider.create(priceRangeSliderUSD, {
         start: [ minPriceValue, maxPriceValue ],
         range: {
@@ -661,6 +664,11 @@ function onReadyFilters() {
 	
 	var minCLPPriceValue = parseInt($($('.superPrice').first()).text().substr(1).replaceAll('\\.',''));
 	var maxCLPPriceValue = parseInt($($('.superPrice').last()).text().substr(1).replaceAll('\\.',''));
+	
+	if (minCLPPriceValue==maxCLPPriceValue){
+		minCLPPriceValue-=1
+		maxCLPPriceValue +=1;
+	}
 	
     noUiSlider.create(priceRangeSlider, {
         start: [ minCLPPriceValue, maxCLPPriceValue ],
