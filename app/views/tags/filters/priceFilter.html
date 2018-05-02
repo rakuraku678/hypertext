@@ -31,38 +31,38 @@
 <script>
 
 $(document).ready(function() {
-	
-	$('#aplFiltersPrice').click(function() {
+   
+   $('#aplFiltersPrice').click(function() {
         var leftPrice = parseInt($("#leftPriceRange").html().replaceAll('\\.','').substring(1));
         var rightPrice = parseInt($("#rightPriceRange").html().replaceAll('\\.','').substring(1));
 
         $(".ticketBaxer").each(function( index ) {
-        	var price = parseInt($(".superPrice",this).html().substr(1).replaceAll('\\.',''));
-        	if (price<=rightPrice && price>=leftPrice ) {
-        		 $(this).show();
-        	}
-        	else {
-        		$(this).hide();
-        	}
+         var price = parseInt($(".superPrice",this).html().substr(1).replaceAll('\\.',''));
+         if (price<=rightPrice && price>=leftPrice ) {
+             $(this).show();
+         }
+         else {
+            $(this).hide();
+         }
         });
         checkEmptyFilterResult();
     });
-	
-	$('#aplFiltersPriceUSD').click(function() {
+   
+   $('#aplFiltersPriceUSD').click(function() {
         var leftPrice = parseInt($("#leftPriceRangeUSD").html().substring(3));
         var rightPrice = parseInt($("#rightPriceRangeUSD").html().substring(3));
 
         $(".ticketBaxer").each(function( index ) {
-        	var price = parseFloat($(".superUsdPrice",this).html()).toFixed(0);
-        	if (price<=rightPrice && price>=leftPrice ) {
-        		 $(this).show();
-        	}
-        	else {
-        		$(this).hide();
-        	}
+         var price = parseFloat($(".superUsdPrice",this).html()).toFixed(0);
+         if (price<=rightPrice && price>=leftPrice ) {
+             $(this).show();
+         }
+         else {
+            $(this).hide();
+         }
         });
         checkEmptyFilterResult();
     });
-	
+   
 });
 </script>
