@@ -329,11 +329,11 @@
             #{/else}
             <span class="title">Precio por Adulto</span>
             #{if _flight.pricingCLP.adtTotalPriceWithAllTaxes.getAsDouble() > _flight.pricingCLP.adtTotalPrice.getAsDouble() && _flight.pricing.adtTotalPriceBeforeDiscount && _flight.pricing.adtTotalPriceBeforeDiscount != _flight.pricing.adtTotalPrice}
-            <span class="price before-discount"><span class="usdpriceCon"><span class="simbolCurrency">US$</span><span class="superUsdPrice">${_flight.pricing.adtTotalPriceWithAllTaxes?.getAsString()}</span></span><span class="clppriceCon hidden">${_flight.pricingCLP.adtTotalPriceWithAllTaxes?.getAsString()}</span></span>
-            <span class="price"><span class="usdpriceCon"><span class="simbolCurrency">US$</span><span class="superUsdPrice">${_flight.pricing.adtTotalPriceString?.getAsString()}</span><span class="clppriceCon hidden superPrice">${_flight.pricingCLP.adtTotalPriceString?.getAsString()}</span></span>
+            <span class="price before-discount"><span class="usdpriceCon"><span class="simbolCurrency">US$</span>${_flight.pricing.adtTotalPriceWithAllTaxes?.getAsString().replaceAll('\\,','.')}</span><span class="clppriceCon hidden">${_flight.pricingCLP.adtTotalPriceWithAllTaxes?.getAsString()}</span></span>
+            <span class="price"><span class="usdpriceCon"><span class="simbolCurrency">US$</span><span class="superUsdPrice">${_flight.pricing.adtTotalPriceString?.getAsString().replaceAll('\\,','.')}</span></span><span class="clppriceCon hidden superPrice">${_flight.pricingCLP.adtTotalPriceString?.getAsString()}</span></span>
             #{/if}
             #{elseif _flight.pricingCLP.adtTotalPriceWithAllTaxes.getAsDouble() <= _flight.pricingCLP.adtTotalPrice.getAsDouble() && _flight.pricing.adtTotalPriceBeforeDiscount && _flight.pricing.adtTotalPriceBeforeDiscount != _flight.pricing.adtTotalPrice}
-            <span class="price"><span class="usdpriceCon"><span class="simbolCurrency">US$</span><span class="superUsdPrice">${_flight.pricing.adtTotalPriceString?.getAsString()}</span></span><span class="clppriceCon hidden superPrice">${_flight.pricingCLP.adtTotalPriceString?.getAsString()}</span></span>
+            <span class="price"><span class="usdpriceCon"><span class="simbolCurrency">US$</span><span class="superUsdPrice">${_flight.pricing.adtTotalPriceString?.getAsString().replaceAll('\\,','.')}</span></span><span class="clppriceCon hidden superPrice">${_flight.pricingCLP.adtTotalPriceString?.getAsString()}</span></span>
             #{/elseif}
             #{else}
             <span class="price"><span class="usdpriceCon"><span class="simbolCurrency">US$</span><span class="superUsdPrice">${_flight.pricing.adtTotalPriceWithAllTaxes?.getAsString().replaceAll('\\,','.')}</span></span><span class="clppriceCon hidden superPrice">${_flight.pricingCLP.adtTotalPriceWithAllTaxes?.getAsString()}</span></span>
