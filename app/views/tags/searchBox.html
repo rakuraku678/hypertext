@@ -635,6 +635,7 @@ function onReadyFilters() {
       minPriceValue-=1
       maxPriceValue +=1;
    }
+   
    noUiSlider.create(priceRangeSliderUSD, {
         start: [ minPriceValue, maxPriceValue ],
         range: {
@@ -659,8 +660,6 @@ function onReadyFilters() {
         priceRangeSliderStartLabelUSD.text('US$' + values[0]);
         priceRangeSliderEndLabelUSD.text('US$' + values[1]);
     });
-   
-   
    
    var minCLPPriceValue = parseInt($($('.superPrice').first()).text().substr(1).replaceAll('\\.',''));
    var maxCLPPriceValue = parseInt($($('.superPrice').last()).text().substr(1).replaceAll('\\.',''));
