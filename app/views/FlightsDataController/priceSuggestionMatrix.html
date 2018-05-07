@@ -17,8 +17,8 @@ lastRowDate = firstDepartureDate.minusDays(1);
             <!--<th><a href="#">Tendencia de tarifas</a></th>-->
 
             <th colspan="2" class="select-th"><a class="priceSug" href="#">Precios +/- 5 días </a></th>
-         	<th colspan="2" ><a class="PXA" href="#">Precios por aerolíneas</a></th>
-         	*{<th colspan="3" ><a class="tTar" href="#">Tendencia de Tarifas</a></th>}*
+            <th colspan="2" ><a class="PXA" href="#">Precios por aerolíneas</a></th>
+            *{<th colspan="3" ><a class="tTar" href="#">Tendencia de Tarifas</a></th>}*
         </tr>
         </thead>
         <tbody>
@@ -67,7 +67,7 @@ lastRowDate = firstDepartureDate.minusDays(1);
                 tdClass = "high";
                 }
             }%
-            	<td><a href="#" class="pr-fare ${tdClass}" data-from="${endUserFmt.print(details.departureDate)}" data-to="${endUserFmt.print(details.returnDate)}"><span class="simbolCurrency">US$</span><span class="usdTablePrice">${details?.passengerFare.replace(".0","")}</span><span class="clppriceCon hidden"></span></a>
+               <td><a href="#" class="pr-fare ${tdClass}" data-from="${endUserFmt.print(details.departureDate)}" data-to="${endUserFmt.print(details.returnDate)}"><span class="simbolCurrency">US$</span><span class="usdTablePrice">${details?.passengerFare.replace(".0","")}</span><span class="clppriceCon hidden"></span></a>
                 *{<td><a onclick="window.location=this.href" class="pr-fare" data-from="${endUserFmt.print(details.departureDate)}" data-to="${endUserFmt.print(details.returnDate)}">US$${details?.passengerFare.replace(".0","")}</a>}*
                 *{${details.sequenceNumber}<br>}*
                 *{${details.passengerFare}<br>}*
@@ -96,41 +96,55 @@ function calculateClpExchange() {
     });
 }
     $(document).ready(function () {
-    	calculateClpExchange();
-		
-		$( ".chkAerolineaMatrix" ).each(function( index ) {
-			
-			var airline = $(this).data("airlinename");
-			var escalafiltro = $(this).data("stop");
-			
-			if ($(this).text()!=' - '){
-				var minPrice = 99999999;
-				$(".ticketBaxer").each(function() {
-					var allStopsI = $(this).data("allstopsi");
-					var allStopsV = $(this).data("allstopsv");
-					var validatingCarrier = $(this).data("validatingcarrier");
-					
-					if (escalafiltro==0 && validatingCarrier==airline && ( allStopsI.indexOf('-'+escalafiltro)!=-1 && allStopsV.indexOf('-'+escalafiltro)!=-1)){
-						var price = $(".superPrice",this).html().substr(1).replaceAll('\\.','');
-						if (parseInt(price)<minPrice){
-							minPrice=price;
-						}
-					}
-					else if (escalafiltro==1 && validatingCarrier==airline && ( allStopsI.indexOf('-'+escalafiltro)!=-1 || allStopsV.indexOf('-'+escalafiltro)!=-1)){
-						var price = $(".superPrice",this).html().substr(1).replaceAll('\\.','');
-						if (parseInt(price)<minPrice){
-							minPrice=price;
-						}
-					}
-				
-				});
-				if (minPrice!=99999999){
-					$('.clppriceCon',this).html(numberWithCommas(minPrice));
-				}
-			}
-		});
-		
+      calculateClpExchange();
+      
+      $( ".chkAerolineaMatrix" ).each(function( index ) {
+         
+         var airline = $(this).data("airlinename");
+         var escalafiltro = $(this).data("stop");
+         
+         if ($(this).text()!=' - '){
+            var minPrice = 99999999;
+            var minPriceUSD = 99999999;
+            $(".ticketBaxer").each(function() {
+               var allStopsI = $(this).data("allstopsi");
+               var allStopsV = $(this).data("allstopsv");
+               var validatingCarrier = $(this).data("validatingcarrier");
+               
+               if (escalafiltro==0 && validatingCarrier==airline && ( allStopsI.indexOf('-'+escalafiltro)!=-1 && allStopsV.indexOf('-'+escalafiltro)!=-1)){
+                  var price = $(".superPrice",this).html().substr(1).replaceAll('\\.','');
+                  if (parseInt(price)<minPrice){
+                     minPrice=price;
+                  }
+                  
+                  var priceUSD = $('.superUsdPrice',this).html().replaceAll('\\,','.');
+                  if (parseFloat(priceUSD)<minPriceUSD){
+                     minPriceUSD=priceUSD;
+                  }
+                  
+                  
+               }
+               else if (escalafiltro==1 && validatingCarrier==airline && ( allStopsI.indexOf('-'+escalafiltro)!=-1 || allStopsV.indexOf('-'+escalafiltro)!=-1)){
+                  var price = $(".superPrice",this).html().substr(1).replaceAll('\\.','');
+                  if (parseInt(price)<minPrice){
+                     minPrice=price;
+                  }
+                  
+                  var priceUSD = $('.superUsdPrice',this).html().replaceAll('\\,','.');
+                  if (parseFloat(priceUSD)<minPriceUSD){
+                     minPriceUSD=priceUSD;
+                  }
+               }
+            
+            });
+            if (minPrice!=99999999){
+               $('.clppriceCon',this).html(numberWithCommas(minPrice));
+            }
+            if (minPriceUSD!=99999999){
+               $('.usdTablePrice',this).html(minPriceUSD);
+            }
+         }
+      });
+      
     });
 </script>
-
-
