@@ -1,4 +1,4 @@
-<button class="btn btn-primary btn-search-mobile" type="button" data-toggle="collapse"
+            <button class="btn btn-primary btn-search-mobile" type="button" data-toggle="collapse"
         data-target="#collapseSearchMobile" aria-expanded="false" aria-controls="collapseSearchMobile">
     <ul>
         <li><i class="icon-fly-mobile-search"></i>
@@ -36,10 +36,10 @@
                 </div>
                 <div class="form-group col-xs-6">
                     <label>Partida:</label>
-                    	<div class='input-group date' id='starDateBtn'>
+                     <div class='input-group date' id='starDateBtn'>
                             <input type="text" readonly="true" name="partida" autocomplete="off" id="startDate"
                                    class="form-delta form-control percent" value="${params.departureDate}">
-        					<i class="form-delta bg-calendar input-group-addon"></i>
+                     <i class="form-delta bg-calendar input-group-addon"></i>
                         </div>
                 </div>
                 <div class="form-group col-xs-6">
@@ -47,8 +47,8 @@
                     <div class='input-group date' id='endDateBtn'>
                         <input type="text" readonly="true" name="regreso" id="endDate" autocomplete="off"
                                class="form-delta form-control percent" value="${params.returnDate}">
-    					<i class="form-delta bg-calendar input-group-addon"></i>
-    					</span>
+                  <i class="form-delta bg-calendar input-group-addon"></i>
+                  </span>
                     </div>
                 </div>
                 <div class="form-group col-xs-4" id="idPaxADL">
@@ -67,7 +67,7 @@
                 <div class="form-group col-xs-4" id="idPaxCHD">
                     <label>Niños:</label>
                     <select id="childrenCount" class="form-delta bg-arrow form-control" name="childrencount">
-                    	<option #{if params.children == "0"}selected#{/if}>0</option>
+                     <option #{if params.children == "0"}selected#{/if}>0</option>
                         <option #{if params.children == "1"}selected#{/if}>1</option>
                         <option #{if params.children == "2"}selected#{/if}>2</option>
                         <option #{if params.children == "3"}selected#{/if}>3</option>
@@ -131,7 +131,7 @@
                     $( "#loading" ).show("fade");
                     $( "#priceSuggestionMatrix" ).html("");
                     $( "#fligthsData" ).html("");
-					$( "#filterContent" ).html("");
+               $( "#filterContent" ).html("");
 
                     $( "#fligthsData" ).load(
                         "/flights/data?" + getSearchParams(),
@@ -182,7 +182,7 @@
                     var cabin = searchForm.find('select[name="cabin"]').val();
                     var transactionId = "";
                     if (searchForm.find('input[name="hdnTransactionId"]').val()!=''){
-                    	transactionId = "/"+searchForm.find('input[name="hdnTransactionId"]').val();
+                     transactionId = "/"+searchForm.find('input[name="hdnTransactionId"]').val();
                     }
                     *{if(promotion){}*
                         *{searchURL += "/promociones/" + promotion;}*
@@ -198,7 +198,7 @@
                 var showError = function(msg){
                     $("#errorMessage").html("");
                     var em = $("#errorMessage");
-                    em.append("<img src='/public/images/Pointer.png' /><p>"+msg+"</p>");
+                    em.append("<img src='/public-vol3/images/Pointer.png' /><p>"+msg+"</p>");
                     em.show();
                     $('#flightSearchForm input[type="submit"]').attr('disabled', false);
                 };
@@ -233,7 +233,7 @@
                         $("#startDate").val($(this).data('from'));
                         $("#endDate").val($(this).data('to'));
                         var url = getCurrentSearchURL();
-						window.location.href = url;
+                  window.location.href = url;
                     });
                 }
 
@@ -363,7 +363,7 @@
             
         });
 
-			  //var dateFormat = "dd/mm/yy";
+           //var dateFormat = "dd/mm/yy";
               var dateFormat = "dd-mm-yy";
               var minDate = new Date(parseDate("24-04-2017"));
               var maxDate = new Date(parseDate("01-01-2018"));
@@ -516,8 +516,8 @@
 
       <div class="modal-body" id="loginModalBody" style="height:400px; overflow: hidden;">
       </div>
-	  <div class="modal-footer">
-       		 <button type="button" id="btnSaltearPaso" class="btn btn-search" style="width: initial;" data-dismiss="modal">Saltar Este Paso ></button>
+     <div class="modal-footer">
+             <button type="button" id="btnSaltearPaso" class="btn btn-search" style="width: initial;" data-dismiss="modal">Saltar Este Paso ></button>
       </div>
     </div>
   </div>
@@ -592,7 +592,7 @@ function deleteActiveFilter(obj) {
 function onReadyFilters() {
 
     /*FILTER*/
-	var priceRangeSliderStartLabel = $('.price-range-slider-start-label');
+   var priceRangeSliderStartLabel = $('.price-range-slider-start-label');
     var priceRangeSliderEndLabel = $('.price-range-slider-end-label');
     var priceRangeSliderStartLabelUSD = $('.price-range-slider-start-labelUSD');
     var priceRangeSliderEndLabelUSD = $('.price-range-slider-end-labelUSD');
@@ -609,33 +609,34 @@ function onReadyFilters() {
     var hourRangeSliderFrom = $('.hour-range-from-slider')[0];
 
 
-	var maxPriceValue = 0;
-	if ($($('.usdpriceCon').last()[0]).text().substr(1).indexOf(',')!=-1){
-		maxPriceValue = parseInt($($('.usdpriceCon').last()[0]).text().substr(1).split(',')[0])+1;
-	}
-	else if ($($('.usdpriceCon').last()[0]).text().substr(1).indexOf('.')!=-1){
-		maxPriceValue = parseInt($($('.usdpriceCon').last()[0]).text().substr(1).split('.')[0])+1;
-	}
-	else {
-		maxPriceValue = $($('.usdpriceCon').last()[0]).text().substr(1);
-	}
-	
-	var minPriceValue = 0;
-	if ($($('.usdpriceCon').first()[0]).text().substr(1).indexOf(',')!=-1){
-		minPriceValue = parseInt($($('.usdpriceCon').first()[0]).text().substr(1).split(',')[0]);
-	}
-	else if ($($('.usdpriceCon').first()[0]).text().substr(1).indexOf('.')!=-1){
-		minPriceValue = parseInt($($('.usdpriceCon').first()[0]).text().substr(1).split('.')[0]);
-	}
-	else {
-		minPriceValue = $($('.usdpriceCon').first()[0]).text().substr(1);
-	}	
-	
-	if (minPriceValue==maxPriceValue){
-		minPriceValue-=1
-		maxPriceValue +=1;
-	}
-	noUiSlider.create(priceRangeSliderUSD, {
+   var maxPriceValue = 0;
+   if ($($('.superUsdPrice').last()[0]).text().indexOf(',')!=-1){
+      maxPriceValue = parseInt($($('.superUsdPrice').last()[0]).text().split(',')[0])+1;
+   }
+   else if ($($('.superUsdPrice').last()[0]).text().indexOf('.')!=-1){
+      maxPriceValue = parseInt($($('.superUsdPrice').last()[0]).text().split('.')[0])+1;
+   }
+   else {
+      maxPriceValue = $($('.superUsdPrice').last()[0]).text();
+   }
+   
+   var minPriceValue = 0;
+   if ($($('.superUsdPrice').first()[0]).text().indexOf(',')!=-1){
+      minPriceValue = parseInt($($('.superUsdPrice').first()[0]).text().split(',')[0]);
+   }
+   else if ($($('.superUsdPrice').first()[0]).text().indexOf('.')!=-1){
+      minPriceValue = parseInt($($('.superUsdPrice').first()[0]).text().split('.')[0]);
+   }
+   else {
+      minPriceValue = $($('.superUsdPrice').first()[0]).text();
+   }  
+   
+   if (minPriceValue==maxPriceValue){
+      minPriceValue-=1
+      maxPriceValue +=1;
+   }
+   
+   noUiSlider.create(priceRangeSliderUSD, {
         start: [ minPriceValue, maxPriceValue ],
         range: {
             'min': minPriceValue,
@@ -649,9 +650,9 @@ function onReadyFilters() {
             values: 1,
             density: 4
         },
-        	format: wNumb({
-				decimals: 0
-		})
+         format: wNumb({
+            decimals: 0
+      })
         
     });
 
@@ -659,17 +660,15 @@ function onReadyFilters() {
         priceRangeSliderStartLabelUSD.text('US$' + values[0]);
         priceRangeSliderEndLabelUSD.text('US$' + values[1]);
     });
-	
-	
-	
-	var minCLPPriceValue = parseInt($($('.superPrice').first()).text().substr(1).replaceAll('\\.',''));
-	var maxCLPPriceValue = parseInt($($('.superPrice').last()).text().substr(1).replaceAll('\\.',''));
-	
-	if (minCLPPriceValue==maxCLPPriceValue){
-		minCLPPriceValue-=1
-		maxCLPPriceValue +=1;
-	}
-	
+   
+   var minCLPPriceValue = parseInt($($('.superPrice').first()).text().substr(1).replaceAll('\\.',''));
+   var maxCLPPriceValue = parseInt($($('.superPrice').last()).text().substr(1).replaceAll('\\.',''));
+   
+   if (minCLPPriceValue==maxCLPPriceValue){
+      minCLPPriceValue-=1
+      maxCLPPriceValue +=1;
+   }
+   
     noUiSlider.create(priceRangeSlider, {
         start: [ minCLPPriceValue, maxCLPPriceValue ],
         range: {
@@ -684,9 +683,9 @@ function onReadyFilters() {
             values: 1,
             density: 4
         },
-        	format: wNumb({
-				decimals: 0
-		})
+         format: wNumb({
+            decimals: 0
+      })
     });
 
     priceRangeSlider.noUiSlider.on('update', function(values, handle) {
@@ -810,60 +809,60 @@ function onReadyFilters() {
 
 
 
-	
-	var maxDeparture = 0;
-	var maxReturn = 0;
+   
+   var maxDeparture = 0;
+   var maxReturn = 0;
        
-	$(".segmentBaxerIda").each(function( index ) {
-     	var departureElapsedTime = parseInt($(this).data("departureelapsedtime"));
+   $(".segmentBaxerIda").each(function( index ) {
+      var departureElapsedTime = parseInt($(this).data("departureelapsedtime"));
 
-     	if (departureElapsedTime>maxDeparture){
-     		maxDeparture = departureElapsedTime;
-     	}
-	});
-	
-	$(".segmentBaxerVuelta").each(function( index ) {
-     	var returnElapsedTime = parseInt($(this).data("returnelapsedtime"));
+      if (departureElapsedTime>maxDeparture){
+         maxDeparture = departureElapsedTime;
+      }
+   });
+   
+   $(".segmentBaxerVuelta").each(function( index ) {
+      var returnElapsedTime = parseInt($(this).data("returnelapsedtime"));
  
-      	if (returnElapsedTime>maxReturn){
-     		maxReturn = returnElapsedTime;
-     	}
-	});
-     	
-     	
-     	
-	var durationSliderStart = $('.duration-start-slider')[0];
+         if (returnElapsedTime>maxReturn){
+         maxReturn = returnElapsedTime;
+      }
+   });
+      
+      
+      
+   var durationSliderStart = $('.duration-start-slider')[0];
     var durationSliderEnd = $('.duration-end-slider')[0];
      
      noUiSlider.create(durationSliderStart, {
-         	start: maxDeparture,
-		    step: 1,
-		    connect: "lower",
-		    range: {
-		      'min': 0,
-		      'max': maxDeparture
-		    },
-		    serialization: {
-		      format: {
-		        decimals: 0
-		      }
-		    }
+            start: maxDeparture,
+          step: 1,
+          connect: "lower",
+          range: {
+            'min': 0,
+            'max': maxDeparture
+          },
+          serialization: {
+            format: {
+              decimals: 0
+            }
+          }
      });
 
 
      noUiSlider.create(durationSliderEnd, {
-         	start: maxReturn,
-		    step: 1,
-		    connect: "lower",
-		    range: {
-		      'min': 0,
-		      'max': maxReturn
-		    },
-		    serialization: {
-		      format: {
-		        decimals: 0
-		      }
-		    }
+            start: maxReturn,
+          step: 1,
+          connect: "lower",
+          range: {
+            'min': 0,
+            'max': maxReturn
+          },
+          serialization: {
+            format: {
+              decimals: 0
+            }
+          }
      });
 
 
