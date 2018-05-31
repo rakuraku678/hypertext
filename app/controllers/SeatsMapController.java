@@ -39,7 +39,7 @@ public class SeatsMapController extends Controller {
 	    Map m = Maps.newHashMap();
 	    m.put("seatsMap", jsonSeats);
 
-	    m.put("numberOfSeats", bodyJsonElement.getAsJsonObject().get("pricing").getAsJsonObject().get("seats").getAsInt());
+	    m.put("numberOfSeats", bodyJsonElement.getAsJsonObject().get("numberOfSeats").getAsInt());
 	    renderHtml(template.render(m).replaceAll("\\s{2,}"," "));
 	    
     }

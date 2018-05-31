@@ -291,11 +291,12 @@ span.seatCharts-legendDescription {
 			$('#modalSeatsMap').modal('show');
 			var ida = JSON.parse($("[name='resultSegmentIda']").val());
 			var vuelta = JSON.parse($("[name='resultSegmentVuelta']").val());
+			var passengersQuantity = ${_passengersQuantity};
 			$.ajax({
 			    'url': '@{SeatsMapController.getSeats}',
 			    'type': 'POST',
 			    'contentType': "application/json",
-			    'data':  JSON.stringify({"departureSegment": ida, "returnSegment":vuelta }),
+			    'data':  JSON.stringify({"departureSegment": ida, "returnSegment":vuelta, "numberOfSeats":passengersQuantity }),
 			    'success': function(result){
 		        	$('#modalSeatsBody').html(result);
 		        	$('#cargandoDiv').hide();

@@ -69,7 +69,7 @@
                     #{/list}
                     *{#{checkout.paymentBox/}}*
                     #{if promotionDto.displaySeatMap}
-                        #{checkout.seatsMap /}
+                        #{checkout.seatsMap passengersQuantity: bfmResultItem.pricing.seats.getAsInt()/}
                     #{/if}
                     #{checkout.termsConditionBox/}
                     #{checkout.hiddenInputBox bfmResultItem: bfmResultItem, promotion: promotionDto, resultSegmentIda:resultSegmentIda, resultSegmentVuelta:resultSegmentVuelta/}
