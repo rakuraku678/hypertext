@@ -29,6 +29,8 @@ public class SeatsMapController extends Controller {
     
 
     public static void getSeats(String body) {
+    	
+    	System.out.println("body que llega: "+body);
 	    JsonElement bodyJsonElement = new JsonParser().parse(body);
 	    SeatsMap seatsMap = new SeatsMap();
 	    JsonElement jsonSeats = seatsMap.process(bodyJsonElement);
