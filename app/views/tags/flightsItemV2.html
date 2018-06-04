@@ -31,7 +31,7 @@
       data-validatingcarrier="${_flight.pricing.validatingCarrier.getAsString()}"
 	  data-escala="${_flight.idaAirSearchSegments.get(0).flightsCount.getAsInt() - 1}"
 	  data-returnEscala="${connectionsReturnCount}" style="min-height: ${baxerHeight}"
-	  data-gds="${_flight.gds}">
+	  data-gds="${_flight.gds.getAsString()}">
 
     <form class="form-ticket" id="fnumber${_flightNumber}" action="@{PaymentFlowController.index}" method="post" data-tknumber="${_tknumber}">
       <input type="hidden" name="selectedCurrency" class="selCurrency" value="usd" id="hdnSelectedCurrency"/>
