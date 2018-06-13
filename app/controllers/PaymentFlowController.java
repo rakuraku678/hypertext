@@ -6,6 +6,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.joda.time.DateTime;
+import org.joda.time.Minutes;
+
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -14,11 +17,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import dto.CheckoutPostDto;
 import dto.StateDto;
-import org.joda.time.DateTime;
-import org.joda.time.Minutes;
-
 import play.Logger;
 import play.Play;
 import play.cache.Cache;
@@ -32,6 +31,7 @@ import utils.TravelClubUtils;
 import utils.ApiFlightsSdk.v1.AirRules;
 import utils.ApiFlightsSdk.v1.AirlinesSearch;
 import utils.ApiFlightsSdk.v1.Alliance;
+import utils.ApiFlightsSdk.v1.Amadeus;
 import utils.ApiFlightsSdk.v1.Booking;
 import utils.ApiFlightsSdk.v1.Country;
 import utils.ApiFlightsSdk.v1.Promotion;
@@ -57,6 +57,14 @@ public class PaymentFlowController extends Controller {
         
         JsonElement resultSegmentIda = new JsonParser().parse(params.get("resultSegmentIda"));
         JsonElement resultSegmentVuelta = new JsonParser().parse(params.get("resultSegmentVuelta"));
+        String gds = params.get("gds");
+        
+        System.out.println("GDS: "+gds);
+        if (gds.equals("Amadeus")){
+        	System.out.println("preparando para pegarle a airsell recommendation");
+        	JsonElement response = Amadeus.doAirSellRecommendation(resultSegmentIda,resultSegmentVuelta);
+        }
+        
         
         Logger.info("resultSegmentIda: "+resultSegmentIda.toString(),"DESARROLLO");
         Logger.info("==========================","DESARROLLO");
