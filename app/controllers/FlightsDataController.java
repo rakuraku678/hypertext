@@ -43,7 +43,7 @@ public class FlightsDataController extends Controller {
         } else {
             promotionDto = new Promotion().getDefault();
         }
-        String dollarExchangeRate = TravelClubUtils.getDollarExchangeRate(promotionDto.agency.externalId);
+        String dollarExchangeRate = "630";//TravelClubUtils.getDollarExchangeRate(promotionDto.agency.externalId);
         String transactionId = params.get("transactionId");
         
         BFMSearch bfmSearch  = new BFMSearch();
