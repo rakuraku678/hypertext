@@ -60,9 +60,12 @@ public class PaymentFlowController extends Controller {
         String gds = params.get("gds");
         
         System.out.println("GDS: "+gds);
+        Map<String,String> amadeusSessionMap = Maps.newHashMap();
         if (gds.equals("Amadeus")){
-        	System.out.println("preparando para pegarle a airsell recommendation");
+        	System.out.println("Preparando request a Airsell From Recommendation");
         	JsonElement response = Amadeus.doAirSellRecommendation(resultSegmentIda,resultSegmentVuelta);
+        	amadeusSessionMap.put("sessionId", response.getAsJsonObject().get("sessionId").getAsString());
+        	amadeusSessionMap.put("token", response.getAsJsonObject().get("securityToken").getAsString());
         }
         
         
@@ -123,7 +126,7 @@ public class PaymentFlowController extends Controller {
         String urlServer = Play.configuration.getProperty("url.server");
         render(agencyConfigurationDto, bfmResultItem, selectedCurrency, dollarExchangeRate, airRulesResultList, promotionDto, 
         		countriesList, onlyPassport, whiteListAirlines, validatingCarrier, AllianceMessage, transactionId, token, state, urlServer, 
-        		resultSegmentIda, resultSegmentVuelta);
+        		resultSegmentIda, resultSegmentVuelta, amadeusSessionMap, gds);
 	
     }
 

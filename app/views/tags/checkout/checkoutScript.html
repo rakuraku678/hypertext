@@ -1,8 +1,6 @@
 <script type="text/javascript">
 $(document).ready(function () {
-    new Fingerprint2().get(function(result){
-        $("#fingerprint").val(result);
-    });
+
     
     $(window).keydown(function(event){
       if(event.keyCode == 13) {

@@ -72,7 +72,6 @@ public class BookingController extends Controller {
         //    bodyJsonElement.getAsJsonObject().addProperty("redirect", Router.getFullUrl("PaymentFlowController.processPayment", params));
         String redirectRouter = bodyJsonElement.getAsJsonObject().get("origin").getAsString() + "/checkout/_ID_/process";
         bodyJsonElement.getAsJsonObject().addProperty("redirect", redirectRouter);
-
         renderJSON(booking.process(bodyJsonElement));
     }
 

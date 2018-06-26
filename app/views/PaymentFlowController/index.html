@@ -104,6 +104,10 @@
             </div>
             <div class="row">
                 <div class="col-md-8 text-right">
+                	#{if gds.equals("Amadeus")}
+                		<input type="hidden" name="ss" value="${amadeusSessionMap.get('sessionId')}" />
+                		<input type="hidden" name="tk" value="${amadeusSessionMap.get('token')}" />
+                	#{/if}
                     <input type="submit" name="submitButton" class="btn btn-search" value="continuar" id="btnContinue">
                 </div>
             </div>
