@@ -63,7 +63,8 @@ public class PaymentFlowController extends Controller {
         Map<String,String> amadeusSessionMap = Maps.newHashMap();
         if (gds.equals("Amadeus")){
         	System.out.println("Preparando request a Airsell From Recommendation");
-        	JsonElement response = Amadeus.doAirSellRecommendation(resultSegmentIda,resultSegmentVuelta);
+        	
+        	JsonElement response = Amadeus.doAirSellRecommendation(resultSegmentIda,resultSegmentVuelta, new JsonParser().parse(params.get("pricingElement")));
         	amadeusSessionMap.put("sessionId", response.getAsJsonObject().get("sessionId").getAsString());
         	amadeusSessionMap.put("token", response.getAsJsonObject().get("securityToken").getAsString());
         }

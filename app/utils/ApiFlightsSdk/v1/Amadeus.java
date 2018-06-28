@@ -12,12 +12,12 @@ public class Amadeus extends ApiFlightsSDKBase {
 
     private static final String ENDPOINT = "/v1/airsellfromrecommendation";
 
-    public static JsonElement doAirSellRecommendation(JsonElement resultSegmentIda, JsonElement resultSegmentVuelta){
+    public static JsonElement doAirSellRecommendation(JsonElement resultSegmentIda, JsonElement resultSegmentVuelta, JsonElement pricingElement){
     	WS.WSRequest request = prepareRequest(ENDPOINT);
     	JsonObject jsonParams = new JsonObject();
     	jsonParams.add("resultSegmentIda", resultSegmentIda);
     	jsonParams.add("resultSegmentVuelta", resultSegmentVuelta);
-    	
+    	jsonParams.add("pricingElement", pricingElement);
     	
     	request.body(jsonParams);
     	JsonElement response = processResponsePost(request);
